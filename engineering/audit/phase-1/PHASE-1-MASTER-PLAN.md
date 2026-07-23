@@ -163,7 +163,6 @@ Use the strictest classification the evidence supports. Change classification if
 
 **Deliverables:**
 - Zero ESLint warnings
-- `engineering/phase-1/P1-001-eslint.md`
 
 **Verification commands:**
 ```bash
@@ -180,13 +179,10 @@ npx playwright test
 - [ ] Tests pass
 - [ ] No TypeScript regressions
 - [ ] No architectural regression
-- [ ] Documentation created
 
 **Rollback considerations:** Each change is independently revertible. Removing an export (e.g., `useSidebar`) may require re-adding it if a consumer appears in future work, but this is a one-line change.
 
 **Regression risks:** Minimal. The only non-trivial change is removing `useSidebar` from the sidebar module's export block. Zero external consumers were found via grep.
-
-**Documentation required:** `engineering/phase-1/P1-001-eslint.md`
 
 **Definition of Done:**
 - [ ] All warnings resolved
@@ -232,7 +228,6 @@ npx playwright test
 
 **Deliverables:**
 - Zero TypeScript errors across all configs
-- `engineering/phase-1/P1-002-typescript.md`
 
 **Verification commands:**
 ```bash
@@ -287,7 +282,6 @@ npx playwright test
 **Deliverables:**
 - Zero critical/high vulnerabilities
 - Clean dependency inventory
-- `engineering/phase-1/P1-003-dependencies.md`
 
 **Verification commands:**
 ```bash
@@ -339,7 +333,6 @@ npx playwright test
 
 **Deliverables:**
 - Zero Tailwind build warnings
-- `engineering/phase-1/P1-004-tailwind.md`
 
 **Verification commands:**
 ```bash
@@ -394,7 +387,6 @@ npx playwright test
 **Deliverables:**
 - Bundle analysis report
 - Implemented safe bundle optimizations
-- `engineering/phase-1/P1-005-bundle.md`
 
 **Verification commands:**
 ```bash
@@ -446,7 +438,6 @@ npx playwright test
 **Deliverables:**
 - Resolved mixed-import warning
 - Documented import architecture decision
-- `engineering/phase-1/P1-006-supabase-imports.md`
 
 **Verification commands:**
 ```bash
@@ -497,7 +488,6 @@ npx playwright test
 
 **Deliverables:**
 - Zero console output from application code in production
-- `engineering/phase-1/P1-007-runtime-console.md`
 
 **Verification commands:**
 ```bash
@@ -539,7 +529,6 @@ grep -r "console\.\(log\|warn\|error\|info\|debug\)" src/ --include="*.ts" --inc
 **Deliverables:**
 - Signed verification matrix
 - Phase 1 completion report
-- `engineering/phase-1/P1-008-final-verification.md`
 
 **Verification commands:**
 ```bash
@@ -606,15 +595,10 @@ Every completed ticket must produce an audit report.
 
 **Naming convention:**
 ```
-engineering/phase-1/P1-{number}-{short-name}.md
+engineering/audit/phase-1/P1-{number}-{short-name}.md
 ```
 
-**Examples:**
-```
-engineering/phase-1/P1-001-eslint.md
-engineering/phase-1/P1-002-typescript.md
-engineering/phase-1/P1-003-dependencies.md
-```
+**Note:** Individual ticket reports from Phase 1 have been archived. The `PHASE-1-MASTER-PLAN.md` serves as the consolidated historical record of all findings, changes, and verifications.
 
 **Each report must contain:**
 
