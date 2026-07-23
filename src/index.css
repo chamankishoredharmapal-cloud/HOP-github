@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* House of Padmavati — Coastal Blossom Design System
+   "Sarees · Stories · You" — A digital sanctuary, calm and museum-like. */
+
+@layer base {
+  :root {
+    /* Coastal Blossom palette (HSL) */
+    --jasmine: 40 33% 95%;        /* #F7F4EE */
+    --jasmine-deep: 40 25% 91%;
+    --teal: 174 16% 44%;          /* #5D817E */
+    --teal-deep: 174 22% 28%;
+    --sand: 36 45% 81%;           /* #E4D3BA */
+    --sakura: 8 31% 73%;          /* #CFA9A2 */
+    --ink: 0 0% 15%;              /* #262626 */
+    --ink-soft: 0 0% 30%;
+
+    /* Semantic tokens */
+    --background: var(--jasmine);
+    --foreground: var(--ink);
+
+    --nav-background: var(--jasmine);
+    --nav-foreground: var(--ink);
+    --nav-hover: var(--teal);
+
+    --primary: var(--teal-deep);
+    --primary-foreground: var(--jasmine);
+    --primary-hover: var(--teal);
+
+    --secondary: var(--jasmine-deep);
+    --secondary-foreground: var(--ink);
+
+    --muted: var(--jasmine-deep);
+    --muted-foreground: var(--ink-soft);
+
+    --accent: var(--sand);
+    --accent-foreground: var(--ink);
+
+    --border: 36 20% 86%;
+    --input: 36 20% 86%;
+    --ring: var(--teal);
+
+    --card: 0 0% 100%;
+    --card-foreground: var(--ink);
+
+    --popover: var(--jasmine);
+    --popover-foreground: var(--ink);
+
+    --destructive: 0 60% 50%;
+    --destructive-foreground: var(--jasmine);
+
+    --radius: 0.75rem;
+
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: var(--jasmine);
+    --sidebar-foreground: var(--ink);
+    --sidebar-primary: var(--teal-deep);
+    --sidebar-primary-foreground: var(--jasmine);
+    --sidebar-accent: var(--jasmine-deep);
+    --sidebar-accent-foreground: var(--ink);
+    --sidebar-border: 36 20% 86%;
+    --sidebar-ring: var(--teal);
+  }
+
+  .dark {
+    --background: var(--teal-deep);
+    --foreground: var(--jasmine);
+    --card: var(--ink);
+    --card-foreground: var(--jasmine);
+    --primary: var(--sand);
+    --primary-foreground: var(--ink);
+    --border: 174 15% 32%;
+    --input: 174 15% 32%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "kern", "liga", "calt";
+  }
+  h1, h2, h3, h4, h5 {
+    @apply font-serif font-light tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .gallery-shadow {
+    box-shadow: 0 40px 100px -40px hsl(var(--teal-deep) / 0.3);
+  }
+}
+
+@keyframes kenburns {
+  0%   { transform: scale(1)    translate3d(0, 0, 0); }
+  100% { transform: scale(1.08) translate3d(-1%, -1%, 0); }
+}
+
+/* Visible focus styles for keyboard navigation */
+:focus-visible {
+  outline: 2px solid hsl(var(--teal));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Remove focus outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Animation for search modal */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
