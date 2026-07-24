@@ -1,0 +1,86 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+title: Craft Note
+description: Educational content about handloom techniques, materials, and processes
+required:
+  - type
+  - title
+  - slug
+  - published
+  - status
+  - author
+  - tag
+  - dek
+  - hero
+  - seo
+properties:
+  type:
+    type: string
+    const: craft-note
+  title:
+    type: string
+    description: Full title, sentence case
+  slug:
+    type: string
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+  published:
+    type: string
+    format: date
+  updated:
+    type: string
+    format: date
+  status:
+    type: string
+    enum:
+      - draft
+      - review
+      - published
+      - archive
+  author:
+    type: string
+    default: "House of Padmavati"
+  tag:
+    type: string
+    enum:
+      - Technique
+      - Fabric
+      - Weave
+      - Dye
+      - History
+    description: Controlled vocabulary tag
+  dek:
+    type: string
+    maxLength: 160
+  readingTime:
+    type: integer
+    minimum: 1
+  hero:
+    type: string
+  alt:
+    type: string
+  collections:
+    type: array
+    items:
+      type: string
+    description: Related collection slugs
+  products:
+    type: array
+    items:
+      type: string
+    description: Related product UUIDs
+  glossaryTerms:
+    type: array
+    items:
+      type: string
+  seo:
+    type: object
+    properties:
+      title:
+        type: string
+        maxLength: 70
+      description:
+        type: string
+        maxLength: 160
+    required:
+      - title
+      - description

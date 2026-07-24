@@ -1,0 +1,69 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+title: Ritual Guide
+description: A guide for a specific saree-related ritual, occasion, or care practice
+required:
+  - type
+  - title
+  - slug
+  - published
+  - status
+  - occasion
+  - hero
+  - seo
+properties:
+  type:
+    type: string
+    const: ritual-guide
+  title:
+    type: string
+  slug:
+    type: string
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+  published:
+    type: string
+    format: date
+  status:
+    type: string
+    enum:
+      - draft
+      - review
+      - published
+      - archive
+  occasion:
+    type: string
+    enum:
+      - Wedding
+      - Festival
+      - Office
+      - Daily
+      - Gift
+    description: The occasion type this guide addresses
+  hero:
+    type: string
+  alt:
+    type: string
+  collections:
+    type: array
+    items:
+      type: string
+  products:
+    type: array
+    items:
+      type: string
+  relatedArticles:
+    type: array
+    items:
+      type: string
+  seo:
+    type: object
+    properties:
+      title:
+        type: string
+        maxLength: 70
+      description:
+        type: string
+        maxLength: 160
+    required:
+      - title
+      - description

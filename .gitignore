@@ -49,3 +49,6 @@ Thumbs.db
 
 # Supabase local state
 supabase/.temp/
+
+# Generated content index files
+src/data/__generated__/

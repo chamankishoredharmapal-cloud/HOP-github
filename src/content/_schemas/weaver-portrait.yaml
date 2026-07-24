@@ -1,0 +1,87 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+title: Weaver Portrait
+description: A biographical portrait of a weaver, their craft, and their lineage
+required:
+  - type
+  - title
+  - slug
+  - published
+  - status
+  - author
+  - weaverName
+  - generation
+  - location
+  - technique
+  - hero
+  - alt
+  - quote
+  - portraits
+  - seo
+properties:
+  type:
+    type: string
+    const: weaver-portrait
+  title:
+    type: string
+  slug:
+    type: string
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+  published:
+    type: string
+    format: date
+  status:
+    type: string
+    enum:
+      - draft
+      - review
+      - published
+      - archive
+  author:
+    type: string
+    default: "House of Padmavati"
+  weaverName:
+    type: string
+    description: The weaver's full name
+  generation:
+    type: integer
+    minimum: 1
+    description: Generations the family has been weaving
+  location:
+    type: string
+    description: Village/town and state
+  technique:
+    type: string
+    description: Primary weaving technique
+  hero:
+    type: string
+  alt:
+    type: string
+  quote:
+    type: string
+    description: A direct quote from the weaver
+  portraits:
+    type: array
+    items:
+      type: string
+    description: Paths to portrait images
+  collections:
+    type: array
+    items:
+      type: string
+  products:
+    type: array
+    items:
+      type: string
+  seo:
+    type: object
+    properties:
+      title:
+        type: string
+        maxLength: 70
+      description:
+        type: string
+        maxLength: 160
+    required:
+      - title
+      - description

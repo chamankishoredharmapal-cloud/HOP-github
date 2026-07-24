@@ -1,0 +1,60 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+title: House Letter
+description: A brand manifesto, announcement, or letter from the house
+required:
+  - type
+  - title
+  - slug
+  - published
+  - status
+  - occasion
+  - hero
+  - seo
+properties:
+  type:
+    type: string
+    const: house-letter
+  title:
+    type: string
+  slug:
+    type: string
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+  published:
+    type: string
+    format: date
+  status:
+    type: string
+    enum:
+      - draft
+      - review
+      - published
+      - archive
+  occasion:
+    type: string
+    enum:
+      - Seasonal
+      - Milestone
+      - Collection Launch
+      - Annual
+    description: The type of occasion prompting this letter
+  hero:
+    type: string
+  alt:
+    type: string
+  signature:
+    type: string
+    default: "— House of Padmavati"
+    description: Closing signature
+  seo:
+    type: object
+    properties:
+      title:
+        type: string
+        maxLength: 70
+      description:
+        type: string
+        maxLength: 160
+    required:
+      - title
+      - description

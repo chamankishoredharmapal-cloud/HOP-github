@@ -1,0 +1,49 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+title: Glossary Entry
+description: A single textile terminology entry
+required:
+  - type
+  - term
+  - slug
+  - category
+  - definition
+properties:
+  type:
+    type: string
+    const: glossary
+  term:
+    type: string
+    description: The term being defined, capitalised
+  slug:
+    type: string
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+  pronunciation:
+    type: string
+    description: IPA pronunciation guide
+  category:
+    type: string
+    enum:
+      - Fabric
+      - Weave
+      - Technique
+      - Tool
+      - Tradition
+      - Region
+    description: Category of the term
+  definition:
+    type: string
+    description: Concise definition (1-3 sentences)
+  extended:
+    type: string
+    description: Optional deeper explanation (markdown)
+  relatedTerms:
+    type: array
+    items:
+      type: string
+    description: Slugs of related glossary terms
+  seeAlso:
+    type: array
+    items:
+      type: string
+    description: Slugs of articles or collections for further reading

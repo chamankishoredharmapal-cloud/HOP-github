@@ -1,0 +1,68 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+title: Field Note
+description: Travelogue or diary entry from a visit to a weaving cluster, village, or craft fair
+required:
+  - type
+  - title
+  - slug
+  - published
+  - status
+  - author
+  - location
+  - dateVisited
+  - hero
+  - seo
+properties:
+  type:
+    type: string
+    const: field-note
+  title:
+    type: string
+  slug:
+    type: string
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+  published:
+    type: string
+    format: date
+  status:
+    type: string
+    enum:
+      - draft
+      - review
+      - published
+      - archive
+  author:
+    type: string
+    default: "House of Padmavati"
+  location:
+    type: string
+    description: Specific location visited
+  dateVisited:
+    type: string
+    format: date
+    description: Date of the visit
+  hero:
+    type: string
+  alt:
+    type: string
+  collections:
+    type: array
+    items:
+      type: string
+  products:
+    type: array
+    items:
+      type: string
+  seo:
+    type: object
+    properties:
+      title:
+        type: string
+        maxLength: 70
+      description:
+        type: string
+        maxLength: 160
+    required:
+      - title
+      - description

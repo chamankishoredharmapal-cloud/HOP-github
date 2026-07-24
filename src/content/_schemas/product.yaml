@@ -1,0 +1,84 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+title: Product Story
+description: Extended editorial narrative for a product, complementing the database record
+required:
+  - type
+  - productId
+  - status
+  - hero
+  - alt
+  - sensoryStory
+  - seo
+properties:
+  type:
+    type: string
+    const: product
+  productId:
+    type: string
+    pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    description: UUID of the product in the database
+  status:
+    type: string
+    enum:
+      - draft
+      - published
+      - archive
+  hero:
+    type: string
+    description: Relative path to hero image
+  alt:
+    type: string
+    description: Alt text for the hero image
+  sensoryStory:
+    type: string
+    description: Sensory-rich description of the product — how it feels, moves, weighs, behaves
+  wearingContext:
+    type: string
+    description: Specific occasion or context for wearing this saree
+  system2:
+    type: object
+    properties:
+      weave:
+        type: string
+        description: Weave specifications
+      fabric:
+        type: string
+        description: Fabric composition details
+      origin:
+        type: string
+        description: Place of origin
+      care:
+        type: string
+        description: Care instructions
+      dispatch:
+        type: string
+        description: Dispatch timeline information
+    description: Technical details available on demand via accordion
+  collections:
+    type: array
+    items:
+      type: string
+    description: Slugs of collections this product belongs to
+  relatedArticles:
+    type: array
+    items:
+      type: string
+    description: Slugs of related journal articles
+  glossaryTerms:
+    type: array
+    items:
+      type: string
+    description: Slugs of glossary terms referenced
+  seo:
+    type: object
+    properties:
+      title:
+        type: string
+        maxLength: 70
+      description:
+        type: string
+        maxLength: 160
+    required:
+      - title
+      - description
