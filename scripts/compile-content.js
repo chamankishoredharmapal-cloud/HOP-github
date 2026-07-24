@@ -1,232 +1,200 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createHash } from "node:crypto";
-import { load as yamlLoad, dump as yamlDump } from "js-yaml";
+import { load as yamlLoad } from "js-yaml";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const CONTENT_DIR = path.join(ROOT, "src/content");
 const OUTPUT_DIR = path.join(ROOT, "src/data/__generated__");
-const PUBLIC_DIR = path.join(ROOT, "public");
-const MANIFEST_PATH = path.join(OUTPUT_DIR, ".manifest.json");
+const SCHEMA_DIR = path.join(CONTENT_DIR, "_schemas");
 
 const CONTENT_TYPES = [
-  { dir: "journal",    type: "journal",       importType: "JournalArticle" },
-  { dir: "collections",type: "collection",     importType: "CollectionNarrative" },
-  { dir: "products",   type: "product",        importType: "ProductStory" },
-  { dir: "craft-notes",type: "craft-note",     importType: "CraftNote" },
-  { dir: "weaver-portraits", type: "weaver-portrait", importType: "WeaverPortrait" },
-  { dir: "field-notes",type: "field-note",     importType: "FieldNote" },
-  { dir: "house-letters", type: "house-letter",importType: "HouseLetter" },
-  { dir: "ritual-guides", type: "ritual-guide",importType: "RitualGuide" },
-  { dir: "glossary",   type: "glossary",       importType: "GlossaryEntry" },
+  { dir: "journal",          type: "journal",       importType: "JournalArticle" },
+  { dir: "collections",      type: "collection",     importType: "CollectionNarrative" },
+  { dir: "products",         type: "product",        importType: "ProductStory" },
+  { dir: "craft-notes",      type: "craft-note",     importType: "CraftNote" },
+  { dir: "weaver-portraits", type: "weaver-portrait",importType: "WeaverPortrait" },
+  { dir: "field-notes",      type: "field-note",     importType: "FieldNote" },
+  { dir: "house-letters",    type: "house-letter",   importType: "HouseLetter" },
+  { dir: "ritual-guides",    type: "ritual-guide",   importType: "RitualGuide" },
+  { dir: "glossary",         type: "glossary",       importType: "GlossaryEntry" },
 ];
 
 const BLOCK_BODY_TYPES = new Set(["intro", "body", "closure", "step", "system-2"]);
-const BODY_ONLY_TYPES = new Set(["divider"]);
+const BLOCK_NO_BODY_TYPES = new Set(["hero", "pull-quote", "image", "video", "related"]);
+const BLOCK_EMPTY_TYPES = new Set(["divider"]);
+const ALL_BLOCK_TYPES = new Set([...BLOCK_BODY_TYPES, ...BLOCK_NO_BODY_TYPES, ...BLOCK_EMPTY_TYPES]);
 
-const FILE_HASH_CACHE = new Map();
+const GLOSSARY_ENTRY_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*\.md$/;
 
-function fileHash(filePath) {
-  if (FILE_HASH_CACHE.has(filePath)) return FILE_HASH_CACHE.get(filePath);
-  if (!fs.existsSync(filePath)) return null;
-  const content = fs.readFileSync(filePath);
-  const hash = createHash("md5").update(content).digest("hex");
-  FILE_HASH_CACHE.set(filePath, hash);
-  return hash;
+const ERROR = "error";
+const WARNING = "warning";
+
+const errors = [];
+const warnings = [];
+
+function report(severity, unit, message) {
+  const entry = { unit, message };
+  if (severity === ERROR) errors.push(entry);
+  else warnings.push(entry);
 }
 
-function loadManifest() {
-  try {
-    return JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf-8"));
-  } catch {
-    return {};
-  }
+function readFile(filePath) {
+  return fs.readFileSync(filePath, "utf-8");
 }
 
-function saveManifest(manifest) {
-  fs.mkdirSync(path.dirname(MANIFEST_PATH), { recursive: true });
-  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2), "utf-8");
+function fileExists(filePath) {
+  return fs.existsSync(filePath);
 }
 
-function discoverContent() {
-  const units = [];
-  for (const ct of CONTENT_TYPES) {
-    const typeDir = path.join(CONTENT_DIR, ct.dir);
-    if (!fs.existsSync(typeDir)) continue;
-
-    const rootIndex = path.join(typeDir, "index.md");
-    if (fs.existsSync(rootIndex)) {
-      units.push({
-        type: ct.type,
-        typeDir: ct.dir,
-        slug: "index",
-        dir: typeDir,
-        indexPath: rootIndex,
-        importType: ct.importType,
-      });
-    }
-
-    const entries = fs.readdirSync(typeDir, { withFileTypes: true });
-    for (const entry of entries) {
-      if (!entry.isDirectory()) continue;
-      const indexPath = path.join(typeDir, entry.name, "index.md");
-      if (!fs.existsSync(indexPath)) continue;
-      units.push({
-        type: ct.type,
-        typeDir: ct.dir,
-        slug: entry.name,
-        dir: path.join(typeDir, entry.name),
-        indexPath,
-        importType: ct.importType,
-      });
-    }
-  }
-  return units;
+function readSchema(typeName) {
+  const schemaPath = path.join(SCHEMA_DIR, `${typeName}.yaml`);
+  if (!fileExists(schemaPath)) return null;
+  return yamlLoad(readFile(schemaPath));
 }
 
 function parseContent(filePath) {
-  const text = fs.readFileSync(filePath, "utf-8");
+  const text = readFile(filePath);
   const lines = text.split("\n");
 
   if (lines[0].trim() !== "---") {
-    throw new Error("Content must start with ---");
+    return { error: "Content must start with ---", frontmatter: null, blocks: [] };
   }
 
-  let fmEndLine = -1;
+  let fmEnd = -1;
   for (let i = 1; i < lines.length; i++) {
-    if (lines[i].trim() === "---") {
-      fmEndLine = i;
-      break;
-    }
+    if (lines[i].trim() === "---") { fmEnd = i; break; }
   }
-  if (fmEndLine === -1) {
-    throw new Error("Frontmatter not closed");
+  if (fmEnd === -1) return { error: "Frontmatter not closed", frontmatter: null, blocks: [] };
+
+  let frontmatter;
+  try {
+    frontmatter = yamlLoad(lines.slice(1, fmEnd).join("\n"));
+  } catch (e) {
+    return { error: `YAML parse error: ${e.message}`, frontmatter: null, blocks: [] };
   }
 
-  const frontmatter = yamlLoad(lines.slice(1, fmEndLine).join("\n"));
-  const remainingLines = lines.slice(fmEndLine + 1);
-
+  const remaining = lines.slice(fmEnd + 1);
   const blocks = [];
   let i = 0;
-  while (i < remainingLines.length) {
-    if (remainingLines[i].trim() !== "---") {
-      i++;
-      continue;
-    }
+
+  while (i < remaining.length) {
+    if (remaining[i].trim() !== "---") { i++; continue; }
+
     const metaLines = [];
     i++;
-    while (i < remainingLines.length && remainingLines[i].trim() !== "---") {
-      metaLines.push(remainingLines[i]);
+    while (i < remaining.length && remaining[i].trim() !== "---") {
+      metaLines.push(remaining[i]);
       i++;
     }
-    let meta = metaLines.length > 0 ? yamlLoad(metaLines.join("\n")) : {};
-    if (!meta || typeof meta !== "object") meta = {};
 
+    let meta = {};
+    if (metaLines.length > 0) {
+      try {
+        const parsed = yamlLoad(metaLines.join("\n"));
+        if (parsed && typeof parsed === "object") meta = parsed;
+      } catch { /* ignore unparseable metadata, treat as body */ }
+    }
+
+    if (i >= remaining.length) break;
     i++;
+
     const bodyLines = [];
-    while (i < remainingLines.length && remainingLines[i].trim() !== "---") {
-      bodyLines.push(remainingLines[i]);
+    while (i < remaining.length && remaining[i].trim() !== "---") {
+      bodyLines.push(remaining[i]);
       i++;
     }
-    const body = bodyLines.join("\n").trim();
 
-    if (BLOCK_BODY_TYPES.has(meta.type)) {
+    const body = bodyLines.join("\n").trim();
+    const blockType = meta.type;
+
+    if (BLOCK_BODY_TYPES.has(blockType)) {
       blocks.push({ ...meta, body });
-    } else {
+    } else if (BLOCK_NO_BODY_TYPES.has(blockType) || BLOCK_EMPTY_TYPES.has(blockType)) {
+      blocks.push(meta);
+    } else if (meta.type === "gallery") {
+      blocks.push(meta);
+    } else if (meta.type) {
       blocks.push(meta);
     }
   }
 
-  return { frontmatter, blocks };
+  return { error: null, frontmatter, blocks };
 }
 
-function readSchema(typeName) {
-  const schemaPath = path.join(CONTENT_DIR, "_schemas", `${typeName}.yaml`);
-  if (!fs.existsSync(schemaPath)) return null;
-  return yamlLoad(fs.readFileSync(schemaPath, "utf-8"));
-}
-
-function validateValue(value, fieldName, schema, errors, warnings) {
-  if (schema.const !== undefined) {
-    if (value !== schema.const) {
-      errors.push(`'${fieldName}' must be '${schema.const}', got '${value}'`);
+function validateValue(value, fieldName, propSchema, errorList) {
+  if (propSchema.const !== undefined) {
+    if (value !== propSchema.const) {
+      errorList.push(`'${fieldName}' must be '${propSchema.const}', got '${value}'`);
     }
     return;
   }
 
-  if (schema.type === "string") {
+  if (propSchema.type === "string") {
     if (typeof value !== "string") {
-      errors.push(`Expected string for '${fieldName}', got ${typeof value}`);
+      errorList.push(`Expected string for '${fieldName}', got ${typeof value}`);
       return;
     }
-    if (schema.enum && !schema.enum.includes(value)) {
-      errors.push(`'${fieldName}' must be one of: ${schema.enum.join(", ")}. Got: '${value}'`);
+    if (propSchema.enum && !propSchema.enum.includes(value)) {
+      errorList.push(`'${fieldName}' must be one of: ${propSchema.enum.join(", ")}. Got '${value}'`);
     }
-    if (schema.minLength != null && value.length < schema.minLength) {
-      errors.push(`'${fieldName}' must be at least ${schema.minLength} characters`);
+    if (propSchema.maxLength != null && value.length > propSchema.maxLength) {
+      errorList.push(`'${fieldName}' exceeds ${propSchema.maxLength} characters (${value.length})`);
     }
-    if (schema.maxLength != null && value.length > schema.maxLength) {
-      warnings.push(`'${fieldName}' exceeds ${schema.maxLength} characters (${value.length})`);
+    if (propSchema.pattern && !new RegExp(propSchema.pattern).test(value)) {
+      errorList.push(`'${fieldName}' does not match pattern ${propSchema.pattern}`);
     }
-    if (schema.pattern && !new RegExp(schema.pattern).test(value)) {
-      errors.push(`'${fieldName}' does not match pattern ${schema.pattern}`);
+    if (propSchema.format === "date" && !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      errorList.push(`'${fieldName}' must be a valid date in YYYY-MM-DD format`);
     }
-    if (schema.format === "date" && !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-      errors.push(`'${fieldName}' must be a valid date in YYYY-MM-DD format`);
-    }
-  } else if (schema.type === "integer") {
+  } else if (propSchema.type === "integer") {
     if (!Number.isInteger(value)) {
-      errors.push(`Expected integer for '${fieldName}', got ${typeof value} (${value})`);
+      errorList.push(`Expected integer for '${fieldName}', got ${typeof value} (${value})`);
       return;
     }
-    if (schema.minimum != null && value < schema.minimum) {
-      errors.push(`'${fieldName}' must be >= ${schema.minimum}`);
+    if (propSchema.minimum != null && value < propSchema.minimum) {
+      errorList.push(`'${fieldName}' must be >= ${propSchema.minimum}`);
     }
-    if (schema.maximum != null && value > schema.maximum) {
-      errors.push(`'${fieldName}' must be <= ${schema.maximum}`);
-    }
-  } else if (schema.type === "array") {
+  } else if (propSchema.type === "array") {
     if (!Array.isArray(value)) {
-      errors.push(`Expected array for '${fieldName}', got ${typeof value}`);
+      errorList.push(`Expected array for '${fieldName}', got ${typeof value}`);
       return;
     }
-    if (schema.items) {
+    if (propSchema.items) {
       for (let idx = 0; idx < value.length; idx++) {
-        validateValue(value[idx], `${fieldName}[${idx}]`, schema.items, errors, warnings);
+        validateValue(value[idx], `${fieldName}[${idx}]`, propSchema.items, errorList);
       }
     }
-  } else if (schema.type === "object") {
+  } else if (propSchema.type === "object") {
     if (typeof value !== "object" || value === null || Array.isArray(value)) {
-      errors.push(`Expected object for '${fieldName}', got ${typeof value}`);
+      errorList.push(`Expected object for '${fieldName}', got ${typeof value}`);
       return;
     }
-    if (schema.required) {
-      for (const req of schema.required) {
+    if (propSchema.required) {
+      for (const req of propSchema.required) {
         if (value[req] === undefined) {
-          errors.push(`Missing required field '${fieldName}.${req}'`);
+          errorList.push(`Missing required field '${fieldName}.${req}'`);
         }
       }
     }
-    if (schema.properties) {
+    if (propSchema.properties) {
       for (const [key, val] of Object.entries(value)) {
-        if (schema.properties[key]) {
-          validateValue(val, `${fieldName}.${key}`, schema.properties[key], errors, warnings);
+        if (propSchema.properties[key]) {
+          validateValue(val, `${fieldName}.${key}`, propSchema.properties[key], errorList);
         }
       }
     }
   }
 }
 
-function validateFrontmatter(frontmatter, schema, unitPath) {
-  const errors = [];
-  const warnings = [];
+function validateFrontmatter(frontmatter, schema, unitId) {
+  const errorList = [];
 
   if (schema.required) {
     for (const req of schema.required) {
       if (frontmatter[req] === undefined) {
-        errors.push(`Missing required field '${req}'`);
+        errorList.push(`Missing required field '${req}'`);
       }
     }
   }
@@ -234,96 +202,63 @@ function validateFrontmatter(frontmatter, schema, unitPath) {
   if (schema.properties && schema.type === "object") {
     for (const [key, val] of Object.entries(frontmatter)) {
       if (schema.properties[key]) {
-        validateValue(val, key, schema.properties[key], errors, warnings);
+        validateValue(val, key, schema.properties[key], errorList);
       }
     }
   }
 
-  return { errors, warnings };
-}
-
-function calculateReadingTime(frontmatter, blocks) {
-  if (frontmatter.readingTime != null) {
-    return frontmatter.readingTime;
+  for (const err of errorList) {
+    report(ERROR, unitId, `Validation: ${err}`);
   }
-  const allText = blocks
-    .map((b) => {
-      const parts = [];
-      for (const val of Object.values(b)) {
-        if (typeof val === "string") parts.push(val);
-      }
-      return parts.join(" ");
-    })
-    .join(" ");
-  const words = allText.split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 200));
 }
 
-function hasAltInSchema(typeName) {
-  const schema = readSchema(typeName);
-  if (!schema || !schema.properties) return false;
-  return schema.properties.alt !== undefined;
-}
-
-function validateImages(contentDir, frontmatter, unitId) {
-  const errors = [];
-  const warnings = [];
-  if (frontmatter.hero) {
-    const heroPath = path.resolve(contentDir, frontmatter.hero);
-    if (!fs.existsSync(heroPath)) {
-      errors.push({ unit: unitId, message: `Missing hero image: ${frontmatter.hero}` });
-    }
-  }
-  return { errors, warnings };
-}
-
-function validateBlockImages(contentDir, blocks, unitId) {
-  const errors = [];
-  const warnings = [];
+function validateBlocks(blocks, contentDir, unitId) {
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i];
+
+    if (!block.type) {
+      report(ERROR, unitId, `Block ${i} has no type`);
+      continue;
+    }
+
+    if (!ALL_BLOCK_TYPES.has(block.type) && block.type !== "gallery") {
+      report(ERROR, unitId, `Block ${i}: unknown block type '${block.type}'`);
+      continue;
+    }
+
     if (block.type === "image" || block.type === "hero") {
       if (block.image) {
         const imgPath = path.resolve(contentDir, block.image);
-        if (!fs.existsSync(imgPath)) {
-          errors.push({ unit: unitId, message: `Missing image in block ${i}: ${block.image}` });
+        if (!fileExists(imgPath)) {
+          report(ERROR, unitId, `Block ${i}: missing image '${block.image}'`);
         }
       }
       if (!block.alt) {
-        warnings.push({ unit: unitId, message: `Missing alt text in block ${i} (${block.type})` });
+        report(WARNING, unitId, `Block ${i} (${block.type}): missing alt text`);
       }
     }
+
     if (block.type === "gallery" && block.images) {
       for (let j = 0; j < block.images.length; j++) {
         const imgPath = path.resolve(contentDir, block.images[j]);
-        if (!fs.existsSync(imgPath)) {
-          errors.push({ unit: unitId, message: `Missing gallery image in block ${i}, index ${j}: ${block.images[j]}` });
+        if (!fileExists(imgPath)) {
+          report(ERROR, unitId, `Block ${i} gallery: missing image '${block.images[j]}'`);
         }
       }
     }
-    if (block.type === "video" && block.poster) {
-      const posterPath = path.resolve(contentDir, block.poster);
-      if (!fs.existsSync(posterPath)) {
-        warnings.push({ unit: unitId, message: `Missing video poster in block ${i}: ${block.poster}` });
+
+    if (block.type === "video") {
+      if (block.poster) {
+        const posterPath = path.resolve(contentDir, block.poster);
+        if (!fileExists(posterPath)) {
+          report(WARNING, unitId, `Block ${i}: missing video poster '${block.poster}'`);
+        }
       }
     }
   }
-  return { errors, warnings };
 }
 
-function copyHeroImage(contentDir, frontmatter, unitType, unitSlug) {
-  if (!frontmatter.hero) return false;
-  const srcPath = path.resolve(contentDir, frontmatter.hero);
-  if (!fs.existsSync(srcPath)) return false;
-
-  const destDir = path.join(PUBLIC_DIR, "content", unitType, unitSlug);
-  const destPath = path.join(destDir, "hero.jpg");
-  fs.mkdirSync(destDir, { recursive: true });
-  fs.copyFileSync(srcPath, destPath);
-  return true;
-}
-
-function resolveContentReferences(unit, allUnits) {
+function resolveReferences(unit, allUnits) {
   const fm = unit.frontmatter;
   const result = {
     relatedProducts: [],
@@ -332,54 +267,57 @@ function resolveContentReferences(unit, allUnits) {
     relatedCollections: [],
     glossaryTerms: [],
   };
-  const errors = [];
-  const warnings = [];
 
   if (fm.relatedProducts) {
     for (const uuid of fm.relatedProducts) {
       if (allUnits.some((u) => u.frontmatter.productId === uuid)) {
         result.relatedProducts.push(uuid);
       } else {
-        warnings.push({ unit: unit.id, message: `Related product '${uuid}' not found` });
+        report(WARNING, unit.id, `Related product '${uuid}' not found`);
       }
     }
   }
 
   if (fm.relatedArticles) {
     for (const slug of fm.relatedArticles) {
-      const found = allUnits.find(
-        (u) => u.type === "journal" && u.slug === slug
-      );
+      const found = allUnits.find((u) => u.type === "journal" && u.slug === slug);
       if (found) {
         result.relatedArticles.push(slug);
       } else {
-        errors.push({ unit: unit.id, message: `Related article '${slug}' not found` });
+        report(ERROR, unit.id, `Related article '${slug}' not found`);
+      }
+    }
+  }
+
+  if (fm.relatedCraftNotes) {
+    for (const slug of fm.relatedCraftNotes) {
+      const found = allUnits.find((u) => u.type === "craft-note" && u.slug === slug);
+      if (found) {
+        result.relatedCraftNotes.push(slug);
+      } else {
+        report(ERROR, unit.id, `Related craft note '${slug}' not found`);
       }
     }
   }
 
   if (fm.glossaryTerms) {
     for (const slug of fm.glossaryTerms) {
-      const found = allUnits.find(
-        (u) => u.type === "glossary" && u.slug === slug
-      );
+      const found = allUnits.find((u) => u.type === "glossary" && u.slug === slug);
       if (found) {
         result.glossaryTerms.push(slug);
       } else {
-        warnings.push({ unit: unit.id, message: `Glossary term '${slug}' not found` });
+        report(WARNING, unit.id, `Glossary term '${slug}' not found`);
       }
     }
   }
 
   if (fm.collections) {
     for (const slug of fm.collections) {
-      const found = allUnits.find(
-        (u) => u.type === "collection" && u.slug === slug
-      );
+      const found = allUnits.find((u) => u.type === "collection" && u.slug === slug);
       if (found) {
         result.relatedCollections.push(slug);
       } else {
-        warnings.push({ unit: unit.id, message: `Collection '${slug}' not found` });
+        report(WARNING, unit.id, `Collection '${slug}' not found`);
       }
     }
   }
@@ -392,43 +330,89 @@ function resolveContentReferences(unit, allUnits) {
     }
   }
 
-  if (fm.relatedCraftNotes) {
-    for (const slug of fm.relatedCraftNotes) {
+  if (fm.seeAlso) {
+    for (const ref of fm.seeAlso) {
       const found = allUnits.find(
-        (u) => u.type === "craft-note" && u.slug === slug
+        (u) => u.slug === ref && u.type !== "glossary"
       );
-      if (found) {
-        result.relatedCraftNotes.push(slug);
-      } else {
-        errors.push({ unit: unit.id, message: `Related craft note '${slug}' not found` });
+      if (!found) {
+        report(WARNING, unit.id, `seeAlso reference '${ref}' not found`);
       }
     }
   }
 
-  return { result, errors, warnings };
+  return result;
 }
 
-function buildRelationshipGraph(allUnits) {
-  const graph = {};
-  for (const unit of allUnits) {
-    const contentId = `${unit.type}/${unit.slug}`;
-    graph[contentId] = { ...unit.relationships };
+function calculateReadingTime(frontmatter, blocks) {
+  if (frontmatter.readingTime != null) {
+    return frontmatter.readingTime;
   }
-  return graph;
+  const words = blocks
+    .flatMap((b) => Object.values(b).filter((v) => typeof v === "string"))
+    .join(" ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
 }
 
-const READING_TIME_TYPES = new Set(["journal", "craft-note"]);
+function discoverUnits() {
+  const units = [];
 
-function generateOutputContent(unit) {
-  const { frontmatter, blocks, type } = unit;
-  const entry = { ...frontmatter, body: blocks };
-  if (READING_TIME_TYPES.has(type) && entry.readingTime == null) {
-    entry.readingTime = calculateReadingTime(frontmatter, blocks);
+  for (const ct of CONTENT_TYPES) {
+    const typeDir = path.join(CONTENT_DIR, ct.dir);
+    if (!fileExists(typeDir)) continue;
+
+    if (ct.dir === "glossary") {
+      const entries = fs.readdirSync(typeDir, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.isDirectory()) {
+          const indexPath = path.join(typeDir, entry.name, "index.md");
+          if (fileExists(indexPath)) {
+            units.push({
+              type: ct.type,
+              typeDir: ct.dir,
+              slug: entry.name,
+              dir: path.join(typeDir, entry.name),
+              indexPath,
+              importType: ct.importType,
+            });
+          }
+        } else if (entry.isFile() && GLOSSARY_ENTRY_PATTERN.test(entry.name)) {
+          if (entry.name === "index.md") continue;
+          const slug = entry.name.replace(/\.md$/, "");
+          units.push({
+            type: ct.type,
+            typeDir: ct.dir,
+            slug,
+            dir: typeDir,
+            indexPath: path.join(typeDir, entry.name),
+            importType: ct.importType,
+          });
+        }
+      }
+    } else {
+      const entries = fs.readdirSync(typeDir, { withFileTypes: true });
+      for (const entry of entries) {
+        if (!entry.isDirectory()) continue;
+        const indexPath = path.join(typeDir, entry.name, "index.md");
+        if (!fileExists(indexPath)) continue;
+        units.push({
+          type: ct.type,
+          typeDir: ct.dir,
+          slug: entry.name,
+          dir: path.join(typeDir, entry.name),
+          indexPath,
+          importType: ct.importType,
+        });
+      }
+    }
   }
-  return entry;
+
+  return units;
 }
 
-function serializeValue(val) {
+function escapeValue(val) {
   if (typeof val === "string") {
     const escaped = val
       .replace(/\\/g, "\\\\")
@@ -439,313 +423,236 @@ function serializeValue(val) {
   if (val === null || val === undefined) return "undefined";
   if (Array.isArray(val)) {
     if (val.length === 0) return "[]";
-    const items = val.map((v) => serializeValue(v));
-    if (items.every((s) => !s.includes("\n") && !s.includes(",\n"))) {
-      return `[${items.join(", ")}]`;
-    }
-    return `[\n    ${items.join(",\n    ")},\n  ]`;
+    const items = val.map((v) => escapeValue(v));
+    return `[${items.join(", ")}]`;
   }
   if (typeof val === "object") {
     const keys = Object.keys(val).filter((k) => val[k] !== undefined);
     if (keys.length === 0) return "{}";
-    const entries = keys.map((k) => {
-      const sv = serializeValue(val[k]);
-      return `${k}: ${sv}`;
-    });
-    return `{\n    ${entries.join(",\n    ")},\n  }`;
+    const entries = keys.map((k) => `${k}: ${escapeValue(val[k])}`);
+    return `{ ${entries.join(", ")} }`;
   }
   return JSON.stringify(val);
 }
 
-function serializeBlock(block) {
-  return serializeValue(block);
+function generateUnitEntry(unit) {
+  const { frontmatter, blocks } = unit;
+  const entry = { ...frontmatter, body: blocks };
+  const rtTypes = new Set(["journal", "craft-note"]);
+  if (rtTypes.has(unit.type) && entry.readingTime == null) {
+    entry.readingTime = calculateReadingTime(frontmatter, blocks);
+  }
+  return entry;
 }
 
-function generateTypeScriptFile(units, typeName, importType) {
-  const entries = units.map((u) => serializeValue(generateOutputContent(u)));
-  const body = entries.join(",\n  ");
-
+function generateTypeFile(units, importType) {
+  const entries = units.map((u) => escapeValue(generateUnitEntry(u)));
   return [
-    `// Auto-generated by content compiler. Do not edit directly.`,
-    `// Generated at: ${new Date().toISOString()}`,
+    "// Auto-generated by content compiler. Do not edit directly.",
     `import type { ${importType} } from "@/types/content";`,
-    ``,
+    "",
     `const data: ${importType}[] = [`,
-    `  ${body}`,
-    `];`,
-    ``,
-    `export default data;`,
-    ``,
+    ...entries.map((e) => `  ${e},`),
+    "];",
+    "",
+    "export default data;",
+    "",
   ].join("\n");
 }
 
-function generateContentIndex(allUnits) {
-  const entries = allUnits.map((u) => {
+function generateContentIndex(units) {
+  const entries = units.map((u) => {
     const fm = u.frontmatter;
-    const tags = fm.tag ? [fm.tag] : undefined;
     return {
       type: u.type,
       slug: u.slug,
       title: fm.title || fm.name || fm.term || u.slug,
-      dek: fm.dek || fm.definition || fm.tagline,
+      dek: fm.dek || fm.tagline || fm.definition,
       published: fm.published,
-      tags,
+      tags: fm.tag ? [fm.tag] : undefined,
       hero: fm.hero,
     };
   });
 
-  const serialized = serializeValue(entries);
   return [
-    `// Auto-generated by content compiler. Do not edit directly.`,
+    "// Auto-generated by content compiler. Do not edit directly.",
     `import type { ContentIndexEntry } from "@/types/content";`,
-    ``,
-    `const data: ContentIndexEntry[] = ${serialized};`,
-    ``,
-    `export default data;`,
-    ``,
+    "",
+    `const data: ContentIndexEntry[] = ${escapeValue(entries)};`,
+    "",
+    "export default data;",
+    "",
   ].join("\n");
 }
 
-function generateRelationshipGraph(graph) {
-  const serialized = serializeValue(graph);
+function generateRelationshipGraph(units) {
+  const graph = {};
+  for (const unit of units) {
+    graph[`${unit.type}/${unit.slug}`] = { ...unit.relationships };
+  }
+
   return [
-    `// Auto-generated by content compiler. Do not edit directly.`,
+    "// Auto-generated by content compiler. Do not edit directly.",
     `import type { RelationshipGraph } from "@/types/content";`,
-    ``,
-    `const data: RelationshipGraph = ${serialized};`,
-    ``,
-    `export default data;`,
-    ``,
+    "",
+    `const data: RelationshipGraph = ${escapeValue(graph)};`,
+    "",
+    "export default data;",
+    "",
   ].join("\n");
 }
 
-function generateSearchIndex(allUnits) {
-  const entries = allUnits.map((u) => {
+function generateSearchIndex(units) {
+  const entries = units.map((u) => {
     const fm = u.frontmatter;
-    const tags = fm.tag ? [fm.tag] : undefined;
     const allBodyText = u.blocks
-      .map((b) => {
-        const texts = [];
-        for (const val of Object.values(b)) {
-          if (typeof val === "string") texts.push(val);
-        }
-        return texts.join(" ");
-      })
+      .map((b) => Object.values(b).filter((v) => typeof v === "string").join(" "))
       .join(" ")
       .slice(0, 3000);
     return {
       type: u.type,
       slug: u.slug,
       title: fm.title || fm.name || fm.term || u.slug,
-      dek: fm.dek || fm.definition || fm.tagline,
-      tags,
+      dek: fm.dek || fm.tagline || fm.definition,
+      tags: fm.tag ? [fm.tag] : undefined,
       body: allBodyText,
     };
   });
 
-  const serialized = serializeValue(entries);
   return [
-    `// Auto-generated by content compiler. Do not edit directly.`,
+    "// Auto-generated by content compiler. Do not edit directly.",
     `import type { SearchIndexEntry } from "@/types/content";`,
-    ``,
-    `const data: SearchIndexEntry[] = ${serialized};`,
-    ``,
-    `export default data;`,
-    ``,
+    "",
+    `const data: SearchIndexEntry[] = ${escapeValue(entries)};`,
+    "",
+    "export default data;",
+    "",
   ].join("\n");
 }
 
 function writeOutput(filename, content) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  const filePath = path.join(OUTPUT_DIR, filename);
-  fs.writeFileSync(filePath, content, "utf-8");
+  fs.writeFileSync(path.join(OUTPUT_DIR, filename), content, "utf-8");
 }
 
-function pluralizeTypeDir(dir) {
-  const map = {
-    "weaver-portrait": "weaver-portraits",
-    "craft-note": "craft-notes",
-    "field-note": "field-notes",
-    "house-letter": "house-letters",
-    "ritual-guide": "ritual-guides",
-  };
-  return map[dir] || `${dir}s`;
+function copyHeroImage(contentDir, frontmatter, unitType, unitSlug) {
+  if (!frontmatter.hero) return false;
+  const srcPath = path.resolve(contentDir, frontmatter.hero);
+  if (!fileExists(srcPath)) {
+    report(WARNING, `${unitType}/${unitSlug}`, `Hero image not found: '${frontmatter.hero}'`);
+    return false;
+  }
+  const destDir = path.join(ROOT, "public", "content", unitType, unitSlug);
+  const destPath = path.join(destDir, "hero.jpg");
+  fs.mkdirSync(destDir, { recursive: true });
+  fs.copyFileSync(srcPath, destPath);
+  return true;
 }
 
-async function main() {
+function checkDuplicateSlugs(units) {
+  const seen = new Map();
+  for (const unit of units) {
+    const key = `${unit.type}:${unit.slug}`;
+    if (seen.has(key)) {
+      report(ERROR, unit.id, `Duplicate slug '${unit.slug}' in type '${unit.type}' (also at ${seen.get(key)})`);
+    }
+    seen.set(key, unit.id);
+  }
+}
+
+function main() {
   const startTime = Date.now();
-  const manifest = loadManifest();
-  const newManifest = {};
-  let changedCount = 0;
-  let unchangedCount = 0;
-  const allErrors = [];
-  const allWarnings = [];
-  const allUnits = [];
-  const typeGroups = {};
 
   console.log("HOP Content Compiler");
   console.log("━".repeat(50));
 
-  const discovered = discoverContent();
-  if (discovered.length === 0) {
-    console.log("No content units found.");
-  }
+  const units = discoverUnits();
 
-  for (const unit of discovered) {
+  for (const unit of units) {
     const unitId = `${unit.type}/${unit.slug}`;
-    const currentHash = fileHash(unit.indexPath);
-    newManifest[unit.indexPath] = currentHash;
+    unit.id = unitId;
 
-    const isChanged = manifest[unit.indexPath] !== currentHash;
-
-    if (!isChanged && manifest[unit.indexPath]) {
-      unchangedCount++;
-      const cachedManifestPath = path.join(OUTPUT_DIR, `${unit.typeDir}.ts`);
-      if (fs.existsSync(cachedManifestPath)) {
-        continue;
-      }
-    }
-
-    changedCount++;
-    let frontmatter, blocks;
-    try {
-      ({ frontmatter, blocks } = parseContent(unit.indexPath));
-    } catch (err) {
-      allErrors.push({ unit: unitId, message: `Parse error: ${err.message}` });
+    const parsed = parseContent(unit.indexPath);
+    if (parsed.error) {
+      report(ERROR, unitId, parsed.error);
       continue;
     }
 
-    if (!frontmatter || typeof frontmatter !== "object") {
-      allErrors.push({ unit: unitId, message: "Frontmatter is empty or invalid" });
-      continue;
-    }
+    unit.frontmatter = parsed.frontmatter;
+    unit.blocks = parsed.blocks;
 
     const schema = readSchema(unit.type);
     if (schema) {
-      const { errors: valErrors, warnings: valWarnings } = validateFrontmatter(frontmatter, schema, unit.indexPath);
-      for (const e of valErrors) allErrors.push({ unit: unitId, message: `Validation error: ${e}` });
-      for (const w of valWarnings) allWarnings.push({ unit: unitId, message: `Validation warning: ${w}` });
+      validateFrontmatter(unit.frontmatter, schema, unitId);
     }
 
-    const { errors: imgErrors, warnings: imgWarnings } = validateImages(unit.dir, frontmatter, unitId);
-    allErrors.push(...imgErrors);
-    allWarnings.push(...imgWarnings);
-
-    const { errors: blkErrors, warnings: blkWarnings } = validateBlockImages(unit.dir, blocks, unitId);
-    allErrors.push(...blkErrors);
-    allWarnings.push(...blkWarnings);
-
-    const readingTime = calculateReadingTime(frontmatter, blocks);
-
-    allUnits.push({
-      ...unit,
-      id: unitId,
-      frontmatter,
-      blocks,
-      readingTime,
-      relationships: null,
-    });
+    validateBlocks(unit.blocks, unit.dir, unitId);
   }
 
-  for (const unit of allUnits) {
-    const { result: relationships, errors: refErrors, warnings: refWarnings } = resolveContentReferences(unit, allUnits);
-    unit.relationships = relationships;
-    allErrors.push(...refErrors);
-    allWarnings.push(...refWarnings);
+  checkDuplicateSlugs(units);
+
+  const validUnits = units.filter((u) => u.frontmatter && u.blocks);
+
+  for (const unit of validUnits) {
+    unit.relationships = resolveReferences(unit, validUnits);
   }
 
-  const slugMap = new Map();
-  for (const unit of allUnits) {
-    const key = `${unit.type}:${unit.slug}`;
-    if (slugMap.has(key)) {
-      allErrors.push({
-        unit: unit.id,
-        message: `Duplicate slug '${unit.slug}' in type '${unit.type}' (also found at ${slugMap.get(key)})`,
-      });
-    }
-    slugMap.set(key, unit.id);
-  }
-
-  for (const unit of allUnits) {
-    const typeDir = unit.typeDir;
-    if (!typeGroups[typeDir]) typeGroups[typeDir] = [];
-    typeGroups[typeDir].push(unit);
+  const typeGroups = {};
+  for (const ct of CONTENT_TYPES) {
+    typeGroups[ct.dir] = validUnits.filter((u) => u.typeDir === ct.dir);
   }
 
   for (const ct of CONTENT_TYPES) {
-    const units = typeGroups[ct.dir] || [];
-    const tsContent = generateTypeScriptFile(units, ct.importType, ct.importType);
-    writeOutput(`${ct.dir}.ts`, tsContent);
+    const group = typeGroups[ct.dir] || [];
+    const content = generateTypeFile(group, ct.importType);
+    writeOutput(`${ct.dir}.ts`, content);
   }
 
-  const contentIndexContent = generateContentIndex(allUnits);
-  writeOutput("content-index.ts", contentIndexContent);
+  writeOutput("content-index.ts", generateContentIndex(validUnits));
+  writeOutput("relationship-graph.ts", generateRelationshipGraph(validUnits));
+  writeOutput("search-index.ts", generateSearchIndex(validUnits));
 
-  const graph = buildRelationshipGraph(allUnits);
-  const graphContent = generateRelationshipGraph(graph);
-  writeOutput("relationship-graph.ts", graphContent);
-
-  const searchContent = generateSearchIndex(allUnits);
-  writeOutput("search-index.ts", searchContent);
-
-  let copiedImages = 0;
-  let failedImages = 0;
-  for (const unit of allUnits) {
+  let copied = 0;
+  for (const unit of validUnits) {
     try {
-      const copied = copyHeroImage(unit.dir, unit.frontmatter, unit.type, unit.slug);
-      if (copied) copiedImages++;
-    } catch (err) {
-      failedImages++;
-      allErrors.push({ unit: unit.id, message: `Failed to copy hero image: ${err.message}` });
+      if (copyHeroImage(unit.dir, unit.frontmatter, unit.type, unit.slug)) copied++;
+    } catch (e) {
+      report(WARNING, unit.id, `Failed to copy hero image: ${e.message}`);
     }
   }
 
   const elapsed = Date.now() - startTime;
   console.log(`\nResults:`);
-  console.log(`  Files parsed:     ${discovered.length}`);
-  if (changedCount > 0) {
-    console.log(`  Compiled:         ${changedCount}`);
-  }
-  if (unchangedCount > 0) {
-    console.log(`  Unchanged (cached): ${unchangedCount}`);
-  }
-  console.log(`  Errors:           ${allErrors.length}`);
-  console.log(`  Warnings:         ${allWarnings.length}`);
-  console.log(`  Images copied:    ${copiedImages}`);
-  if (failedImages > 0) {
-    console.log(`  Image copy failures: ${failedImages}`);
-  }
+  console.log(`  Content units:    ${validUnits.length}`);
+  console.log(`  Errors:           ${errors.length}`);
+  console.log(`  Warnings:         ${warnings.length}`);
+  console.log(`  Images copied:    ${copied}`);
   console.log(`  Duration:         ${elapsed}ms`);
 
-  if (allErrors.length > 0) {
+  if (errors.length > 0) {
     console.log(`\nErrors:`);
-    for (const err of allErrors) {
-      console.log(`  ✖ ${err.unit}: ${err.message}`);
+    for (const e of errors) {
+      console.log(`  ✖ ${e.unit}: ${e.message}`);
     }
   }
 
-  if (allWarnings.length > 0) {
+  if (warnings.length > 0) {
     console.log(`\nWarnings:`);
-    for (const w of allWarnings) {
+    for (const w of warnings) {
       console.log(`  ⚠ ${w.unit}: ${w.message}`);
     }
   }
 
-  if (allErrors.length > 0) {
-    console.log(`\n❌ Build failed with ${allErrors.length} error(s).`);
+  if (errors.length > 0) {
+    console.log(`\n❌ Build failed with ${errors.length} error(s).`);
     process.exit(1);
   }
 
-  saveManifest(newManifest);
-
-  if (allWarnings.length > 0) {
-    console.log(`\n⚠ Build succeeded with ${allWarnings.length} warning(s).`);
+  if (warnings.length > 0) {
+    console.log(`\n⚠ Build succeeded with ${warnings.length} warning(s).`);
   } else {
     console.log(`\n✅ Build succeeded.`);
   }
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
-  process.exit(1);
-});
+main();

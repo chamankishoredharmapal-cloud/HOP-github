@@ -51,4 +51,5 @@ Thumbs.db
 supabase/.temp/
 
 # Generated content index files
-src/data/__generated__/
+src/data/__generated__/*
+!src/data/__generated__/.gitkeep
