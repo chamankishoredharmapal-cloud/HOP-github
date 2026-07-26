@@ -6,7 +6,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/contexts/CartContext";
 import { createRazorpayOrder } from "@/services/paymentService";
@@ -29,11 +29,6 @@ interface FormErrors {
   [key: string]: string;
 }
 
-const SHIPPING_OPTIONS = [
-  { value: "standard", label: "Standard", detail: "3–5 business days", cost: 0 },
-  { value: "express", label: "Express", detail: "1–2 business days", cost: 800 },
-  { value: "overnight", label: "Overnight", detail: "Next business day", cost: 2400 },
-];
 
 function validate(form: FormData): FormErrors {
   const errors: FormErrors = {};
@@ -69,7 +64,7 @@ function formatPhone(phone: string): string {
 export default function Checkout() {
   useMetadata({
     title: "Checkout — House of Padmavati",
-    description: "Complete your order at House of Padmavati.",
+    description: "Checkout.",
     noIndex: true,
   });
   const { items, totalPrice, clearCart } = useCart();
@@ -78,7 +73,6 @@ export default function Checkout() {
   const { state: paymentState, startPayment, reset: resetPayment } = usePayment();
   const [form, setForm] = useState<FormData>(EMPTY_FORM);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [shippingOption, setShippingOption] = useState("standard");
   const [submitted, setSubmitted] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderId, setOrderId] = useState("");
@@ -89,8 +83,9 @@ export default function Checkout() {
   const [error, setError] = useState<string | null>(null);
   const [inventoryErrors, setInventoryErrors] = useState<string[]>([]);
   const validatedRef = useRef(false);
+  const [returnPolicyAccepted, setReturnPolicyAccepted] = useState(false);
 
-  const shippingCost = SHIPPING_OPTIONS.find((o) => o.value === shippingOption)?.cost ?? 0;
+  const shippingCost = totalPrice >= 2499 ? 0 : 99;
   const totalRupees = totalPrice + shippingCost;
 
   const handleChange = (field: keyof FormData, value: string) => {
@@ -116,7 +111,7 @@ export default function Checkout() {
     }
 
     if (!validatedRef.current) {
-      const check = await validateCheckout(items, shippingOption);
+      const check = await validateCheckout(items, "standard");
       if (!check.valid) {
         setInventoryErrors(check.errors);
         setError("Please fix the issues below before proceeding.");
@@ -142,7 +137,7 @@ export default function Checkout() {
           shipping_state: "",
           shipping_postal_code: form.postalCode,
           shipping_country: form.country,
-          shipping_option: shippingOption,
+          shipping_option: "standard",
           notes: isGift ? `Gift for ${giftRecipient}: ${giftMessage}`.replace(/: $/, "") : undefined,
           items: items.map((item) => ({
             product_id: item.productId,
@@ -185,7 +180,7 @@ export default function Checkout() {
         payment_creation_failed: "We couldn't initiate payment. Please try again.",
         internal_error: "Something went wrong on our end. Please try again.",
       };
-      setError(errorMessages[code] ?? (msg || "Something went wrong, but your bag is safe. Please try again."));
+      setError(errorMessages[code] ?? (msg || "An error occurred. Please try again."));
       setIsProcessing(false);
     }
   };
@@ -212,12 +207,9 @@ export default function Checkout() {
         <main className="container pt-28 pb-24">
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <ShoppingBag className="h-16 w-16 text-ink-soft/30 mb-6" />
-            <h1 className="font-serif text-3xl text-ink mb-3">Your bag is empty</h1>
-            <p className="text-ink-soft font-light mb-8 max-w-xs">
-              Add something beautiful to begin.
-            </p>
+            <h1 className="font-serif text-3xl text-ink mb-6">Your bag is empty.</h1>
             <Button asChild>
-              <Link to="/collections">Explore Collections</Link>
+              <Link to="/collections">View collections</Link>
             </Button>
           </div>
         </main>
@@ -241,7 +233,7 @@ export default function Checkout() {
           Return to bag
         </Link>
 
-        <h1 className="font-serif text-3xl md:text-4xl text-ink mb-12">Checkout</h1>
+        <h1 className="font-serif text-3xl md:text-4xl text-ink mb-12">Checkout.</h1>
 
         <form onSubmit={handleSubmit} className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           <div className="lg:col-span-3 space-y-10">
@@ -384,35 +376,6 @@ export default function Checkout() {
 
             <section>
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
-                Delivery method
-              </h2>
-              <RadioGroup value={shippingOption} onValueChange={setShippingOption} className="space-y-3 max-w-md">
-                {SHIPPING_OPTIONS.map((opt) => (
-                  <label
-                    key={opt.value}
-                    className={`flex items-center justify-between p-4 border cursor-pointer transition-colors ${
-                      shippingOption === opt.value
-                        ? "border-teal-deep bg-teal-deep/[0.03]"
-                        : "border-border hover:border-ink-soft/30"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value={opt.value} id={opt.value} />
-                      <div>
-                        <p className="text-sm text-ink font-medium">{opt.label}</p>
-                        <p className="text-xs text-ink-soft font-light">{opt.detail}</p>
-                      </div>
-                    </div>
-                    <span className="text-sm text-ink font-light">
-                      {opt.cost === 0 ? "Free" : `₹ ${opt.cost.toLocaleString()}`}
-                    </span>
-                  </label>
-                ))}
-              </RadioGroup>
-            </section>
-
-            <section>
-              <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"
@@ -433,7 +396,7 @@ export default function Checkout() {
                       id="giftRecipient"
                       value={giftRecipient}
                       onChange={(e) => setGiftRecipient(e.target.value)}
-                      placeholder="Who is this for?"
+                      placeholder=""
                       className="mt-1.5 rounded-none"
                     />
                   </div>
@@ -445,12 +408,9 @@ export default function Checkout() {
                       id="giftMessage"
                       value={giftMessage}
                       onChange={(e) => setGiftMessage(e.target.value)}
-                      placeholder="A whisper to go with the weave..."
+                      placeholder=""
                       className="mt-1.5 rounded-md min-h-[100px]"
                     />
-                    <p className="text-[0.65rem] text-ink-soft/50 mt-1">
-                      Handwritten on our keepsake card.
-                    </p>
                   </div>
                 </div>
               )}
@@ -462,10 +422,7 @@ export default function Checkout() {
               </h2>
               <div className="max-w-md p-6 border border-border/60">
                 <p className="text-xs text-ink-soft/70 leading-relaxed">
-                  All transactions are processed securely through Razorpay.
-                  We accept Credit &amp; Debit Cards, UPI, Net Banking, and
-                  Wallets. You will choose your payment method in the secure
-                  checkout window after placing your order.
+                  Processed securely through Razorpay. We accept all major cards, UPI, net banking, and wallets.
                 </p>
                 <div className="mt-4 pt-4 border-t border-border/40">
                   <div className="flex items-center gap-2 text-xs text-ink-soft/70">
@@ -480,7 +437,7 @@ export default function Checkout() {
           <aside className="lg:col-span-2 lg:sticky lg:top-32 lg:self-start">
             <div className="border border-border/60 p-6 md:p-8">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-6">
-                Order summary
+                Summary
               </h2>
 
               <div className="space-y-5">
@@ -518,6 +475,7 @@ export default function Checkout() {
                     {shippingCost === 0 ? "Free" : `₹ ${shippingCost.toLocaleString()}`}
                   </span>
                 </div>
+                <p className="text-xs text-ink-soft/50 font-light text-right">Estimated delivery: 3–5 business days</p>
                 <div className="flex justify-between text-base border-t border-border/60 pt-2 mt-2">
                   <span className="text-ink font-medium">Total</span>
                   <span className="font-serif text-xl text-ink">₹ {totalRupees.toLocaleString()}</span>
@@ -564,6 +522,21 @@ export default function Checkout() {
                 </div>
               )}
 
+              <div className="mt-6">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={returnPolicyAccepted}
+                    onChange={(e) => setReturnPolicyAccepted(e.target.checked)}
+                    required
+                    className="mt-0.5 w-4 h-4 rounded border-border accent-teal-deep shrink-0"
+                  />
+                  <span className="text-xs text-ink-soft font-light leading-relaxed">
+                    I acknowledge and accept the{" "}
+                    <Link to="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Return & Replacement Policy</Link>.
+                  </span>
+                </label>
+              </div>
               <Button
                 type="submit"
                 disabled={isProcessing || isPaymentProcessing}

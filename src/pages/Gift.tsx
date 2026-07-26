@@ -30,12 +30,10 @@ export default function Gift() {
             Modern Heirlooms
           </p>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance leading-tight max-w-3xl mx-auto">
-            A gift that carries <em className="text-teal">the weight of intention.</em>
+            Gifting.
           </h1>
           <p className="mt-6 max-w-xl mx-auto text-sm sm:text-base text-ink-soft font-light leading-relaxed">
-            Every Padmavati gift is hand-wrapped in jasmine paper, tied with cotton ribbon,
-            and accompanied by a handwritten keepsake card. No marketing. No clutter.
-            Only your words and the cloth.
+            Every Padmavati gift is hand-wrapped in jasmine paper and accompanied by a handwritten card.
           </p>
         </section>
 
@@ -82,7 +80,7 @@ export default function Gift() {
               </div>
 
               <div className="border-t border-border pt-8">
-                <h2 className="font-serif text-2xl text-ink mb-4">Begin a gift order</h2>
+                <h2 className="font-serif text-2xl text-ink mb-4">Gift order</h2>
                 {submitted ? (
                   <div className="bg-teal-deep/5 border border-teal-deep/20 rounded-lg p-6 text-center">
                     <Heart className="w-8 h-8 text-teal-deep mx-auto mb-3" />
@@ -93,7 +91,7 @@ export default function Gift() {
                     </p>
                     <Button asChild className="mt-4 rounded-full bg-teal-deep text-jasmine hover:bg-teal">
                       <Link to="/collections">
-                        Browse sarees <ArrowRight className="h-4 w-4 ml-1" />
+                        View collections <ArrowRight className="h-4 w-4 ml-1" />
                       </Link>
                     </Button>
                   </div>
@@ -113,13 +111,13 @@ export default function Gift() {
                     </div>
                     <div>
                       <label htmlFor="gift-message" className="text-sm text-ink-soft font-light">
-                        Your message
+                        Message
                       </label>
                       <Textarea
                         id="gift-message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder="A whisper to go with the weave..."
+                        placeholder="Your message"
                         className="mt-1.5 rounded-md min-h-[120px]"
                       />
                       <p className="text-[0.65rem] text-ink-soft/50 mt-1">
@@ -133,8 +131,7 @@ export default function Gift() {
                       Save gift note
                     </Button>
                     <p className="text-xs text-ink-soft/60 mt-2">
-                      Your note will be stored for this session. When you checkout, simply
-                      check "This is a gift" and your note will be included.
+                      Your note will be saved for this session and applied at checkout.
                     </p>
                   </form>
                 )}
@@ -146,7 +143,7 @@ export default function Gift() {
                 <div className="text-center">
                   <Heart className="w-16 h-16 text-teal-deep/30 mx-auto mb-6" />
                   <p className="font-serif italic text-2xl text-ink-soft/60 leading-snug max-w-xs mx-auto">
-                    "A gift is not a thing, but a carrying of the self into another's life."
+
                   </p>
                 </div>
               </div>
@@ -157,7 +154,7 @@ export default function Gift() {
         <section className="bg-sand/30">
           <div className="container py-20 text-center">
             <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">
-              Need help choosing?
+              Need assistance?
             </h2>
             <p className="text-ink-soft font-light max-w-md mx-auto mb-8">
               Our gift concierge can help you select the perfect saree. Write to us at
@@ -165,7 +162,7 @@ export default function Gift() {
             </p>
             <Button asChild variant="outline" className="rounded-full">
               <Link to="/customer-care">
-                Contact concierge <ArrowRight className="h-4 w-4 ml-1" />
+                Contact us <ArrowRight className="h-4 w-4 ml-1" />
               </Link>
             </Button>
           </div>

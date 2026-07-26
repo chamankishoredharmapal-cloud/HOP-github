@@ -21,6 +21,7 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   if (authLoading) return null;
   if (user) return <Navigate to="/account" replace />;
@@ -42,14 +43,22 @@ export default function Signup() {
   if (success) {
     return (
       <PageLayout>
-        <div className="container max-w-md py-16 md:py-24 text-center">
-          <h1 className="font-serif text-2xl md:text-3xl text-ink mb-4">Check your email</h1>
-          <p className="text-sm text-ink-soft mb-8">
-            We have sent a verification link to <strong>{email}</strong>. Please check your inbox and verify your email to complete signup.
-          </p>
-          <Button variant="outline" asChild>
-            <Link to="/account/login">Back to sign in</Link>
-          </Button>
+        <div className="container max-w-lg py-20 md:py-32">
+          <div className="mx-auto max-w-sm text-center">
+            <div className="mb-6 flex justify-center">
+              <div className="h-px w-16 bg-teal/40" />
+            </div>
+            <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
+              Check your email
+            </h1>
+            <p className="mt-4 text-sm text-ink-soft leading-relaxed">
+              We have sent a verification link to <strong className="text-ink">{email}</strong>.
+              Please check your inbox and verify your email to complete signup.
+            </p>
+            <Button variant="outline" asChild className="mt-8 h-12 border-ink/10 px-8 text-sm tracking-wider uppercase transition-all duration-300 hover:bg-ink/5">
+              <Link to="/account/login">Back to sign in</Link>
+            </Button>
+          </div>
         </div>
       </PageLayout>
     );
@@ -57,64 +66,117 @@ export default function Signup() {
 
   return (
     <PageLayout>
-      <div className="container max-w-md py-16 md:py-24">
-        <h1 className="font-serif text-2xl md:text-3xl text-ink mb-2">Create account</h1>
-        <p className="text-sm text-ink-soft mb-8">Join House of Padmavati</p>
+      <div className="container max-w-lg py-20 md:py-32">
+        <div className="mx-auto max-w-sm">
+          <div className="mb-10 text-center">
+            <div className="mb-4 flex justify-center">
+              <div className="h-px w-16 bg-teal/40" />
+            </div>
+            <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
+              Create account
+            </h1>
 
-        {error && (
-          <Alert variant="destructive" className="mb-6">
-            <AlertDescription className="text-sm">{error}</AlertDescription>
-          </Alert>
-        )}
+          </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="space-y-2">
-            <Label htmlFor="fullName">Full name</Label>
-            <Input
-              id="fullName"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-              autoComplete="name"
-              placeholder="Your full name"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-              placeholder="you@example.com"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete="new-password"
-              placeholder="At least 8 characters"
-              minLength={8}
-            />
-          </div>
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Creating account…" : "Create account"}
-          </Button>
-        </form>
+          {error && (
+            <Alert variant="destructive" className="mb-8">
+              <AlertDescription className="text-sm">{error}</AlertDescription>
+            </Alert>
+          )}
 
-        <p className="mt-6 text-center text-sm text-ink-soft">
-          Already have an account?{" "}
-          <Link to="/account/login" className="text-teal-deep hover:underline">
-            Sign in
-          </Link>
-        </p>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="fullName" className="text-xs font-medium text-ink tracking-wider uppercase">
+                Full name
+              </Label>
+              <Input
+                id="fullName"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                autoComplete="name"
+                placeholder="Your full name"
+                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-xs font-medium text-ink tracking-wider uppercase">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete="email"
+                placeholder="you@example.com"
+                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-xs font-medium text-ink tracking-wider uppercase">
+                Password
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="new-password"
+                placeholder="At least 8 characters"
+                minLength={8}
+                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  required
+                  className="mt-0.5 w-4 h-4 rounded border-border accent-teal-deep shrink-0"
+                />
+                <span className="text-xs text-ink-soft font-light leading-relaxed">
+                  I agree to the{" "}
+                  <Link to="/terms" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Terms & Conditions</Link>,{" "}
+                  <Link to="/privacy-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Privacy Policy</Link>,{" "}
+                  <Link to="/shipping-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Shipping Policy</Link>, and{" "}
+                  <Link to="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Returns & Refund Policy</Link>.
+                </span>
+              </label>
+            </div>
+            <Button
+              type="submit"
+              className="h-12 w-full bg-teal-deep text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-teal"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <span className="inline-block h-3 w-3 animate-spin rounded-full border border-jasmine border-t-transparent" />
+                  Creating account…
+                </span>
+              ) : (
+                "Create account"
+              )}
+            </Button>
+          </form>
+
+          <div className="mt-10 flex items-center gap-4">
+            <div className="h-px flex-1 bg-ink/5" />
+            <span className="text-xs text-ink-soft/50">or</span>
+            <div className="h-px flex-1 bg-ink/5" />
+          </div>
+
+          <p className="mt-6 text-center text-sm text-ink-soft">
+            Already have an account?{" "}
+            <Link to="/account/login" className="font-medium text-teal-deep transition-colors hover:text-teal">
+              Sign in
+            </Link>
+          </p>
+        </div>
       </div>
     </PageLayout>
   );

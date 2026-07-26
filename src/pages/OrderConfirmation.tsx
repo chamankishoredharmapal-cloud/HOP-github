@@ -164,7 +164,7 @@ export default function OrderConfirmation() {
 
           <div className="text-center mt-10">
             <Button asChild variant="outline">
-              <Link to="/collections">Continue browsing</Link>
+              <Link to="/collections">Return to collections</Link>
             </Button>
           </div>
         </div>

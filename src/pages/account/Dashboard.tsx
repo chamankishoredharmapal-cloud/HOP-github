@@ -51,7 +51,7 @@ export default function Dashboard() {
     <div className="space-y-8">
       <div>
         <h2 className="font-serif text-xl md:text-2xl text-ink mb-1">
-          Hello, {user?.user_metadata?.full_name || "there"}
+          Hello, {user?.user_metadata?.full_name || "there"}.
         </h2>
         <p className="text-sm text-ink-soft">{user?.email}</p>
       </div>
@@ -113,7 +113,7 @@ export default function Dashboard() {
         </div>
       ) : activeOrders.length > 0 ? (
         <section>
-          <h3 className="font-serif text-lg text-ink mb-3">Active orders</h3>
+          <h3 className="font-serif text-lg text-ink mb-3">Active orders.</h3>
           <div className="space-y-3">
             {activeOrders.slice(0, 3).map((order) => (
               <Link

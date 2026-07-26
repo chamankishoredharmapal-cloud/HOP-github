@@ -7,10 +7,14 @@ import AboutSidebar from "../../components/about/AboutSidebar";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../components/ui/accordion";
 import { submitContactForm } from "@/services/contactService";
+import { useMetadata } from "@/hooks/useMetadata";
 
 const SareeCare = () => {
+  useMetadata({
+    title: "Customer Care · House of Padmavati",
+    description: "Customer care and correspondence.",
+  });
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -64,54 +68,20 @@ const SareeCare = () => {
 
         <main className="w-full lg:w-[70vw] lg:ml-auto px-6">
           <PageHeader
-            title="Saree Care"
-            subtitle="On living with a Padmavati — questions, answered slowly."
+            title="Customer Care."
+            subtitle="We are here to assist you."
           />
 
-          <ContentSection title="Quiet correspondence">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="space-y-3">
-                <h3 className="font-serif text-xl text-ink">Whisper</h3>
-                <p className="text-ink-soft font-light">care@houseofpadmavati.com</p>
-                <p className="text-sm text-ink-soft/70">A reply within two days, never automated.</p>
-              </div>
-              <div className="space-y-3">
-                <h3 className="font-serif text-xl text-ink">WhatsApp</h3>
-                <p className="text-ink-soft font-light">+91 99999 99999</p>
-                <p className="text-sm text-ink-soft/70">Mon–Sat, 10 am to 6 pm IST.</p>
-              </div>
-              <div className="space-y-3">
-                <h3 className="font-serif text-xl text-ink">Atelier visit</h3>
-                <Button variant="outline" className="rounded-full">Request appointment</Button>
-                <p className="text-sm text-ink-soft/70">Pondicherry, by appointment only.</p>
-              </div>
-            </div>
-          </ContentSection>
-
-          <ContentSection title="Frequently, gently asked">
-            <Accordion type="single" collapsible className="space-y-3">
-              {[
-                { k: "ship", q: "How is my saree wrapped and shipped?", a: "Every Padmavati saree is folded in muslin, wrapped in jasmine paper, and tucked into a hand-finished box. Worldwide shipping is fully insured." },
-                { k: "ret", q: "Do you accept returns?", a: "Yes — within 14 days of delivery, in unworn condition. Custom blouses and bridal pieces are final sale." },
-                { k: "care", q: "How should I care for my saree?", a: "Dry clean only with a trusted, gentle dry-cleaner. Store folded in muslin, refolded each season to prevent crease wear. Air the pallu rather than ironing it." },
-                { k: "alter", q: "Can my blouse be tailored?", a: "Yes — first-fit blouse tailoring is included with every saree. Send us your measurements after purchase." },
-                { k: "loom", q: "Where is each saree woven?", a: "Each saree carries a small card naming the weaver, the loom, and the month it was finished." },
-              ].map((f) => (
-                <AccordionItem key={f.k} value={f.k} className="border border-border rounded-md px-6">
-                  <AccordionTrigger className="text-left hover:no-underline font-serif text-lg text-ink">{f.q}</AccordionTrigger>
-                  <AccordionContent className="text-ink-soft font-light">{f.a}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </ContentSection>
-
-          <ContentSection title="Write to the house">
+          <ContentSection title="Write to the House">
+            <p className="text-ink-soft font-light mb-8 max-w-md">
+              We welcome your thoughts and questions. Please leave a message below, and we will respond with care.
+            </p>
             {success ? (
               <div className="max-w-2xl p-8 border border-teal-deep/20 rounded-lg bg-teal-deep/5 text-center">
                 <CheckCircle className="h-12 w-12 text-teal-deep mx-auto mb-4" />
-                <p className="font-serif text-xl text-ink mb-2">Your whisper has been received.</p>
+                <p className="font-serif text-xl text-ink mb-2">Thank you for writing to us.</p>
                 <p className="text-sm text-ink-soft font-light">
-                  We reply within two days, never automated. A quiet answer for a quiet question.
+                  We have received your message and will reply within two business days.
                 </p>
               </div>
             ) : (
@@ -168,7 +138,7 @@ const SareeCare = () => {
                     onChange={(e) => setMessage(e.target.value)}
                     onBlur={() => handleBlur("message")}
                     className="rounded-md min-h-[140px]"
-                    placeholder="A note from you"
+                    placeholder="How may we help you."
                     aria-label="Message"
                     aria-invalid={!!errors.message}
                   />
@@ -195,7 +165,7 @@ const SareeCare = () => {
                   ) : (
                     <span className="flex items-center gap-2">
                       <Send className="h-3.5 w-3.5" />
-                      Send a whisper
+                      Send message
                     </span>
                   )}
                 </Button>

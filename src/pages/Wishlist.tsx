@@ -10,7 +10,7 @@ import { useMetadata } from "@/hooks/useMetadata";
 export default function Wishlist() {
   useMetadata({
     title: "Wishlist — House of Padmavati",
-    description: "Your saved sarees and favourite weaves.",
+    description: "Your saved items.",
   });
   const { items, removeItem, clearWishlist } = useWishlist();
   const { addItem } = useCart();
@@ -21,13 +21,10 @@ export default function Wishlist() {
         <main className="container pt-28 pb-24">
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <Heart className="h-16 w-16 text-ink-soft/30 mb-6" />
-            <h1 className="font-serif text-3xl text-ink mb-3">Your wishlist is empty</h1>
-            <p className="text-ink-soft font-light mb-8 max-w-xs">
-              Save your favourite sarees and find them here.
-            </p>
+            <h1 className="font-serif text-3xl text-ink mb-6">Your wishlist is empty.</h1>
             <Button asChild>
               <Link to="/collections">
-                Explore Collections <ArrowRight className="h-4 w-4" />
+                View collections <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -56,7 +53,7 @@ export default function Wishlist() {
     <PageLayout>
       <main className="container pt-28 pb-24">
         <div className="flex items-center justify-between mb-10">
-          <h1 className="font-serif text-3xl md:text-4xl text-ink">Wishlist</h1>
+          <h1 className="font-serif text-3xl md:text-4xl text-ink">Wishlist.</h1>
           <button
             onClick={clearWishlist}
             className="text-xs tracking-[0.2em] uppercase text-ink-soft hover:text-teal transition-colors"

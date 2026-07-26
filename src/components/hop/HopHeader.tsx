@@ -64,7 +64,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
           overlay ? "bg-ink/30 text-jasmine" : "bg-teal-deep text-jasmine"
         }`}
       >
-        A house, not a shop · Every saree carries a story
+        A digital fashion house for Indian sarees
       </div>
 
       <div className="container flex items-center justify-between h-20 md:h-24 lg:h-28 gap-4 md:gap-6">

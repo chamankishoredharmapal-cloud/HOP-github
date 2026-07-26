@@ -108,7 +108,7 @@ export const MOCK_PRODUCTS = [
     collections: { slug: "viara", name: "Viara" },
   },
   {
-    id: "prod-sakura",
+    id: "77777777-8888-9999-0000-111111111111",
     name: "Sakura · Organza Drift",
     slug: "sakura-organza-drift",
     story: "An airy organza saree with hand-embroidered floral motifs.",
@@ -144,7 +144,7 @@ export const MOCK_IMAGES = [
   { id: "img-vi-1", product_id: "prod-viara-silk", url: "https://placehold.co/800x1000/pink/white?text=Viara+1", alt_text: null, sort_order: 0, is_primary: true },
   { id: "img-vi-2", product_id: "prod-viara-silk", url: "https://placehold.co/800x1000/jasmine/ink?text=Viara+2", alt_text: null, sort_order: 1, is_primary: false },
   { id: "img-vi-3", product_id: "prod-viara-silk", url: "https://placehold.co/800x1000/teal/jasmine?text=Viara+3", alt_text: null, sort_order: 2, is_primary: false },
-  { id: "img-sa-1", product_id: "prod-sakura", url: "https://placehold.co/800x1000/ivory/ink?text=Sakura+1", alt_text: null, sort_order: 0, is_primary: true },
+  { id: "img-sa-1", product_id: "77777777-8888-9999-0000-111111111111", url: "https://placehold.co/800x1000/ivory/ink?text=Sakura+1", alt_text: null, sort_order: 0, is_primary: true },
 ];
 
 function extractParam(url: URL, name: string): string | null {

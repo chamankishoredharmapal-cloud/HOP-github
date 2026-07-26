@@ -429,7 +429,7 @@ function escapeValue(val) {
   if (typeof val === "object") {
     const keys = Object.keys(val).filter((k) => val[k] !== undefined);
     if (keys.length === 0) return "{}";
-    const entries = keys.map((k) => `${k}: ${escapeValue(val[k])}`);
+    const entries = keys.map((k) => `"${k}": ${escapeValue(val[k])}`);
     return `{ ${entries.join(", ")} }`;
   }
   return JSON.stringify(val);

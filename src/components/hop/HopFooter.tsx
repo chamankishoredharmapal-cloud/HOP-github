@@ -17,7 +17,7 @@ const HopFooter = () => {
             </p>
           </div>
           <p className="text-sm font-light text-jasmine/70 leading-relaxed max-w-sm">
-            A quiet atelier of heritage and contemporary luxury sarees, hand-wrapped and shipped from India.
+            A digital fashion house for Indian sarees.
           </p>
           <form className="flex max-w-sm border-b border-jasmine/40 pb-2">
             <input
@@ -43,7 +43,9 @@ const HopFooter = () => {
           </FooterCol>
           <FooterCol title="The House">
             <FooterLink to="/about">Our Story</FooterLink>
+            <FooterLink to="/lookbook">Lookbook</FooterLink>
             <FooterLink to="/journal">Journal</FooterLink>
+            <FooterLink to="/appointments">Appointments</FooterLink>
             <FooterLink to="/customer-care">Contact</FooterLink>
           </FooterCol>
           <FooterCol title="Care">
@@ -64,8 +66,8 @@ const HopFooter = () => {
             <p>Fully insured · Discreet packaging · 14-day returns</p>
           </div>
           <div className="text-center">
-            <p className="text-jasmine/80 font-medium mb-1">Handcrafted with care</p>
-            <p>Each saree is hand-woven and one of one</p>
+            <p className="text-jasmine/80 font-medium mb-1">Distinct collections</p>
+            <p>Each saree is an expression of identity</p>
           </div>
           <div className="text-center md:text-right">
             <p className="text-jasmine/80 font-medium mb-1">Secure payments</p>
@@ -75,8 +77,10 @@ const HopFooter = () => {
       </div>
       <div className="border-t border-jasmine/15">
         <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs font-light text-jasmine/60">
-          <p>© {new Date().getFullYear()} House of Padmavati. Woven with care.</p>
+          <p>© {new Date().getFullYear()} House of Padmavati. Designed with intention.</p>
           <div className="flex gap-6">
+            <Link to="/shipping-policy" className="hover:text-jasmine transition-colors">Shipping</Link>
+            <Link to="/returns-policy" className="hover:text-jasmine transition-colors">Returns</Link>
             <Link to="/privacy-policy" className="hover:text-jasmine transition-colors">Privacy</Link>
             <Link to="/terms-of-service" className="hover:text-jasmine transition-colors">Terms</Link>
           </div>

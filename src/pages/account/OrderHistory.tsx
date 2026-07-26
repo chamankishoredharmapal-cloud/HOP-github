@@ -42,7 +42,7 @@ export default function OrderHistory() {
 
   return (
     <div>
-      <h2 className="font-serif text-xl text-ink mb-6">Order history</h2>
+      <h2 className="font-serif text-xl text-ink mb-6">Order history.</h2>
 
       {isLoading ? (
         <div className="space-y-3">
@@ -95,8 +95,7 @@ export default function OrderHistory() {
       ) : (
         <div className="text-center py-16 text-ink-soft">
           <Package className="w-10 h-10 mx-auto mb-4 opacity-30" />
-          <p className="text-sm mb-1">No orders yet</p>
-          <p className="text-xs">When you place an order, it will appear here.</p>
+          <p className="text-sm mb-1">No orders yet.</p>
         </div>
       )}
     </div>

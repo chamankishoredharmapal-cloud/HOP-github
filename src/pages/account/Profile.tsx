@@ -111,12 +111,12 @@ export default function Profile() {
           <Label>Email</Label>
           <Input value={user?.email ?? ""} disabled className="text-ink-soft" />
           <p className="text-xs text-ink-soft">
-            Email cannot be changed. Contact support if needed.
+            Email cannot be changed.
           </p>
         </div>
         <Button type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-          {mutation.isPending ? "Saving…" : "Save changes"}
+          {mutation.isPending ? "Saving…" : "Save"}
         </Button>
       </form>
     </div>

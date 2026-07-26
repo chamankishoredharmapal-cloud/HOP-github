@@ -82,7 +82,7 @@ const Category = () => {
   const displayName = collection?.name ?? "The Atelier";
   const displayTagline = collection?.tagline ?? "All weaves · All seasons";
   const displayStory = collection?.editorial_story ?? "";
-  const displayNote = collection?.description ?? "Every saree currently in the house.";
+  const displayNote = collection?.description ?? `Every saree in the house — ${displayName}`;
   const editorial = displayStory || displayNote;
 
   const sortedProducts = useMemo(() => {
@@ -181,9 +181,6 @@ const Category = () => {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between border-b border-border pb-6 mt-10">
             <div>
               <p className="text-xs tracking-[0.42em] uppercase text-teal">{displayTagline}</p>
-              <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-ink mt-2 leading-tight">
-                {displayName}
-              </h1>
             </div>
             <span className="mt-2 sm:mt-0 text-sm text-ink-soft font-light whitespace-nowrap">
               {data ? `${data.products.length} sarees` : ""}
@@ -194,9 +191,6 @@ const Category = () => {
             <div className="max-w-2xl mt-12">
               <p className="text-base sm:text-lg text-ink-soft font-light leading-relaxed">
                 {editorial}
-              </p>
-              <p className="mt-8 text-xs tracking-[0.32em] uppercase text-ink-soft/50">
-                — A note from the house
               </p>
             </div>
           )}

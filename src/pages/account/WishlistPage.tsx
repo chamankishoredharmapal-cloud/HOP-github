@@ -45,15 +45,14 @@ export default function WishlistPage() {
     return (
       <div className="text-center py-16 text-ink-soft">
         <Heart className="w-10 h-10 mx-auto mb-4 opacity-30" />
-        <p className="text-sm mb-1">Your wishlist is empty</p>
-        <p className="text-xs">Save your favourite pieces here.</p>
+        <p className="text-sm mb-1">Your wishlist is empty.</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="font-serif text-xl text-ink mb-6">Wishlist</h2>
+      <h2 className="font-serif text-xl text-ink mb-6">Wishlist.</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {wishlistIds.map((productId) => (
           <div key={productId} className="group relative rounded-lg border border-border overflow-hidden">

@@ -138,7 +138,7 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
-        specifier: ^6.30.1
+        specifier: ^6.30.2
         version: 6.30.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       recharts:
         specifier: ^2.15.4
@@ -201,8 +201,11 @@ importers:
       globals:
         specifier: ^15.15.0
         version: 15.15.0
+      js-yaml:
+        specifier: ^5.2.2
+        version: 5.2.2
       postcss:
-        specifier: ^8.5.6
+        specifier: ^8.5.8
         version: 8.5.16
       tailwindcss:
         specifier: ^3.4.17
@@ -214,7 +217,7 @@ importers:
         specifier: ^8.38.0
         version: 8.62.1(eslint@9.39.4(jiti@1.21.7))(typescript@5.9.3)
       vite:
-        specifier: ^5.4.19
+        specifier: ^5.4.21
         version: 5.4.21(@types/node@22.20.0)
 
 packages:
@@ -1933,6 +1936,10 @@ packages:
 
   js-yaml@4.3.0:
     resolution: {integrity: sha512-1td788aAnnZ5qs7V2QIRl1owjtYpbKt749Y3xauqQgwIIGF/xXWz1wMTEBx5O3LK3lXLVuqXPdPxj2BoFHaW9Q==}
+    hasBin: true
+
+  js-yaml@5.2.2:
+    resolution: {integrity: sha512-dayzUzKkJ1MkuUtZglSebU43utNXH0OWQByK9rKOOuYIO8M5TV1y+n8ALMdG0rdzBnfNkOmZEqrURepb0ejqBw==}
     hasBin: true
 
   json-buffer@3.0.1:
@@ -4084,6 +4091,10 @@ snapshots:
   js-tokens@4.0.0: {}
 
   js-yaml@4.3.0:
+    dependencies:
+      argparse: 2.0.1
+
+  js-yaml@5.2.2:
     dependencies:
       argparse: 2.0.1
 

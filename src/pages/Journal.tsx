@@ -1,37 +1,36 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
+import { Film } from "@/components/hop/Film";
+import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { useMetadata } from "@/hooks/useMetadata";
 import { articles } from "@/data/journalArticles";
+import heroImg from "@/assets/hop-hero.jpg";
 
 const Journal = () => {
   useMetadata({
     title: "The Journal — House of Padmavati",
-    description: "Slow words on cloth and light. Field notes from the loom, the studio, and the quiet hours in between.",
+    description: "The House of Padmavati Journal.",
   });
 
   return (
     <PageLayout>
       <main>
         <section className="container pt-20 pb-12 text-center">
-          <p className="text-xs tracking-[0.42em] uppercase text-teal mb-4">The Journal</p>
           <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-balance leading-tight">
-            Slow words on cloth and light.
+            The Journal.
           </h1>
-          <p className="mt-6 max-w-xl mx-auto text-ink-soft font-light leading-relaxed">
-            Field notes from the loom, the studio, and the quiet hours in between.
-          </p>
         </section>
 
-        {/* Featured */}
-        <section className="container pb-24">
+        <section className="container pb-32">
           <Link to={`/journal/${articles[0].slug}`} className="group block">
             <div className="aspect-[16/9] overflow-hidden rounded-md bg-jasmine-deep">
-              <img
-                src={articles[0].img}
+              <Film
+                src={COLLECTION_VIDEOS.hero}
+                poster={heroImg}
                 alt={articles[0].title}
-                className="w-full h-full object-cover transition-transform duration-1400 ease-out group-hover:scale-[1.03]"
-                loading="lazy"
+                className="w-full h-full"
+                preload="metadata"
               />
             </div>
             <div className="mt-8 max-w-3xl">
@@ -40,34 +39,11 @@ const Journal = () => {
                 {articles[0].title}
               </h2>
               <p className="mt-4 text-ink-soft font-light text-lg">{articles[0].dek}</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-[0.65rem] tracking-[0.32em] uppercase text-teal-deep group-hover:text-teal transition-colors">
+                Read <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+              </span>
             </div>
           </Link>
-        </section>
-
-        {/* Grid */}
-        <section className="container pb-32">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
-            {articles.slice(1).map((a) => (
-              <Link key={a.slug} to={`/journal/${a.slug}`} className="group">
-                <div className="aspect-[5/4] overflow-hidden rounded-md bg-jasmine-deep">
-                  <img
-                    src={a.img}
-                    alt={a.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-1200 ease-out group-hover:scale-105"
-                  />
-                </div>
-                <p className="mt-5 text-[0.7rem] tracking-[0.32em] uppercase text-teal">{a.tag}</p>
-                <h3 className="mt-2 font-serif text-2xl text-ink leading-snug text-balance group-hover:text-teal transition-colors duration-500">
-                  {a.title}
-                </h3>
-                <p className="mt-2 text-sm text-ink-soft font-light">{a.dek}</p>
-                <span className="mt-3 inline-flex items-center gap-2 text-[0.65rem] tracking-[0.32em] uppercase text-teal-deep">
-                  Read <ArrowRight className="w-3 h-3" />
-                </span>
-              </Link>
-            ))}
-          </div>
         </section>
       </main>
     </PageLayout>

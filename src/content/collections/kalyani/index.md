@@ -3,7 +3,7 @@ type: collection
 name: "Kalyani"
 slug: kalyani
 status: published
-tagline: "Wedding Elegance · Heritage Luxury"
+tagline: "Wedding Silk · Heritage Weave"
 hero: ./hero.jpg
 filmPoster: ./film-poster.jpg
 mood: "Warm gold and deep teal, the light of late afternoon before a winter ceremony."
@@ -15,7 +15,7 @@ lookbook:
   - ./lookbook/03-environmental.jpg
 seo:
   title: "Kalyani Collection — House of Padmavati"
-  description: "Wedding Elegance · Heritage Luxury. The Kalyani collection belongs to winter weddings where the light fades by five."
+  description: "Wedding Silk · Heritage Weave. The Kalyani collection belongs to winter weddings where the light fades by five."
 relatedCraftNotes:
   - understanding-zari
 ---
@@ -53,7 +53,7 @@ width: full
 type: body
 ---
 
-Each Kalyani saree is woven in Mulberry silk with hand-spun zari. The weave takes twenty-one days. The border is woven first, then the body, then the pallu. Each section requires a separate setup on the loom. The weaver does not rush. The cloth does not allow it.
+Each Kalyani saree is woven in pure Mulberry silk with hand-spun zari. The weave takes twenty-one days on a traditional pit loom. The border is woven first, then the body, then the pallu. Each section requires a separate setup on the loom. The weaver must adjust the thread tension twice an hour — in summer it is tighter, in monsoon it relaxes. The loom tells you what it needs. The weaver does not rush. The cloth does not allow it.
 
 ---
 type: system-2

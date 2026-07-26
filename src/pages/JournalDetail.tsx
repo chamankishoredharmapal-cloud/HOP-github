@@ -48,7 +48,7 @@ const JournalDetail = () => {
           <p className="text-ink-soft text-lg font-light">Article not found.</p>
           <Link to="/journal" className="mt-4 inline-flex items-center gap-1.5 text-xs tracking-[0.2em] uppercase text-teal-deep hover:text-teal transition-colors">
             <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Journal
+            Back
           </Link>
         </main>
       </PageLayout>

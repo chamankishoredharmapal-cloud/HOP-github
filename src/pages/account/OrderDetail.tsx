@@ -68,7 +68,7 @@ export default function OrderDetail() {
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="font-serif text-xl text-ink">#{order.orderNumber}</h2>
+          <h2 className="font-serif text-xl text-ink">#{order.orderNumber}.</h2>
           <p className="text-xs text-ink-soft">
             Placed on{" "}
             {new Date(order.createdAt).toLocaleDateString("en-IN", {

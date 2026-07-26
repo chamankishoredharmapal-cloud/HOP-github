@@ -9,17 +9,16 @@ export const ModernHeirlooms = () => (
       <div className="order-2 lg:order-1 space-y-6 max-w-md">
         <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal">Modern Heirlooms</p>
         <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-tight text-balance">
-          A keepsake note, printed on jasmine cardstock.
+          Woven for tomorrow.
         </h2>
         <p className="text-sm sm:text-base text-ink-soft font-light leading-relaxed">
-          When you gift a Padmavati, your message is printed in Ink Charcoal on Jasmine Mist paper —
-          tucked inside a hand-wrapped box. No marketing, no clutter. Only your words and the cloth.
+          Real zari softens with age. The silk core relaxes, the metal develops a patina that deepens rather than fades. We do not design for a single season. We design for the women who will inherit these drapes two decades from now.
         </p>
         <Link
-          to="/gift"
+          to="/collections"
           className="group inline-flex items-center gap-3 bg-ink text-jasmine px-7 py-3.5 rounded-full text-[0.7rem] tracking-[0.32em] uppercase hover:bg-teal-deep transition-colors"
         >
-          Begin a gift
+          View the heirlooms
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>

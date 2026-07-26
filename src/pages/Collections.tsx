@@ -9,12 +9,23 @@ import { useMetadata } from "@/hooks/useMetadata";
 const Collections = () => {
   useMetadata({
     title: "Collections — House of Padmavati",
-    description: "Five collections, one quiet house. Every Padmavati saree belongs to one of five families — each woven with a different rhythm.",
+    description: "Five ways of wearing tradition.",
   });
   const { data: collections, isLoading } = useQuery({
     queryKey: ["storefront", "collections"],
     queryFn: fetchCollections,
   });
+
+  const getCollectionSymbol = (name: string) => {
+    switch (name?.toLowerCase()) {
+      case 'kalyani': return '❈';
+      case 'viara': return '⟡';
+      case 'arya': return '⁂';
+      case 'padma': return '◈';
+      case 'spandana': return '⸙';
+      default: return '';
+    }
+  };
 
   return (
     <PageLayout>
@@ -22,16 +33,11 @@ const Collections = () => {
         <section className="container pt-12 sm:pt-16 pb-10 sm:pb-14 text-center">
           <Monogram className="h-10 sm:h-12 mx-auto mb-5 sm:mb-6 opacity-70" />
           <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal mb-3 sm:mb-4">
-            The Atelier
+            THE COLLECTIONS
           </p>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance leading-tight">
-            Five collections,<br />
-            <em className="text-teal">one quiet house.</em>
+            Five ways of wearing tradition.
           </h1>
-          <p className="mt-5 sm:mt-7 max-w-xl mx-auto text-sm sm:text-base text-ink-soft font-light leading-relaxed px-4">
-            Every Padmavati saree belongs to one of five families — each woven with a different rhythm,
-            but the same Coastal Blossom calibration.
-          </p>
         </section>
 
         <section className="container pb-20 sm:pb-28">
@@ -77,8 +83,8 @@ const Collections = () => {
                     )}
                   </div>
                   <div className="space-y-4 sm:space-y-5 lg:px-6">
-                    <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal">
-                      {c.tagline ?? ""}
+                    <p className="text-xl sm:text-2xl text-teal">
+                      {getCollectionSymbol(c.name)}
                     </p>
                     <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-balance group-hover:text-teal transition-colors duration-500">
                       {c.name}
@@ -88,7 +94,7 @@ const Collections = () => {
                     </p>
                     <div className="flex items-center gap-5 sm:gap-7 pt-2">
                       <span className="inline-flex items-center gap-2 text-[0.65rem] sm:text-xs tracking-[0.32em] uppercase text-teal-deep border-b border-teal-deep/40 pb-1">
-                        Explore Collection
+                        Enter
                         <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                       </span>
                     </div>
@@ -101,14 +107,11 @@ const Collections = () => {
 
         <section className="bg-sand/40">
           <div className="container py-16 sm:py-20 lg:py-24 text-center">
-            <p className="font-serif italic text-2xl sm:text-3xl md:text-4xl text-ink leading-snug max-w-2xl mx-auto text-balance">
-              "A saree is never bought. It is chosen, then carried."
-            </p>
             <Link
               to="/about"
-              className="mt-8 inline-flex items-center gap-2 text-[0.7rem] sm:text-xs tracking-[0.32em] uppercase text-teal-deep hover:text-teal"
+              className="inline-flex items-center gap-2 text-[0.7rem] sm:text-xs tracking-[0.32em] uppercase text-teal-deep hover:text-teal"
             >
-              The Padmavati story <ArrowRight className="w-4 h-4" />
+              The House <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>

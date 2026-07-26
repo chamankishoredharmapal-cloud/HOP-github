@@ -8,8 +8,8 @@ import { useMetadata } from "@/hooks/useMetadata";
 
 export default function Cart() {
   useMetadata({
-    title: "Shopping Bag — House of Padmavati",
-    description: "View and edit items in your shopping bag.",
+    title: "The Bag — House of Padmavati",
+    description: "Your bag.",
   });
   const { items, updateQuantity, removeItem, clearCart, totalItems, totalPrice } = useCart();
 
@@ -19,13 +19,10 @@ export default function Cart() {
         <main className="container pt-28 pb-24">
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <ShoppingBag className="h-16 w-16 text-ink-soft/30 mb-6" />
-            <h1 className="font-serif text-3xl text-ink mb-3">Your bag is empty</h1>
-            <p className="text-ink-soft font-light mb-8 max-w-xs">
-              Discover our collection of hand-woven sarees, each carrying a story.
-            </p>
+            <h1 className="font-serif text-3xl text-ink mb-6">Your bag is empty.</h1>
             <Button asChild>
               <Link to="/collections">
-                Explore Collections <ArrowRight className="h-4 w-4" />
+                View collections <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -38,7 +35,7 @@ export default function Cart() {
     <PageLayout>
       <main className="container pt-28 pb-24">
         <div className="flex items-center justify-between mb-10">
-          <h1 className="font-serif text-3xl md:text-4xl text-ink">Shopping Bag</h1>
+          <h1 className="font-serif text-3xl md:text-4xl text-ink">The Bag.</h1>
           <button
             onClick={clearCart}
             className="text-xs tracking-[0.2em] uppercase text-ink-soft hover:text-teal transition-colors"
@@ -111,7 +108,7 @@ export default function Cart() {
           <div className="lg:col-span-1">
             <div className="bg-jasmine-deep/20 p-8 rounded">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-6">
-                Order Summary
+                Summary
               </h2>
 
               <div className="space-y-3 text-sm">
@@ -150,10 +147,24 @@ export default function Cart() {
                   to="/collections"
                   className="text-xs tracking-[0.15em] text-ink-soft hover:text-teal underline underline-offset-4 transition-colors"
                 >
-                  Continue Shopping
+                  Return to collections
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-16 border-t border-border/40 pt-10">
+          <h2 className="font-serif text-2xl text-ink mb-4">Return & Replacement Summary</h2>
+          <div className="max-w-2xl space-y-3 text-sm text-ink-soft font-light leading-relaxed">
+            <p>Return and replacement eligibility depends on the number of sarees in your order:</p>
+            <ul className="list-disc list-inside space-y-1">
+              <li><strong className="text-ink">1 – 3 sarees per order:</strong> 3 calendar days from delivery</li>
+              <li><strong className="text-ink">4 or more sarees per order:</strong> 7 calendar days from delivery</li>
+            </ul>
+            <p>Eligible reasons: wrong product, transit damage, manufacturing defect, incorrect measurements (stitched orders only).</p>
+            <p>Not eligible: change of mind, colour variation, ordered by mistake, personal preference, worn, washed, altered, or damaged items.</p>
+            <p>Refunds are processed via bank transfer within 5 – 7 business days after inspection. See the <Link to="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Returns & Refund Policy</Link> for full details.</p>
           </div>
         </div>
       </main>

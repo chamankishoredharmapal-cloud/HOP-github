@@ -20,6 +20,8 @@ import About from "./pages/about/OurStory";
 import CustomerCare from "./pages/about/CustomerCare";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import ReturnsPolicy from "./pages/ReturnsPolicy";
 import StudioLogin from "./studio/pages/Login";
 import StudioResetPassword from "./studio/pages/ResetPassword";
 import { AuthGuard } from "./studio/components/AuthGuard";
@@ -42,6 +44,9 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Collections = lazy(() => import("./pages/Collections"));
 const Journal = lazy(() => import("./pages/Journal"));
 const JournalDetail = lazy(() => import("./pages/JournalDetail"));
+const QuietWedding = lazy(() => import("./pages/campaigns/QuietWedding"));
+const Lookbook = lazy(() => import("./pages/Lookbook"));
+const Appointments = lazy(() => import("./pages/Appointments"));
 const StudioDashboard = lazy(() => import("./studio/pages/Dashboard"));
 const StudioOrders = lazy(() => import("./studio/pages/Orders"));
 const StudioOrderDetail = lazy(() => import("./studio/pages/OrderDetail"));
@@ -93,6 +98,11 @@ const App = () => (
               <Route path="/customer-care" element={<CustomerCare />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/shipping-policy" element={<ShippingPolicy />} />
+              <Route path="/returns-policy" element={<ReturnsPolicy />} />
+              <Route path="/campaigns/quiet-wedding" element={<QuietWedding />} />
+              <Route path="/lookbook" element={<Lookbook />} />
+              <Route path="/appointments" element={<Appointments />} />
               <Route path="/journal" element={<Journal />} />
               <Route path="/journal/:slug" element={<JournalDetail />} />
               <Route path="/studio/login" element={<StudioLogin />} />

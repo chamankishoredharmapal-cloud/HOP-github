@@ -8,7 +8,10 @@ export const JournalPreview = () => (
     <div className="flex items-end justify-between mb-10 sm:mb-14 gap-4">
       <div>
         <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal mb-3">The Journal</p>
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl">Slow words on cloth and light.</h2>
+        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl">Field Notes & Reflections.</h2>
+        <p className="mt-4 text-sm sm:text-base text-ink-soft font-light max-w-md">
+          Dispatches from the loom, histories of the weave, and conversations on the art of choosing well.
+        </p>
       </div>
       <Link to="/journal" className="hidden md:inline text-[0.7rem] tracking-[0.32em] uppercase text-ink hover:text-teal underline underline-offset-4">
         Read all

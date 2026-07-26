@@ -47,8 +47,8 @@ const ProductDetail = () => {
   useMetadata({
     title: product ? `${product.name} — House of Padmavati` : "House of Padmavati",
     description: product
-      ? (product.story || product.short_description || product.customer_description || "Handcrafted with care.")
-      : "House of Padmavati: a digital sanctuary for heritage and contemporary luxury sarees.",
+      ? (product.story || product.short_description || product.customer_description || "House of Padmavati.")
+      : "A digital fashion house for Indian sarees.",
     ogImage: heroImage,
   });
 
@@ -214,7 +214,7 @@ const ProductDetail = () => {
             </div>
 
             <p className="text-ink-soft font-light leading-relaxed max-w-md">
-              {product.story || product.short_description || product.customer_description || "Handcrafted with care."}
+              {product.story || product.short_description || product.customer_description || ""}
             </p>
 
             <div className="space-y-3">
@@ -260,11 +260,11 @@ const ProductDetail = () => {
                   </AccordionContent>
                 </AccordionItem>
               ) : null}
-              <AccordionItem value="ship" className="border-b border-border">
-                <AccordionTrigger className="text-sm tracking-wider uppercase">Wrapped & Shipped</AccordionTrigger>
-                <AccordionContent className="text-ink-soft font-light leading-relaxed space-y-2">
-                  <p>Hand-wrapped in jasmine paper with a handwritten keepsake card. Worldwide shipping, fully insured.</p>
-                  <p className="text-xs text-ink-soft/60">Free standard shipping within India. 14-day return window for unworn sarees.</p>
+              <AccordionItem value="shipping" className="border-b border-border">
+                <AccordionTrigger className="text-sm tracking-wider uppercase">Shipping & Returns</AccordionTrigger>
+                <AccordionContent className="text-ink-soft font-light leading-relaxed space-y-3">
+                  <p>Dispatched within 1 business day.</p>
+                  <p>Return and replacement eligibility depends on the number of sarees in your order. See the <Link to="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Returns & Refund Policy</Link> for complete details.</p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -274,7 +274,7 @@ const ProductDetail = () => {
         {relatedProducts && relatedProducts.length > 0 && (
           <section className="mt-32">
             <div className="flex items-end justify-between mb-10">
-              <h2 className="font-serif text-3xl md:text-4xl">From the same loom.</h2>
+              <h2 className="font-serif text-3xl md:text-4xl">Related pieces.</h2>
               <Link
                 to={product.collection_id ? `/collections/${product.slug}` : "/collections"}
                 className="text-sm font-light text-ink hover:text-teal flex items-center gap-2"

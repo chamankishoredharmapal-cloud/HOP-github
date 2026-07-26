@@ -6,6 +6,14 @@ import { Monogram } from "@/components/hop/Monogram";
 import { fetchCollections } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 
+const COLLECTION_SYMBOLS: Record<string, string> = {
+  kalyani: "❈",
+  viara: "⟡",
+  arya: "⁂",
+  padma: "◈",
+  spandana: "⸙",
+};
+
 export const CollectionStage = () => {
   const { data: collections } = useQuery({
     queryKey: ["storefront", "collections"],
@@ -16,9 +24,9 @@ export const CollectionStage = () => {
     <section className="relative">
       <div className="container text-center py-14 sm:py-20 lg:py-24">
         <Monogram className="h-10 sm:h-12 mx-auto mb-5 opacity-60" />
-        <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal mb-4">The Collection Universe</p>
+        <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal mb-4">The Collections</p>
         <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-balance max-w-3xl mx-auto">
-          Five voices, one quiet house.
+          Five ways of wearing tradition.
         </h2>
       </div>
 
@@ -40,7 +48,7 @@ export const CollectionStage = () => {
                   <div className={`lg:col-span-5 space-y-5 sm:space-y-6 ${align === "right" ? "lg:pl-8" : "lg:pr-8"}`}>
                     <div className="flex items-center gap-4">
                       <span className="font-serif italic text-teal text-lg">
-                        {String(i + 1).padStart(2, "0")}
+                        {COLLECTION_SYMBOLS[c.slug] ?? String(i + 1).padStart(2, "0")}
                       </span>
                       <span className="h-px w-12 bg-teal/40" />
                       <p className="text-[0.6rem] sm:text-[0.65rem] tracking-[0.42em] uppercase text-teal">

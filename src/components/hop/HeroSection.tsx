@@ -14,11 +14,14 @@ export const HeroSection = () => {
       <div className="container">
         <div className="text-center mb-6 sm:mb-8 animate-fade-in" style={{ animationDuration: "1.4s" }}>
           <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal mb-3">
-            {featured?.tagline ?? "Coastal Blossom · Spring Atelier"}
+            {featured?.tagline ?? "House of Padmavati"}
           </p>
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-balance">
-            Sarees · <em className="text-teal">Stories</em> · You
+            Saree. <em className="text-teal">Time</em>. You.
           </h1>
+          <p className="mt-4 text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-lg mx-auto">
+            A digital fashion house for Indian sarees.
+          </p>
         </div>
 
         <div
@@ -30,7 +33,7 @@ export const HeroSection = () => {
             poster={featured?.hero_image_url ?? ""}
             alt={featured ? `${featured.name} — collection film` : "House of Padmavati"}
             className="aspect-[16/9]"
-            preload="metadata"
+            preload="auto"
           />
           <div className="absolute bottom-5 left-5 sm:bottom-8 sm:left-8 bg-jasmine/85 backdrop-blur-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-[0.6rem] sm:text-[0.7rem] tracking-[0.32em] uppercase text-ink-soft">
             {featured?.name ?? "Film"}

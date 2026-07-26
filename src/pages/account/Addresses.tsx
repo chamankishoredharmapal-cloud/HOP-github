@@ -234,7 +234,7 @@ export default function Addresses() {
                   </button>
                   <button
                     onClick={() => {
-                      if (confirm("Delete this address?")) deleteMutation.mutate(addr.id);
+                      if (confirm("Remove this address?")) deleteMutation.mutate(addr.id);
                     }}
                     className="p-1.5 rounded-md text-ink-soft hover:text-red-600 hover:bg-red-50"
                     aria-label="Delete address"
@@ -249,7 +249,7 @@ export default function Addresses() {
       ) : (
         <div className="text-center py-12 text-ink-soft">
           <MapPin className="w-8 h-8 mx-auto mb-3 opacity-40" />
-          <p className="text-sm">No addresses saved yet.</p>
+          <p className="text-sm">No addresses saved.</p>
         </div>
       )}
     </div>
