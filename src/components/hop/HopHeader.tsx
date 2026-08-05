@@ -58,11 +58,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
 
   return (
     <header className={`fixed top-0 inset-x-0 z-50 text-[#1F1F1F] pt-2 md:pt-4 transition-transform duration-300 ease-in-out ${transparent ? "" : "bg-[#FBF5EB]"} ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
-      {transparent && (
-        <div className="w-full h-8 flex items-center justify-center bg-[#8B1E2D] text-[#FBF5EB] text-[0.65rem] sm:text-[0.7rem] tracking-[0.32em] uppercase font-light">
-          A DIGITAL FASHION HOUSE FOR INDIAN SAREES
-        </div>
-      )}
+      {/* Top banner removed due to brand guideline violation (No aggressive sales tactics/mass-market tropes) */}
       <div className="container flex items-center justify-between h-[72px] md:h-[80px] gap-4 md:gap-6">
         <nav
           className="hidden lg:flex items-center gap-8 xl:gap-10 text-[0.78rem] xl:text-[0.85rem] font-light tracking-[0.18em] uppercase w-1/3"

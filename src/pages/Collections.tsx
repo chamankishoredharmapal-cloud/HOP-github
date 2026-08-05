@@ -3,7 +3,9 @@ import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import PageLayout from "@/components/layout/PageLayout";
 import { Monogram } from "@/components/hop/Monogram";
+import { Film } from "@/components/hop/Film";
 import { fetchCollections } from "@/services/collectionService";
+import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { useMetadata } from "@/hooks/useMetadata";
 
 const Collections = () => {
@@ -69,18 +71,12 @@ const Collections = () => {
                   }`}
                 >
                   <div className="aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] overflow-hidden rounded-md bg-jasmine-deep">
-                    {c.hero_image_url ? (
-                      <img
-                        src={c.hero_image_url}
-                        alt={c.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-1400 ease-out group-hover:scale-[1.04]"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-xs text-ink-soft/30" />
-                      </div>
-                    )}
+                    <Film
+                      src={c.hero_video_url ?? COLLECTION_VIDEOS[c.slug] ?? undefined}
+                      poster={c.hero_image_url ?? ""}
+                      alt={c.name}
+                      className="w-full h-full [&>div>img]:transition-transform [&>div>img]:duration-1400 [&>div>img]:ease-out group-hover:[&>div>img]:scale-[1.04] [&>div>video]:transition-transform [&>div>video]:duration-1400 [&>div>video]:ease-out group-hover:[&>div>video]:scale-[1.04]"
+                    />
                   </div>
                   <div className="space-y-4 sm:space-y-5 lg:px-6">
                     <p className="text-xl sm:text-2xl text-teal">

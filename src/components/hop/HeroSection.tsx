@@ -17,7 +17,7 @@ export const HeroSection = () => {
             {featured?.tagline ?? "House of Padmavati"}
           </p>
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-balance">
-            Saree. <em className="text-teal">Time</em>. You.
+            Saree. Time. You.
           </h1>
         </div>
 
