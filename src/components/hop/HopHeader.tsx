@@ -20,54 +20,50 @@ const editorial = [
   { label: "About", href: "/about" },
 ];
 
-const getLinkClassName = (href: string, pathname: string) => {
-  const isActive = pathname === href || 
-    (href === "/about" && pathname.startsWith("/about")) ||
-    (href.includes("/collections") && pathname.includes("/collections"));
-  return `hover:text-teal transition-colors duration-500 whitespace-nowrap font-medium ${isActive ? "text-teal-deep" : "text-ink-soft"}`;
+const getLinkClassName = () => {
+  return `hover:text-[#8B1E2D] transition-colors duration-500 whitespace-nowrap font-medium text-[#1F1F1F]`;
 };
 
 const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
   const { totalItems } = useCart();
   const { totalItems: wishlistCount } = useWishlist();
 
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y <= 4) {
+        setHidden(false);
+      } else if (y > lastScrollY.current) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      lastScrollY.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const closeMenu = useCallback(() => {
     setOpen(false);
     menuTriggerRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const overlay = transparent && !scrolled;
-
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        overlay
-          ? "bg-transparent border-b border-transparent text-jasmine"
-          : "bg-jasmine/85 backdrop-blur-md border-b border-border/60 text-ink"
-      }`}
-    >
-      <div
-        className={`text-[0.65rem] sm:text-[0.7rem] tracking-[0.32em] uppercase text-center py-2 font-light transition-colors duration-500 ${
-          overlay ? "bg-ink/30 text-jasmine" : "bg-teal-deep text-jasmine"
-        }`}
-      >
-        A digital fashion house for Indian sarees
-      </div>
-
-      <div className="container flex items-center justify-between h-20 md:h-24 lg:h-28 gap-4 md:gap-6">
+    <header className={`fixed top-0 inset-x-0 z-50 text-[#1F1F1F] pt-2 md:pt-4 transition-transform duration-300 ease-in-out ${transparent ? "" : "bg-[#FBF5EB]"} ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
+      {transparent && (
+        <div className="w-full h-8 flex items-center justify-center bg-[#8B1E2D] text-[#FBF5EB] text-[0.65rem] sm:text-[0.7rem] tracking-[0.32em] uppercase font-light">
+          A DIGITAL FASHION HOUSE FOR INDIAN SAREES
+        </div>
+      )}
+      <div className="container flex items-center justify-between h-[72px] md:h-[80px] gap-4 md:gap-6">
         <nav
           className="hidden lg:flex items-center gap-8 xl:gap-10 text-[0.78rem] xl:text-[0.85rem] font-light tracking-[0.18em] uppercase w-1/3"
           role="navigation"
@@ -77,8 +73,8 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
             <Link
               key={c.href}
               to={c.href}
-              className={getLinkClassName(c.href, pathname)}
-                  aria-current={pathname === c.href || (c.href === "/about" && pathname.startsWith("/about")) ? "page" : undefined}
+              className={getLinkClassName()}
+              aria-current={pathname === c.href || (c.href === "/about" && pathname.startsWith("/about")) ? "page" : undefined}
               aria-label={`${c.label} page${pathname === c.href ? " (current)" : ""}`}
             >
               {c.label}
@@ -87,47 +83,47 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
         </nav>
 
         <button
-          className="lg:hidden p-2 hover:text-teal transition-colors duration-300"
+          className="lg:hidden p-2 text-[#1F1F1F] hover:text-[#8B1E2D] transition-colors duration-300"
           onClick={() => setOpen(true)}
           aria-label="Open menu"
         >
-          <Menu className="w-6 h-6" />
+          <Menu className="w-5 h-5" strokeWidth={1.5} />
         </button>
 
         <Link
           to="/"
-          className="flex-1 lg:flex-none flex flex-col items-center justify-center min-w-0 pl-2 pr-2 md:pl-4 md:pr-4"
+          className="flex-1 lg:flex-none flex flex-col items-center justify-center min-w-0"
           aria-label="House of Padmavati home"
         >
-          <Monogram variant="signature" className="h-10 sm:h-12 md:h-14" />
-          <span className="mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.28em] sm:tracking-[0.32em] uppercase whitespace-nowrap font-light">
-            House of Padmavati
+          <Monogram variant="signature" className="h-8 md:h-10" />
+          <span className="mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.28em] sm:tracking-[0.32em] uppercase whitespace-nowrap text-[#8B1E2D]">
+            HOUSE OF PADMAVATI
           </span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-6 xl:gap-8 text-[0.78rem] xl:text-[0.85rem] font-light tracking-[0.18em] uppercase w-1/3 justify-end">
+        <div className="hidden lg:flex items-center gap-6 xl:gap-8 text-[#1F1F1F] w-1/3 justify-end">
           <button
             onClick={() => setSearchOpen(true)}
             aria-label="Search"
-            className="p-2 hover:text-teal transition-colors duration-300"
+            className="p-2 hover:text-[#8B1E2D] transition-colors duration-300"
           >
-            <Search className="w-5 h-5" />
+            <Search className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </button>
           <Link
             to="/account"
             aria-label="Account"
-            className="p-2 hover:text-teal transition-colors duration-300"
+            className="p-2 hover:text-[#8B1E2D] transition-colors duration-300"
           >
-            <User className="w-5 h-5" />
+            <User className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </Link>
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="p-2 hover:text-teal transition-colors duration-300 relative"
+            className="p-2 hover:text-[#8B1E2D] transition-colors duration-300 relative"
           >
-            <Heart className="w-5 h-5" />
+            <Heart className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
             {wishlistCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-teal-deep text-jasmine text-[0.55rem] font-medium rounded-full flex items-center justify-center">
+              <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-[#8B1E2D] text-[#FBF5EB] text-[0.55rem] font-medium rounded-full flex items-center justify-center">
                 {wishlistCount}
               </span>
             )}
@@ -135,57 +131,44 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
           <Link
             to="/cart"
             aria-label="Bag"
-            className="p-2 hover:text-teal transition-colors duration-300 flex items-center gap-2"
+            className="p-2 hover:text-[#8B1E2D] transition-colors duration-300 flex items-center gap-2"
           >
-            <ShoppingBag className="w-5 h-5" />
-            <span className="text-[0.75rem]">({totalItems})</span>
+            <ShoppingBag className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
+            <span className="text-[0.75rem] font-light">({totalItems})</span>
           </Link>
         </div>
 
         <Link
           to="/cart"
-          className="lg:hidden p-2 hover:text-teal transition-colors duration-300 relative"
+          className="lg:hidden p-2 text-[#1F1F1F] hover:text-[#8B1E2D] transition-colors duration-300 relative"
           aria-label="Bag"
         >
-          <ShoppingBag className="w-6 h-6" />
+          <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
           {totalItems > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-teal-deep text-jasmine text-[0.55rem] font-medium rounded-full flex items-center justify-center">
+            <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-[#8B1E2D] text-[#FBF5EB] text-[0.55rem] font-medium rounded-full flex items-center justify-center">
               {totalItems}
             </span>
           )}
         </Link>
       </div>
 
-      {/* Sub-nav: collections — homepage only */}
-      {pathname === "/" && !overlay && (
-        <div className="hidden lg:block border-t border-border/40">
-          <nav className="container flex items-center justify-center gap-10 h-10 text-[0.7rem] font-light text-ink-soft tracking-[0.32em] uppercase">
-            {collections.map((c) => (
-              <Link key={c.href} to={c.href} className="hover:text-teal-deep transition-colors duration-500">
-                {c.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
-
       {/* Mobile drawer */}
       {open && (
         <div
           ref={menuRef}
-          className="lg:hidden fixed inset-0 z-50 bg-jasmine text-ink animate-fade-in"
+          className="lg:hidden fixed inset-0 z-50 bg-[#FBF5EB] text-[#1F1F1F] animate-fade-in"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
           onKeyDown={(e) => { if (e.key === "Escape") closeMenu(); }}
         >
-          <div className="container flex items-center justify-between h-16 border-b border-border">
+          <div className="container flex items-center justify-between h-16 border-b border-[#87817A]/15">
             <div className="flex items-center gap-3">
               <Monogram variant="signature" className="h-9" />
-              <span className="font-serif text-[0.65rem] tracking-[0.32em] uppercase">House of Padmavati</span>
+              <span className="font-serif text-[0.65rem] tracking-[0.32em] uppercase text-[#8B1E2D]">HOUSE OF PADMAVATI</span>
             </div>
             <button onClick={closeMenu} aria-label="Close menu" ref={menuTriggerRef}>
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5" strokeWidth={1.5} />
             </button>
           </div>
           <nav
@@ -193,30 +176,14 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
             role="navigation"
             aria-label="Mobile navigation"
           >
-            {pathname === "/" && (
-              <div className="space-y-6">
-                {collections.map((c) => (
-                  <Link
-                    key={c.href}
-                    to={c.href}
-                    onClick={closeMenu}
-                    className="block text-2xl md:text-3xl font-serif hover:text-teal transition-colors duration-300"
-                    aria-current={pathname === c.href || (c.href.includes("/collections") && pathname.includes("/collections")) ? "page" : undefined}
-                  >
-                    {c.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-            <div className="h-px bg-border/60 my-4" />
             <div className="space-y-4">
               {editorial.map((c) => (
                 <Link
                   key={c.href}
                   to={c.href}
                   onClick={closeMenu}
-                  className="block text-xl md:text-2xl font-sans font-light hover:text-teal transition-colors duration-300 tracking-wide"
-              aria-current={pathname === c.href || (c.href === "/about" && pathname.startsWith("/about")) ? "page" : undefined}
+                  className="block text-xl md:text-2xl font-sans font-light hover:text-[#8B1E2D] transition-colors duration-300 tracking-wide"
+                  aria-current={pathname === c.href || (c.href === "/about" && pathname.startsWith("/about")) ? "page" : undefined}
                 >
                   {c.label}
                 </Link>
@@ -227,6 +194,9 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
       )}
 
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+      {!transparent && (
+        <div aria-hidden="true" className="absolute bottom-0 inset-x-0 h-px bg-[#87817A]/15" />
+      )}
     </header>
   );
 };

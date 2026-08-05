@@ -297,39 +297,28 @@ export type Database = {
       products: {
         Row: {
           id: string
-          title: string
+          sku: string
+          name: string
           slug: string
-          name: string | null
-          sku: string | null
           story: string | null
           short_description: string | null
           customer_description: string | null
-          price: number | null
           selling_price: number
           mrp: number
           cost_price: number
           stock: number
           low_stock_alert: number
-          category: string | null
           fabric: string | null
-          craft: string | null
-          color: string | null
-          colour: string | null
           weave: string | null
-          border: string | null
-          zari_type: string | null
+          colour: string | null
           occasion: string | null
           length: string | null
           weight: string | null
           blouse_included: boolean
-          blouse_details: string | null
           care_instructions: string | null
-          origin: string | null
           country_of_origin: string | null
-          estimated_dispatch_days: number | null
-          featured: boolean | null
-          is_featured: boolean | null
-          is_active: boolean | null
+          estimated_dispatch_days: number
+          featured: boolean
           meta_title: string | null
           meta_description: string | null
           og_image_url: string | null
@@ -340,39 +329,28 @@ export type Database = {
         }
         Insert: {
           id?: string
-          title: string
+          sku: string
+          name: string
           slug: string
-          name?: string | null
-          sku?: string | null
           story?: string | null
           short_description?: string | null
           customer_description?: string | null
-          price?: number | null
           selling_price: number
           mrp?: number
           cost_price?: number
           stock?: number
           low_stock_alert?: number
-          category?: string | null
           fabric?: string | null
-          craft?: string | null
-          color?: string | null
-          colour?: string | null
           weave?: string | null
-          border?: string | null
-          zari_type?: string | null
+          colour?: string | null
           occasion?: string | null
           length?: string | null
           weight?: string | null
           blouse_included?: boolean
-          blouse_details?: string | null
           care_instructions?: string | null
-          origin?: string | null
           country_of_origin?: string | null
-          estimated_dispatch_days?: number | null
-          featured?: boolean | null
-          is_featured?: boolean | null
-          is_active?: boolean | null
+          estimated_dispatch_days?: number
+          featured?: boolean
           meta_title?: string | null
           meta_description?: string | null
           og_image_url?: string | null
@@ -383,39 +361,28 @@ export type Database = {
         }
         Update: {
           id?: string
-          title?: string
+          sku?: string
+          name?: string
           slug?: string
-          name?: string | null
-          sku?: string | null
           story?: string | null
           short_description?: string | null
           customer_description?: string | null
-          price?: number | null
           selling_price?: number
           mrp?: number
           cost_price?: number
           stock?: number
           low_stock_alert?: number
-          category?: string | null
           fabric?: string | null
-          craft?: string | null
-          color?: string | null
-          colour?: string | null
           weave?: string | null
-          border?: string | null
-          zari_type?: string | null
+          colour?: string | null
           occasion?: string | null
           length?: string | null
           weight?: string | null
           blouse_included?: boolean
-          blouse_details?: string | null
           care_instructions?: string | null
-          origin?: string | null
           country_of_origin?: string | null
-          estimated_dispatch_days?: number | null
-          featured?: boolean | null
-          is_featured?: boolean | null
-          is_active?: boolean | null
+          estimated_dispatch_days?: number
+          featured?: boolean
           meta_title?: string | null
           meta_description?: string | null
           og_image_url?: string | null

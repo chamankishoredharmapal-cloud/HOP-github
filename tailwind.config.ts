@@ -15,6 +15,7 @@ export default {
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Vonca Regular"', 'Georgia', 'serif'],
       },
       transitionDuration: {
         "1000": "1000ms",
@@ -76,6 +77,9 @@ export default {
           DEFAULT: "hsl(var(--ink))",
           soft: "hsl(var(--ink-soft))",
         },
+        crimson: "hsl(var(--crimson))",
+        "warm-white": "hsl(var(--warm-white))",
+        "warm-white-bright": "hsl(var(--warm-white-bright))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

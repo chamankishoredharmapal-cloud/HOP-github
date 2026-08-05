@@ -145,7 +145,6 @@ export async function createProduct(data: ProductFormData): Promise<Product> {
   const { data: row, error } = await supabase
     .from("products")
     .insert({
-      title: data.name,
       sku: data.sku,
       name: data.name,
       slug,
@@ -173,7 +172,7 @@ export async function createProduct(data: ProductFormData): Promise<Product> {
       meta_title: data.meta_title,
       meta_description: data.meta_description,
       og_image_url: data.og_image_url,
-    } as unknown as Database["public"]["Tables"]["products"]["Insert"])
+    })
     .select()
     .single();
   if (error) throw error;

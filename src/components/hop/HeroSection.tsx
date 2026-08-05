@@ -19,9 +19,6 @@ export const HeroSection = () => {
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-balance">
             Saree. <em className="text-teal">Time</em>. You.
           </h1>
-          <p className="mt-4 text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-lg mx-auto">
-            A digital fashion house for Indian sarees.
-          </p>
         </div>
 
         <div

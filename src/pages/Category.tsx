@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { fetchProductsByCollection } from "@/services/productService";
 import { fetchCollectionBySlug } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import { getCollectionDescriptor } from "@/data/collectionDescriptors";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 
 const sortOptions = [
@@ -189,6 +190,11 @@ const Category = () => {
 
           {editorial && (
             <div className="max-w-2xl mt-12">
+              {getCollectionDescriptor(collection?.name, slug) && (
+                <p className="font-serif text-3xl sm:text-4xl md:text-5xl text-teal-deep font-normal leading-snug text-balance mb-6">
+                  {getCollectionDescriptor(collection?.name, slug)}
+                </p>
+              )}
               <p className="text-base sm:text-lg text-ink-soft font-light leading-relaxed">
                 {editorial}
               </p>
