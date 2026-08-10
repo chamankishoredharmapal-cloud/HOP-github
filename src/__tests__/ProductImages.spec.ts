@@ -44,7 +44,13 @@ test.describe("Product image rendering (N+1 removal)", () => {
       return;
     }
 
+    const isMobile = (page.viewportSize()?.width || 1024) < 768;
     const nextBtn = page.getByRole("button", { name: "Next image" });
-    await expect(nextBtn).toBeVisible();
+    
+    if (isMobile) {
+      await expect(nextBtn).toBeHidden();
+    } else {
+      await expect(nextBtn).toBeVisible();
+    }
   });
 });
