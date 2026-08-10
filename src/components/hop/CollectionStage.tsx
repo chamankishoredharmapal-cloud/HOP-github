@@ -5,6 +5,7 @@ import { Film } from "@/components/hop/Film";
 import { fetchCollections } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { getCollectionDescriptor } from "@/data/collectionDescriptors";
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
 const COLLECTION_SYMBOLS: Record<string, string> = {
   kalyani: "❈",
@@ -24,10 +25,12 @@ const renderDescriptor = (text: string) => {
 };
 
 export const CollectionStage = () => {
-  const { data: collections } = useQuery({
+  const { data: collections, isLoading } = useQuery({
     queryKey: ["storefront", "collections"],
     queryFn: fetchCollections,
   });
+
+  usePrerenderReady(!isLoading && collections !== undefined);
 
   return (
     <section className="relative">

@@ -3,5 +3,7 @@ Allow: /
 Disallow: /studio/
 Disallow: /checkout
 Disallow: /cart
+Disallow: /account/
+Disallow: /*?*sort=
 
 Sitemap: https://houseofpadmavati.com/sitemap.xml

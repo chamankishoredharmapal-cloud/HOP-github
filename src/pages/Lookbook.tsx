@@ -1,8 +1,10 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
 import { Link } from "react-router-dom";
 
 const Lookbook = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "Lookbook · House of Padmavati",
     description: "A visual archive of House of Padmavati.",
@@ -144,3 +146,4 @@ const Lookbook = () => {
 };
 
 export default Lookbook;
+

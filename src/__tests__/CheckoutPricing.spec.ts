@@ -34,6 +34,7 @@ test.describe("Checkout pricing authority (server-side pricing)", () => {
     await page.getByRole("textbox", { name: "City" }).fill("Mumbai");
     await page.getByRole("textbox", { name: "Postal code" }).fill("400001");
     await page.getByRole("textbox", { name: "Country" }).fill("India");
+    await page.getByRole("checkbox").last().check(); // Check the policy checkbox
 
     await page.getByRole("button", { name: /pay securely/i }).click();
     await page.waitForTimeout(2000);
@@ -64,6 +65,7 @@ test.describe("Checkout pricing authority (server-side pricing)", () => {
     await page.getByRole("textbox", { name: "City" }).fill("Mumbai");
     await page.getByRole("textbox", { name: "Postal code" }).fill("400001");
     await page.getByRole("textbox", { name: "Country" }).fill("India");
+    await page.getByRole("checkbox").last().check(); // Check the policy checkbox
 
     await page.getByRole("button", { name: /pay securely/i }).click();
     await page.waitForTimeout(2000);
@@ -94,6 +96,7 @@ test.describe("Checkout pricing authority (server-side pricing)", () => {
     await page.getByRole("textbox", { name: "City" }).fill("Mumbai");
     await page.getByRole("textbox", { name: "Postal code" }).fill("400001");
     await page.getByRole("textbox", { name: "Country" }).fill("India");
+    await page.getByRole("checkbox").last().check(); // Check the policy checkbox
 
     await page.getByRole("button", { name: /pay securely/i }).click();
     await page.waitForTimeout(2000);
@@ -133,6 +136,7 @@ test.describe("Checkout pricing authority (server-side pricing)", () => {
     await page.getByRole("textbox", { name: "City" }).fill("Mumbai");
     await page.getByRole("textbox", { name: "Postal code" }).fill("400001");
     await page.getByRole("textbox", { name: "Country" }).fill("India");
+    await page.getByRole("checkbox").last().check(); // Check the policy checkbox
 
     await page.getByRole("button", { name: /pay securely/i }).click();
     await page.waitForTimeout(2000);

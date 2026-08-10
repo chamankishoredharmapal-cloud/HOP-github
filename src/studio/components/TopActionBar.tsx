@@ -25,10 +25,11 @@ interface TopActionBarProps {
   onSave: () => void;
   onPublish: () => void;
   onPreview: () => void;
+  canPublish?: boolean;
 }
 
 export function TopActionBar({
-  title, status, isDirty, saving, onSave, onPublish, onPreview,
+  title, status, isDirty, saving, onSave, onPublish, onPreview, canPublish = true,
 }: TopActionBarProps) {
   const navigate = useNavigate();
 
@@ -66,7 +67,7 @@ export function TopActionBar({
           <Save className="h-3.5 w-3.5" />
           {saving ? "Saving..." : "Save Draft"}
         </Button>
-        <Button size="sm" onClick={onPublish} disabled={saving} className="gap-1.5 bg-teal-deep text-jasmine hover:bg-teal transition-colors">
+        <Button size="sm" onClick={onPublish} disabled={saving || !canPublish} className="gap-1.5 bg-teal-deep text-jasmine hover:bg-teal transition-colors">
           <Send className="h-3.5 w-3.5" />
           Publish
         </Button>

@@ -169,6 +169,7 @@ export default function ProductWorkspace() {
         onSave={handleSave}
         onPublish={handlePublish}
         onPreview={handlePreview}
+        canPublish={progress === 100 && heroImageExists}
       />
 
       <div className="grid gap-8 lg:grid-cols-[1fr_380px]">

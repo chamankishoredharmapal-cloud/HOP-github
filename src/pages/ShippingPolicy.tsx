@@ -1,7 +1,9 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
 
 const ShippingPolicy = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "Shipping · House of Padmavati",
     description: "Shipping policy for House of Padmavati — delivery timelines, charges, courier partners, and coverage areas.",
@@ -96,3 +98,4 @@ const ShippingPolicy = () => {
 };
 
 export default ShippingPolicy;
+

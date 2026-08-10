@@ -20,6 +20,7 @@ import { fetchCollectionBySlug } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { getCollectionDescriptor } from "@/data/collectionDescriptors";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
 const sortOptions = [
   { value: "newest", label: "Newest first" },
@@ -54,6 +55,7 @@ const Category = () => {
   });
 
   const isLoading = collectionLoading || productsLoading;
+  usePrerenderReady(!isLoading);
 
   useMetadata({
     title: `${collection?.name ?? "The Atelier"} — House of Padmavati`,

@@ -7,6 +7,7 @@ import { Film } from "@/components/hop/Film";
 import { fetchCollections } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { useMetadata } from "@/hooks/useMetadata";
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
 const Collections = () => {
   useMetadata({
@@ -17,6 +18,8 @@ const Collections = () => {
     queryKey: ["storefront", "collections"],
     queryFn: fetchCollections,
   });
+
+  usePrerenderReady(!isLoading && collections !== undefined);
 
   const getCollectionSymbol = (name: string) => {
     switch (name?.toLowerCase()) {

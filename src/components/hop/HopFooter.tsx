@@ -20,7 +20,9 @@ const HopFooter = () => {
             A digital fashion house for Indian sarees.
           </p>
           <form className="flex max-w-sm border-b border-jasmine/40 pb-2">
+            <label htmlFor="footer-email" className="sr-only">Email address</label>
             <input
+              id="footer-email"
               type="email"
               placeholder="Your email, gently kept"
               className="flex-1 bg-transparent text-sm text-jasmine placeholder:text-jasmine/50 outline-none font-light"

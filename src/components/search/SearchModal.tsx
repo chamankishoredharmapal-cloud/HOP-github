@@ -114,7 +114,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
         onKeyDown={handleKeyDown}
       >
         <div className="flex items-center gap-3 border-b border-border/60 px-4 py-3">
-          <Search className="h-5 w-5 text-ink-soft/50 shrink-0" />
+          <Search className="h-5 w-5 text-ink-soft/70 shrink-0" />
           <Input
             ref={inputRef}
             type="text"
@@ -144,7 +144,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
             <div className="text-center py-12">
               <Package className="h-10 w-10 text-ink-soft/20 mx-auto mb-3" />
               <p className="text-sm text-ink-soft font-light">No results found</p>
-              <p className="text-xs text-ink-soft/50 mt-1">
+              <p className="text-xs text-ink-soft/70 mt-1">
                 Try searching by name, colour, weave, or collection.
               </p>
             </div>
@@ -200,7 +200,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
 
         {results.length > 0 && (
           <div className="border-t border-border/60 px-4 py-2.5 text-center">
-            <span className="text-xs text-ink-soft/50">
+            <span className="text-xs text-ink-soft/70">
               {results.length} result{results.length !== 1 ? "s" : ""} · Use ↑↓ to navigate, Enter to select
             </span>
           </div>

@@ -60,7 +60,14 @@ const StudioJournal = lazy(() => import("./studio/pages/Journal"));
 const StudioMedia = lazy(() => import("./studio/pages/Media"));
 const StudioSettings = lazy(() => import("./studio/pages/Settings"));
 
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+
 const queryClient = new QueryClient();
+
+if (typeof window !== "undefined") {
+  (window as any).__QUERY_CLIENT__ = queryClient;
+  (window as any).ReactQueryDehydrate = dehydrate;
+}
 
 function StudioRoute({ children, title }: { children: React.ReactNode; title: string }) {
   return (
@@ -74,7 +81,8 @@ function StudioRoute({ children, title }: { children: React.ReactNode; title: st
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+    <HydrationBoundary state={typeof window !== "undefined" ? (window as any).__REACT_QUERY_STATE__ : undefined}>
+      <TooltipProvider>
       <CartProvider>
         <WishlistProvider>
           <AuthProvider>
@@ -144,6 +152,7 @@ const App = () => (
       </WishlistProvider>
       </CartProvider>
     </TooltipProvider>
+    </HydrationBoundary>
   </QueryClientProvider>
 );
 

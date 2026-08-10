@@ -1,10 +1,13 @@
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
 import { Link } from "react-router-dom";
+import { HeroSection } from "@/components/hop/HeroSection";
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import ProductGrid from "@/components/hop/ProductGrid";
 import ContentBlock from "@/components/hop/ContentBlock";
 
 const QuietWedding = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "The Quiet Wedding · House of Padmavati",
     description: "Bridal collection.",

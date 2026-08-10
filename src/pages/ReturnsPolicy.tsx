@@ -1,7 +1,9 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
 
 const ReturnsPolicy = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "Returns & Refund · House of Padmavati",
     description: "Returns, refund, and replacement policy for House of Padmavati — eligibility windows by order size, conditions, and process.",
@@ -135,3 +137,4 @@ const ReturnsPolicy = () => {
 };
 
 export default ReturnsPolicy;
+

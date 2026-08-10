@@ -1,3 +1,4 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import { useState } from "react";
 import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
@@ -11,6 +12,7 @@ import { submitContactForm } from "@/services/contactService";
 import { useMetadata } from "@/hooks/useMetadata";
 
 const SareeCare = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "Customer Care · House of Padmavati",
     description: "Customer care and correspondence.",
@@ -35,6 +37,7 @@ const SareeCare = () => {
   if (touched.message && !message.trim()) errors.message = "Message is required";
 
   const handleBlur = (field: string) => {
+  usePrerenderReady(true);
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
@@ -179,3 +182,4 @@ const SareeCare = () => {
 };
 
 export default SareeCare;
+

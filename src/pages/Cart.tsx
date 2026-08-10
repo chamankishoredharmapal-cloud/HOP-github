@@ -72,7 +72,7 @@ export default function Cart() {
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="p-1 text-ink-soft/50 hover:text-teal transition-colors shrink-0"
+                      className="p-1 text-ink-soft/70 hover:text-teal transition-colors shrink-0"
                       aria-label={`Remove ${item.name}`}
                     >
                       <Trash2 className="h-4 w-4" />

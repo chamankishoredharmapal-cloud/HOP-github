@@ -1,7 +1,9 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
 
 const TermsOfService = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "Terms · House of Padmavati",
     description: "Terms and conditions for using House of Padmavati and purchasing our products.",
@@ -173,3 +175,4 @@ const TermsOfService = () => {
 };
 
 export default TermsOfService;
+

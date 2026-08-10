@@ -1,3 +1,4 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import PageLayout from "@/components/layout/PageLayout";
 import PageHeader from "../../components/about/PageHeader";
 import ContentSection from "../../components/about/ContentSection";
@@ -7,6 +8,7 @@ import { useMetadata } from "@/hooks/useMetadata";
 import heroImg from "@/assets/hop-hero.jpg";
 
 const OurStory = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "The House — House of Padmavati",
     description: "The story of House of Padmavati. A digital fashion house for Indian sarees.",
@@ -41,3 +43,4 @@ const OurStory = () => {
 };
 
 export default OurStory;
+

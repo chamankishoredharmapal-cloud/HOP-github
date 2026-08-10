@@ -1,3 +1,4 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
@@ -8,6 +9,7 @@ import { articles } from "@/data/journalArticles";
 import heroImg from "@/assets/hop-hero.jpg";
 
 const Journal = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "The Journal — House of Padmavati",
     description: "The House of Padmavati Journal.",
@@ -51,3 +53,4 @@ const Journal = () => {
 };
 
 export default Journal;
+

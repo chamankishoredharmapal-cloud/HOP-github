@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 import { articles } from "@/data/journalArticles";
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
 const JournalDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const article = articles.find((a) => a.slug === slug);
+  usePrerenderReady(true);
 
   useMetadata({
     title: article ? `${article.title} — House of Padmavati` : "Journal — House of Padmavati",

@@ -18,6 +18,7 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { fetchProductById, fetchRelatedProducts } from "@/services/productService";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
 function formatPrice(paise: number): string {
   return `₹ ${(paise / 100).toLocaleString("en-IN")}`;
@@ -41,6 +42,9 @@ const ProductDetail = () => {
     enabled: !!product?.collection_id && !!product?.id,
     staleTime: 5 * 60 * 1000,
   });
+
+  const isRelatedLoaded = !product?.collection_id || relatedProducts !== undefined;
+  usePrerenderReady(!isLoading && isRelatedLoaded);
 
   const heroImage = product?.images?.[0]?.url;
 

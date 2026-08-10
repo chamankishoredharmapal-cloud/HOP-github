@@ -1,7 +1,9 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
 
 const PrivacyPolicy = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "Privacy · House of Padmavati",
     description: "Privacy policy for House of Padmavati — how we collect, use, and protect your personal information.",
@@ -148,3 +150,4 @@ const PrivacyPolicy = () => {
 };
 
 export default PrivacyPolicy;
+

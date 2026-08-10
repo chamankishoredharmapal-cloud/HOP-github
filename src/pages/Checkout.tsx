@@ -360,7 +360,7 @@ export default function Checkout() {
 
                 <div>
                   <Label htmlFor="phone" className="text-sm text-ink-soft font-light">
-                    Phone <span className="text-ink-soft/50">(optional)</span>
+                    Phone <span className="text-ink-soft/70">(optional)</span>
                   </Label>
                   <Input
                     id="phone"
@@ -376,8 +376,9 @@ export default function Checkout() {
 
             <section>
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
-                <label className="flex items-center gap-3 cursor-pointer">
+                <label className="flex items-center gap-3 cursor-pointer" htmlFor="isGift">
                   <input
+                    id="isGift"
                     type="checkbox"
                     checked={isGift}
                     onChange={(e) => setIsGift(e.target.checked)}
@@ -390,7 +391,7 @@ export default function Checkout() {
                 <div className="space-y-4 max-w-md">
                   <div>
                     <Label htmlFor="giftRecipient" className="text-sm text-ink-soft font-light">
-                      Recipient name <span className="text-ink-soft/50">(optional)</span>
+                      Recipient name <span className="text-ink-soft/70">(optional)</span>
                     </Label>
                     <Input
                       id="giftRecipient"
@@ -402,7 +403,7 @@ export default function Checkout() {
                   </div>
                   <div>
                     <Label htmlFor="giftMessage" className="text-sm text-ink-soft font-light">
-                      Note <span className="text-ink-soft/50">(optional)</span>
+                      Note <span className="text-ink-soft/70">(optional)</span>
                     </Label>
                     <Textarea
                       id="giftMessage"
@@ -475,7 +476,7 @@ export default function Checkout() {
                     {shippingCost === 0 ? "Free" : `₹ ${shippingCost.toLocaleString()}`}
                   </span>
                 </div>
-                <p className="text-xs text-ink-soft/50 font-light text-right">Estimated delivery: 3–5 business days</p>
+                <p className="text-xs text-ink-soft/70 font-light text-right">Estimated delivery: 3–5 business days</p>
                 <div className="flex justify-between text-base border-t border-border/60 pt-2 mt-2">
                   <span className="text-ink font-medium">Total</span>
                   <span className="font-serif text-xl text-ink">₹ {totalRupees.toLocaleString()}</span>
@@ -523,8 +524,9 @@ export default function Checkout() {
               )}
 
               <div className="mt-6">
-                <label className="flex items-start gap-3 cursor-pointer">
+                <label className="flex items-start gap-3 cursor-pointer" htmlFor="returnPolicyAccepted">
                   <input
+                    id="returnPolicyAccepted"
                     type="checkbox"
                     checked={returnPolicyAccepted}
                     onChange={(e) => setReturnPolicyAccepted(e.target.checked)}
@@ -552,7 +554,7 @@ export default function Checkout() {
                 )}
               </Button>
 
-              <div className="mt-4 flex items-center justify-center gap-1.5 text-[0.65rem] text-ink-soft/50">
+              <div className="mt-4 flex items-center justify-center gap-1.5 text-[0.65rem] text-ink-soft/70">
                 <Shield className="h-3 w-3" />
                 Secured by Razorpay
               </div>

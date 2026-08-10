@@ -1,3 +1,4 @@
+import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import { useEffect } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { HeroSection } from "@/components/hop/HeroSection";
@@ -6,6 +7,7 @@ import { CraftSection } from "@/components/hop/CraftSection";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 
 const Index = () => {
+  usePrerenderReady(true);
   useMetadata({
     title: "House of Padmavati",
     description: "House of Padmavati is a digital fashion house for Indian sarees.",
@@ -48,3 +50,4 @@ const Index = () => {
 };
 
 export default Index;
+
