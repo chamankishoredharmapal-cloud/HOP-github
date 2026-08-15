@@ -24,6 +24,8 @@ export const ProductGallery = React.memo(function ProductGallery({
   });
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
+  const [canScrollNext, setCanScrollNext] = React.useState(false);
   const [zoomLevel, setZoomLevel] = React.useState(1);
   const [isZoomed, setIsZoomed] = React.useState(false);
 
@@ -33,16 +35,42 @@ export const ProductGallery = React.memo(function ProductGallery({
     "1/1": "aspect-square",
   }[aspectRatio];
 
-  const onSelect = React.useCallback(() => {
+  const syncState = React.useCallback(() => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
   }, [emblaApi]);
 
   React.useEffect(() => {
     if (!emblaApi) return;
-    emblaApi.on("select", onSelect);
-    onSelect();
-  }, [emblaApi, onSelect]);
+    emblaApi.on("init", syncState);
+    emblaApi.on("reInit", syncState);
+    emblaApi.on("select", syncState);
+    emblaApi.on("settle", syncState);
+    emblaApi.on("resize", syncState);
+    syncState();
+    return () => {
+      emblaApi.off("init", syncState);
+      emblaApi.off("reInit", syncState);
+      emblaApi.off("select", syncState);
+      emblaApi.off("settle", syncState);
+      emblaApi.off("resize", syncState);
+    };
+  }, [emblaApi, syncState]);
+
+  React.useEffect(() => {
+    if (!emblaApi) return;
+    let rafId = 0;
+    const reInit = () => {
+      rafId = 0;
+      emblaApi.reInit();
+    };
+    rafId = window.requestAnimationFrame(() => {
+      rafId = window.requestAnimationFrame(reInit);
+    });
+    return () => window.cancelAnimationFrame(rafId);
+  }, [emblaApi]);
 
   const scrollPrev = React.useCallback(() => {
     emblaApi?.scrollPrev();
@@ -147,7 +175,7 @@ export const ProductGallery = React.memo(function ProductGallery({
       <button
         onClick={scrollPrev}
         className="hidden lg:block absolute -left-12 top-1/2 -translate-y-1/2 rounded-full border border-border bg-background p-2 transition-colors hover:bg-accent"
-        disabled={!emblaApi?.canScrollPrev()}
+        disabled={!canScrollPrev}
         aria-label="Previous image"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -156,7 +184,7 @@ export const ProductGallery = React.memo(function ProductGallery({
       <button
         onClick={scrollNext}
         className="hidden lg:block absolute -right-12 top-1/2 -translate-y-1/2 rounded-full border border-border bg-background p-2 transition-colors hover:bg-accent"
-        disabled={!emblaApi?.canScrollNext()}
+        disabled={!canScrollNext}
         aria-label="Next image"
       >
         <ArrowRight className="h-4 w-4" />

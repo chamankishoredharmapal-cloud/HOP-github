@@ -97,10 +97,13 @@ serve(async (req) => {
 
     if (orderId) {
       console.log("[create-razorpay-order] RETRY path — order exists in DB:", orderId);
+
+      const { data: isAdmin } = await supabaseAuth.rpc("is_admin", { user_id: user.id });
+
       // Retry path — order already exists in the DB
       const { data: order, error: orderError } = await supabase
         .from("orders")
-        .select("id, total, order_number, payment_status, status")
+        .select("id, total, order_number, payment_status, status, customers(email)")
         .eq("id", orderId)
         .single();
 
@@ -108,6 +111,14 @@ serve(async (req) => {
         return new Response(
           JSON.stringify({ error: "order_not_found" }),
           { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+
+      // IDOR prevention: verify the authenticated user owns this order
+      if (!isAdmin && (order.customers as unknown as { email: string })?.email !== user.email) {
+        return new Response(
+          JSON.stringify({ error: "forbidden" }),
+          { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
         );
       }
 
@@ -136,7 +147,7 @@ serve(async (req) => {
       orderNumber = order.order_number;
       console.log("[create-razorpay-order] Retry — order total:", orderTotal, "order_number:", orderNumber);
     } else {
-      console.log("[create-razorpay-order] NEW order path — creating DB order");
+      console.log("[create-razorpay-order] NEW order path — creating DB order via RPC");
       const {
         customer_email,
         customer_full_name,
@@ -161,187 +172,36 @@ serve(async (req) => {
         );
       }
 
-      // Validate items and compute totals
-      let subtotal = 0;
-      for (const item of items) {
-        if (item.quantity <= 0) {
-          return new Response(
-            JSON.stringify({ error: `Invalid quantity for product ${item.product_id}`, code: "invalid_quantity" }),
-            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-          );
-        }
+      const { data: rpcData, error: rpcError } = await supabase.rpc("create_order", {
+        p_customer_email: customer_email,
+        p_customer_full_name: customer_full_name,
+        p_customer_phone: customer_phone ?? null,
+        p_shipping_recipient_name: shipping_recipient_name ?? customer_full_name,
+        p_shipping_phone: shipping_phone ?? "",
+        p_shipping_address: shipping_address,
+        p_shipping_city: shipping_city,
+        p_shipping_state: shipping_state ?? "",
+        p_shipping_postal_code: shipping_postal_code,
+        p_shipping_country: shipping_country,
+        p_shipping_landmark: shipping_landmark ?? null,
+        p_shipping_option: shipping_option,
+        p_notes: notes ?? null,
+        p_items: items,
+      });
 
-        const { data: product, error: productError } = await supabase
-          .from("products")
-          .select("id, selling_price, name, status, stock")
-          .eq("id", item.product_id)
-          .single();
-
-        if (productError || !product) {
-          return new Response(
-            JSON.stringify({ error: `Product ${item.product_id} not found`, code: "product_not_found" }),
-            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-          );
-        }
-
-        if (product.status !== "active" && product.status !== "published") {
-          return new Response(
-            JSON.stringify({ error: `Product ${item.product_id} is not available`, code: "product_not_available" }),
-            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-          );
-        }
-
-        if (product.stock < item.quantity) {
-          return new Response(
-            JSON.stringify({
-              error: `Insufficient stock for ${product.name}`,
-              code: "insufficient_stock",
-              product_id: item.product_id,
-              available: product.stock,
-              requested: item.quantity,
-            }),
-            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-          );
-        }
-
-        subtotal += product.selling_price * item.quantity;
-      }
-
-      let shippingCost = 0;
-      if (shipping_option === "express") shippingCost = 800;
-      else if (shipping_option === "overnight") shippingCost = 2400;
-
-      orderTotal = subtotal + shippingCost;
-
-      // Upsert customer by email
-      const { data: existingCustomer } = await supabase
-        .from("customers")
-        .select("id")
-        .eq("email", customer_email.toLowerCase())
-        .maybeSingle();
-
-      let customerId: string;
-      if (existingCustomer) {
-        customerId = existingCustomer.id;
-      } else {
-          const { data: newCustomer, error: customerError } = await supabase
-            .from("customers")
-            .insert({ email: customer_email, full_name: customer_full_name, phone: customer_phone ?? null })
-            .select("id")
-            .single();
-
-        if (customerError || !newCustomer) {
-          console.error("Failed to create customer:", customerError);
-          return new Response(
-            JSON.stringify({ error: "customer_creation_failed" }),
-            { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-          );
-        }
-        customerId = newCustomer.id;
-      }
-
-      // Insert shipping address
-      const { data: address, error: addressError } = await supabase
-        .from("shipping_addresses")
-        .insert({
-          customer_id: customerId,
-          recipient_name: shipping_recipient_name ?? customer_full_name,
-          phone: shipping_phone ?? "",
-          address: shipping_address,
-          city: shipping_city,
-          state: shipping_state ?? "",
-          postal_code: shipping_postal_code,
-          country: shipping_country,
-          landmark: shipping_landmark ?? null,
-        })
-        .select("id")
-        .single();
-
-      if (addressError || !address) {
-        console.error("Failed to insert shipping address:", addressError);
+      if (rpcError || !rpcData) {
+        console.error("Failed to create order via RPC:", rpcError);
+        // Fallback error parsing if it throws an exception (which it does using RAISE EXCEPTION)
+        const errorMsg = rpcError?.message || "order_creation_failed";
         return new Response(
-          JSON.stringify({ error: "address_creation_failed" }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+          JSON.stringify({ error: errorMsg }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
         );
       }
 
-      // Generate order number
-      const { data: orderNumResult, error: orderNumError } = await supabase
-        .rpc("generate_order_number");
-
-      if (orderNumError || !orderNumResult) {
-        console.error("Failed to generate order number:", orderNumError);
-        return new Response(
-          JSON.stringify({ error: "order_number_failed" }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-        );
-      }
-      orderNumber = orderNumResult as string;
-
-      // Insert order
-      const { data: order, error: orderError } = await supabase
-        .from("orders")
-        .insert({
-          customer_id: customerId,
-          shipping_address_id: address.id,
-          order_number: orderNumber,
-          status: "pending_payment",
-          payment_status: "pending",
-          subtotal,
-          shipping_cost: shippingCost,
-          total: orderTotal,
-          notes: notes ?? null,
-        })
-        .select("id")
-        .single();
-
-      if (orderError || !order) {
-        console.error("Failed to insert order:", orderError);
-        return new Response(
-          JSON.stringify({ error: "order_creation_failed" }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-        );
-      }
-      orderId = order.id;
-
-      // Insert order items with product info from DB
-      const orderItems = [];
-      for (const item of items) {
-        const { data: product } = await supabase
-          .from("products")
-          .select("name, selling_price")
-          .eq("id", item.product_id)
-          .single();
-
-        const { data: image } = await supabase
-          .from("product_images")
-          .select("url")
-          .eq("product_id", item.product_id)
-          .eq("is_primary", true)
-          .limit(1)
-          .maybeSingle();
-
-        orderItems.push({
-          order_id: orderId,
-          product_id: item.product_id,
-          product_name: product?.name ?? "",
-          product_price: product?.selling_price ?? 0,
-          quantity: item.quantity,
-          image_url: image?.url ?? null,
-        });
-      }
-
-      const { error: itemsError } = await supabase
-        .from("order_items")
-        .insert(orderItems);
-
-      if (itemsError) {
-        console.error("Failed to insert order items:", itemsError);
-        return new Response(
-          JSON.stringify({ error: "order_items_failed" }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-        );
-      }
+      orderId = rpcData.order_id;
+      orderNumber = rpcData.order_number;
+      orderTotal = rpcData.total;
     }
 
     // --- Step 2: Create Razorpay order ---

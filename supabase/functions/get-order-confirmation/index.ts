@@ -101,7 +101,7 @@ serve(async (req) => {
 
     const { data: order, error: orderError } = await supabase
       .from("orders")
-      .select("id, order_number, status, payment_status, created_at, subtotal, shipping_cost, total, shipping_address_id")
+      .select("id, order_number, status, payment_status, created_at, subtotal, shipping_cost, total, shipping_address_id, customers(email)")
       .eq("order_number", orderNumber)
       .maybeSingle();
 
@@ -117,6 +117,15 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ error: "order_not_found" }),
         { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    const { data: isAdmin } = await supabaseAuth.rpc("is_admin", { user_id: user.id });
+
+    if (!isAdmin && (order.customers as unknown as { email: string })?.email !== user.email) {
+      return new Response(
+        JSON.stringify({ error: "forbidden" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 

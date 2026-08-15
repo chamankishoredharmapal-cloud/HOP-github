@@ -14,10 +14,13 @@ export const customerAuthService = {
     });
     if (error) throw error;
     if (data.user) {
-      await supabase.from("customers").upsert(
-        { id: data.user.id, email, full_name: fullName },
-        { onConflict: "id" }
-      );
+      const { error: rpcError } = await supabase.rpc("upsert_customer_profile", {
+        p_email: email,
+        p_full_name: fullName,
+      });
+      if (rpcError) {
+        console.error("Failed to sync customer profile:", rpcError);
+      }
     }
     return data;
   },

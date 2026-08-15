@@ -10,10 +10,12 @@ export function usePrerenderReady(isReady: boolean) {
     if (isReady && typeof window !== "undefined") {
       // Delay slightly to ensure React has flushed the DOM and Helmet/Metadata has injected tags.
       const timer = setTimeout(() => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (window as any).__PRERENDER_STATUS = "ready";
       }, 100);
       return () => clearTimeout(timer);
     } else if (typeof window !== "undefined") {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).__PRERENDER_STATUS = "loading";
     }
   }, [isReady]);

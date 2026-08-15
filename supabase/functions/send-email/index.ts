@@ -37,6 +37,31 @@ serve(async (req) => {
   }
 
   try {
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2.106.2");
+    const supabaseAuth = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_ANON_KEY")!,
+      { global: { headers: { Authorization: authHeader } } }
+    );
+    const { data: { user }, error: userError } = await supabaseAuth.auth.getUser();
+
+    if (userError || !user) {
+      return new Response(
+        JSON.stringify({ error: "unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    const { data: isAdmin } = await supabaseAuth.rpc("is_admin", { user_id: user.id });
+
     const body: EmailRequest = await req.json();
 
     if (!body.to || !body.subject || !body.body) {
@@ -45,6 +70,15 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
+
+    // Security: Only admins can send to arbitrary addresses. Customers can only email themselves.
+    if (!isAdmin && body.to !== user.email) {
+      return new Response(
+        JSON.stringify({ error: "forbidden_recipient" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
 
     console.log("[send-email] Email payload:", {
       to: body.to,

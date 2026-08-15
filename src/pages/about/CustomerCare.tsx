@@ -36,8 +36,9 @@ const SareeCare = () => {
   }
   if (touched.message && !message.trim()) errors.message = "Message is required";
 
-  const handleBlur = (field: string) => {
   usePrerenderReady(true);
+
+  const handleBlur = (field: string) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 

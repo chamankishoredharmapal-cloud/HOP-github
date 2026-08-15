@@ -63,7 +63,16 @@ async function verifyWebhookSignature(
   const expected = Array.from(new Uint8Array(sigBytes))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
-  return expected === signature;
+
+  // Constant-time comparison to prevent timing attacks (SOP mandate)
+  if (expected.length !== signature.length) return false;
+  const a = encoder.encode(expected);
+  const b = encoder.encode(signature);
+  let result = 0;
+  for (let i = 0; i < a.length; i++) {
+    result |= a[i] ^ b[i];
+  }
+  return result === 0;
 }
 
 serve(async (req) => {

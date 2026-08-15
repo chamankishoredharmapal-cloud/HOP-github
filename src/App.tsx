@@ -65,7 +65,9 @@ import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 
 if (typeof window !== "undefined") {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as any).__QUERY_CLIENT__ = queryClient;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as any).ReactQueryDehydrate = dehydrate;
 }
 
@@ -81,6 +83,7 @@ function StudioRoute({ children, title }: { children: React.ReactNode; title: st
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
     <HydrationBoundary state={typeof window !== "undefined" ? (window as any).__REACT_QUERY_STATE__ : undefined}>
       <TooltipProvider>
       <CartProvider>
