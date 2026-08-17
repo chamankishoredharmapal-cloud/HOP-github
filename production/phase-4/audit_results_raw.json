@@ -1,0 +1,832 @@
+{
+  "timestamp": "2026-08-17T08:05:41.234Z",
+  "routesTested": [
+    {
+      "path": "/",
+      "type": "homepage",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:41 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "House of Padmavati",
+        "metaDesc": "House of Padmavati is a digital fashion house for Indian sarees.",
+        "canonical": "https://houseofpadmavati.com/",
+        "ogTitle": "House of Padmavati",
+        "ogDesc": "House of Padmavati is a digital fashion house for Indian sarees.",
+        "ogUrl": "https://houseofpadmavati.com/",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees.",
+                "url": "https://houseofpadmavati.com",
+                "logo": "https://houseofpadmavati.com/favicon.png",
+                "sameAs": [
+                  "https://instagram.com/houseofpadmavati",
+                  "https://pinterest.com/houseofpadmavati"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "url": "https://houseofpadmavati.com",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees."
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "Saree. Time. You."
+        ],
+        "h2Tags": [
+          "Five Different Ways to Wear Tradition",
+          "How tradition is worn."
+        ]
+      },
+      "timing": {
+        "ttfb": 8.599999994039536,
+        "domInteractive": 124.09999999403954,
+        "domContentLoaded": 140.20000000298023,
+        "loadEventEnd": 142.90000000596046,
+        "transferSize": 31173,
+        "encodedBodySize": 30873,
+        "decodedBodySize": 30873
+      },
+      "paint": {
+        "first-paint": 144,
+        "first-contentful-paint": 144
+      }
+    },
+    {
+      "path": "/collections",
+      "type": "collections",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:46 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "Collections — House of Padmavati",
+        "metaDesc": "Five ways of wearing tradition.",
+        "canonical": "https://houseofpadmavati.com/collections",
+        "ogTitle": "Collections — House of Padmavati",
+        "ogDesc": "Five ways of wearing tradition.",
+        "ogUrl": "https://houseofpadmavati.com/collections",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees.",
+                "url": "https://houseofpadmavati.com",
+                "logo": "https://houseofpadmavati.com/favicon.png",
+                "sameAs": [
+                  "https://instagram.com/houseofpadmavati",
+                  "https://pinterest.com/houseofpadmavati"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "url": "https://houseofpadmavati.com",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees."
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "Five ways of wearing tradition."
+        ],
+        "h2Tags": [
+          "Kalyani",
+          "Viara",
+          "Arya",
+          "Padma",
+          "Spandana"
+        ]
+      },
+      "timing": {
+        "ttfb": 2,
+        "domInteractive": 109.6000000089407,
+        "domContentLoaded": 124,
+        "loadEventEnd": 126.40000000596046,
+        "transferSize": 56784,
+        "encodedBodySize": 56484,
+        "decodedBodySize": 56484
+      },
+      "paint": {
+        "first-paint": 144,
+        "first-contentful-paint": 144
+      }
+    },
+    {
+      "path": "/collections/kalyani",
+      "type": "collection_detail",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:47 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "Kalyani — House of Padmavati",
+        "metaDesc": "Every saree currently in the house.",
+        "canonical": "https://houseofpadmavati.com/collections/kalyani",
+        "ogTitle": "Kalyani — House of Padmavati",
+        "ogDesc": "Every saree currently in the house.",
+        "ogUrl": "https://houseofpadmavati.com/collections/kalyani",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "House",
+                "item": "https://houseofpadmavati.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Collections",
+                "item": "https://houseofpadmavati.com/collections"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Kalyani",
+                "item": "https://houseofpadmavati.com/collections/kalyani"
+              }
+            ]
+          }
+        ],
+        "h1Tags": [],
+        "h2Tags": []
+      },
+      "timing": {
+        "ttfb": 2.2999999970197678,
+        "domInteractive": 102.29999999701977,
+        "domContentLoaded": 122.59999999403954,
+        "loadEventEnd": 125.40000000596046,
+        "transferSize": 50467,
+        "encodedBodySize": 50167,
+        "decodedBodySize": 50167
+      },
+      "paint": {
+        "first-paint": 112,
+        "first-contentful-paint": 112
+      }
+    },
+    {
+      "path": "/about",
+      "type": "about",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:49 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "The House — House of Padmavati",
+        "metaDesc": "The story of House of Padmavati. A digital fashion house for Indian sarees.",
+        "canonical": "https://houseofpadmavati.com/about",
+        "ogTitle": "The House — House of Padmavati",
+        "ogDesc": "The story of House of Padmavati. A digital fashion house for Indian sarees.",
+        "ogImage": "https://houseofpadmavati.com/assets/hop-hero-CdNzEp8V.jpg",
+        "ogUrl": "https://houseofpadmavati.com/about",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees.",
+                "url": "https://houseofpadmavati.com",
+                "logo": "https://houseofpadmavati.com/favicon.png",
+                "sameAs": [
+                  "https://instagram.com/houseofpadmavati",
+                  "https://pinterest.com/houseofpadmavati"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "url": "https://houseofpadmavati.com",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees."
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "The House."
+        ],
+        "h2Tags": []
+      },
+      "timing": {
+        "ttfb": 2.7999999970197678,
+        "domInteractive": 41.099999994039536,
+        "domContentLoaded": 116,
+        "loadEventEnd": 118.3999999910593,
+        "transferSize": 43956,
+        "encodedBodySize": 43656,
+        "decodedBodySize": 43656
+      },
+      "paint": {
+        "first-paint": 124,
+        "first-contentful-paint": 124
+      }
+    },
+    {
+      "path": "/customer-care",
+      "type": "customer_care",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:50 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "Customer Care · House of Padmavati",
+        "metaDesc": "Customer care and correspondence.",
+        "canonical": "https://houseofpadmavati.com/customer-care",
+        "ogTitle": "Customer Care · House of Padmavati",
+        "ogDesc": "Customer care and correspondence.",
+        "ogUrl": "https://houseofpadmavati.com/customer-care",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees.",
+                "url": "https://houseofpadmavati.com",
+                "logo": "https://houseofpadmavati.com/favicon.png",
+                "sameAs": [
+                  "https://instagram.com/houseofpadmavati",
+                  "https://pinterest.com/houseofpadmavati"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "url": "https://houseofpadmavati.com",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees."
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "Customer Care."
+        ],
+        "h2Tags": [
+          "Write to the House"
+        ]
+      },
+      "timing": {
+        "ttfb": 2.2999999970197678,
+        "domInteractive": 137.40000000596046,
+        "domContentLoaded": 161.20000000298023,
+        "loadEventEnd": 163.59999999403954,
+        "transferSize": 46740,
+        "encodedBodySize": 46440,
+        "decodedBodySize": 46440
+      },
+      "paint": {
+        "first-paint": 172,
+        "first-contentful-paint": 172
+      }
+    },
+    {
+      "path": "/privacy-policy",
+      "type": "legal",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:51 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "Privacy · House of Padmavati",
+        "metaDesc": "Privacy policy for House of Padmavati — how we collect, use, and protect your personal information.",
+        "canonical": "https://houseofpadmavati.com/privacy-policy",
+        "ogTitle": "Privacy · House of Padmavati",
+        "ogDesc": "Privacy policy for House of Padmavati — how we collect, use, and protect your personal information.",
+        "ogUrl": "https://houseofpadmavati.com/privacy-policy",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees.",
+                "url": "https://houseofpadmavati.com",
+                "logo": "https://houseofpadmavati.com/favicon.png",
+                "sameAs": [
+                  "https://instagram.com/houseofpadmavati",
+                  "https://pinterest.com/houseofpadmavati"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "url": "https://houseofpadmavati.com",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees."
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "Privacy"
+        ],
+        "h2Tags": [
+          "1. Introduction",
+          "2. Information We Collect",
+          "3. How We Use Your Information",
+          "4. Analytics and Tracking",
+          "5. Third-Party Services We Use",
+          "6. Cookies",
+          "7. Data Sharing and Disclosure",
+          "8. Data Security",
+          "9. Data Retention",
+          "10. Your Rights",
+          "11. Children's Privacy",
+          "12. Changes to This Policy",
+          "13. Contact Us"
+        ]
+      },
+      "timing": {
+        "ttfb": 2.3999999910593033,
+        "domInteractive": 108,
+        "domContentLoaded": 123.8999999910593,
+        "loadEventEnd": 126,
+        "transferSize": 49503,
+        "encodedBodySize": 49203,
+        "decodedBodySize": 49203
+      },
+      "paint": {
+        "first-paint": 136,
+        "first-contentful-paint": 136
+      }
+    },
+    {
+      "path": "/journal",
+      "type": "journal",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:52 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "The Journal — House of Padmavati",
+        "metaDesc": "The House of Padmavati Journal.",
+        "canonical": "https://houseofpadmavati.com/journal",
+        "ogTitle": "The Journal — House of Padmavati",
+        "ogDesc": "The House of Padmavati Journal.",
+        "ogUrl": "https://houseofpadmavati.com/journal",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees.",
+                "url": "https://houseofpadmavati.com",
+                "logo": "https://houseofpadmavati.com/favicon.png",
+                "sameAs": [
+                  "https://instagram.com/houseofpadmavati",
+                  "https://pinterest.com/houseofpadmavati"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "url": "https://houseofpadmavati.com",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees."
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "The Journal."
+        ],
+        "h2Tags": [
+          "How morning light reads a weave."
+        ]
+      },
+      "timing": {
+        "ttfb": 1.3999999910593033,
+        "domInteractive": 42.5,
+        "domContentLoaded": 115.40000000596046,
+        "loadEventEnd": 117.80000001192093,
+        "transferSize": 44508,
+        "encodedBodySize": 44208,
+        "decodedBodySize": 44208
+      },
+      "paint": {
+        "first-paint": 140,
+        "first-contentful-paint": 140
+      }
+    },
+    {
+      "path": "/lookbook",
+      "type": "lookbook",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:52 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "Lookbook · House of Padmavati",
+        "metaDesc": "A visual archive of House of Padmavati.",
+        "canonical": "https://houseofpadmavati.com/lookbook",
+        "ogTitle": "Lookbook · House of Padmavati",
+        "ogDesc": "A visual archive of House of Padmavati.",
+        "ogUrl": "https://houseofpadmavati.com/lookbook",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees.",
+                "url": "https://houseofpadmavati.com",
+                "logo": "https://houseofpadmavati.com/favicon.png",
+                "sameAs": [
+                  "https://instagram.com/houseofpadmavati",
+                  "https://pinterest.com/houseofpadmavati"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "url": "https://houseofpadmavati.com",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees."
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "Lookbook."
+        ],
+        "h2Tags": []
+      },
+      "timing": {
+        "ttfb": 1.5,
+        "domInteractive": 40,
+        "domContentLoaded": 101.69999998807907,
+        "loadEventEnd": 1882.7999999970198,
+        "transferSize": 45902,
+        "encodedBodySize": 45602,
+        "decodedBodySize": 45602
+      },
+      "paint": {
+        "first-paint": 116,
+        "first-contentful-paint": 116
+      }
+    },
+    {
+      "path": "/campaigns/quiet-wedding",
+      "type": "campaign",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:55 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "The Quiet Wedding · House of Padmavati",
+        "metaDesc": "Bridal collection.",
+        "canonical": "https://houseofpadmavati.com/campaigns/quiet-wedding",
+        "ogTitle": "The Quiet Wedding · House of Padmavati",
+        "ogDesc": "Bridal collection.",
+        "ogUrl": "https://houseofpadmavati.com/campaigns/quiet-wedding",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees.",
+                "url": "https://houseofpadmavati.com",
+                "logo": "https://houseofpadmavati.com/favicon.png",
+                "sameAs": [
+                  "https://instagram.com/houseofpadmavati",
+                  "https://pinterest.com/houseofpadmavati"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "url": "https://houseofpadmavati.com",
+                "name": "House of Padmavati",
+                "description": "A digital fashion house for Indian sarees."
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "Bridal."
+        ],
+        "h2Tags": [
+          "Bridal."
+        ]
+      },
+      "timing": {
+        "ttfb": 1.5999999940395355,
+        "domInteractive": 40.29999999701977,
+        "domContentLoaded": 103.70000000298023,
+        "loadEventEnd": 2187.4000000059605,
+        "transferSize": 44536,
+        "encodedBodySize": 44236,
+        "decodedBodySize": 44236
+      },
+      "paint": {
+        "first-paint": 112,
+        "first-contentful-paint": 112
+      }
+    },
+    {
+      "path": "/nonexistent-route-xyz-404",
+      "type": "nonexistent",
+      "httpStatus": 404,
+      "headers": {
+        "cache-control": "no-cache",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:05:58 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "404 — House of Padmavati",
+        "metaDesc": "The page you are looking for does not exist.",
+        "canonical": "https://houseofpadmavati.com/nonexistent-route-xyz-404",
+        "ogTitle": "404 — House of Padmavati",
+        "ogDesc": "The page you are looking for does not exist.",
+        "ogUrl": "https://houseofpadmavati.com/nonexistent-route-xyz-404",
+        "robots": "noindex, nofollow",
+        "jsonLdScripts": [],
+        "h1Tags": [
+          "404"
+        ],
+        "h2Tags": []
+      },
+      "timing": {
+        "ttfb": 2.2000000029802322,
+        "domInteractive": 18.099999994039536,
+        "domContentLoaded": 69.90000000596046,
+        "loadEventEnd": 70.5,
+        "transferSize": 2537,
+        "encodedBodySize": 2237,
+        "decodedBodySize": 2237
+      },
+      "paint": {
+        "first-paint": 56,
+        "first-contentful-paint": 192
+      }
+    },
+    {
+      "path": "/sitemap.xml",
+      "type": "sitemap",
+      "httpStatus": 200,
+      "contentType": "application/xml",
+      "contentSample": "<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><style id=\"xml-viewer-style\">/* Copyright 2014 The Chromium Authors\n * Use of this source code is governed by a BSD-style license that can be\n * found in the LICENSE file.\n */\n\n:root {\n  color-scheme: light dark;\n}\n\ndiv.header {\n    border-bottom: 2px"
+    },
+    {
+      "path": "/robots.txt",
+      "type": "robots",
+      "httpStatus": 200,
+      "contentType": "text/plain",
+      "contentSample": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">User-agent: *\nAllow: /\nDisallow: /studio/\nDisallow: /checkout\nDisallow: /cart\nDisallow: /account/\nDisallow: /*?*sort=\n\nSitemap: https://houseofpadmavati.com/sitemap.xml\n"
+    },
+    {
+      "path": "/product/3d123e03-be1b-4454-a0c3-14e809146d92",
+      "type": "product_detail",
+      "httpStatus": 200,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "connection": "keep-alive",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://api.razorpay.com; object-src 'none'; base-uri 'self'; form-action 'self';",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 08:06:00 GMT",
+        "keep-alive": "timeout=5",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "seo": {
+        "title": "abc — House of Padmavati",
+        "metaDesc": "assasas",
+        "canonical": "https://houseofpadmavati.com/product/3d123e03-be1b-4454-a0c3-14e809146d92",
+        "ogTitle": "abc — House of Padmavati",
+        "ogDesc": "assasas",
+        "ogImage": "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/product-images/3d123e03-be1b-4454-a0c3-14e809146d92/4de69a01-5526-4486-b99c-17b100f29201.png",
+        "ogUrl": "https://houseofpadmavati.com/product/3d123e03-be1b-4454-a0c3-14e809146d92",
+        "jsonLdScripts": [
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Product",
+                "name": "abc",
+                "description": "assasas",
+                "image": "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/product-images/3d123e03-be1b-4454-a0c3-14e809146d92/4de69a01-5526-4486-b99c-17b100f29201.png",
+                "brand": {
+                  "@type": "Brand",
+                  "name": "House of Padmavati"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "price": "123.00",
+                  "priceCurrency": "INR",
+                  "availability": "https://schema.org/OutOfStock"
+                }
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "House",
+                    "item": "https://houseofpadmavati.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Kalyani",
+                    "item": "https://houseofpadmavati.com/collections/abc"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "abc",
+                    "item": "https://houseofpadmavati.com/product/3d123e03-be1b-4454-a0c3-14e809146d92"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "h1Tags": [
+          "abc"
+        ],
+        "h2Tags": [
+          "Related pieces."
+        ]
+      },
+      "timing": {
+        "ttfb": 2,
+        "domInteractive": 46.20000000298023,
+        "domContentLoaded": 125.1000000089407,
+        "loadEventEnd": 1281.7000000029802,
+        "transferSize": 55343,
+        "encodedBodySize": 55043,
+        "decodedBodySize": 55043
+      },
+      "paint": {
+        "first-paint": 132,
+        "first-contentful-paint": 132
+      }
+    }
+  ],
+  "performanceMetrics": {
+    "mobile_/": {
+      "paint": {
+        "first-paint": 200,
+        "first-contentful-paint": 200
+      },
+      "ttfb": 1.7999999970197678,
+      "domInteractive": 46,
+      "loadEventEnd": 197.29999999701977
+    },
+    "mobile_/collections/kalyani": {
+      "paint": {
+        "first-paint": 136,
+        "first-contentful-paint": 136
+      },
+      "ttfb": 1.5,
+      "domInteractive": 79.09999999403954,
+      "loadEventEnd": 142.3999999910593
+    },
+    "mobile_/about": {
+      "paint": {
+        "first-paint": 120,
+        "first-contentful-paint": 120
+      },
+      "ttfb": 1.9000000059604645,
+      "domInteractive": 81.5,
+      "loadEventEnd": 99.79999999701977
+    }
+  },
+  "seoAudit": {},
+  "routingAudit": {},
+  "securityHeaders": {}
+}

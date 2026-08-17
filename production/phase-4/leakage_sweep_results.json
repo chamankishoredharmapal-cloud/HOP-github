@@ -1,0 +1,2250 @@
+[
+  {
+    "file": ".ai/prompts/WRITE_EDGE_FUNCTION.md",
+    "lineNum": 54,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/PAYMENT_FLOW.md",
+    "lineNum": 31,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 6,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 13,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 19,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 20,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 24,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 28,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 29,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 33,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 34,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 37,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 41,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 44,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 53,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/reference/RLS_POLICIES.md",
+    "lineNum": 54,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/rules/SECURITY_STANDARDS.md",
+    "lineNum": 115,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/rules/SUPABASE_STANDARDS.md",
+    "lineNum": 53,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/rules/SUPABASE_STANDARDS.md",
+    "lineNum": 57,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/rules/SUPABASE_STANDARDS.md",
+    "lineNum": 132,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/PAYMENT_SECURITY.md",
+    "lineNum": 108,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 15,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 19,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 24,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 29,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 41,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 46,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 50,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 62,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 68,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 80,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 86,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 101,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 111,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 130,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 139,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/security/SUPABASE_RLS_POLICIES.md",
+    "lineNum": 141,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/standards/DATABASE.md",
+    "lineNum": 31,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/standards/DATABASE.md",
+    "lineNum": 32,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/standards/DATABASE.md",
+    "lineNum": 35,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": ".ai/standards/DATABASE.md",
+    "lineNum": 57,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/assets/index-DUp2vlMw.js",
+    "lineNum": 30,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/assets/index-DUp2vlMw.js",
+    "lineNum": 33,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/arya/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/arya/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/kalyani/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/kalyani/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/padma/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/padma/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/spandana/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/spandana/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/viara/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/collections/viara/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/index.html",
+    "lineNum": 38,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/journal/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/3d123e03-be1b-4454-a0c3-14e809146d92/index.html",
+    "lineNum": 36,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/3d123e03-be1b-4454-a0c3-14e809146d92/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/3d123e03-be1b-4454-a0c3-14e809146d92/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/5215d2f7-82b1-4b98-8d5b-e5d68e3bf034/index.html",
+    "lineNum": 36,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/5215d2f7-82b1-4b98-8d5b-e5d68e3bf034/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/5215d2f7-82b1-4b98-8d5b-e5d68e3bf034/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/a2799dd3-80a5-4cc4-b510-031678a2c1f7/index.html",
+    "lineNum": 36,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/a2799dd3-80a5-4cc4-b510-031678a2c1f7/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/a2799dd3-80a5-4cc4-b510-031678a2c1f7/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/d31d9bdc-1975-4acd-acb2-c1b90857e0ea/index.html",
+    "lineNum": 36,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/d31d9bdc-1975-4acd-acb2-c1b90857e0ea/index.html",
+    "lineNum": 39,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "dist/product/d31d9bdc-1975-4acd-acb2-c1b90857e0ea/index.html",
+    "lineNum": 43,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PRERENDERED_HTML_MEDIA_REF",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/decisions/ADR-001-supabase-backend.md",
+    "lineNum": 20,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/decisions/ADR-004-rls-default-deny-orders.md",
+    "lineNum": 9,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/DEPLOYMENT.md",
+    "lineNum": 7,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/DEPLOYMENT.md",
+    "lineNum": 9,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/QA_CHECKLIST.md",
+    "lineNum": 14,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/README.md",
+    "lineNum": 127,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/README.md",
+    "lineNum": 128,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/SECURITY.md",
+    "lineNum": 26,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/SECURITY.md",
+    "lineNum": 67,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/SECURITY.md",
+    "lineNum": 70,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/SECURITY.md",
+    "lineNum": 76,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/SECURITY.md",
+    "lineNum": 79,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/SECURITY.md",
+    "lineNum": 80,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "docs/storefront/homepage.md",
+    "lineNum": 66,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 694,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 712,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 730,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 747,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 818,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 836,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 872,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 890,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 908,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 926,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 944,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 980,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 998,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1016,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1034,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1052,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1070,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1088,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1106,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1124,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1190,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1194,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1250,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 1289,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 2938,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3079,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3083,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3087,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3091,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3095,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3099,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3526,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3532,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3538,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3544,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3550,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3556,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3562,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3568,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3574,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3580,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3586,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3592,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3598,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3604,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 3610,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4049,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4532,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4537,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4542,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4547,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4552,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4557,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4562,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 4567,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "ops/releases/v0.1.0/ph3-lighthouse-index-desktop-20260811.json",
+    "lineNum": 5495,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/01_PRE_PRODUCTION_AUDIT.md",
+    "lineNum": 119,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/08_SECURITY_AUDIT.md",
+    "lineNum": 310,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/AI_PRODUCTION_EXECUTION_MANUAL.md",
+    "lineNum": 555,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/AI_PRODUCTION_EXECUTION_MANUAL.md",
+    "lineNum": 801,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/AI_PRODUCTION_EXECUTION_MANUAL_AUDIT.md",
+    "lineNum": 149,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/human_blocker.md",
+    "lineNum": 6,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/human_blocker.md",
+    "lineNum": 6,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/human_blocker.md",
+    "lineNum": 7,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/human_blocker.md",
+    "lineNum": 7,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-1/phase1_webhook_final_verification.md",
+    "lineNum": 52,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-2/08_SECRET_EXPOSURE_AUDIT.md",
+    "lineNum": 10,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-2/08_SECRET_EXPOSURE_AUDIT.md",
+    "lineNum": 21,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-2/13_PRE_COMMIT_GOVERNANCE_REVIEW.md",
+    "lineNum": 66,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-2/phase2_security_audit_report.md",
+    "lineNum": 34,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-2/phase2_security_audit_report.md",
+    "lineNum": 54,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/10_PLAYWRIGHT_TEST_EVIDENCE.md",
+    "lineNum": 4,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/11_FINDING_REGISTER.md",
+    "lineNum": 13,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/12_RECONCILIATION.md",
+    "lineNum": 18,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/14_PHASE_3_CLOSURE_REPORT.md",
+    "lineNum": 6,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/14_PHASE_3_CLOSURE_REPORT.md",
+    "lineNum": 7,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/14_PHASE_3_CLOSURE_REPORT.md",
+    "lineNum": 15,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/14_PHASE_3_CLOSURE_REPORT.md",
+    "lineNum": 59,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/14_PHASE_3_FINAL_CLOSURE.md",
+    "lineNum": 16,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/14_PHASE_3_FINAL_CLOSURE.md",
+    "lineNum": 27,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/14_PHASE_3_FINAL_CLOSURE.md",
+    "lineNum": 29,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/15_MIGRATION_RECONCILIATION_STAGING.md",
+    "lineNum": 4,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/15_MIGRATION_RECONCILIATION_STAGING.md",
+    "lineNum": 4,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/15_MIGRATION_RECONCILIATION_STAGING.md",
+    "lineNum": 12,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/15_MIGRATION_RECONCILIATION_STAGING.md",
+    "lineNum": 69,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/15_MIGRATION_RECONCILIATION_STAGING.md",
+    "lineNum": 125,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/15_MIGRATION_RECONCILIATION_STAGING.md",
+    "lineNum": 126,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 4,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 5,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 14,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 18,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 25,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 30,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 39,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 53,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 54,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 56,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 87,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 203,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 217,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 233,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 238,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 246,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 271,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_PART_1_STAGING_RECONCILIATION_REPORT.md",
+    "lineNum": 272,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md",
+    "lineNum": 4,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md",
+    "lineNum": 16,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md",
+    "lineNum": 17,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md",
+    "lineNum": 32,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md",
+    "lineNum": 40,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md",
+    "lineNum": 48,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md",
+    "lineNum": 59,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-3/PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md",
+    "lineNum": 69,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/01_PHASE_4_BASELINE.md",
+    "lineNum": 26,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/01_PHASE_4_BASELINE.md",
+    "lineNum": 27,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/01_PHASE_4_BASELINE.md",
+    "lineNum": 28,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/01_PHASE_4_BASELINE.md",
+    "lineNum": 32,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/01_PHASE_4_BASELINE.md",
+    "lineNum": 32,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/01_PHASE_4_BASELINE.md",
+    "lineNum": 33,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/03_STAGING_DEPLOYMENT_SIMULATION.md",
+    "lineNum": 4,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/03_STAGING_DEPLOYMENT_SIMULATION.md",
+    "lineNum": 22,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/03_STAGING_DEPLOYMENT_SIMULATION.md",
+    "lineNum": 49,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/03_STAGING_DEPLOYMENT_SIMULATION.md",
+    "lineNum": 50,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/03_STAGING_DEPLOYMENT_SIMULATION.md",
+    "lineNum": 50,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/04_INFRASTRUCTURE_DELIVERY_AUDIT.md",
+    "lineNum": 54,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/04_INFRASTRUCTURE_DELIVERY_AUDIT.md",
+    "lineNum": 55,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/05_PRODUCTION_OUTPUT_INSPECTION.md",
+    "lineNum": 77,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/06_PART_1_EVIDENCE_REGISTER.md",
+    "lineNum": 14,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/06_PART_1_EVIDENCE_REGISTER.md",
+    "lineNum": 15,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/06_PART_1_EVIDENCE_REGISTER.md",
+    "lineNum": 27,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/07_PART_1_FINDING_REGISTER.md",
+    "lineNum": 13,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/07_PART_1_FINDING_REGISTER.md",
+    "lineNum": 13,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/07_PART_1_FINDING_REGISTER.md",
+    "lineNum": 14,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/07_PART_1_FINDING_REGISTER.md",
+    "lineNum": 14,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/07_PART_1_FINDING_REGISTER.md",
+    "lineNum": 15,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/08_PART_1_CONTRADICTION_REGISTER.md",
+    "lineNum": 13,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/08_PART_1_CONTRADICTION_REGISTER.md",
+    "lineNum": 13,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/08_PART_1_CONTRADICTION_REGISTER.md",
+    "lineNum": 14,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/08_PART_1_CONTRADICTION_REGISTER.md",
+    "lineNum": 14,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/09_PART_1_GATE_REPORT.md",
+    "lineNum": 15,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/09_PART_1_GATE_REPORT.md",
+    "lineNum": 17,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/09_PART_1_GATE_REPORT.md",
+    "lineNum": 17,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/13_PHASE_4_RECONCILIATION.md",
+    "lineNum": 15,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/13_PHASE_4_RECONCILIATION.md",
+    "lineNum": 16,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/13_PHASE_4_RECONCILIATION.md",
+    "lineNum": 29,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/13_PHASE_4_RECONCILIATION.md",
+    "lineNum": 30,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/14_PHASE_4_FINAL_CLOSURE_REPORT.md",
+    "lineNum": 27,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/14_PHASE_4_FINAL_CLOSURE_REPORT.md",
+    "lineNum": 30,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/14_PHASE_4_FINAL_CLOSURE_REPORT.md",
+    "lineNum": 34,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "DOCUMENTATION",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/audit_results_raw.json",
+    "lineNum": 730,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "production/phase-4/audit_results_raw.json",
+    "lineNum": 740,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "scripts/sweep_leakage.mjs",
+    "lineNum": 39,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "scripts/sweep_leakage.mjs",
+    "lineNum": 46,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "scripts/sweep_leakage.mjs",
+    "lineNum": 77,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "scripts/sweep_leakage.mjs",
+    "lineNum": 78,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "scripts/sweep_leakage.mjs",
+    "lineNum": 87,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "scripts/sweep_leakage.mjs",
+    "lineNum": 94,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "scripts/sweep_leakage.mjs",
+    "lineNum": 95,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "scripts/sweep_leakage.mjs",
+    "lineNum": 99,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "src/data/collectionVideos.ts",
+    "lineNum": 8,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PUBLIC_MEDIA_CDN",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "src/data/collectionVideos.ts",
+    "lineNum": 9,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PUBLIC_MEDIA_CDN",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "src/data/collectionVideos.ts",
+    "lineNum": 10,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PUBLIC_MEDIA_CDN",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "src/data/collectionVideos.ts",
+    "lineNum": 11,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PUBLIC_MEDIA_CDN",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "src/data/collectionVideos.ts",
+    "lineNum": 12,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PUBLIC_MEDIA_CDN",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "src/data/collectionVideos.ts",
+    "lineNum": 13,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "PUBLIC_MEDIA_CDN",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "src/__tests__/RazorpayWebhook.spec.ts",
+    "lineNum": 21,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/.temp/linked-project.json",
+    "lineNum": 1,
+    "pattern": "Staging Supabase Ref (zalbmbhczouhrdboucfe)",
+    "classification": "STAGING_INFRASTRUCTURE_REF",
+    "risk": "NONE",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/config.toml",
+    "lineNum": 1,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "SUPABASE_CONFIG_TOML",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/cancel-payment/index.ts",
+    "lineNum": 33,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/cancel-payment/index.ts",
+    "lineNum": 49,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/create-razorpay-order/index.ts",
+    "lineNum": 61,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/create-razorpay-order/index.ts",
+    "lineNum": 75,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/get-order-confirmation/index.ts",
+    "lineNum": 58,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/get-order-confirmation/index.ts",
+    "lineNum": 99,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/razorpay-webhook/index.ts",
+    "lineNum": 123,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/release-inventory/index.ts",
+    "lineNum": 33,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/release-inventory/index.ts",
+    "lineNum": 56,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/functions/verify-payment/index.ts",
+    "lineNum": 67,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "EDGE_FUNCTION_SERVER_ENV",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 475,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 486,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 495,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 504,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 516,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 550,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 563,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 578,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 593,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 599,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 605,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 632,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260706000001_create_order_system.sql",
+    "lineNum": 638,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260708000000_create_orders_schema.sql",
+    "lineNum": 25,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260708000000_create_orders_schema.sql",
+    "lineNum": 188,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260717000000_payment_events.sql",
+    "lineNum": 20,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260717000000_payment_events.sql",
+    "lineNum": 22,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260718000001_create_missing_objects.sql",
+    "lineNum": 94,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "supabase/migrations/20260718000001_create_missing_objects.sql",
+    "lineNum": 193,
+    "pattern": "service_role / SUPABASE_SERVICE_ROLE",
+    "classification": "LOCAL_CONFIG",
+    "risk": "LOW",
+    "disposition": "SAFE"
+  },
+  {
+    "file": "test-security.mjs",
+    "lineNum": 4,
+    "pattern": "Production Supabase Ref (kbvjmcnaaogkbnerjcoc)",
+    "classification": "CLIENT_CODE",
+    "risk": "LOW (READ-ONLY PUBLIC)",
+    "disposition": "SAFE"
+  }
+]

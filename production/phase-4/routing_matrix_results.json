@@ -1,0 +1,63 @@
+[
+  {
+    "scenario": "Known valid static route",
+    "path": "/about",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "title": "The House — House of Padmavati",
+    "canonical": "https://houseofpadmavati.com/about",
+    "h1": "The House.",
+    "bodySnippet": "Skip to main content COLLECTIONS JOURNAL ABOUT HOUSE OF PADMAVATI (0) The House Our Story Saree Care The House. A digital fashion house for Indian sarees. House of Padmavati is named for a real woma"
+  },
+  {
+    "scenario": "Known valid collection route",
+    "path": "/collections/kalyani",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "title": "Kalyani — House of Padmavati",
+    "canonical": "https://houseofpadmavati.com/collections/kalyani",
+    "h1": "",
+    "bodySnippet": "Skip to main content COLLECTIONS JOURNAL ABOUT HOUSE OF PADMAVATI (0) HOUSE COLLECTIONS KALYANI ALL WEAVES · ALL SEASONS 2 sarees Timeless. Sacred. Enduring. Every saree in the house — Kalyani SO"
+  },
+  {
+    "scenario": "Known invalid static asset",
+    "path": "/assets/nonexistent-asset-12345.js",
+    "httpStatus": 404,
+    "contentType": "text/html; charset=utf-8",
+    "title": "404 — House of Padmavati",
+    "metaRobots": "noindex, nofollow",
+    "canonical": "https://houseofpadmavati.com/assets/nonexistent-asset-12345.js",
+    "h1": "404",
+    "bodySnippet": "Skip to main content COLLECTIONS JOURNAL ABOUT HOUSE OF PADMAVATI (0) 404 The page you are looking for does not exist. RETURN HOUSE OF PADMAVATI To the woman who wove my world. A digital fashion "
+  },
+  {
+    "scenario": "Invalid product route (nonexistent UUID)",
+    "path": "/product/00000000-0000-0000-0000-000000000000",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "title": "House of Padmavati",
+    "canonical": "https://houseofpadmavati.com/product/00000000-0000-0000-0000-000000000000",
+    "h1": "",
+    "bodySnippet": "Skip to main content COLLECTIONS JOURNAL ABOUT HOUSE OF PADMAVATI (0) HOUSE OF PADMAVATI To the woman who wove my world. A digital fashion house for Indian sarees. Email address JOIN Collections K"
+  },
+  {
+    "scenario": "Invalid collection route (nonexistent slug)",
+    "path": "/collections/nonexistent-collection-slug",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "title": "The Atelier — House of Padmavati",
+    "canonical": "https://houseofpadmavati.com/collections/nonexistent-collection-slug",
+    "h1": "",
+    "bodySnippet": "Skip to main content COLLECTIONS JOURNAL ABOUT HOUSE OF PADMAVATI (0) HOUSE COLLECTIONS THE ATELIER ALL WEAVES · ALL SEASONS Every saree in the house — The Atelier SORT Newest first Price: Low to H"
+  },
+  {
+    "scenario": "Deep-link route refresh",
+    "path": "/privacy-policy",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "title": "Privacy · House of Padmavati",
+    "canonical": "https://houseofpadmavati.com/privacy-policy",
+    "h1": "Privacy",
+    "bodySnippet": "Skip to main content COLLECTIONS JOURNAL ABOUT HOUSE OF PADMAVATI (0) Privacy Last updated · July 2026 1. Introduction House of Padmavati respects your privacy and is committed to protecting your p"
+  }
+]
