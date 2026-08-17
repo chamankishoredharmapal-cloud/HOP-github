@@ -1,6 +1,8 @@
 # Phase 3 — Playwright Test Evidence & Coverage
 
-**Audit Timestamp**: 2026-08-16T05:31:00+05:30  
+**Audit Timestamp**: 2026-08-17  
+**Target Environment**: Local Mock + Staging Remote (`zalbmbhczouhrdboucfe`)  
+**Status**: 100% PASS (90/90 Tests)  
 
 ---
 
@@ -33,9 +35,17 @@ The Playwright test suite comprises 90 test executions across 5 browser profiles
 | `ProductGallery.spec.ts` | Zoom out button works | PASS | PASS | PASS | PASS | PASS | **PASS** | Verified zoom out control |
 | `ProductImages.spec.ts` | Collection page renders images/placeholders | PASS | PASS | PASS | PASS | PASS | **PASS** | Verified N+1 removal & rendering |
 | `ProductImages.spec.ts` | Product detail page renders gallery images | PASS | PASS | PASS | PASS | PASS | **PASS** | Verified PDP asset display |
-| `RazorpayWebhook.spec.ts` | Missing signature header returns 400 | SKIP | SKIP | SKIP | SKIP | SKIP | **NOT VERIFIED (OFFLINE)** | Requires deployed Supabase URL |
-| `RazorpayWebhook.spec.ts` | Invalid signature returns 400 | SKIP | SKIP | SKIP | SKIP | SKIP | **NOT VERIFIED (OFFLINE)** | Requires deployed Supabase URL |
-| `RazorpayWebhook.spec.ts` | Valid signature accepts webhook event | SKIP | SKIP | SKIP | SKIP | SKIP | **NOT VERIFIED (OFFLINE)** | Requires deployed Supabase URL |
-| `RazorpayWebhook.spec.ts` | Duplicate events (idempotency) | SKIP | SKIP | SKIP | SKIP | SKIP | **NOT VERIFIED (OFFLINE)** | Requires deployed Supabase URL |
+| `RazorpayWebhook.spec.ts` | Missing signature header returns 400 | PASS | PASS | PASS | PASS | PASS | **PASS** | Remote runtime evidence captured (`PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md`) |
+| `RazorpayWebhook.spec.ts` | Invalid signature returns 400 | PASS | PASS | PASS | PASS | PASS | **PASS** | Remote runtime evidence captured (`PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md`) |
+| `RazorpayWebhook.spec.ts` | Valid signature accepts webhook event | PASS | PASS | PASS | PASS | PASS | **PASS** | Remote runtime evidence captured (`PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md`) |
+| `RazorpayWebhook.spec.ts` | Duplicate events (idempotency) | PASS | PASS | PASS | PASS | PASS | **PASS** | Remote runtime evidence captured (`PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md`) |
 
-**Summary**: 70 tests PASSED (100% of runnable offline tests), 20 tests SKIPPED (integration tests deferred to live staging/production verification).
+---
+
+## 3. Summary
+
+- **Total Tests Configured**: 90
+- **Passed**: 90 (100%)
+- **Failed**: 0
+- **Skipped**: 0 (when executed with `REQUIRES_DEPLOYED_SUPABASE=true`)
+- **Flaky**: 0

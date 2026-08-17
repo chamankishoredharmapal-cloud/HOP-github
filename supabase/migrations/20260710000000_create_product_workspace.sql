@@ -1,5 +1,14 @@
+-- =============================================================================
 -- House of Padmavati Studio — Product Workspace Schema
 -- Sprint 4.2
+-- =============================================================================
+-- RECONCILIATION NOTE (2026-08-17):
+-- The combined product workspace migration (20260709000000) already merged
+-- this file's content and performs the price → selling_price rename itself.
+-- This file is kept for history; the rename below is guarded so that it
+-- becomes a no-op when selling_price already exists (same pattern as
+-- 20260711000000_extend_collections.sql / 20260712000000_fix_collections_migration.sql).
+-- =============================================================================
 
 -- Extend product_status enum
 ALTER TYPE product_status ADD VALUE IF NOT EXISTS 'review';
@@ -20,8 +29,20 @@ ALTER TABLE products
   ADD COLUMN IF NOT EXISTS meta_description          text,
   ADD COLUMN IF NOT EXISTS og_image_url              text;
 
-ALTER TABLE products
-  RENAME COLUMN price TO selling_price;
+-- Rename price → selling_price (guarded: no-op if already renamed by 20260709000000)
+DO $$ BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'products' AND column_name = 'price'
+  ) AND NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'products' AND column_name = 'selling_price'
+  ) THEN
+    ALTER TABLE products RENAME COLUMN price TO selling_price;
+  END IF;
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Skipped rename price→selling_price: %', SQLERRM;
+END $$;
 
 COMMENT ON COLUMN products.selling_price IS 'Amount in paise';
 COMMENT ON COLUMN products.mrp IS 'Amount in paise. Maximum retail price';

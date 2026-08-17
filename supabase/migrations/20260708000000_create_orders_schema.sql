@@ -3,6 +3,15 @@
 -- Sprint 3.1 — Order Creation & Storage
 -- House of Padmavati
 -- ============================================================
+-- RECONCILIATION NOTE (2026-08-17):
+-- The OLD schema (20260706000001_create_order_system.sql) creates the
+-- enums order_status, payment_status and payment_transaction_status
+-- first. This migration therefore drops those types if they already
+-- exist (matching the drop semantics of 20260718000000_reconcile_order_schema.sql)
+-- so the canonical definitions below replace the OLD ones. CASCADE also
+-- removes the OLD dependent tables, which are recreated canonically by
+-- this migration and finalized by the reconcile migration.
+-- ============================================================
 -- Modifications applied:
 --   1. full_name replaces first_name + last_name
 --   2. size removed from order_items
@@ -75,6 +84,21 @@ CREATE INDEX IF NOT EXISTS idx_shipping_addresses_customer_id
 -- -------------------------
 -- 3. Orders
 -- -------------------------
+-- Safely remove the legacy M1 objects that conflict with the canonical
+-- order schema. DROP TYPE ... CASCADE only removes dependent columns, so
+-- the legacy tables are dropped explicitly before the canonical enums and
+-- tables are created (matching 20260718000000_reconcile_order_schema.sql
+-- semantics). All legacy tables are empty on a fresh replay.
+DROP TABLE IF EXISTS order_status_history CASCADE;
+DROP TABLE IF EXISTS order_items CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS payments CASCADE;
+DROP TABLE IF EXISTS coupons CASCADE;
+
+DROP TYPE IF EXISTS order_status CASCADE;
+DROP TYPE IF EXISTS payment_status CASCADE;
+DROP TYPE IF EXISTS payment_transaction_status CASCADE;
+
 CREATE TYPE order_status AS ENUM (
   'pending_payment',
   'confirmed',
@@ -174,6 +198,14 @@ ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
 -- -------------------------
 -- 7. Order Number Generator
 -- -------------------------
+-- The legacy schema (20260706000001) defined generate_order_number() as a
+-- TRIGGER function (RETURNS TRIGGER). The canonical definition below is a
+-- scalar TEXT function; PostgreSQL cannot change an existing function's
+-- return type via CREATE OR REPLACE, so the legacy signature is dropped
+-- first (its dependent trigger lives on the legacy orders table, which is
+-- dropped earlier in this migration).
+DROP FUNCTION IF EXISTS generate_order_number() CASCADE;
+
 CREATE OR REPLACE FUNCTION generate_order_number()
 RETURNS TEXT
 LANGUAGE plpgsql
@@ -213,7 +245,7 @@ CREATE OR REPLACE FUNCTION create_order(
   p_shipping_landmark       TEXT DEFAULT NULL,
   p_shipping_option         TEXT DEFAULT 'standard',
   p_notes                   TEXT DEFAULT NULL,
-  p_items                   JSONB
+  p_items                   JSONB DEFAULT NULL
 ) RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER

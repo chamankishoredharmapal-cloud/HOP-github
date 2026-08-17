@@ -6,6 +6,24 @@
 -- =============================================================================
 
 -- #############################################################################
+-- 0. ADMIN HELPER FUNCTION
+-- #############################################################################
+CREATE OR REPLACE FUNCTION public.is_admin(user_id uuid DEFAULT auth.uid())
+RETURNS boolean
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT
+    user_id IS NOT NULL
+    AND (
+      COALESCE(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin'
+      OR COALESCE(auth.jwt() -> 'app_metadata' -> 'roles', '[]'::jsonb) ? 'admin'
+    );
+$$;
+
+-- #############################################################################
 -- 1. ORDER EVENTS — audit trail for order lifecycle
 -- #############################################################################
 CREATE TABLE IF NOT EXISTS order_events (
@@ -25,9 +43,8 @@ ALTER TABLE order_events ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY order_events_admin_all
   ON order_events FOR ALL
-  USING (auth.role() = 'authenticated' AND EXISTS (
-    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
-  ));
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 -- #############################################################################
 -- 2. RLS — COMMERCE TABLES
@@ -39,9 +56,8 @@ ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS orders_admin_all ON orders;
 CREATE POLICY orders_admin_all
   ON orders FOR ALL
-  USING (auth.role() = 'authenticated' AND EXISTS (
-    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
-  ));
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 DROP POLICY IF EXISTS orders_customer_select ON orders;
 CREATE POLICY orders_customer_select
@@ -56,9 +72,8 @@ ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS order_items_admin_all ON order_items;
 CREATE POLICY order_items_admin_all
   ON order_items FOR ALL
-  USING (auth.role() = 'authenticated' AND EXISTS (
-    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
-  ));
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 DROP POLICY IF EXISTS order_items_customer_select ON order_items;
 CREATE POLICY order_items_customer_select
@@ -75,9 +90,8 @@ ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS payments_admin_all ON payments;
 CREATE POLICY payments_admin_all
   ON payments FOR ALL
-  USING (auth.role() = 'authenticated' AND EXISTS (
-    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
-  ));
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 DROP POLICY IF EXISTS payments_customer_select ON payments;
 CREATE POLICY payments_customer_select
@@ -94,9 +108,8 @@ ALTER TABLE payment_events ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS payment_events_admin_all ON payment_events;
 CREATE POLICY payment_events_admin_all
   ON payment_events FOR ALL
-  USING (auth.role() = 'authenticated' AND EXISTS (
-    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
-  ));
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 -- Inventory history: admin only
 ALTER TABLE inventory_history ENABLE ROW LEVEL SECURITY;
@@ -104,9 +117,8 @@ ALTER TABLE inventory_history ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS inventory_history_admin_all ON inventory_history;
 CREATE POLICY inventory_history_admin_all
   ON inventory_history FOR ALL
-  USING (auth.role() = 'authenticated' AND EXISTS (
-    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
-  ));
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 -- Shipping addresses: admin all, customers read own
 ALTER TABLE shipping_addresses ENABLE ROW LEVEL SECURITY;
@@ -114,9 +126,8 @@ ALTER TABLE shipping_addresses ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS shipping_addresses_admin_all ON shipping_addresses;
 CREATE POLICY shipping_addresses_admin_all
   ON shipping_addresses FOR ALL
-  USING (auth.role() = 'authenticated' AND EXISTS (
-    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
-  ));
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 DROP POLICY IF EXISTS shipping_addresses_customer_select ON shipping_addresses;
 CREATE POLICY shipping_addresses_customer_select
@@ -209,9 +220,8 @@ ALTER TABLE customers ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS customers_admin_all ON customers;
 CREATE POLICY customers_admin_all
   ON customers FOR ALL
-  USING (auth.role() = 'authenticated' AND EXISTS (
-    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
-  ));
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 DROP POLICY IF EXISTS customers_self_select ON customers;
 CREATE POLICY customers_self_select

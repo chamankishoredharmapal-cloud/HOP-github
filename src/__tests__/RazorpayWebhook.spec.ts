@@ -18,7 +18,7 @@
 import { test, expect } from "@playwright/test";
 import { createHmac } from "node:crypto";
 
-const SUPABASE_URL = "https://kbvjmcnaaogkbnerjcoc.supabase.co";
+const SUPABASE_URL = process.env.TEST_SUPABASE_URL || "https://zalbmbhczouhrdboucfe.supabase.co";
 const WEBHOOK_URL = `${SUPABASE_URL}/functions/v1/razorpay-webhook`;
 const WEBHOOK_SECRET = process.env.RAZORPAY_WEBHOOK_SECRET_TEST || "";
 const RUN_INTEGRATION = process.env.REQUIRES_DEPLOYED_SUPABASE === "true";

@@ -65,6 +65,7 @@ ALTER TYPE product_status ADD VALUE IF NOT EXISTS 'review';
 ALTER TYPE product_status ADD VALUE IF NOT EXISTS 'published';
 
 ALTER TABLE products
+  ADD COLUMN IF NOT EXISTS story                    text,
   ADD COLUMN IF NOT EXISTS short_description       text,
   ADD COLUMN IF NOT EXISTS customer_description     text,
   ADD COLUMN IF NOT EXISTS mrp                      integer NOT NULL DEFAULT 0 CHECK (mrp >= 0),

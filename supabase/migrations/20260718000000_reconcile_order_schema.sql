@@ -21,14 +21,27 @@
 -- Drop shipping_addresses first (FK depends on customers which will be recreated)
 DROP TABLE IF EXISTS shipping_addresses CASCADE;
 
+-- Drop the legacy order-domain tables explicitly. DROP TYPE ... CASCADE only
+-- removes dependent columns, not the owning tables, so the tables themselves
+-- must be dropped to guarantee the canonical CREATE TABLE statements below
+-- execute on a clean slate (fresh-replay path: canonical tables created by
+-- 20260708000000 are recreated here with the documented refinements).
+DROP TABLE IF EXISTS order_status_history CASCADE;
+DROP TABLE IF EXISTS order_items CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS payments CASCADE;
+DROP TABLE IF EXISTS coupons CASCADE;
+
 -- Drop conflicting enums. CASCADE propagates through:
 --   order_status    → orders, order_status_history
 --   payment_status  → payments (old schema), orders
 --   payment_method  → payments (old schema)
 --   coupon_type     → coupons
--- FK-dependent tables (order_items, payments, etc.) are also cascaded.
+-- payment_transaction_status is also dropped so the canonical redefinition
+-- below can execute after 20260708000000 created it.
 DROP TYPE IF EXISTS order_status CASCADE;
 DROP TYPE IF EXISTS payment_status CASCADE;
+DROP TYPE IF EXISTS payment_transaction_status CASCADE;
 DROP TYPE IF EXISTS payment_method CASCADE;
 DROP TYPE IF EXISTS coupon_type CASCADE;
 
@@ -240,7 +253,7 @@ CREATE OR REPLACE FUNCTION create_order(
   p_shipping_landmark       TEXT DEFAULT NULL,
   p_shipping_option         TEXT DEFAULT 'standard',
   p_notes                   TEXT DEFAULT NULL,
-  p_items                   JSONB
+  p_items                   JSONB DEFAULT NULL
 ) RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
