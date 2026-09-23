@@ -1406,7 +1406,7 @@ A11y/interaction: keyboard-only pass, focus visibility, 44px touch spot-checks, 
 
 ## Current Objective
 
-ALL OBJECTIVES CLOSED — transformation complete with documented exceptions (see below). No active objective.
+UI TRANSFORMATION COMPLETE → STAGING DEPLOYMENT / PRODUCTION READINESS
 
 ## Status
 
@@ -1432,15 +1432,22 @@ OBJ-01 COMPLETE · OBJ-02 COMPLETE · OBJ-03 COMPLETE (5-world matrix limited by
 
 ## Current Checkpoint
 
-Browser validation phase finished and recorded. Working tree holds all transformation edits uncommitted (commit/PR is a human/governance decision — not taken).
+Browser validation phase finished and recorded. Commit 43599c1 pushed to main and staging branches. Staging deployed to Cloudflare Pages (preview: https://155a88d2.hop-staging.pages.dev, project URL: https://hop-staging.pages.dev). Prerendered routes verified OK. SPA fallback requires Git integration (Cloudflare Dashboard action).
 
 ## Blocking Issues
 
-None for the UI transformation. Remaining items are other tracks' (engineering hydration/ tests, media/infra 406s, content/production-data world matrix, staging deploy + CTO gates per PHASE_2_14/productionreadyHOP).
+None for the UI transformation. Staging deployment requires Cloudflare Dashboard configuration:
+1. Connect Pages project to GitHub (enables automatic branch deployments + _redirects/_headers processing)
+2. Set environment variables in Cloudflare Pages (VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY, VITE_RAZORPAY_KEY_ID)
+3. Configure Supabase Auth URL Configuration for staging URL
+4. Configure Razorpay Test webhook for staging
+5. Run full E2E test matrix (T01–T07) per CLOUDFLARE_DEPLOYMENT_RUNBOOK.md
+
+Remaining items are other tracks' (engineering hydration/ tests, media/infra 406s, content/production-data world matrix, staging deploy + CTO gates per PHASE_2_14/productionreadyHOP).
 
 ## Next Action
 
-Human/governance: review this checkpoint + screenshots, then commit (clean logical commits, no secrets/junk) and proceed to staging deployment per productionreadyHOP.md gates. No further UI implementation required unless a deferred browser item is contested.
+Configure Cloudflare Pages project via Dashboard (connect GitHub, set build command/output dir, set production branch=staging, add env vars). Then configure Supabase Auth + Razorpay webhook for staging. Run E2E test matrix T01–T07. No further UI implementation required.
 
 ## Do Not Redo
 
