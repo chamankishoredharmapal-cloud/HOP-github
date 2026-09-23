@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
+// House photography only: the former Unsplash stock URL returned 404.
+import fabricImg from "@/assets/hop-fabric.jpg";
 
 const Appointments = () => {
   useMetadata({
@@ -26,7 +28,7 @@ const Appointments = () => {
           {/* Left: Imagery */}
           <section className="relative h-[40vh] lg:h-auto order-2 lg:order-1">
             <img
-              src="https://images.unsplash.com/photo-1610030469647-7973dfd70756?auto=format&fit=crop&q=80"
+              src={fabricImg}
               alt="Folded silks in the atelier"
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -43,7 +45,7 @@ const Appointments = () => {
               </div>
 
               {status === "success" ? (
-                <div className="bg-sand-light p-8 border border-teal/10 text-center space-y-4">
+                <div className="bg-sand/20 p-8 border border-teal/10 text-center space-y-4">
                   <h3 className="font-serif text-2xl text-ink">Request received.</h3>
                   <p className="text-ink-soft text-sm">
                     We will contact you shortly to confirm the details of your appointment.

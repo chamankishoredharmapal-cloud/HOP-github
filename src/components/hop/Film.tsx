@@ -21,25 +21,60 @@ export const Film = ({
   preload?: "auto" | "metadata" | "none";
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [inView, setInView] = useState(false);
+  // Reduced-motion preference is read at mount so the browser never autoplays
+  // for visitors who ask for stillness (the autoPlay attribute alone would win).
+  const [reducedMotion] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
+  );
 
   const doPlay = useCallback(
     (v: HTMLVideoElement) => {
       v.muted = true;
       v.playsInline = true;
-      v.play().catch((err) => console.error("Film play failed", src, err));
+      // Respect visitors who ask for reduced motion — leave the still frame.
+      if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+      v.play().catch(() => undefined);
     },
-    [src],
+    [],
   );
+
+  // Only load / play the film when its frame enters the viewport.
+  // Prevents 5+ simultaneous autoplays on collection feeds.
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame || !src) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setInView(true);
+            io.disconnect();
+          }
+        }
+      },
+      { rootMargin: "200px 0px", threshold: 0.1 },
+    );
+    io.observe(frame);
+    return () => io.disconnect();
+  }, [src]);
 
   useEffect(() => {
     const v = videoRef.current;
-    if (!v || !src) return;
+    if (!v || !src || !inView) return;
     if (v.readyState >= 2) {
       setVideoReady(true);
       doPlay(v);
     }
-  }, [src, doPlay]);
+  }, [src, inView, doPlay]);
 
   const handleLoadedData = useCallback(
     (e: React.SyntheticEvent<HTMLVideoElement>) => {
@@ -50,24 +85,31 @@ export const Film = ({
   );
 
   const handleVideoError = useCallback(() => {
-    console.error("Film video error", src);
-  }, [src]);
+    // Poster remains — a still frame is an acceptable, quiet fallback.
+    setVideoReady(false);
+  }, []);
 
   return (
-    <div className={`relative overflow-hidden bg-jasmine-deep ${className} ${isCinematic ? "rounded-2xl lg:rounded-3xl" : "rounded-md"} gallery-shadow`}>
-      {/* Poster layer — always rendered */}
+    <div ref={frameRef} className={`relative overflow-hidden bg-jasmine-deep ${className} ${isCinematic ? "rounded-2xl lg:rounded-3xl" : "rounded-sm"} gallery-shadow`}>
+      {/* Poster layer — guarded: never render empty src */}
       <div className="absolute inset-0">
-        <img
-          src={poster}
-          alt={alt}
-          loading="lazy"
-          className="w-full h-full object-cover animate-[kenburns_22s_ease-in-out_infinite_alternate]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent pointer-events-none" />
+        {poster ? (
+          <img
+            src={poster}
+            alt={alt}
+            loading="lazy"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-jasmine-deep flex items-center justify-center">
+            <span className="text-[0.6rem] tracking-[0.2em] uppercase text-ink-soft/40">House of Padmavati</span>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/15 via-transparent to-transparent pointer-events-none" />
       </div>
 
-      {/* Video layer — fades in when ready */}
-      {src && (
+      {/* Video layer — mounts in view, fades in when ready */}
+      {src && inView && (
         <div
           className="absolute inset-0 transition-opacity duration-700"
           style={{ opacity: videoReady ? 1 : 0 }}
@@ -77,7 +119,7 @@ export const Film = ({
             className="w-full h-full object-cover"
             src={src}
             poster={poster}
-            autoPlay
+            autoPlay={!reducedMotion}
             muted
             loop
             playsInline
@@ -86,7 +128,6 @@ export const Film = ({
             onLoadedData={handleLoadedData}
             onError={handleVideoError}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent pointer-events-none" />
           {isCinematic && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-jasmine/90 backdrop-blur-sm flex items-center justify-center opacity-80">

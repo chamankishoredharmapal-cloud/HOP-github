@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Film } from "@/components/hop/Film";
 import { fetchFeaturedCollection } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import houseStill from "@/assets/hop-hero.jpg";
 
 export const HeroSection = () => {
   const { data: featured } = useQuery({
@@ -9,37 +11,48 @@ export const HeroSection = () => {
     queryFn: fetchFeaturedCollection,
   });
 
+  // The hero must stand alone: when no collection is featured,
+  // the house still shows its own still — never an empty frame.
+  const collectionName = featured?.name ?? "House of Padmavati";
+  const poster = featured?.hero_image_url || houseStill;
+
   return (
-    <section className="relative pb-12 sm:pb-16 lg:pb-20">
+    <section className="relative pb-16 sm:pb-20 lg:pb-24">
       <div className="container">
-        <div className="text-center mb-6 sm:mb-8 animate-fade-in" style={{ animationDuration: "1.4s" }}>
-          <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal mb-3">
+        <div className="text-center mb-8 sm:mb-10 animate-fade-in" style={{ animationDuration: "1.2s" }}>
+          <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-4">
             {featured?.tagline ?? "House of Padmavati"}
           </p>
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-balance">
+          <h1 className="font-serif font-light text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-balance text-ink">
             Saree. Time. You.
           </h1>
+          <p className="mt-5 text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-xl mx-auto text-pretty">
+            Five ways of wearing tradition — woven slowly, chosen quietly.
+          </p>
         </div>
 
         <div
-          className="relative mx-auto rounded-xl overflow-hidden gallery-shadow animate-fade-in"
-          style={{ width: "min(92vw, 1680px)", animationDuration: "1.6s", animationDelay: "0.3s", animationFillMode: "both" }}
+          className="relative mx-auto overflow-hidden animate-fade-in"
+          style={{ width: "min(92vw, 1680px)", animationDuration: "1.4s", animationDelay: "0.2s", animationFillMode: "both" }}
         >
           <Film
             src={COLLECTION_VIDEOS.hero}
-            poster={featured?.hero_image_url ?? ""}
-            alt={featured ? `${featured.name} — collection film` : "House of Padmavati"}
+            poster={poster}
+            alt={featured ? `${featured.name} — collection film` : "House of Padmavati — woven drape in natural light"}
             className="aspect-[16/9]"
             preload="auto"
           />
-          <div className="absolute bottom-5 left-5 sm:bottom-8 sm:left-8 bg-jasmine/85 backdrop-blur-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-[0.6rem] sm:text-[0.7rem] tracking-[0.32em] uppercase text-ink-soft">
-            {featured?.name ?? "Film"}
-          </div>
-          <div className="absolute top-5 right-5 sm:top-8 sm:right-8 hidden sm:block">
-            <span className="text-[0.6rem] tracking-[0.42em] uppercase text-jasmine/90 bg-ink/40 backdrop-blur-sm px-4 py-2 rounded-full">
-              {featured?.name ?? "House of Padmavati"}
+          <p className="mt-4 flex items-baseline justify-between gap-4">
+            <span className="text-[0.6rem] sm:text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft">
+              {collectionName}
             </span>
-          </div>
+            <Link
+              to="/collections"
+              className="text-[0.6rem] sm:text-[0.65rem] tracking-[0.32em] uppercase text-ink border-b border-ink/30 pb-1 hover:border-ink hover:text-ink transition-colors"
+            >
+              Enter the collections
+            </Link>
+          </p>
         </div>
       </div>
     </section>

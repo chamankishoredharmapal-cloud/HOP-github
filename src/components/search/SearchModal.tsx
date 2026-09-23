@@ -144,7 +144,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
             <div className="text-center py-12">
               <Package className="h-10 w-10 text-ink-soft/20 mx-auto mb-3" />
               <p className="text-sm text-ink-soft font-light">No results found</p>
-              <p className="text-xs text-ink-soft/70 mt-1">
+              <p className="text-xs text-ink-soft mt-1">
                 Try searching by name, colour, weave, or collection.
               </p>
             </div>
@@ -176,7 +176,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-ink truncate">{result.name}</p>
-                    <p className="text-xs text-ink-soft/70 mt-0.5 capitalize">{result.type}</p>
+                    <p className="text-xs text-ink-soft mt-0.5 capitalize">{result.type}</p>
                   </div>
                   {result.price !== undefined && (
                     <p className="text-sm text-ink-soft font-light shrink-0">
@@ -200,7 +200,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
 
         {results.length > 0 && (
           <div className="border-t border-border/60 px-4 py-2.5 text-center">
-            <span className="text-xs text-ink-soft/70">
+              <span className="text-xs text-ink-soft">
               {results.length} result{results.length !== 1 ? "s" : ""} · Use ↑↓ to navigate, Enter to select
             </span>
           </div>

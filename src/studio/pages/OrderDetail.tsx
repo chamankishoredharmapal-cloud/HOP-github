@@ -48,6 +48,11 @@ const paymentStatusStyles: Record<string, string> = {
   failed: "bg-muted text-destructive",
   refunded: "bg-muted text-muted-foreground",
   partially_refunded: "bg-sand/30 text-ink",
+  deposit_pending: "bg-sakura/20 text-ink",
+  deposit_paid: "bg-teal/10 text-teal-deep",
+  partially_paid: "bg-sand/30 text-ink",
+  balance_due: "bg-amber/10 text-amber",
+  fully_paid: "bg-teal-deep/10 text-teal-deep",
 };
 
 function formatCurrency(paise: number): string {
@@ -320,6 +325,25 @@ export default function OrderDetail() {
                   {order.payment_status.replace(/_/g, " ")}
                 </span>
               </div>
+              {(order.total_amount && order.paid_amount !== null && order.remaining_amount !== null && order.total_amount > 0) && (
+                <div className="space-y-2 p-3 bg-jasmine-deep/30 rounded-lg border border-border/50">
+                  <div className="text-xs font-medium text-ink">Deposit Tracking</div>
+                  <div className="grid grid-cols-3 gap-2 text-sm">
+                    <div>
+                      <span className="text-muted-foreground block">Total Amount</span>
+                      <span className="text-foreground font-medium">{formatCurrency(order.total_amount)}</span>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground block">Paid</span>
+                      <span className="text-teal-deep font-medium">{formatCurrency(order.paid_amount)}</span>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground block">Remaining</span>
+                      <span className="text-amber font-medium">{formatCurrency(order.remaining_amount)}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
               {order.payments.length > 0 ? (
                 <div className="divide-y divide-border/30">
                   {order.payments.map((p) => (

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
 import { useMetadata } from "@/hooks/useMetadata";
+import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
 
 export default function Cart() {
   useMetadata({
@@ -18,13 +19,17 @@ export default function Cart() {
       <PageLayout>
         <main className="container pt-28 pb-24">
           <div className="flex flex-col items-center justify-center py-24 text-center">
-            <ShoppingBag className="h-16 w-16 text-ink-soft/30 mb-6" />
-            <h1 className="font-serif text-3xl text-ink mb-6">Your bag is empty.</h1>
-            <Button asChild>
-              <Link to="/collections">
-                View collections <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+            <ShoppingBag className="h-12 w-12 text-ink-soft/30 mb-6" strokeWidth={1} aria-hidden="true" />
+            <h1 className="font-serif font-light text-3xl sm:text-4xl text-ink mb-4">Your bag is empty.</h1>
+            <p className="text-sm text-ink-soft font-light leading-relaxed max-w-sm mb-8">
+              Each drape is singular. When one chooses you, it will wait here.
+            </p>
+            <Link
+              to="/collections"
+              className="inline-flex items-center gap-3 text-[0.65rem] tracking-[0.32em] uppercase text-ink border-b border-ink/30 pb-1.5 hover:border-ink transition-colors"
+            >
+              View collections <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
         </main>
       </PageLayout>
@@ -34,11 +39,14 @@ export default function Cart() {
   return (
     <PageLayout>
       <main className="container pt-28 pb-24">
-        <div className="flex items-center justify-between mb-10">
-          <h1 className="font-serif text-3xl md:text-4xl text-ink">The Bag.</h1>
+        <div className="flex items-end justify-between mb-4">
+          <div>
+            <p className="text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft mb-2">Bag · {totalItems} {totalItems === 1 ? "drape" : "drapes"}</p>
+            <h1 className="font-serif font-light text-3xl md:text-4xl text-ink">The Bag.</h1>
+          </div>
           <button
             onClick={clearCart}
-            className="text-xs tracking-[0.2em] uppercase text-ink-soft hover:text-teal transition-colors"
+            className="text-[0.65rem] tracking-[0.2em] uppercase text-ink-soft hover:text-ink transition-colors"
           >
             Clear all
           </button>
@@ -53,8 +61,17 @@ export default function Cart() {
               >
                 <div className="w-24 h-32 md:w-28 md:h-36 shrink-0 bg-jasmine-deep rounded overflow-hidden">
                   <img
-                    src={item.image}
+                    src={getSupabaseOptimizedUrl(item.image, { width: 160, height: 192, resize: "cover" })}
                     alt={item.name}
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.dataset.fallback) {
+                        target.dataset.fallback = "true";
+                        target.src = item.image;
+                      }
+                    }}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -62,17 +79,17 @@ export default function Cart() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <h3 className="text-sm md:text-base font-medium text-ink truncate">
+                      <h3 className="font-serif font-light text-base md:text-lg text-ink truncate">
                         {item.name}
                       </h3>
                       {item.size && (
-                        <p className="text-xs text-ink-soft mt-0.5">{item.size}</p>
+                        <p className="text-xs text-ink-soft mt-0.5 font-light">{item.size}</p>
                       )}
-                      <p className="text-sm text-ink mt-1.5">{item.formattedPrice}</p>
+                      <p className="text-sm text-ink mt-1.5 font-light">{item.formattedPrice}</p>
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="p-1 text-ink-soft/70 hover:text-teal transition-colors shrink-0"
+                      className="p-1 text-ink-soft/70 hover:text-ink transition-colors shrink-0"
                       aria-label={`Remove ${item.name}`}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -106,8 +123,8 @@ export default function Cart() {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-jasmine-deep/20 p-8 rounded">
-              <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-6">
+            <div className="border border-ink/15 p-8 rounded-sm">
+              <h2 className="text-[0.7rem] tracking-[0.25em] uppercase text-ink font-medium mb-6">
                 Summary
               </h2>
 
@@ -135,17 +152,17 @@ export default function Cart() {
 
               <Button
                 asChild
-                className="w-full mt-8 rounded-full bg-teal-deep text-jasmine hover:bg-teal transition-colors duration-500 h-12 text-xs tracking-[0.2em] uppercase"
+                className="w-full mt-8 rounded-full bg-ink text-jasmine hover:bg-ink-soft transition-colors duration-300 h-12 text-[0.65rem] tracking-[0.25em] uppercase"
               >
                 <Link to="/checkout">
-                  Checkout <ArrowRight className="h-4 w-4" />
+                  Checkout <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
 
               <div className="mt-4 text-center">
                 <Link
                   to="/collections"
-                  className="text-xs tracking-[0.15em] text-ink-soft hover:text-teal underline underline-offset-4 transition-colors"
+                  className="text-[0.65rem] tracking-[0.2em] uppercase text-ink-soft hover:text-ink border-b border-ink/20 pb-0.5 transition-colors"
                 >
                   Return to collections
                 </Link>
@@ -164,7 +181,7 @@ export default function Cart() {
             </ul>
             <p>Eligible reasons: wrong product, transit damage, manufacturing defect, incorrect measurements (stitched orders only).</p>
             <p>Not eligible: change of mind, colour variation, ordered by mistake, personal preference, worn, washed, altered, or damaged items.</p>
-            <p>Refunds are processed via bank transfer within 5 – 7 business days after inspection. See the <Link to="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Returns & Refund Policy</Link> for full details.</p>
+            <p>Refunds are processed via bank transfer within 5 – 7 business days after inspection. See the <Link to="/returns-policy" className="text-ink border-b border-ink/30 hover:border-ink transition-colors">Returns & Refund Policy</Link> for full details.</p>
           </div>
         </div>
       </main>

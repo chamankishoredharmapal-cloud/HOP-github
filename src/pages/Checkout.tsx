@@ -13,6 +13,7 @@ import { createRazorpayOrder } from "@/services/paymentService";
 import { usePayment } from "@/hooks/usePayment";
 import { validateCheckout } from "@/services/checkoutService";
 import { useMetadata } from "@/hooks/useMetadata";
+import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
 
 interface FormData {
   email: string;
@@ -64,7 +65,7 @@ function formatPhone(phone: string): string {
 export default function Checkout() {
   useMetadata({
     title: "Checkout — House of Padmavati",
-    description: "Checkout.",
+    description: "Where this drape will arrive — House of Padmavati checkout.",
     noIndex: true,
   });
   const { items, totalPrice, clearCart } = useCart();
@@ -87,6 +88,12 @@ export default function Checkout() {
 
   const shippingCost = totalPrice >= 2499 ? 0 : 99;
   const totalRupees = totalPrice + shippingCost;
+  const DEPOSIT_AMOUNT = 20000; // ₹200 in paise
+
+  const [paymentOption, setPaymentOption] = useState<'full' | 'deposit'>('full');
+  const isDeposit = paymentOption === 'deposit';
+  const depositAmountRupees = DEPOSIT_AMOUNT / 100;
+  const remainingAmountRupees = isDeposit ? (totalRupees - depositAmountRupees) : 0;
 
   const handleChange = (field: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -143,6 +150,8 @@ export default function Checkout() {
             product_id: item.productId,
             quantity: item.quantity,
           })),
+          amount: isDeposit ? DEPOSIT_AMOUNT : undefined,
+          payment_model: isDeposit ? 'deposit' : 'full',
         });
         currentOrderId = result.order_id;
         currentOrderNumber = result.order_number;
@@ -152,7 +161,7 @@ export default function Checkout() {
 
       await startPayment(
         { order_id: currentOrderId },
-        totalRupees,
+        isDeposit ? DEPOSIT_AMOUNT : totalRupees,
         form.email,
         formatPhone(form.phone),
         `${form.firstName} ${form.lastName}`.trim(),
@@ -206,11 +215,15 @@ export default function Checkout() {
       <PageLayout>
         <main className="container pt-28 pb-24">
           <div className="flex flex-col items-center justify-center py-24 text-center">
-            <ShoppingBag className="h-16 w-16 text-ink-soft/30 mb-6" />
-            <h1 className="font-serif text-3xl text-ink mb-6">Your bag is empty.</h1>
-            <Button asChild>
-              <Link to="/collections">View collections</Link>
-            </Button>
+            <ShoppingBag className="h-12 w-12 text-ink-soft/30 mb-6" strokeWidth={1} aria-hidden="true" />
+            <h1 className="font-serif font-light text-3xl text-ink mb-4">Your bag is empty.</h1>
+            <p className="text-sm text-ink-soft font-light mb-8">There is nothing to wrap yet.</p>
+            <Link
+              to="/collections"
+              className="inline-flex items-center gap-3 text-[0.65rem] tracking-[0.32em] uppercase text-ink border-b border-ink/30 pb-1.5 hover:border-ink transition-colors"
+            >
+              View collections
+            </Link>
           </div>
         </main>
       </PageLayout>
@@ -227,13 +240,20 @@ export default function Checkout() {
       <main className="container pt-16 pb-24">
         <Link
           to="/cart"
-          className="inline-flex items-center gap-1.5 text-xs tracking-[0.2em] uppercase text-ink-soft hover:text-teal transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-[0.65rem] tracking-[0.25em] uppercase text-ink-soft hover:text-ink transition-colors mb-8"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Return to bag
         </Link>
 
-        <h1 className="font-serif text-3xl md:text-4xl text-ink mb-12">Checkout.</h1>
+        <h1 className="font-serif font-light text-3xl md:text-4xl text-ink mb-3">Checkout.</h1>
+        <ol className="flex items-center gap-2 text-[0.65rem] tracking-[0.25em] uppercase text-ink-soft mb-12" aria-label="Checkout steps">
+          <li><Link to="/cart" className="hover:text-ink transition-colors">Bag</Link></li>
+          <li aria-hidden="true" className="text-ink/30">/</li>
+          <li aria-current="step" className="text-ink">Details</li>
+          <li aria-hidden="true" className="text-ink/30">/</li>
+          <li className="text-ink-soft">Confirm</li>
+        </ol>
 
         <form onSubmit={handleSubmit} className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           <div className="lg:col-span-3 space-y-10">
@@ -251,10 +271,10 @@ export default function Checkout() {
                   value={form.email}
                   onChange={(e) => handleChange("email", e.target.value)}
                   placeholder="you@example.com"
-                  className={`mt-1.5 rounded-none ${errors.email ? "border-teal-deep" : ""}`}
+                  className={`mt-1.5 rounded-none ${errors.email ? "border-destructive" : ""}`}
                 />
                 {errors.email && (
-                  <p className="text-[0.7rem] text-teal-deep mt-1">{errors.email}</p>
+                  <p className="text-[0.7rem] text-destructive mt-1">{errors.email}</p>
                 )}
               </div>
             </section>
@@ -273,10 +293,10 @@ export default function Checkout() {
                       id="firstName"
                       value={form.firstName}
                       onChange={(e) => handleChange("firstName", e.target.value)}
-                      className={`mt-1.5 rounded-none ${errors.firstName ? "border-teal-deep" : ""}`}
+                      className={`mt-1.5 rounded-none ${errors.firstName ? "border-destructive" : ""}`}
                     />
                     {errors.firstName && (
-                      <p className="text-[0.7rem] text-teal-deep mt-1">{errors.firstName}</p>
+                      <p className="text-[0.7rem] text-destructive mt-1">{errors.firstName}</p>
                     )}
                   </div>
                   <div>
@@ -287,10 +307,10 @@ export default function Checkout() {
                       id="lastName"
                       value={form.lastName}
                       onChange={(e) => handleChange("lastName", e.target.value)}
-                      className={`mt-1.5 rounded-none ${errors.lastName ? "border-teal-deep" : ""}`}
+                      className={`mt-1.5 rounded-none ${errors.lastName ? "border-destructive" : ""}`}
                     />
                     {errors.lastName && (
-                      <p className="text-[0.7rem] text-teal-deep mt-1">{errors.lastName}</p>
+                      <p className="text-[0.7rem] text-destructive mt-1">{errors.lastName}</p>
                     )}
                   </div>
                 </div>
@@ -304,10 +324,10 @@ export default function Checkout() {
                     value={form.address}
                     onChange={(e) => handleChange("address", e.target.value)}
                     placeholder="Street address"
-                    className={`mt-1.5 rounded-none ${errors.address ? "border-teal-deep" : ""}`}
+                    className={`mt-1.5 rounded-none ${errors.address ? "border-destructive" : ""}`}
                   />
                   {errors.address && (
-                    <p className="text-[0.7rem] text-teal-deep mt-1">{errors.address}</p>
+                    <p className="text-[0.7rem] text-destructive mt-1">{errors.address}</p>
                   )}
                 </div>
 
@@ -320,10 +340,10 @@ export default function Checkout() {
                       id="city"
                       value={form.city}
                       onChange={(e) => handleChange("city", e.target.value)}
-                      className={`mt-1.5 rounded-none ${errors.city ? "border-teal-deep" : ""}`}
+                      className={`mt-1.5 rounded-none ${errors.city ? "border-destructive" : ""}`}
                     />
                     {errors.city && (
-                      <p className="text-[0.7rem] text-teal-deep mt-1">{errors.city}</p>
+                      <p className="text-[0.7rem] text-destructive mt-1">{errors.city}</p>
                     )}
                   </div>
                   <div>
@@ -334,10 +354,10 @@ export default function Checkout() {
                       id="postalCode"
                       value={form.postalCode}
                       onChange={(e) => handleChange("postalCode", e.target.value)}
-                      className={`mt-1.5 rounded-none ${errors.postalCode ? "border-teal-deep" : ""}`}
+                      className={`mt-1.5 rounded-none ${errors.postalCode ? "border-destructive" : ""}`}
                     />
                     {errors.postalCode && (
-                      <p className="text-[0.7rem] text-teal-deep mt-1">{errors.postalCode}</p>
+                      <p className="text-[0.7rem] text-destructive mt-1">{errors.postalCode}</p>
                     )}
                   </div>
                 </div>
@@ -351,16 +371,16 @@ export default function Checkout() {
                     value={form.country}
                     onChange={(e) => handleChange("country", e.target.value)}
                     placeholder="India"
-                    className={`mt-1.5 rounded-none ${errors.country ? "border-teal-deep" : ""}`}
+                    className={`mt-1.5 rounded-none ${errors.country ? "border-destructive" : ""}`}
                   />
                   {errors.country && (
-                    <p className="text-[0.7rem] text-teal-deep mt-1">{errors.country}</p>
+                    <p className="text-[0.7rem] text-destructive mt-1">{errors.country}</p>
                   )}
                 </div>
 
                 <div>
                   <Label htmlFor="phone" className="text-sm text-ink-soft font-light">
-                    Phone <span className="text-ink-soft/70">(optional)</span>
+                    Phone <span className="text-ink-soft">(optional)</span>
                   </Label>
                   <Input
                     id="phone"
@@ -391,7 +411,7 @@ export default function Checkout() {
                 <div className="space-y-4 max-w-md">
                   <div>
                     <Label htmlFor="giftRecipient" className="text-sm text-ink-soft font-light">
-                      Recipient name <span className="text-ink-soft/70">(optional)</span>
+                      Recipient name <span className="text-ink-soft">(optional)</span>
                     </Label>
                     <Input
                       id="giftRecipient"
@@ -403,7 +423,7 @@ export default function Checkout() {
                   </div>
                   <div>
                     <Label htmlFor="giftMessage" className="text-sm text-ink-soft font-light">
-                      Note <span className="text-ink-soft/70">(optional)</span>
+                      Note <span className="text-ink-soft">(optional)</span>
                     </Label>
                     <Textarea
                       id="giftMessage"
@@ -421,12 +441,38 @@ export default function Checkout() {
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
                 Payment
               </h2>
-              <div className="max-w-md p-6 border border-border/60">
-                <p className="text-xs text-ink-soft/70 leading-relaxed">
+              <div className="max-w-md p-6 border border-border/60 space-y-4">
+                <p className="text-xs text-ink-soft leading-relaxed">
                   Processed securely through Razorpay. We accept all major cards, UPI, net banking, and wallets.
                 </p>
+                
+                <div className="space-y-3">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="paymentOption"
+                      value="full"
+                      checked={paymentOption === 'full'}
+                      onChange={() => setPaymentOption('full')}
+                      className="w-4 h-4 border-border accent-teal-deep focus:ring-teal-deep"
+                    />
+                    <span className="text-sm text-ink font-light">Pay ₹{totalRupees.toLocaleString()} in full online</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="paymentOption"
+                      value="deposit"
+                      checked={paymentOption === 'deposit'}
+                      onChange={() => setPaymentOption('deposit')}
+                      className="w-4 h-4 border-border accent-teal-deep focus:ring-teal-deep"
+                    />
+                    <span className="text-sm text-ink font-light">Pay ₹{depositAmountRupees} now, remaining ₹{remainingAmountRupees.toLocaleString()} at delivery</span>
+                  </label>
+                </div>
+
                 <div className="mt-4 pt-4 border-t border-border/40">
-                  <div className="flex items-center gap-2 text-xs text-ink-soft/70">
+                  <div className="flex items-center gap-2 text-xs text-ink-soft">
                     <Shield className="h-3 w-3 shrink-0" />
                     <span>Secured by Razorpay</span>
                   </div>
@@ -446,8 +492,17 @@ export default function Checkout() {
                   <div key={item.id} className="flex gap-4">
                     <div className="w-16 h-20 shrink-0 bg-jasmine-deep rounded overflow-hidden">
                       <img
-                        src={item.image}
+                        src={getSupabaseOptimizedUrl(item.image, { width: 160, height: 200, resize: "cover" })}
                         alt={item.name}
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.dataset.fallback) {
+                            target.dataset.fallback = "true";
+                            target.src = item.image;
+                          }
+                        }}
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -476,28 +531,45 @@ export default function Checkout() {
                     {shippingCost === 0 ? "Free" : `₹ ${shippingCost.toLocaleString()}`}
                   </span>
                 </div>
-                <p className="text-xs text-ink-soft/70 font-light text-right">Estimated delivery: 3–5 business days</p>
-                <div className="flex justify-between text-base border-t border-border/60 pt-2 mt-2">
-                  <span className="text-ink font-medium">Total</span>
-                  <span className="font-serif text-xl text-ink">₹ {totalRupees.toLocaleString()}</span>
-                </div>
-              </div>
-
-              {inventoryErrors.length > 0 && (
-                <div className="mt-6 p-3 rounded-md bg-amber-50 border border-amber-200" role="alert" aria-live="assertive">
-                  <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-4 h-4 text-amber-600" />
-                    <span className="text-xs font-medium text-amber-800">Inventory update needed</span>
+                <p className="text-xs text-ink-soft font-light text-right">Estimated delivery: 3–5 business days</p>
+                {isDeposit ? (
+                  <>
+                    <div className="flex justify-between text-sm text-ink-soft font-light border-t border-border/60 pt-2 mt-2">
+                      <span>Pay now (deposit)</span>
+                      <span className="text-ink">₹ {depositAmountRupees.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-ink-soft font-light">
+                      <span>Remaining (at delivery)</span>
+                      <span className="text-ink">₹ {remainingAmountRupees.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-base border-t border-border/60 pt-2 mt-2">
+                      <span className="text-ink font-medium">Total</span>
+                      <span className="font-serif text-xl text-ink">₹ {totalRupees.toLocaleString()}</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex justify-between text-base border-t border-border/60 pt-2 mt-2">
+                    <span className="text-ink font-medium">Total</span>
+                    <span className="font-serif text-xl text-ink">₹ {totalRupees.toLocaleString()}</span>
                   </div>
-                  <ul className="space-y-1">
-                    {inventoryErrors.map((e, i) => (
-                      <li key={i} className="text-xs text-amber-700">{e}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {error && inventoryErrors.length === 0 && (
+                )}
+</div>
+ 
+               {inventoryErrors.length > 0 && (
+                 <div className="mt-6 p-3 rounded-md bg-amber-50 border border-amber-200" role="alert" aria-live="assertive">
+                   <div className="flex items-center gap-2 mb-2">
+                     <AlertTriangle className="w-4 h-4 text-amber-600" />
+                     <span className="text-xs font-medium text-amber-800">Inventory update needed</span>
+                   </div>
+                   <ul className="space-y-1">
+                     {inventoryErrors.map((e, i) => (
+                       <li key={i} className="text-xs text-amber-700">{e}</li>
+                     ))}
+                   </ul>
+                 </div>
+               )}
+ 
+               {error && inventoryErrors.length === 0 && (
                 <p className="mt-6 text-sm text-red-500 text-center" role="alert" aria-live="assertive">{error}</p>
               )}
 
@@ -510,7 +582,7 @@ export default function Checkout() {
                       ? "You closed the payment window."
                       : "Your payment could not be verified."}
                   </p>
-                  <p className="text-[0.65rem] text-ink-soft/60 mb-3">{paymentState.error}</p>
+                  <p className="text-[0.65rem] text-ink mb-3">{paymentState.error}</p>
                   <Button
                     type="button"
                     variant="outline"
@@ -535,14 +607,14 @@ export default function Checkout() {
                   />
                   <span className="text-xs text-ink-soft font-light leading-relaxed">
                     I acknowledge and accept the{" "}
-                    <Link to="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Return & Replacement Policy</Link>.
+                    <Link to="/returns-policy" className="text-ink border-b border-ink/30 hover:border-ink transition-colors">Return & Replacement Policy</Link>.
                   </span>
                 </label>
               </div>
               <Button
                 type="submit"
                 disabled={isProcessing || isPaymentProcessing}
-                className="w-full mt-4 rounded-full bg-teal-deep text-jasmine hover:bg-teal transition-colors duration-500 h-12 text-xs tracking-[0.2em] uppercase"
+                className="w-full mt-4 rounded-full bg-ink text-jasmine hover:bg-ink-soft transition-colors duration-300 h-12 text-[0.65rem] tracking-[0.25em] uppercase"
               >
                 {isPaymentProcessing ? (
                   <span className="flex items-center gap-2">
@@ -554,7 +626,7 @@ export default function Checkout() {
                 )}
               </Button>
 
-              <div className="mt-4 flex items-center justify-center gap-1.5 text-[0.65rem] text-ink-soft/70">
+              <div className="mt-4 flex items-center justify-center gap-1.5 text-[0.65rem] text-ink-soft/90">
                 <Shield className="h-3 w-3" />
                 Secured by Razorpay
               </div>

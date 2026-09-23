@@ -24,6 +24,8 @@ interface CreateOrderRequest {
   shipping_option?: string;
   notes?: string;
   items?: OrderItemInput[];
+  amount?: number; // Optional: deposit amount in paise (must be exactly 20000 for ₹200 deposit)
+  payment_model?: 'full' | 'deposit'; // Optional: explicit payment model selector
 }
 
 const corsHeaders = {
@@ -103,7 +105,7 @@ serve(async (req) => {
       // Retry path — order already exists in the DB
       const { data: order, error: orderError } = await supabase
         .from("orders")
-        .select("id, total, order_number, payment_status, status, customers(email)")
+        .select("id, total, total_amount, paid_amount, remaining_amount, order_number, payment_status, status, customers(email)")
         .eq("id", orderId)
         .single();
 
@@ -145,7 +147,11 @@ serve(async (req) => {
 
       orderTotal = order.total;
       orderNumber = order.order_number;
-      console.log("[create-razorpay-order] Retry — order total:", orderTotal, "order_number:", orderNumber);
+      
+      // For retry: detect if this is a deposit order (has paid_amount < total_amount)
+      const isDepositRetry = order.total_amount && order.paid_amount !== null && 
+                             order.paid_amount > 0 && order.paid_amount < order.total_amount;
+      console.log("[create-razorpay-order] Retry — order total:", orderTotal, "order_number:", orderNumber, "isDeposit:", isDepositRetry);
     } else {
       console.log("[create-razorpay-order] NEW order path — creating DB order via RPC");
       const {
@@ -208,6 +214,55 @@ serve(async (req) => {
     console.log("[create-razorpay-order] Step 2 — Creating Razorpay order");
     console.log("[create-razorpay-order] orderId:", orderId, "orderNumber:", orderNumber, "orderTotal (paise):", orderTotal);
 
+    // Determine payment amount: use explicit amount for deposit, otherwise full order total
+    let paymentAmount = orderTotal;
+    
+    // Check if this is a deposit payment:
+    // - New order: explicit amount provided and less than orderTotal
+    // - Retry: order has total_amount and paid_amount indicating deposit
+    let isDeposit = false;
+    if (body.amount !== undefined && body.amount > 0 && body.amount < orderTotal) {
+      // New order with explicit deposit amount
+      isDeposit = true;
+    } else if (orderId && body.order_id) {
+      // Retry path: check if order has deposit columns populated (deposit_paid status)
+      // We'll check the existing payment record to see if it's a deposit
+      const { data: existingPayment } = await supabase
+        .from("payments")
+        .select("id, amount, status")
+        .eq("order_id", orderId)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      
+      if (existingPayment && existingPayment.amount > 0 && existingPayment.amount < orderTotal) {
+        isDeposit = true;
+        paymentAmount = existingPayment.amount;
+        console.log("[create-razorpay-order] Retry deposit detected: using existing payment amount", paymentAmount);
+      }
+    }
+
+    if (isDeposit) {
+      // For new deposit: validate amount is exactly ₹200 (20000 paise)
+      if (body.amount !== undefined) {
+        if (body.amount !== 20000) {
+          return new Response(
+            JSON.stringify({ error: "invalid_deposit_amount", message: "Deposit must be exactly ₹200 (20000 paise)" }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        paymentAmount = body.amount;
+      }
+      // Sanity check: order total must exceed deposit amount
+      if (orderTotal <= 20000) {
+        return new Response(
+          JSON.stringify({ error: "order_total_too_low", message: "Order total must exceed deposit amount" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      console.log("[create-razorpay-order] Deposit mode: charging", paymentAmount, "paise");
+    }
+
     // Check for existing pending Razorpay order
     const { data: existingPayment } = await supabase
       .from("payments")
@@ -232,7 +287,7 @@ serve(async (req) => {
 
     const order_receipt = body.receipt || orderNumber || orderId;
     const razorpayPayload = {
-      amount: orderTotal,
+      amount: paymentAmount,
       currency: "INR",
       receipt: order_receipt,
       payment_capture: 1,
@@ -247,7 +302,7 @@ serve(async (req) => {
     const { error: insertErr } = await supabase.from("payments").insert({
       order_id: orderId,
       razorpay_order_id: razorpayOrder.id,
-      amount: orderTotal,
+      amount: paymentAmount,
       currency: "INR",
       status: "pending",
     });

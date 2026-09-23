@@ -21,10 +21,11 @@ const statusTabs: { label: string; value: StatusTab }[] = [
   { label: "Returned", value: "returned" },
 ];
 
-const paymentFilterOptions: { label: string; value: "all" | "paid" | "cod" }[] = [
+const paymentFilterOptions: { label: string; value: "all" | "paid" | "deposit_paid" | "balance_due" }[] = [
   { label: "All", value: "all" },
   { label: "Paid", value: "paid" },
-  { label: "COD", value: "cod" },
+  { label: "Deposit Paid", value: "deposit_paid" },
+  { label: "Balance Due", value: "balance_due" },
 ];
 
 const statusStyles: Record<string, string> = {
@@ -66,7 +67,7 @@ function formatDate(iso: string): string {
 export default function Orders() {
   const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState<StatusTab>("all");
-  const [paymentFilter, setPaymentFilter] = useState<"all" | "paid" | "cod">("all");
+  const [paymentFilter, setPaymentFilter] = useState<"all" | "paid" | "deposit_paid" | "balance_due">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
@@ -91,7 +92,8 @@ export default function Orders() {
 
   const filteredOrders = (displayOrders ?? []).filter((o) => {
     if (paymentFilter === "paid") return o.payment_status === "paid";
-    if (paymentFilter === "cod") return false;
+    if (paymentFilter === "deposit_paid") return o.payment_status === "deposit_paid";
+    if (paymentFilter === "balance_due") return o.payment_status === "partially_paid" || o.payment_status === "balance_due";
     if (debouncedQuery && statusFilter !== "all") return o.status === statusFilter;
     return true;
   });
@@ -210,6 +212,9 @@ export default function Orders() {
                     <th className="text-left pb-3 text-xs font-medium text-muted-foreground uppercase tracking-[0.12em] hidden md:table-cell">
                       Payment
                     </th>
+                    <th className="text-left pb-3 text-xs font-medium text-muted-foreground uppercase tracking-[0.12em] hidden lg:table-cell">
+                      Paid / Remaining
+                    </th>
                     <th className="text-right pb-3 text-xs font-medium text-muted-foreground uppercase tracking-[0.12em]">
                       Total
                     </th>
@@ -256,11 +261,28 @@ export default function Orders() {
                               ? "bg-teal-deep/10 text-teal-deep"
                               : order.payment_status === "pending"
                                 ? "bg-sakura/20 text-ink"
+                                : order.payment_status === "deposit_paid"
+                                ? "bg-teal/10 text-teal-deep"
+                                : order.payment_status === "partially_paid" || order.payment_status === "balance_due"
+                                ? "bg-amber/10 text-amber"
                                 : "bg-muted text-muted-foreground"
                           }`}
                         >
                           {order.payment_status.replace(/_/g, " ")}
                         </span>
+                      </td>
+                      <td className="py-3.5 pr-3 hidden lg:table-cell">
+                        {(() => {
+                          if (order.paid_amount && order.remaining_amount && order.total_amount) {
+                            return (
+                              <div className="text-xs">
+                                <span className="text-teal-deep">Paid: {formatCurrency(order.paid_amount)}</span>
+                                <span className="text-amber ml-2">Due: {formatCurrency(order.remaining_amount)}</span>
+                              </div>
+                            );
+                          }
+                          return <span className="text-muted-foreground">—</span>;
+                        })()}
                       </td>
                       <td className="py-3.5 text-right text-foreground font-medium whitespace-nowrap">
                         {formatCurrency(order.total)}

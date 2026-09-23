@@ -16,7 +16,7 @@ const PageLayout = ({ children, transparent = false }: PageLayoutProps) => {
         Skip to main content
       </a>
       <HopHeader transparent={transparent} />
-      <div id="main-content" className="pt-28 sm:pt-28 md:pt-32 lg:pt-48">
+      <div id="main-content" className="pt-24 sm:pt-28 md:pt-32">
         {children}
       </div>
       <HopFooter />

@@ -5,6 +5,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
 import { useMetadata } from "@/hooks/useMetadata";
 import { fetchOrderConfirmation } from "@/services/orderService";
+import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
 
 function formatPrice(paise: number): string {
   return `₹ ${(paise / 100).toLocaleString("en-IN")}`;
@@ -93,7 +94,7 @@ export default function OrderConfirmation() {
                   <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium">Payment</h2>
                   <PaymentStatusBadge status={detail.paymentStatus} />
                 </div>
-                <p className="text-xs text-ink-soft/70 font-light">
+                <p className="text-xs text-ink-soft font-light">
                   Total charged: <span className="text-ink font-medium">{formatPrice(detail.total)}</span>
                 </p>
               </div>
@@ -106,7 +107,20 @@ export default function OrderConfirmation() {
                       <div key={i} className="flex gap-4">
                         <div className="w-14 h-16 shrink-0 bg-jasmine-deep rounded overflow-hidden">
                           {item.imageUrl ? (
-                            <img src={item.imageUrl} alt={item.productName} className="w-full h-full object-cover" />
+                            <img
+                              src={getSupabaseOptimizedUrl(item.imageUrl, { width: 112, height: 128, resize: "cover" })}
+                              alt={item.productName}
+                              loading="lazy"
+                              decoding="async"
+                              onError={(e) => {
+                                const target = e.currentTarget;
+                                if (!target.dataset.fallback) {
+                                  target.dataset.fallback = "true";
+                                  target.src = item.imageUrl!;
+                                }
+                              }}
+                              className="w-full h-full object-cover"
+                            />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
                               <Package className="h-5 w-5 text-ink-soft/30" />
@@ -117,7 +131,7 @@ export default function OrderConfirmation() {
                           <p className="text-sm text-ink">{item.productName}</p>
                           <p className="text-xs text-ink-soft mt-0.5">Qty {item.quantity}</p>
                           {item.estimatedDeliveryDays && (
-                            <p className="text-xs text-ink-soft/60 mt-0.5">
+                            <p className="text-xs text-ink-soft mt-0.5">
                               Est. dispatch: {item.estimatedDeliveryDays} business days
                             </p>
                           )}

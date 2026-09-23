@@ -2,6 +2,15 @@ import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
 import { Link } from "react-router-dom";
+// House photography only: the former Unsplash stock URLs returned 404 and
+// violated the house imagery doctrine. Local weave studies stand in until
+// commissioned collection photography exists (content track).
+import heroImg from "@/assets/hop-hero.jpg";
+import fabricImg from "@/assets/hop-fabric.jpg";
+import giftImg from "@/assets/hop-gift.jpg";
+import linenImg from "@/assets/hop-collection-linen.jpg";
+import pattuImg from "@/assets/hop-collection-pattu.jpg";
+import organzaImg from "@/assets/hop-collection-organza.jpg";
 
 const Lookbook = () => {
   usePrerenderReady(true);
@@ -12,12 +21,12 @@ const Lookbook = () => {
 
   return (
     <PageLayout>
-      <main className="bg-sand-light min-h-screen">
+      <main className="bg-sand/20 min-h-screen">
         {/* Hero Section */}
         <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img
-              src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80"
+              src={fabricImg}
               alt="Macro detail of hand-twisted silver zari on a Kalyani border"
               className="w-full h-full object-cover object-center"
             />
@@ -41,7 +50,7 @@ const Lookbook = () => {
               <figure className="md:col-span-5 md:mt-24 space-y-4">
                 <div className="aspect-[4/5] overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1584557997672-b7dce51d7c04?auto=format&fit=crop&q=80" 
+                    src={pattuImg} 
                     alt="Detail of a heavy border"
                     className="w-full h-full object-cover"
                   />
@@ -55,7 +64,7 @@ const Lookbook = () => {
               <figure className="md:col-span-7 space-y-4">
                 <div className="aspect-[16/9] overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1605810756770-3532cb19e240?auto=format&fit=crop&q=80" 
+                    src={heroImg} 
                     alt="The interaction of warp and weft"
                     className="w-full h-full object-cover"
                   />
@@ -69,7 +78,7 @@ const Lookbook = () => {
               <figure className="md:col-span-8 md:col-start-3 space-y-4 md:mt-16">
                 <div className="aspect-[3/2] overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1583391733975-6677f5f9f8c6?auto=format&fit=crop&q=80" 
+                    src={linenImg} 
                     alt="Pure zari detail"
                     className="w-full h-full object-cover"
                   />
@@ -93,7 +102,7 @@ const Lookbook = () => {
               <figure className="space-y-4">
                 <div className="aspect-[3/4] overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1610030469607-482a5c53b27b?auto=format&fit=crop&q=80" 
+                    src={organzaImg} 
                     alt="Saree in motion"
                     className="w-full h-full object-cover"
                   />
@@ -106,7 +115,7 @@ const Lookbook = () => {
               <figure className="space-y-4 md:mt-48">
                 <div className="aspect-[3/4] overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1583391733958-d25e77b22438?auto=format&fit=crop&q=80" 
+                    src={linenImg} 
                     alt="Saree pleats"
                     className="w-full h-full object-cover"
                   />
@@ -124,7 +133,7 @@ const Lookbook = () => {
           <div className="max-w-lg mx-auto space-y-12">
             <div className="aspect-square overflow-hidden bg-white/50 p-8 rounded-sm">
               <img 
-                src="https://images.unsplash.com/photo-1610030469647-7973dfd70756?auto=format&fit=crop&q=80" 
+                src={giftImg} 
                 alt="Folded saree in a box"
                 className="w-full h-full object-cover rounded-sm mix-blend-multiply"
               />

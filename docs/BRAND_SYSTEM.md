@@ -51,7 +51,8 @@ House of Padmavati — abbreviated **HOP** in order numbers and code.
 
 | Family | CSS Variable | Weight | Usage |
 |--------|-------------|--------|-------|
-| **Cormorant Garamond** | `--font-serif` | 300, 400, 500 | Headlines, editorial text, collection names |
+| **Cormorant Garamond** | `--font-serif` | 300, 400, 500 | Headlines, section titles, editorial prose |
+| **Fraunces** | `font-editorial` | 300–600 (opsz 9–144) | Collection / product / journal NAMES only (OBJ-01 ADOPT-SCOPED) |
 | **Inter** | `--font-sans` | 300, 400, 500, 600 | Body text, navigation, UI labels |
 
 ### Type Scale

@@ -5,6 +5,12 @@ import { HeroSection } from "@/components/hop/HeroSection";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import ProductGrid from "@/components/hop/ProductGrid";
 import ContentBlock from "@/components/hop/ContentBlock";
+// House photography only: the former Unsplash stock URLs returned 404.
+// Local weave studies stand in until commissioned campaign photography exists.
+import fabricImg from "@/assets/hop-fabric.jpg";
+import linenImg from "@/assets/hop-collection-linen.jpg";
+import pattuImg from "@/assets/hop-collection-pattu.jpg";
+import organzaImg from "@/assets/hop-collection-organza.jpg";
 
 const QuietWedding = () => {
   usePrerenderReady(true);
@@ -17,10 +23,10 @@ const QuietWedding = () => {
     <PageLayout>
       <main>
         {/* Campaign Hero */}
-        <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center bg-sand-light overflow-hidden">
+        <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center bg-sand/20 overflow-hidden">
           <div className="absolute inset-0 bg-black/20 z-10" />
           <img
-            src="https://images.unsplash.com/photo-1583391733958-d25e77b22438?auto=format&fit=crop&q=80"
+            src={fabricImg}
             alt="A close up of heavy Kanchipuram silk draping"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -32,7 +38,7 @@ const QuietWedding = () => {
 
 
         {/* Curated Products */}
-        <section className="bg-sand-light/30 py-24 px-6">
+        <section className="bg-sand/10 py-24 px-6">
           <div className="max-w-[1400px] mx-auto space-y-16">
             <div className="text-center space-y-4">
               <h2 className="font-serif text-3xl text-ink">Bridal.</h2>
@@ -45,26 +51,26 @@ const QuietWedding = () => {
                   id: "1",
                   title: "Kalyani Brocade",
                   price: 85000,
-                  image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80",
-                  href: "/products/kalyani-brocade"
+                  image: pattuImg,
+                  href: "/product/1"
                 },
                 {
                   id: "2",
                   title: "Viara Tissue",
                   price: 110000,
-                  image: "https://images.unsplash.com/photo-1605810756770-3532cb19e240?auto=format&fit=crop&q=80",
-                  href: "/products/viara-tissue"
+                  image: organzaImg,
+                  href: "/product/2"
                 },
                 {
                   id: "3",
                   title: "Megham Pure Zari",
                   price: 95000,
-                  image: "https://images.unsplash.com/photo-1583391733975-6677f5f9f8c6?auto=format&fit=crop&q=80",
-                  href: "/products/megham-pure-zari"
+                  image: linenImg,
+                  href: "/product/3"
                 }
               ].map((product) => (
                 <Link to={product.href} key={product.id} className="group block space-y-4">
-                  <div className="aspect-[3/4] overflow-hidden bg-sand-light">
+                  <div className="aspect-[3/4] overflow-hidden bg-sand/20">
                     <img 
                       src={product.image} 
                       alt={product.title}

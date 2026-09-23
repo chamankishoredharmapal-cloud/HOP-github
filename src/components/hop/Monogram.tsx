@@ -24,7 +24,7 @@ export const Monogram = ({ className, withWordmark = false, variant, style }: Mo
   return (
     <img
       src={src}
-      alt="House of Padmavati"
+      alt=""
       className={cn("h-full w-auto object-contain select-none", className)}
       style={style}
       draggable={false}

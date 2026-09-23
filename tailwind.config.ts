@@ -15,7 +15,10 @@ export default {
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['"Vonca Regular"', 'Georgia', 'serif'],
+        // Fraunces: display serif for collection/product/journal NAMES only.
+        // Decision: OBJ-01 ADOPT-SCOPED (HOP_UI_TRANSFORMATION_MASTER.md) —
+        // names carry Fraunces; headings stay Cormorant; body stays Inter.
+        editorial: ['Fraunces', 'Georgia', 'serif'],
       },
       transitionDuration: {
         "1000": "1000ms",

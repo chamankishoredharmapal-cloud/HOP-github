@@ -1,9 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Heart } from "lucide-react";
+import { ChevronDown, Heart } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import PageLayout from "@/components/layout/PageLayout";
-import { Button } from "@/components/ui/button";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,15 +11,21 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { toast } from "sonner";
 import { fetchProductsByCollection } from "@/services/productService";
 import { fetchCollectionBySlug } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import { Film } from "@/components/hop/Film";
 import { getCollectionDescriptor } from "@/data/collectionDescriptors";
+import { getWorld } from "@/data/collectionWorlds";
+import { Selvedge } from "@/components/hop/Selvedge";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
+import {
+  getSupabaseOptimizedUrl,
+  getSupabaseSrcSet,
+} from "@/lib/supabaseImage";
 
 const sortOptions = [
   { value: "newest", label: "Newest first" },
@@ -38,7 +43,6 @@ function formatPrice(paise: number): string {
 const Category = () => {
   const { slug = "all" } = useParams();
   const [sort, setSort] = useState<SortValue>("newest");
-  const { addItem } = useCart();
   const { toggleItem, isWishlisted } = useWishlist();
 
   const { data: collection, isLoading: collectionLoading } = useQuery({
@@ -87,6 +91,7 @@ const Category = () => {
   const displayStory = collection?.editorial_story ?? "";
   const displayNote = collection?.description ?? `Every saree in the house — ${displayName}`;
   const editorial = displayStory || displayNote;
+  const world = getWorld(slug);
 
   const sortedProducts = useMemo(() => {
     if (!data) return [];
@@ -102,18 +107,6 @@ const Category = () => {
         return products;
     }
   }, [sort, data]);
-
-  const handleAddToCart = (productId: string, name: string, price: number, image?: string) => {
-    addItem({
-      id: `product-${productId}`,
-      productId,
-      name,
-      price,
-      formattedPrice: formatPrice(price),
-      image: image ?? "",
-    });
-    toast("Added to bag", { description: name, duration: 3000 });
-  };
 
   const handleToggleWishlist = (productId: string, name: string, price: number, image?: string) => {
     const id = `product-${productId}`;
@@ -137,17 +130,14 @@ const Category = () => {
       <main>
         <div className="w-full aspect-[2/1] overflow-hidden bg-jasmine-deep">
           {collectionLoading ? (
-            <div className="w-full h-full bg-muted animate-pulse" />
-          ) : COLLECTION_VIDEOS[slug] ? (
-              <video
+            <div className="w-full h-full bg-jasmine-deep animate-pulse" />
+          ) : COLLECTION_VIDEOS[slug] && collection?.hero_image_url ? (
+              <Film
                 src={COLLECTION_VIDEOS[slug]}
-                className="w-full h-full object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
+                poster={collection.hero_image_url}
+                alt={`${displayName} — collection film`}
+                className="aspect-[2/1]"
                 preload="metadata"
-                poster={collection?.hero_image_url}
               />
           ) : collection?.hero_image_url ? (
             <img
@@ -156,8 +146,9 @@ const Category = () => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <span className="text-xs text-ink-soft/30" />
+            <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-jasmine-deep text-ink-soft">
+              <span className="text-[0.65rem] tracking-[0.32em] uppercase">{displayName}</span>
+              <span className="text-xs font-light">Image forthcoming — the loom is still working.</span>
             </div>
           )}
         </div>
@@ -181,19 +172,26 @@ const Category = () => {
             </Breadcrumb>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between border-b border-border pb-6 mt-10">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between border-b border-ink/15 pb-6 mt-10">
             <div>
-              <p className="text-xs tracking-[0.42em] uppercase text-teal">{displayTagline}</p>
+              <h1 className="font-editorial font-light text-3xl sm:text-4xl text-ink leading-tight">{displayName}</h1>
+              <p className="mt-2 text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">
+                {displayTagline}{world ? ` · ${world.accentName}` : ""}
+              </p>
+              {world && (
+                <p className="mt-2 text-[0.65rem] tracking-wide text-ink-soft font-light">{world.emotion}</p>
+              )}
             </div>
-            <span className="mt-2 sm:mt-0 text-sm text-ink-soft font-light whitespace-nowrap">
-              {data ? `${data.products.length} sarees` : ""}
+            <span className="mt-2 sm:mt-0 text-sm text-ink-soft font-light whitespace-nowrap tnum">
+              {data ? `${data.products.length} ${data.products.length === 1 ? "saree" : "sarees"}` : ""}
             </span>
           </div>
+          {world && <Selvedge accent={world.accent} className="mt-6 max-w-[240px]" />}
 
           {editorial && (
-            <div className="max-w-2xl mt-12">
+            <div className="max-w-2xl mt-10">
               {getCollectionDescriptor(collection?.name, slug) && (
-                <p className="font-serif text-3xl sm:text-4xl md:text-5xl text-teal-deep font-normal leading-snug text-balance mb-6">
+                <p className="font-serif italic font-light text-2xl sm:text-3xl text-ink-soft leading-snug text-balance mb-6">
                   {getCollectionDescriptor(collection?.name, slug)}
                 </p>
               )}
@@ -203,51 +201,77 @@ const Category = () => {
             </div>
           )}
 
-          <div className="flex items-center justify-end gap-3 mt-20 mb-14">
-            <label className="text-xs tracking-[0.32em] uppercase text-ink-soft/70">
+          <div className="flex items-center justify-end gap-3 mt-14 mb-10">
+            <label htmlFor="hop-sort" className="text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft/70">
               Sort
             </label>
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value as SortValue)}
-              className="text-sm text-ink bg-transparent border border-border px-3 py-2 outline-none cursor-pointer appearance-none font-light"
-            >
-              {sortOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                id="hop-sort"
+                value={sort}
+                onChange={(e) => setSort(e.target.value as SortValue)}
+                className="text-sm text-ink bg-transparent border border-ink/20 rounded-sm pl-3 pr-9 py-2 outline-none cursor-pointer appearance-none font-light hover:border-ink/40 transition-colors"
+              >
+                {sortOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+              <ChevronDown className="w-4 h-4 text-ink-soft pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
+            </div>
           </div>
 
           {isLoading ? (
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-10 gap-y-20 pb-28">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="animate-pulse">
-                  <div className="aspect-[4/5] rounded-md bg-muted" />
+                  <div className="aspect-[4/5] rounded-sm bg-jasmine-deep" />
                   <div className="mt-5 space-y-3">
-                    <div className="h-5 w-3/4 rounded bg-muted" />
-                    <div className="h-4 w-1/3 rounded bg-muted" />
+                    <div className="h-5 w-3/4 rounded-sm bg-jasmine-deep" />
+                    <div className="h-4 w-1/3 rounded-sm bg-jasmine-deep" />
                   </div>
                 </div>
               ))}
             </div>
           ) : sortedProducts.length === 0 ? (
-            <div className="flex items-center justify-center pb-28">
-              <p className="text-ink-soft text-sm font-light">No products found in this collection.</p>
+            <div className="text-center pb-28 pt-6">
+              <p className="font-serif font-light text-2xl text-ink">Nothing here yet.</p>
+              <p className="mt-3 text-sm text-ink-soft font-light leading-relaxed max-w-sm mx-auto">
+                This chapter is being woven. Begin with the full atelier, or read the journal while you wait.
+              </p>
+              <div className="mt-8 flex items-center justify-center gap-6 text-[0.65rem] tracking-[0.32em] uppercase">
+                <Link to="/collections" className="text-ink border-b border-ink/30 pb-1 hover:border-ink transition-colors">
+                  All collections
+                </Link>
+                <Link to="/journal" className="text-ink-soft hover:text-ink transition-colors">
+                  Journal
+                </Link>
+              </div>
             </div>
           ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-10 gap-y-20 pb-28">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-5 sm:gap-x-6 lg:gap-x-10 gap-y-12 sm:gap-y-16 pb-28">
               {sortedProducts.map((p) => {
                 const heroImage = p.images[0]?.url;
                 return (
                   <div key={p.id} className="group">
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-jasmine-deep">
-                      <Link to={`/product/${p.id}`}>
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-jasmine-deep">
+                      <Link to={`/product/${p.id}`} aria-label={`View ${p.name}`}>
                         {heroImage ? (
                           <img
-                            src={heroImage}
+                            src={getSupabaseOptimizedUrl(heroImage, { width: 640 })}
+                            srcSet={getSupabaseSrcSet(heroImage, [360, 640, 840]) || undefined}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             alt={p.name}
                             loading="lazy"
-                            className="w-full h-full object-cover transition-transform duration-1200 ease-out group-hover:scale-105"
+                            decoding="async"
+                            onError={(e) => {
+                              const target = e.currentTarget;
+                              if (!target.dataset.fallback) {
+                                target.dataset.fallback = "true";
+                                target.srcset = "";
+                                target.src = heroImage;
+                              }
+                            }}
+                            className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.03]"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
@@ -257,33 +281,27 @@ const Category = () => {
                       </Link>
                       <button
                         onClick={(e) => { e.preventDefault(); handleToggleWishlist(p.id, p.name, p.selling_price, heroImage); }}
-                        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-jasmine/70 backdrop-blur-sm flex items-center justify-center hover:bg-jasmine transition-colors"
+                        className="absolute top-3 right-3 w-9 h-9 rounded-full bg-jasmine/80 flex items-center justify-center hover:bg-jasmine transition-colors"
                         aria-label={isWishlisted(`product-${p.id}`) ? "Remove from wishlist" : "Save to wishlist"}
                       >
                         <Heart
                           className={`w-4 h-4 transition-colors ${
                             isWishlisted(`product-${p.id}`)
-                              ? "fill-teal text-teal"
+                              ? "fill-[#8B1E2D] text-[#8B1E2D]"
                               : "text-ink"
                           }`}
                         />
                       </button>
                     </div>
-                    <div className="mt-5 space-y-3">
+                    <div className="mt-4 space-y-1">
                       <Link to={`/product/${p.id}`}>
-                        <h3 className="font-serif text-lg md:text-xl text-ink leading-tight hover:text-teal transition-colors">
+                        <h3 className="font-serif font-light text-base sm:text-lg md:text-xl text-ink leading-tight">
                           {p.name}
                         </h3>
                       </Link>
                       <p className="text-sm font-light text-ink-soft">
                         {formatPrice(p.selling_price)}
                       </p>
-                      <Button
-                        onClick={() => handleAddToCart(p.id, p.name, p.selling_price, heroImage)}
-                        className="rounded-full bg-teal-deep text-jasmine hover:bg-teal transition-colors duration-500 text-[0.6rem] tracking-[0.32em] uppercase h-8 px-5"
-                      >
-                        Add to bag
-                      </Button>
                     </div>
                   </div>
                 );

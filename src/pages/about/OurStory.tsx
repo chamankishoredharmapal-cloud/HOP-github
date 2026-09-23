@@ -22,15 +22,18 @@ const OurStory = () => {
         </div>
 
         <main className="w-full lg:w-[70vw] lg:ml-auto px-6">
-          <PageHeader
-            title="The House."
-            subtitle="A digital fashion house for Indian sarees."
-          />
+<PageHeader
+          title="The House."
+          subtitle="A digital fashion house for Indian sarees."
+        />
 
-          <ContentSection>
-            <ImageTextBlock
+        <h2 className="text-2xl font-light text-foreground mb-6">House of Padmavati</h2>
+
+        <ContentSection>
+          <ImageTextBlock
               image={heroImg}
-              imageAlt="House of Padmavati"
+              assetPath="src/assets/hop-hero.jpg"
+              imageAlt=""
               title="House of Padmavati is named for a real woman."
               content="We curate the Indian saree for the modern wardrobe. Our collections are designed not as seasonal trends, but as enduring expressions of identity."
               imagePosition="left"

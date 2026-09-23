@@ -4,6 +4,8 @@ import PageLayout from "@/components/layout/PageLayout";
 import { HeroSection } from "@/components/hop/HeroSection";
 import { CollectionStage } from "@/components/hop/CollectionStage";
 import { CraftSection } from "@/components/hop/CraftSection";
+import { ModernHeirlooms } from "@/components/hop/ModernHeirlooms";
+import { JournalPreview } from "@/components/hop/JournalPreview";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 
 const Index = () => {
@@ -43,7 +45,9 @@ const Index = () => {
       <main>
         <HeroSection />
         <CollectionStage />
+        <ModernHeirlooms />
         <CraftSection />
+        <JournalPreview />
       </main>
     </PageLayout>
   );

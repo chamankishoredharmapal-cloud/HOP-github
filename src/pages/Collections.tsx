@@ -6,6 +6,7 @@ import { Monogram } from "@/components/hop/Monogram";
 import { Film } from "@/components/hop/Film";
 import { fetchCollections } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import { getWorld } from "@/data/collectionWorlds";
 import { useMetadata } from "@/hooks/useMetadata";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
@@ -19,17 +20,10 @@ const Collections = () => {
     queryFn: fetchCollections,
   });
 
-  usePrerenderReady(!isLoading && collections !== undefined);
+  usePrerenderReady(true);
 
-  const getCollectionSymbol = (name: string) => {
-    switch (name?.toLowerCase()) {
-      case 'kalyani': return '❈';
-      case 'viara': return '⟡';
-      case 'arya': return '⁂';
-      case 'padma': return '◈';
-      case 'spandana': return '⸙';
-      default: return '';
-    }
+  const getChapterLabel = (index: number) => {
+    return `Chapter ${String(index + 1).padStart(2, "0")}`;
   };
 
   return (
@@ -37,12 +31,15 @@ const Collections = () => {
       <main>
         <section className="container pt-12 sm:pt-16 pb-10 sm:pb-14 text-center">
           <Monogram className="h-10 sm:h-12 mx-auto mb-5 sm:mb-6 opacity-70" />
-          <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal mb-3 sm:mb-4">
-            THE COLLECTIONS
+          <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-3 sm:mb-4">
+            The Collections
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance leading-tight">
+          <h1 className="font-serif font-light text-4xl sm:text-5xl md:text-6xl text-balance leading-[1.05] text-ink">
             Five ways of wearing tradition.
           </h1>
+          <p className="mt-5 text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-xl mx-auto">
+            Chapters, not categories. Enter slowly.
+          </p>
         </section>
 
         <section className="container pb-20 sm:pb-28">
@@ -50,11 +47,11 @@ const Collections = () => {
             <div className="space-y-16 sm:space-y-20 lg:space-y-24">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="grid lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 items-center animate-pulse">
-                  <div className={`aspect-[4/5] rounded-md bg-muted ${i % 2 === 1 ? "lg:order-2" : ""}`} />
+                  <div className={`aspect-[16/10] rounded-sm bg-jasmine-deep ${i % 2 === 1 ? "lg:order-2" : ""}`} />
                   <div className="space-y-4">
-                    <div className="h-4 w-32 rounded bg-muted" />
-                    <div className="h-10 w-48 rounded bg-muted" />
-                    <div className="h-16 w-full rounded bg-muted" />
+                    <div className="h-4 w-32 rounded-sm bg-jasmine-deep" />
+                    <div className="h-10 w-48 rounded-sm bg-jasmine-deep" />
+                    <div className="h-16 w-full rounded-sm bg-jasmine-deep" />
                   </div>
                 </div>
               ))}
@@ -64,53 +61,61 @@ const Collections = () => {
               <p className="text-ink-soft text-sm font-light">No collections yet.</p>
             </div>
           ) : (
-            <div className="space-y-16 sm:space-y-20 lg:space-y-24">
-              {collections.map((c, i) => (
+            <div className="space-y-12 sm:space-y-16 lg:space-y-20">
+              {collections.map((c, i) => {
+                const world = getWorld(c.slug);
+                return (
                 <Link
                   key={c.id}
                   to={`/collections/${c.slug}`}
-                  className={`group grid lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 items-center ${
+                  className={`group grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center ${
                     i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                   }`}
+                  aria-label={`Enter the ${c.name} collection`}
                 >
-                  <div className="aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] overflow-hidden rounded-md bg-jasmine-deep">
+                  <div className={`lg:col-span-7 overflow-hidden rounded-sm bg-jasmine-deep ${world?.slug === "padma" ? "aspect-square lg:aspect-[4/3]" : world?.slug === "viara" ? "aspect-[16/10]" : world?.slug === "spandana" ? "aspect-[3/4] lg:aspect-[4/5]" : "aspect-[16/10]"}`}>
                     <Film
                       src={c.hero_video_url ?? COLLECTION_VIDEOS[c.slug] ?? undefined}
                       poster={c.hero_image_url ?? ""}
                       alt={c.name}
-                      className="w-full h-full [&>div>img]:transition-transform [&>div>img]:duration-1400 [&>div>img]:ease-out group-hover:[&>div>img]:scale-[1.04] [&>div>video]:transition-transform [&>div>video]:duration-1400 [&>div>video]:ease-out group-hover:[&>div>video]:scale-[1.04]"
+                      className="w-full h-full [&>div>img]:transition-transform [&>div>img]:duration-1000 [&>div>img]:ease-out group-hover:[&>div>img]:scale-[1.02]"
                     />
                   </div>
-                  <div className="space-y-4 sm:space-y-5 lg:px-6">
-                    <p className="text-xl sm:text-2xl text-teal">
-                      {getCollectionSymbol(c.name)}
+                  <div className="lg:col-span-5 space-y-3 sm:space-y-4">
+                    <p className="text-[0.6rem] tracking-[0.42em] uppercase text-ink-soft">
+                      {getChapterLabel(i)}
+                      {c.tagline ? ` · ${c.tagline}` : world ? ` · ${world.accentName}` : ""}
                     </p>
-                    <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-balance group-hover:text-teal transition-colors duration-500">
+                    <h2 className="font-editorial font-light text-3xl sm:text-4xl leading-[1.08] text-balance text-ink">
                       {c.name}
                     </h2>
-                    <p className="text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-md text-pretty">
-                      {c.editorial_story ?? c.description ?? ""}
-                    </p>
-                    <div className="flex items-center gap-5 sm:gap-7 pt-2">
-                      <span className="inline-flex items-center gap-2 text-[0.65rem] sm:text-xs tracking-[0.32em] uppercase text-teal-deep border-b border-teal-deep/40 pb-1">
+                    {(c.editorial_story ?? c.description) && (
+                      <p className="text-sm text-ink-soft font-light leading-relaxed max-w-md text-pretty line-clamp-3">
+                        {c.editorial_story ?? c.description}
+                      </p>
+                    )}
+                    {world && <p className="text-[0.65rem] text-ink-soft font-light">{world.emotion}</p>}
+                    <div className="pt-1">
+                      <span className="inline-flex items-center gap-2 text-[0.65rem] tracking-[0.32em] uppercase text-ink border-b pb-1" style={{ borderColor: world?.accent ?? "hsl(var(--ink) / 0.3)" }}>
                         Enter
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                        <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                       </span>
                     </div>
                   </div>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           )}
         </section>
 
-        <section className="bg-sand/40">
-          <div className="container py-16 sm:py-20 lg:py-24 text-center">
+        <section className="border-t border-ink/10">
+          <div className="container py-14 sm:py-16 text-center">
             <Link
               to="/about"
-              className="inline-flex items-center gap-2 text-[0.7rem] sm:text-xs tracking-[0.32em] uppercase text-teal-deep hover:text-teal"
+              className="inline-flex items-center gap-2 text-[0.7rem] sm:text-xs tracking-[0.32em] uppercase text-ink-soft hover:text-ink transition-colors"
             >
-              The House <ArrowRight className="w-4 h-4" />
+              The House <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </div>
         </section>

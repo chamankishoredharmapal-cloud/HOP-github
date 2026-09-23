@@ -99,7 +99,7 @@ export default function Gift() {
                   <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
                     <div>
                       <label htmlFor="gift-recipient" className="text-sm text-ink-soft font-light">
-                        Recipient name <span className="text-ink-soft/50">(optional)</span>
+                        Recipient name <span className="text-ink-soft">(optional)</span>
                       </label>
                       <Input
                         id="gift-recipient"
@@ -120,7 +120,7 @@ export default function Gift() {
                         placeholder="Your message"
                         className="mt-1.5 rounded-md min-h-[120px]"
                       />
-                      <p className="text-[0.65rem] text-ink-soft/50 mt-1">
+                      <p className="text-[0.65rem] text-ink-soft mt-1">
                         Handwritten on our keepsake card. Maximum 150 characters.
                       </p>
                     </div>
@@ -130,7 +130,7 @@ export default function Gift() {
                     >
                       Save gift note
                     </Button>
-                    <p className="text-xs text-ink-soft/60 mt-2">
+                    <p className="text-xs text-ink-soft mt-2">
                       Your note will be saved for this session and applied at checkout.
                     </p>
                   </form>

@@ -1,37 +1,53 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Monogram from "./Monogram";
 
 const HopFooter = () => {
+  const [email, setEmail] = useState("");
+  const [joined, setJoined] = useState(false);
+
   return (
-    <footer className="bg-teal-deep text-jasmine mt-32">
-      <div className="container py-20 grid gap-16 lg:grid-cols-[1.2fr_2fr]">
+    <footer className="bg-teal-deep text-jasmine mt-24 sm:mt-32">
+      <div className="container py-16 sm:py-20 grid gap-14 lg:grid-cols-[1.2fr_2fr]">
         {/* Brand column */}
         <div className="space-y-6">
           <div className="text-jasmine">
-            <Monogram variant="signature" className="h-20 [filter:brightness(0)_invert(1)] opacity-90" />
-            <p className="mt-2 font-serif text-lg tracking-[0.22em] uppercase text-jasmine">
+            <Monogram variant="signature" className="h-16 sm:h-20 [filter:brightness(0)_invert(1)] opacity-90" />
+            <p className="mt-2 font-serif font-light text-base sm:text-lg tracking-[0.22em] uppercase text-jasmine">
               House of Padmavati
             </p>
-            <p className="mt-6 font-serif italic text-2xl leading-tight max-w-xs">
+            <p className="mt-6 font-serif italic font-light text-2xl leading-tight max-w-xs">
               To the woman who wove my world.
             </p>
           </div>
           <p className="text-sm font-light text-jasmine/70 leading-relaxed max-w-sm">
-            A digital fashion house for Indian sarees.
+            A house, not a shop — for Indian sarees.
           </p>
-          <form className="flex max-w-sm border-b border-jasmine/40 pb-2">
-            <label htmlFor="footer-email" className="sr-only">Email address</label>
-            <input
-              id="footer-email"
-              type="email"
-              placeholder="Your email, gently kept"
-              className="flex-1 bg-transparent text-sm text-jasmine placeholder:text-jasmine/50 outline-none font-light"
-              aria-label="Email"
-            />
-            <button className="text-xs tracking-[0.3em] uppercase hover:text-sand transition-colors">
-              Join
-            </button>
-          </form>
+          {joined ? (
+            <p className="text-sm font-light text-jasmine/80 max-w-sm" role="status">
+              Kept gently. You will hear from the house only when there is something worth saying.
+            </p>
+          ) : (
+            <form
+              className="flex max-w-sm border-b border-jasmine/40 pb-2"
+              onSubmit={(e) => { e.preventDefault(); if (email.trim()) setJoined(true); }}
+            >
+              <label htmlFor="footer-email" className="sr-only">Email address</label>
+              <input
+                id="footer-email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email, gently kept"
+                className="flex-1 bg-transparent text-sm text-jasmine placeholder:text-jasmine/50 outline-none font-light"
+                aria-label="Email"
+              />
+              <button type="submit" className="text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4">
+                Join
+              </button>
+            </form>
+          )}
         </div>
 
         {/* Link columns */}
@@ -52,29 +68,25 @@ const HopFooter = () => {
           </FooterCol>
           <FooterCol title="Care">
             <FooterLink to="/customer-care">Saree Care</FooterLink>
+            <FooterLink to="/shipping-policy">Shipping</FooterLink>
+            <FooterLink to="/returns-policy">Returns</FooterLink>
           </FooterCol>
-          <FooterCol title="Whisper">
-            <FooterLink to="https://instagram.com">Instagram</FooterLink>
-            <FooterLink to="https://pinterest.com">Pinterest</FooterLink>
-            <FooterLink to="https://wa.me/919999999999">WhatsApp</FooterLink>
-          </FooterCol>
+          <div>
+            <h2 className="font-serif font-light text-base text-jasmine mb-4 tracking-wide">Whisper</h2>
+            <ul className="space-y-2.5">
+              <li><a href="https://instagram.com/houseofpadmavati" target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Instagram</a></li>
+              <li><a href="https://pinterest.com/houseofpadmavati" target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Pinterest</a></li>
+              <li><a href="https://wa.me/919999999999" target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">WhatsApp</a></li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div className="border-t border-jasmine/20 py-6">
-        <div className="container grid md:grid-cols-3 gap-4 text-xs font-light text-jasmine/60">
-          <div className="text-center md:text-left">
-            <p className="text-jasmine/80 font-medium mb-1">Worldwide shipping</p>
-            <p>Fully insured · Discreet packaging · 14-day returns</p>
-          </div>
-          <div className="text-center">
-            <p className="text-jasmine/80 font-medium mb-1">Distinct collections</p>
-            <p>Each saree is an expression of identity</p>
-          </div>
-          <div className="text-center md:text-right">
-            <p className="text-jasmine/80 font-medium mb-1">Secure payments</p>
-            <p>Razorpay · Credit cards · UPI · Net banking</p>
-          </div>
+      <div className="border-t border-jasmine/15 py-5">
+        <div className="container text-center">
+          <p className="text-xs font-light text-jasmine/60">
+            Fully insured · Discreet packaging · Secure payments via Razorpay
+          </p>
         </div>
       </div>
       <div className="border-t border-jasmine/15">
@@ -94,7 +106,9 @@ const HopFooter = () => {
 
 const FooterCol = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div>
-    <h4 className="font-serif text-base text-sand mb-4 tracking-wide">{title}</h4>
+    {/* h2 (not h3): several storefront pages carry no h2, so h3 here skipped a
+        level and failed axe heading-order. Visuals unchanged — classes rule. */}
+    <h2 className="font-serif font-light text-base text-jasmine mb-4 tracking-wide">{title}</h2>
     <ul className="space-y-2.5">{children}</ul>
   </div>
 );

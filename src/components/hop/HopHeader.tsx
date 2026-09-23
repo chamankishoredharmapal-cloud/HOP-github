@@ -28,6 +28,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
@@ -38,6 +39,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
+      setScrolled(y > 12);
       if (y <= 4) {
         setHidden(false);
       } else if (y > lastScrollY.current) {
@@ -47,6 +49,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
       }
       lastScrollY.current = y;
     };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -57,7 +60,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
   }, []);
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 text-[#1F1F1F] pt-2 md:pt-4 transition-transform duration-300 ease-in-out ${transparent ? "" : "bg-[#FBF5EB]"} ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
+    <header className={`fixed top-0 inset-x-0 z-50 text-[#1F1F1F] transition-transform duration-300 ease-in-out ${hidden && !open ? "-translate-y-full" : "translate-y-0"} ${transparent && !scrolled && !open ? "bg-transparent" : "bg-[#FBF5EB]/95 backdrop-blur-sm shadow-[0_1px_0_rgba(31,31,31,0.08)]"}`}>
       {/* Top banner removed due to brand guideline violation (No aggressive sales tactics/mass-market tropes) */}
       <div className="container flex items-center justify-between h-[72px] md:h-[80px] gap-4 md:gap-6">
         <nav
@@ -97,25 +100,25 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
           </span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-6 xl:gap-8 text-[#1F1F1F] w-1/3 justify-end">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6 text-[#1F1F1F] w-1/3 justify-end">
           <button
             onClick={() => setSearchOpen(true)}
             aria-label="Search"
-            className="p-2 hover:text-[#8B1E2D] transition-colors duration-300"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-[#8B1E2D] transition-colors duration-300"
           >
             <Search className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </button>
           <Link
             to="/account"
             aria-label="Account"
-            className="p-2 hover:text-[#8B1E2D] transition-colors duration-300"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-[#8B1E2D] transition-colors duration-300"
           >
             <User className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </Link>
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="p-2 hover:text-[#8B1E2D] transition-colors duration-300 relative"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-[#8B1E2D] transition-colors duration-300 relative"
           >
             <Heart className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
             {wishlistCount > 0 && (
@@ -127,16 +130,16 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
           <Link
             to="/cart"
             aria-label="Bag"
-            className="p-2 hover:text-[#8B1E2D] transition-colors duration-300 flex items-center gap-2"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-[#8B1E2D] transition-colors duration-300 gap-2"
           >
             <ShoppingBag className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
-            <span className="text-[0.75rem] font-light">({totalItems})</span>
+            <span className="text-[0.75rem] font-light tnum">({totalItems})</span>
           </Link>
         </div>
 
         <Link
           to="/cart"
-          className="lg:hidden p-2 text-[#1F1F1F] hover:text-[#8B1E2D] transition-colors duration-300 relative"
+          className="lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center text-[#1F1F1F] hover:text-[#8B1E2D] transition-colors duration-300 relative"
           aria-label="Bag"
         >
           <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
@@ -152,7 +155,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
       {open && (
         <div
           ref={menuRef}
-          className="lg:hidden fixed inset-0 z-50 bg-[#FBF5EB] text-[#1F1F1F] animate-fade-in"
+          className="lg:hidden fixed inset-0 z-50 bg-[#FBF5EB] text-[#1F1F1F] animate-fade-in overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
@@ -168,11 +171,12 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
             </button>
           </div>
           <nav
-            className="container py-8 md:py-12 flex flex-col gap-6"
+            className="container py-8 md:py-12 flex flex-col gap-10"
             role="navigation"
             aria-label="Mobile navigation"
           >
             <div className="space-y-4">
+              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-[#1F1F1F]/50">The House</p>
               {editorial.map((c) => (
                 <Link
                   key={c.href}
@@ -184,6 +188,44 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
                   {c.label}
                 </Link>
               ))}
+            </div>
+            <div className="space-y-4">
+              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-[#1F1F1F]/50">Collections</p>
+              {collections.map((c) => (
+                <Link
+                  key={c.href}
+                  to={c.href}
+                  onClick={closeMenu}
+                  className="block text-xl md:text-2xl font-serif font-light hover:text-[#8B1E2D] transition-colors duration-300"
+                >
+                  {c.label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex items-center gap-2 pt-2 border-t border-[#87817A]/15">
+              <button
+                onClick={() => { closeMenu(); setSearchOpen(true); }}
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-[#8B1E2D] transition-colors"
+                aria-label="Search"
+              >
+                <Search className="w-4 h-4" strokeWidth={1.5} /> Search
+              </button>
+              <Link
+                to="/account"
+                onClick={closeMenu}
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-[#8B1E2D] transition-colors"
+                aria-label="Account"
+              >
+                <User className="w-4 h-4" strokeWidth={1.5} /> Account
+              </Link>
+              <Link
+                to="/wishlist"
+                onClick={closeMenu}
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-[#8B1E2D] transition-colors"
+                aria-label="Wishlist"
+              >
+                <Heart className="w-4 h-4" strokeWidth={1.5} /> Saved
+              </Link>
             </div>
           </nav>
         </div>

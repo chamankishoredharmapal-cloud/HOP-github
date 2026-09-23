@@ -1,7 +1,11 @@
 import * as React from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { ArrowLeft, ArrowRight, ZoomIn } from "lucide-react";
+import { ArrowLeft, ArrowRight, X, ZoomIn } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  getSupabaseOptimizedUrl,
+  getSupabaseSrcSet,
+} from "@/lib/supabaseImage";
 
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 
@@ -90,17 +94,11 @@ export const ProductGallery = React.memo(function ProductGallery({
     setIsZoomed(false);
   };
 
-  const handleImageClick = () => {
-    if (enableZoom) {
-      if (isZoomed) {
-        handleZoomOut();
-      } else {
-        handleZoomIn();
-      }
-    }
-  };
+  const galleryRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
+    const node = galleryRef.current;
+    if (!node) return;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
         event.preventDefault();
@@ -114,32 +112,65 @@ export const ProductGallery = React.memo(function ProductGallery({
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    node.addEventListener("keydown", handleKeyDown);
+    return () => node.removeEventListener("keydown", handleKeyDown);
   }, [scrollPrev, scrollNext, isZoomed]);
 
+  const handleZoomToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!enableZoom) return;
+    if (isZoomed) handleZoomOut();
+    else handleZoomIn();
+  };
+
   return (
-    <div className="relative w-full">
-      <div className="relative overflow-hidden rounded-md bg-jasmine-deep" ref={emblaRef} onClick={handleImageClick}>
+    <div ref={galleryRef} className="relative w-full" tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Product images">
+      <div className="relative overflow-hidden rounded-sm bg-jasmine-deep" ref={emblaRef}>
         <div className="flex">
-          {images.map((image, index) => (
-            <div key={index} className="min-w-0 shrink-0 grow-0 basis-full">
-              <div className={`relative ${aspectRatioClass} w-full`} style={{ transform: isZoomed ? `scale(${zoomLevel})` : "scale(1)", transformOrigin: "center" }}>
-                <img
-                  src={image}
-                  alt={`Product view ${index + 1}`}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-out"
-                  loading="lazy"
-                  style={{ transitionProperty: "transform" }}
-                />
-                {enableZoom && (
-                  <div className="absolute bottom-4 right-4 rounded-full bg-black/50 p-2 backdrop-blur-sm transition-opacity duration-300">
-                    <ZoomIn className="h-4 w-4 text-white" />
-                  </div>
-                )}
+          {images.map((image, index) => {
+            const optimizedSrc = getSupabaseOptimizedUrl(image, { width: 800 });
+            const srcSet = getSupabaseSrcSet(image, [480, 800, 1200]);
+            return (
+              <div key={index} className="min-w-0 shrink-0 grow-0 basis-full">
+                <div className={`relative ${aspectRatioClass} w-full`} style={{ transform: isZoomed ? `scale(${zoomLevel})` : "scale(1)", transformOrigin: "center" }}>
+                  <img
+                    src={optimizedSrc}
+                    srcSet={srcSet || undefined}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+                    alt={`Product view ${index + 1}`}
+                    className={`absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-out ${enableZoom ? (isZoomed ? "cursor-zoom-out" : "cursor-zoom-in") : ""}`}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding={index === 0 ? "sync" : "async"}
+                    // lowercase fetchpriority: React 18 warns on camelCase and drops it (see OptimizedImage).
+                    {...(index === 0 ? { fetchpriority: "high" } : {})}
+                    // Pointer shortcut: the overlay zoom button remains the keyboard-operable control.
+                    onClick={enableZoom ? handleZoomToggle : undefined}
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.dataset.fallback) {
+                        target.dataset.fallback = "true";
+                        target.srcset = "";
+                        target.src = image;
+                      }
+                    }}
+                    style={{ transitionProperty: "transform" }}
+                  />
+                  {/* Zoom toggle. Shown only when not zoomed: once zoomed, the
+                      top-right dismiss control is the single Zoom-out affordance,
+                      so a scaled duplicate can never cover pointer events. */}
+                  {enableZoom && !isZoomed && (
+                    <button
+                      onClick={handleZoomToggle}
+                      className="absolute bottom-4 right-4 rounded-full bg-ink/60 p-2.5 text-jasmine transition-colors hover:bg-ink/80 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                      aria-label="Zoom in"
+                    >
+                      <ZoomIn className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -149,27 +180,43 @@ export const ProductGallery = React.memo(function ProductGallery({
             e.stopPropagation();
             handleZoomOut();
           }}
-          className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 backdrop-blur-sm text-white transition-colors hover:bg-white/20"
+          className="absolute top-4 right-4 z-10 rounded-full bg-ink/60 p-2.5 text-jasmine transition-colors hover:bg-ink/80 min-h-[44px] min-w-[44px] flex items-center justify-center"
           aria-label="Zoom out"
         >
-          <span className="text-xs font-medium">✕</span>
+          <X className="h-4 w-4" aria-hidden="true" />
         </button>
       )}
 
       <div className="mt-4 grid grid-cols-4 gap-3">
-        {images.map((image, index) => (
-          <button
-            key={index}
-            onClick={() => emblaApi?.scrollTo(index)}
-            className={`relative aspect-square overflow-hidden rounded bg-jasmine-deep border transition-all duration-300 ${
-              index === selectedIndex
-                ? "border-teal-deep shadow-sm"
-                : "border-transparent opacity-70 hover:opacity-100"
-            }`}
-          >
-            <img src={image} alt="" className="w-full h-full object-cover" />
-          </button>
-        ))}
+        {images.map((image, index) => {
+          const thumbSrc = getSupabaseOptimizedUrl(image, { width: 160, height: 160, resize: "cover" });
+          return (
+            <button
+              key={index}
+              onClick={() => emblaApi?.scrollTo(index)}
+              className={`relative aspect-square overflow-hidden rounded-sm bg-jasmine-deep border transition-all duration-300 min-h-[44px] ${
+                index === selectedIndex
+                  ? "border-ink shadow-sm"
+                  : "border-transparent opacity-70 hover:opacity-100"
+              }`}
+            >
+              <img
+                src={thumbSrc}
+                alt=""
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.dataset.fallback) {
+                    target.dataset.fallback = "true";
+                    target.src = image;
+                  }
+                }}
+              />
+            </button>
+          );
+        })}
       </div>
 
       <button

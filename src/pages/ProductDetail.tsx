@@ -94,14 +94,14 @@ const ProductDetail = () => {
     return (
       <PageLayout>
         <main className="container pt-10 pb-24 animate-pulse">
-          <div className="h-4 w-64 rounded bg-muted mb-10" />
+          <div className="h-4 w-64 rounded-sm bg-jasmine-deep mb-10" />
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-            <div className="aspect-[4/5] rounded-md bg-muted" />
+            <div className="aspect-[4/5] rounded-sm bg-jasmine-deep" />
             <div className="space-y-6">
-              <div className="h-4 w-24 rounded bg-muted" />
-              <div className="h-10 w-3/4 rounded bg-muted" />
-              <div className="h-6 w-32 rounded bg-muted" />
-              <div className="h-20 w-full rounded bg-muted" />
+              <div className="h-4 w-24 rounded-sm bg-jasmine-deep" />
+              <div className="h-10 w-3/4 rounded-sm bg-jasmine-deep" />
+              <div className="h-6 w-32 rounded-sm bg-jasmine-deep" />
+              <div className="h-20 w-full rounded-sm bg-jasmine-deep" />
             </div>
           </div>
         </main>
@@ -196,7 +196,7 @@ const ProductDetail = () => {
             {gallery.length > 0 ? (
               <ProductGallery images={gallery} aspectRatio="4/5" />
             ) : (
-              <div className="aspect-[4/5] rounded-md bg-jasmine-deep flex items-center justify-center">
+              <div className="aspect-[4/5] rounded-sm bg-jasmine-deep flex items-center justify-center">
                 <p className="text-sm text-ink-soft/50 font-light">No images available</p>
               </div>
             )}
@@ -205,16 +205,21 @@ const ProductDetail = () => {
           <div className="lg:sticky lg:top-32 lg:h-fit space-y-8">
             <div>
               {product.collection_name && (
-                <p className="text-[0.7rem] tracking-[0.42em] uppercase text-teal">
+                <p className="text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">
                   {product.collection_name}
                 </p>
               )}
-              <h1 className="mt-3 font-serif text-4xl md:text-5xl text-ink leading-tight">
+              <h1 className="mt-3 font-editorial font-light text-4xl md:text-5xl text-ink leading-[1.05]">
                 {product.name}
               </h1>
-              <p className="mt-4 text-xl font-light text-ink-soft">
+              <p className="mt-4 text-xl font-normal text-ink tnum">
                 {formatPrice(product.selling_price)}
               </p>
+              {product.stock > 0 && product.stock <= 3 && (
+                <p className="mt-2 text-xs font-light tracking-wide text-ink-soft">
+                  One of a small batch from this loom — {product.stock} {product.stock === 1 ? "drape remains" : "drapes remain"}.
+                </p>
+              )}
             </div>
 
             <p className="text-ink-soft font-light leading-relaxed max-w-md">
@@ -231,16 +236,17 @@ const ProductDetail = () => {
             <div className="flex items-center gap-4 pt-2">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-teal-deep text-jasmine px-7 py-4 text-[0.7rem] tracking-[0.32em] uppercase rounded-full hover:bg-teal transition-colors duration-500"
+                className="flex-1 bg-ink text-jasmine px-7 py-4 text-[0.65rem] tracking-[0.32em] uppercase rounded-full hover:bg-ink-soft transition-colors duration-300"
               >
                 Add to bag
               </button>
               <button
                 onClick={handleToggleWishlist}
                 aria-label={saved ? "Remove from wishlist" : "Save to wishlist"}
-                className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:text-teal transition-colors"
+                aria-pressed={saved}
+                className="w-12 h-12 rounded-full border border-ink/20 flex items-center justify-center hover:border-ink/50 transition-colors"
               >
-                <Heart className={`w-4 h-4 transition-colors ${saved ? "fill-teal text-teal" : ""}`} />
+                <Heart className={`w-4 h-4 transition-colors ${saved ? "fill-[#8B1E2D] text-[#8B1E2D]" : "text-ink"}`} />
               </button>
             </div>
 
@@ -268,7 +274,7 @@ const ProductDetail = () => {
                 <AccordionTrigger className="text-sm tracking-wider uppercase">Shipping & Returns</AccordionTrigger>
                 <AccordionContent className="text-ink-soft font-light leading-relaxed space-y-3">
                   <p>Dispatched within 1 business day.</p>
-                  <p>Return and replacement eligibility depends on the number of sarees in your order. See the <Link to="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Returns & Refund Policy</Link> for complete details.</p>
+                  <p>Return and replacement eligibility depends on the number of sarees in your order. See the <Link to="/returns-policy" className="text-ink border-b border-ink/30 hover:border-ink transition-colors">Returns & Refund Policy</Link> for complete details.</p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -276,26 +282,26 @@ const ProductDetail = () => {
         </div>
 
         {relatedProducts && relatedProducts.length > 0 && (
-          <section className="mt-32">
+          <section className="mt-24 sm:mt-32 border-t border-ink/10 pt-12 sm:pt-16">
             <div className="flex items-end justify-between mb-10">
-              <h2 className="font-serif text-3xl md:text-4xl">Related pieces.</h2>
+              <h2 className="font-serif font-light text-2xl sm:text-3xl md:text-4xl text-ink">Related pieces.</h2>
               <Link
                 to={product.collection_id ? `/collections/${product.slug}` : "/collections"}
-                className="text-sm font-light text-ink hover:text-teal flex items-center gap-2"
+                className="text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft hover:text-ink flex items-center gap-2 transition-colors"
               >
-                View {product.collection_name ?? "Collection"} <ArrowRight className="w-4 h-4" />
+                View {product.collection_name ?? "Collection"} <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-10">
               {relatedProducts.map((p) => (
                 <Link key={p.id} to={`/product/${p.id}`} className="group">
-                  <div className="aspect-[4/5] overflow-hidden bg-jasmine-deep rounded-md">
+                  <div className="aspect-[4/5] overflow-hidden bg-jasmine-deep rounded-sm">
                     {p.images[0] ? (
                       <img
                         src={p.images[0].url}
                         alt={p.name}
                         loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-1200 ease-out group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.03]"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -304,7 +310,7 @@ const ProductDetail = () => {
                     )}
                   </div>
                   <div className="mt-4 space-y-1">
-                    <h3 className="font-serif text-lg text-ink leading-tight">{p.name}</h3>
+                    <h3 className="font-serif font-light text-base sm:text-lg text-ink leading-tight">{p.name}</h3>
                     <p className="text-sm font-light text-ink-soft">{formatPrice(p.selling_price)}</p>
                   </div>
                 </Link>

@@ -40,6 +40,8 @@ export interface CreateOrderPaymentInput {
   shipping_option?: string;
   notes?: string;
   items?: { product_id: string; quantity: number }[];
+  amount?: number; // Optional: deposit amount in paise (must be exactly 20000 for ₹200 deposit)
+  payment_model?: 'full' | 'deposit'; // Optional: explicit payment model selector
 }
 
 export async function createRazorpayOrder(

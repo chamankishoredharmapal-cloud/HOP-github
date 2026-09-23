@@ -2,51 +2,111 @@ import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
-import { Film } from "@/components/hop/Film";
-import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useMetadata } from "@/hooks/useMetadata";
 import { articles } from "@/data/journalArticles";
-import heroImg from "@/assets/hop-hero.jpg";
 
 const Journal = () => {
   usePrerenderReady(true);
   useMetadata({
     title: "The Journal — House of Padmavati",
-    description: "The House of Padmavati Journal.",
+    description: "Field notes and reflections from the House of Padmavati.",
   });
+
+  const [featured, ...rest] = articles;
 
   return (
     <PageLayout>
       <main>
-        <section className="container pt-20 pb-12 text-center">
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-balance leading-tight">
-            The Journal.
+        <section className="container pt-16 sm:pt-20 pb-10 sm:pb-14 text-center">
+          <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-4">
+            The Journal
+          </p>
+          <h1 className="font-serif font-light text-4xl sm:text-5xl md:text-6xl text-balance leading-[1.05] text-ink">
+            Field notes &amp; reflections.
           </h1>
+          <p className="mt-5 text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-xl mx-auto">
+            Dispatches from the loom, histories of the weave, and conversations on the art of choosing well.
+          </p>
         </section>
 
-        <section className="container pb-32">
-          <Link to={`/journal/${articles[0].slug}`} className="group block">
-            <div className="aspect-[16/9] overflow-hidden rounded-md bg-jasmine-deep">
-              <Film
-                src={COLLECTION_VIDEOS.hero}
-                poster={heroImg}
-                alt={articles[0].title}
-                className="w-full h-full"
-                preload="metadata"
-              />
+        {featured && (
+          <section className="container pb-16 sm:pb-24">
+            <Link to={`/journal/${featured.slug}`} className="group block">
+              <div className="aspect-[16/9] overflow-hidden rounded-sm bg-jasmine-deep">
+                {featured.assetPath ? (
+                  <OptimizedImage
+                    assetPath={featured.assetPath}
+                    fallbackSrc={featured.img}
+                    alt={featured.title}
+                    sizes="(max-width: 768px) 100vw, 1200px"
+                    priority={true}
+                    imgClassName="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
+                  />
+                ) : (
+                  <img
+                    src={featured.img}
+                    alt={featured.title}
+                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
+                  />
+                )}
+              </div>
+              <div className="mt-8 max-w-3xl">
+                <p className="text-[0.6rem] tracking-[0.42em] uppercase text-ink-soft">{featured.tag} · Featured</p>
+                <h2 className="mt-3 font-editorial font-light text-3xl md:text-5xl leading-[1.08] text-balance text-ink">
+                  {featured.title}
+                </h2>
+                <p className="mt-4 text-ink-soft font-light text-base sm:text-lg leading-relaxed">{featured.dek}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-[0.65rem] tracking-[0.32em] uppercase text-ink border-b border-ink/30 pb-1">
+                  Read <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </div>
+            </Link>
+          </section>
+        )}
+
+        {rest.length > 0 && (
+          <section className="border-t border-ink/10">
+            <div className="container py-14 sm:py-20">
+              <p className="text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft mb-10">
+                Earlier entries · {rest.length}
+              </p>
+              <div className="divide-y divide-ink/10 border-y border-ink/10">
+                {rest.map((article) => (
+                  <Link
+                    key={article.slug}
+                    to={`/journal/${article.slug}`}
+                    className="group grid grid-cols-[64px_1fr] sm:grid-cols-[120px_1fr_auto] items-center gap-5 sm:gap-8 py-6"
+                  >
+                    <div className="aspect-square overflow-hidden rounded-sm bg-jasmine-deep">
+                      {article.assetPath ? (
+                        <OptimizedImage
+                          assetPath={article.assetPath}
+                          fallbackSrc={article.img}
+                          alt=""
+                          sizes="120px"
+                          imgClassName="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <img src={article.img} alt="" loading="lazy" className="w-full h-full object-cover" />
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[0.6rem] tracking-[0.32em] uppercase text-ink-soft">{article.tag}</p>
+                      <h3 className="mt-1.5 font-editorial font-light text-xl sm:text-2xl text-ink leading-snug text-balance">
+                        {article.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-ink-soft font-light leading-relaxed hidden sm:block">
+                        {article.dek}
+                      </p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-ink-soft transition-transform group-hover:translate-x-1 hidden sm:block" aria-hidden="true" />
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className="mt-8 max-w-3xl">
-              <p className="text-xs tracking-[0.32em] uppercase text-teal">{articles[0].tag} · Featured</p>
-              <h2 className="mt-3 font-serif text-3xl md:text-5xl leading-tight text-balance group-hover:text-teal transition-colors duration-500">
-                {articles[0].title}
-              </h2>
-              <p className="mt-4 text-ink-soft font-light text-lg">{articles[0].dek}</p>
-              <span className="mt-6 inline-flex items-center gap-2 text-[0.65rem] tracking-[0.32em] uppercase text-teal-deep group-hover:text-teal transition-colors">
-                Read <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-              </span>
-            </div>
-          </Link>
-        </section>
+          </section>
+        )}
       </main>
     </PageLayout>
   );

@@ -127,7 +127,7 @@ export default function Login() {
 
           <div className="mt-10 flex items-center gap-4">
             <div className="h-px flex-1 bg-ink/5" />
-            <span className="text-xs text-ink-soft/50">or</span>
+            <span className="text-xs text-ink-soft">or</span>
             <div className="h-px flex-1 bg-ink/5" />
           </div>
 

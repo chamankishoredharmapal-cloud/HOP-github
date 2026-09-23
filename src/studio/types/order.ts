@@ -1,6 +1,15 @@
 export type OrderStatus = "pending_payment" | "confirmed" | "processing" | "shipped" | "delivered" | "cancelled" | "returned";
 
-export type PaymentStatus = "pending" | "paid" | "failed" | "refunded" | "partially_refunded";
+export type PaymentStatus = 
+  | "pending"              // payment initiated, not yet verified
+  | "deposit_pending"      // ₹200 deposit not yet verified via Razorpay
+  | "deposit_paid"         // ₹200 deposit successfully verified, order confirmed
+  | "partially_paid"       // Deposit paid, balance pending delivery
+  | "fully_paid"           // Full amount (deposit + balance) paid
+  | "paid"                 // Alias for fully_paid (existing behavior)
+  | "failed"               // Payment failed
+  | "refunded"             // Order refunded
+  | "cancelled";           // Order cancelled;
 
 export interface Order {
   id: string;
@@ -11,7 +20,10 @@ export interface Order {
   payment_status: PaymentStatus;
   subtotal: number;
   shipping_cost: number;
-  total: number;
+  total: number;           // Display total in rupees (for UI)
+  total_amount: number;    // Full order total in paise (internal)
+  paid_amount: number;     // Amount paid so far in paise (internal)
+  remaining_amount: number; // remaining_amount in paise (internal)
   notes: string | null;
   created_at: string;
   updated_at: string;

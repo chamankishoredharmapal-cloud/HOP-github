@@ -2,32 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Vonca Regular";
-  src: url("@/assets/fonts/vonca-regular.woff") format("woff"),
-       url("@/assets/fonts/vonca-regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* House of Padmavati — Coastal Blossom Design System
-   "Sarees · Stories · You" — A digital sanctuary, calm and museum-like. */
+   "Sarees · Stories · You" — A digital sanctuary, calm and museum-like.
+   Color hierarchy (Objective 02): GROUND / GROUND_ALT / INK / INK_SOFT / SIGNATURE (Alta) / MATERIAL (Champagne+Sakura) / FUNCTIONAL
+   Evidence: /poc/colors lab vs silk/zari/skin. Default = Palette A "Jasmine Honest" — honest tokens, restraint preserved. */
 
 @layer base {
   :root {
-    /* HOP Timeless Editorial Palette (HSL) */
-    --jasmine: 40 33% 95%;        /* Soft Warm Ivory */
-    --jasmine-deep: 40 25% 91%;   /* Deep Ivory */
-    --teal: 350 70% 30%;          /* Deep Crimson (mapped to teal to preserve classes) */
-    --teal-deep: 0 0% 9%;         /* Rich Black (mapped to teal-deep to preserve classes) */
-    --sand: 40 10% 90%;           /* Warm Gray / Off-white (mapped to sand) */
-    --sakura: 0 0% 96%;           /* Minimal Off-White (mapped to sakura) */
-    --ink: 0 0% 9%;               /* Rich Black */
-    --ink-soft: 0 0% 35%;         /* Soft Black */
-    --crimson: var(--teal);       /* Deep Crimson (global header background) */
-    --warm-white: 42 35% 97%;     /* Warm White (global header foreground) */
-    --warm-white-bright: 42 55% 99%; /* Warm White (header hover) */
+    /* HOP Evolved Palette — honest tokens, AA-checked */
+    --jasmine: 38 38% 94%;        /* Warm Ivory — GROUND #F6F1EB */
+    --jasmine-deep: 38 30% 89%;   /* Deep Ivory — GROUND_ALT #EDE7D9 */
+    --teal: 350 70% 30%;          /* Alta Crimson — SIGNATURE ACCENT #8B1E2D (kept name for compat, now honest) */
+    --teal-deep: 0 0% 10%;        /* Ink — #1A1A18 warm near-black */
+    --sand: 36 45% 81%;           /* Golden Sand — MATERIAL #E4D3BA */
+    --sakura: 8 31% 73%;          /* Sakura Dust — MATERIAL2 #CFA9A2 */
+    --ink: 0 0% 10%;              /* Ink — #1A1A18 */
+    --ink-soft: 28 6% 42%;        /* Ink Soft — #6B6560 warm muted */
+    --crimson: var(--teal);       /* Alta Crimson alias */
+    --peacock: 174 16% 44%;       /* Coastal Teal restored #5D817E — optional per-collection, not global */
+    --champagne: 38 42% 62%;      /* Champagne Gold #C7A96D — flat, never gradient */
+    --warm-white: 38 38% 94%;
+    --warm-white-bright: 38 55% 98%;
 
     /* Semantic tokens */
     --background: var(--jasmine);
@@ -50,9 +45,9 @@
     --accent: var(--sand);
     --accent-foreground: var(--ink);
 
-    --border: 40 15% 85%;
-    --input: 40 15% 85%;
-    --ring: var(--ink-soft);
+    --border: 38 22% 84%; /* #E0D8C8 */
+    --input: 38 22% 84%;
+    --ring: 28 6% 42%;
 
     --card: 0 0% 100%;
     --card-foreground: var(--ink);
@@ -74,8 +69,8 @@
     --sidebar-primary-foreground: var(--jasmine);
     --sidebar-accent: var(--jasmine-deep);
     --sidebar-accent-foreground: var(--ink);
-    --sidebar-border: 40 15% 85%;
-    --sidebar-ring: var(--ink-soft);
+    --sidebar-border: 38 22% 84%;
+    --sidebar-ring: 28 6% 42%;
   }
 
   .dark {
@@ -106,13 +101,35 @@
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
   .gallery-shadow {
-    box-shadow: 0 40px 100px -40px hsl(var(--teal-deep) / 0.3);
+    box-shadow: 0 24px 60px -32px hsl(var(--ink) / 0.25);
+  }
+  /* Editorial eyebrow — one quiet voice for section labels */
+  .eyebrow {
+    @apply text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft font-light;
+  }
+  /* Quiet editorial link — underline that deepens, never shouts */
+  .link-quiet {
+    @apply text-ink border-b border-ink/30 pb-1 hover:border-ink transition-colors;
+  }
+  /* Fraunces display serif (OBJ-01 ADOPT-SCOPED): optical sizing on.
+     Applied ONLY to collection/product/journal names — headings stay Cormorant. */
+  .font-editorial {
+    font-optical-sizing: auto;
+  }
+  /* Tabular numerals for prices and counts — figures with posture. */
+  .tnum {
+    font-feature-settings: "tnum" 1, "kern" 1;
+    font-variant-numeric: tabular-nums;
   }
 }
 
-@keyframes kenburns {
-  0%   { transform: scale(1)    translate3d(0, 0, 0); }
-  100% { transform: scale(1.08) translate3d(-1%, -1%, 0); }
+/* Motion is used sparingly — still frames first, film only in view.
+   The former kenburns drift has been retired to honour restraint.
+   One proprietary motion: selvedge-draw (weave edge) — 700ms, once, stillness otherwise. */
+
+@keyframes selvedge-draw {
+  from { transform: scaleX(0); opacity: 0; }
+  to { transform: scaleX(1); opacity: 0.6; }
 }
 
 /* Visible focus styles for keyboard navigation */

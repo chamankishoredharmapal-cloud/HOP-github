@@ -59,6 +59,8 @@ const StudioCustomers = lazy(() => import("./studio/pages/Customers"));
 const StudioJournal = lazy(() => import("./studio/pages/Journal"));
 const StudioMedia = lazy(() => import("./studio/pages/Media"));
 const StudioSettings = lazy(() => import("./studio/pages/Settings"));
+const MediaPoc = lazy(() => import("./pages/poc/MediaPoc"));
+const ColorLab = lazy(() => import("./pages/poc/ColorLab"));
 
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
@@ -145,6 +147,9 @@ const App = () => (
                 <Route path="orders/:id" element={<AccountOrderDetail />} />
                 <Route path="wishlist" element={<AccountWishlistPage />} />
               </Route>
+              {/* Phase 3 POC — temporary test route */}
+              <Route path="/poc/media" element={<MediaPoc />} />
+              <Route path="/poc/colors" element={<ColorLab />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

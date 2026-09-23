@@ -1,0 +1,7 @@
+# Cloudflare Pages SPA Fallback for HOP
+# This file handles client-side routing for React Router SPA
+# Cloudflare Pages serves index.html for all non-asset paths
+
+# SPA fallback - must be last rule
+/* /index.html 200
+!/index.html

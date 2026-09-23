@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useMetadata } from "@/hooks/useMetadata";
 import { fetchCustomerOrderDetail } from "@/services/customerOrderService";
+import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
 
 const statusLabel: Record<string, string> = {
   pending_payment: "Pending payment",
@@ -116,8 +117,17 @@ export default function OrderDetail() {
             >
               {item.imageUrl ? (
                 <img
-                  src={item.imageUrl}
+                  src={getSupabaseOptimizedUrl(item.imageUrl, { width: 128, height: 128, resize: "cover" })}
                   alt={item.productName}
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.dataset.fallback) {
+                      target.dataset.fallback = "true";
+                      target.src = item.imageUrl!;
+                    }
+                  }}
                   className="w-16 h-16 rounded-md object-cover bg-ink/5"
                 />
               ) : (

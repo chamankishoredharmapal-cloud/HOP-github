@@ -79,7 +79,7 @@ test.describe("Razorpay webhook signature verification (fail-closed)", () => {
     const signature = computeSignature(rawBody, WEBHOOK_SECRET);
 
     const response = await page.request.post(WEBHOOK_URL, {
-      data: sampleEvent,
+      data: rawBody,
       headers: {
         "Content-Type": "application/json",
         "x-razorpay-signature": signature,
@@ -105,14 +105,14 @@ test.describe("Razorpay webhook duplicate events (idempotency)", () => {
     };
 
     const firstResponse = await page.request.post(WEBHOOK_URL, {
-      data: sampleEvent,
+      data: rawBody,
       headers,
     });
     const firstBody = await firstResponse.json();
     expect(firstResponse.status()).toBe(200);
 
     const secondResponse = await page.request.post(WEBHOOK_URL, {
-      data: sampleEvent,
+      data: rawBody,
       headers,
     });
     const secondBody = await secondResponse.json();

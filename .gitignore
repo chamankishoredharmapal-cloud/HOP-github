@@ -16,6 +16,8 @@ dist-ssr
 .env
 .env.local
 .env.production
+.env.staging.local
+.env.*.local
 
 # Screenshots and visual artifacts
 screenshots/
@@ -53,3 +55,16 @@ supabase/.temp/
 # Generated content index files
 src/data/__generated__/*
 !src/data/__generated__/.gitkeep
+
+# Environment safe exceptions
+!.env.example
+!.env.*.example
+
+# Credentials and secrets
+*.pem
+*.key
+credentials/
+secrets/
+.tmp/
+test-artifacts/private/
+playwright/.auth/
