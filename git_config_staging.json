@@ -1,0 +1,19 @@
+﻿{
+  "build_config": {
+    "build_command": "pnpm run build",
+    "destination_dir": "dist",
+    "root_dir": ""
+  },
+  "deployment_configs": {
+    "production": {
+      "branch": "staging"
+    },
+    "preview": {
+      "branch": "main"
+    }
+  },
+  "git_integration": {
+    "repository": "https://github.com/chamankishoredharmapal-cloud/HOP-github",
+    "branch": "staging"
+  }
+}

@@ -7,6 +7,10 @@ import { useCart } from "@/contexts/CartContext";
 import { useMetadata } from "@/hooks/useMetadata";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
 
+function formatRupees(amountInPaise: number): string {
+  return `₹ ${(amountInPaise / 100).toLocaleString("en-IN")}`;
+}
+
 export default function Cart() {
   useMetadata({
     title: "The Bag — House of Padmavati",
@@ -85,11 +89,11 @@ export default function Cart() {
                       {item.size && (
                         <p className="text-xs text-ink-soft mt-0.5 font-light">{item.size}</p>
                       )}
-                      <p className="text-sm text-ink mt-1.5 font-light">{item.formattedPrice}</p>
+                       <p className="text-sm text-ink mt-1.5 font-light">{formatRupees(item.price * item.quantity)}</p>
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="p-1 text-ink-soft/70 hover:text-ink transition-colors shrink-0"
+                      className="p-1 min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-soft/70 hover:text-ink transition-colors shrink-0"
                       aria-label={`Remove ${item.name}`}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -100,17 +104,17 @@ export default function Cart() {
                     <div className="flex items-center border border-border rounded">
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="p-2 text-ink-soft hover:text-ink transition-colors"
+                        className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-soft hover:text-ink transition-colors"
                         aria-label="Decrease quantity"
                       >
                         <Minus className="h-3 w-3" />
                       </button>
-                      <span className="min-w-[2.5rem] text-center text-sm text-ink font-medium">
+                      <span role="status" aria-live="polite" className="min-w-[2.5rem] text-center text-sm text-ink font-medium">
                         {item.quantity}
                       </span>
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="p-2 text-ink-soft hover:text-ink transition-colors"
+                        className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-soft hover:text-ink transition-colors"
                         aria-label="Increase quantity"
                       >
                         <Plus className="h-3 w-3" />

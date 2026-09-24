@@ -1,0 +1,8 @@
+{
+  "site_url": "https://548dac25.hop-staging.pages.dev",
+  "additional_redirect_urls": [
+    "https://548dac25.hop-staging.pages.dev/**",
+    "https://548dac25.hop-staging.pages.dev/auth/callback",
+    "https://548dac25.hop-staging.pages.dev/auth/confirm"
+  ]
+}

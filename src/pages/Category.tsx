@@ -174,7 +174,7 @@ const Category = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between border-b border-ink/15 pb-6 mt-10">
             <div>
-              <h1 className="font-editorial font-light text-3xl sm:text-4xl text-ink leading-tight">{displayName}</h1>
+              <h1 className="font-editorial text-3xl sm:text-4xl text-ink leading-tight">{displayName}</h1>
               <p className="mt-2 text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">
                 {displayTagline}{world ? ` · ${world.accentName}` : ""}
               </p>
@@ -287,7 +287,7 @@ const Category = () => {
                         <Heart
                           className={`w-4 h-4 transition-colors ${
                             isWishlisted(`product-${p.id}`)
-                              ? "fill-[#8B1E2D] text-[#8B1E2D]"
+                              ? "fill-signature-crimson text-signature-crimson"
                               : "text-ink"
                           }`}
                         />

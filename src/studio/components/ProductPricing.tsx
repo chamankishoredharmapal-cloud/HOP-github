@@ -75,7 +75,7 @@ export function ProductPricing({ form, onChange }: ProductPricingProps) {
       {margin !== null && (
         <div className="flex items-center gap-2 text-sm">
           <span className="text-muted-foreground">Margin:</span>
-          <span className={`font-medium ${margin >= 30 ? "text-teal-deep" : margin >= 15 ? "text-sand" : "text-sakura"}`}>
+          <span className={`font-medium ${margin >= 30 ? "text-ink" : margin >= 15 ? "text-sand" : "text-sakura"}`}>
             {margin.toFixed(1)}%
           </span>
           <span className="text-xs text-muted-foreground">({displayPrice(form.selling_price - form.cost_price)} per unit)</span>

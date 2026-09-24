@@ -20,7 +20,7 @@ export const CollectionStage = () => {
   if (!isLoading && (!collections || collections.length === 0)) {
     return (
       <section className="relative">
-        <div className="container text-center py-16 sm:py-24">
+        <div className="container text-center py-section-sm">
           <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-4">The Collections</p>
           <h2 className="font-serif font-light text-3xl sm:text-4xl md:text-5xl leading-tight text-balance max-w-2xl mx-auto text-ink">
             Five ways of wearing tradition.
@@ -35,7 +35,7 @@ export const CollectionStage = () => {
 
   return (
     <section className="relative">
-      <div className="container text-center py-14 sm:py-20">
+      <div className="container text-center py-section-sm">
         <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-4">The Collections</p>
         <h2 className="font-serif font-light text-3xl sm:text-4xl md:text-5xl leading-tight text-balance max-w-3xl mx-auto text-ink">
           Five different ways to wear tradition.
@@ -52,7 +52,7 @@ export const CollectionStage = () => {
               key={c.id}
               className="relative"
             >
-              <div className="container py-12 sm:py-16 lg:py-20">
+              <div className="container py-section-sm">
                 <div
                   className={`grid lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center ${
                     align === "right" ? "lg:[&>*:first-child]:order-2" : ""
@@ -65,7 +65,7 @@ export const CollectionStage = () => {
                         {c.tagline ?? `Chapter ${String(i + 1).padStart(2, "0")}`} {world ? `· ${world.accentName}` : ""}
                       </p>
                     </div>
-                    <h3 className="font-editorial font-light leading-[1.02] text-balance text-ink text-4xl sm:text-5xl md:text-6xl">
+                    <h3 className="font-editorial leading-[1.02] text-balance text-ink text-4xl sm:text-5xl md:text-6xl">
                       {c.name}
                     </h3>
                     <p className="text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-md text-pretty">

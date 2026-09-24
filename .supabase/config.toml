@@ -1,0 +1,39 @@
+enabled = true
+site_url = "https://548dac25.hop-staging.pages.dev"
+external_url = "http://127.0.0.1:54321/auth/v1"
+additional_redirect_urls = [
+  "https://548dac25.hop-staging.pages.dev/**",
+  "https://548dac25.hop-staging.pages.dev/auth/callback",
+  "https://548dac25.hop-staging.pages.dev/auth/confirm"
+]
+jwt_expiry = 3600
+jwt_issuer = "http://127.0.0.1:54321/auth/v1"
+enable_refresh_token_rotation = true
+
+[mfa]
+max_enrolled_factors = 10
+[mfa.totp]
+enroll_enabled = false
+verify_enabled = false
+
+[mfa.phone]
+enroll_enabled = false
+verify_enabled = false
+
+[mfa.email]
+enroll_enabled = false
+verify_enabled = false
+
+[email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+secure_password_change = false
+max_frequency = "1s"
+otp_length = 6
+otp_expiry = 3600
+
+[sms]
+enable_signup = false
+double_confirm_changes = false
+enable_confirmations = false

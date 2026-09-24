@@ -90,7 +90,7 @@ export function ProductIdentity({ form, collections, onChange }: ProductIdentity
               type="checkbox"
               checked={form.featured}
               onChange={(e) => onChange("featured", e.target.checked)}
-              className="h-4 w-4 rounded border-input text-teal-deep focus:ring-ring"
+              className="h-4 w-4 rounded border-input text-ink focus:ring-ring"
             />
             <span className="text-sm text-muted-foreground">Show on homepage</span>
           </label>

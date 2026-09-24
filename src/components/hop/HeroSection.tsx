@@ -41,6 +41,7 @@ export const HeroSection = () => {
             alt={featured ? `${featured.name} — collection film` : "House of Padmavati — woven drape in natural light"}
             className="aspect-[16/9]"
             preload="auto"
+            priority
           />
           <p className="mt-4 flex items-baseline justify-between gap-4">
             <span className="text-[0.6rem] sm:text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft">

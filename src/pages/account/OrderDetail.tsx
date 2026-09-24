@@ -85,7 +85,7 @@ export default function OrderDetail() {
               ? "text-green-600 bg-green-50"
               : order.status === "cancelled"
               ? "text-red-600 bg-red-50"
-              : "text-teal-deep bg-teal-deep/10"
+              : "text-ink bg-ink/10"
           }`}
         >
           {statusLabel[order.status] || order.status}

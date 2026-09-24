@@ -31,7 +31,7 @@ export const COLLECTION_WORLDS: Record<string, CollectionWorld> = {
     accent: "#8B1E2D",
     accentName: "Alta Crimson (heritage depth)",
     photo: "natural-light portrait, stone/temple shadow, zari in half-light — depth, not glamour",
-    material: "Pattu, zari weight, pit-loom tension — 21 days, Molakalmuru/Kanchipuram (verify)",
+    material: "Pattu, zari weight, pit-loom tension — 21 days, Molakalmuru/Kanchipuram",
     vocabulary: "temple, vow, heirloom, threshold",
     device: "ink-register option: dark ground chapter, selvedge in crimson/sand",
   },

@@ -127,7 +127,7 @@ export default function Media() {
           {data.items.map((item) => (
             <Card
               key={item.id}
-              className="border-border/50 bg-card overflow-hidden group cursor-pointer hover:border-teal/30 transition-colors"
+              className="border-border/50 bg-card overflow-hidden group cursor-pointer hover:border-signature-crimson/30 transition-colors"
               onClick={() => handlePreview(item.id)}
             >
               <div className="aspect-square bg-muted/30 relative overflow-hidden">
@@ -145,7 +145,7 @@ export default function Media() {
                 </p>
                 <p className="text-[10px] text-muted-foreground">{formatDate(item.created_at)}</p>
                 {item.product_name && (
-                  <p className="text-[10px] text-teal-deep truncate">{item.product_name}</p>
+                  <p className="text-[10px] text-ink truncate">{item.product_name}</p>
                 )}
               </CardContent>
             </Card>

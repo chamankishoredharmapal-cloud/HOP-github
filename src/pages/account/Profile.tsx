@@ -56,8 +56,8 @@ export default function Profile() {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-full bg-teal-deep/10 flex items-center justify-center">
-          <User className="w-6 h-6 text-teal-deep" />
+        <div className="w-12 h-12 rounded-full bg-ink/10 flex items-center justify-center">
+          <User className="w-6 h-6 text-ink" />
         </div>
         <div>
           <h2 className="font-serif text-xl text-ink">Profile</h2>
@@ -74,8 +74,8 @@ export default function Profile() {
       )}
 
       {mutation.isSuccess && (
-        <Alert className="mb-4 bg-teal-deep/10 border-teal-deep/20">
-          <AlertDescription className="text-sm text-teal-deep">
+        <Alert className="mb-4 bg-ink/10 border-ink/20">
+          <AlertDescription className="text-sm text-ink">
             Profile updated successfully.
           </AlertDescription>
         </Alert>

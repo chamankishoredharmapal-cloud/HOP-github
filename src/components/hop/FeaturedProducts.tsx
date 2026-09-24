@@ -70,10 +70,10 @@ export const featured: FeaturedProduct[] = [
 
 export const FeaturedProducts = () => (
   <section className="bg-jasmine-deep/40">
-    <div className="container py-20 sm:py-28 lg:py-32">
+    <div className="container py-section">
       <div className="flex items-end justify-between mb-12 sm:mb-16 gap-4">
         <div>
-          <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-teal mb-3">
+          <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-signature-crimson mb-3">
             Six, quietly chosen
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl">
@@ -82,7 +82,7 @@ export const FeaturedProducts = () => (
         </div>
         <Link
           to="/collections"
-          className="hidden md:inline text-[0.7rem] tracking-[0.32em] uppercase text-ink hover:text-teal underline underline-offset-4"
+          className="hidden md:inline text-[0.7rem] tracking-[0.32em] uppercase text-ink hover:text-signature-crimson underline underline-offset-4"
         >
           View atelier
         </Link>

@@ -46,7 +46,7 @@ export default function Login() {
         <div className="mx-auto max-w-sm">
           <div className="mb-10 text-center">
             <div className="mb-4 flex justify-center">
-              <div className="h-px w-16 bg-teal/40" />
+              <div className="h-px w-16 bg-signature-crimson/40" />
             </div>
             <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
               Sign in
@@ -57,8 +57,8 @@ export default function Login() {
           </div>
 
           {verified && (
-            <Alert className="mb-8 border-teal/20 bg-teal/5">
-              <AlertDescription className="text-sm text-teal-deep">
+            <Alert className="mb-8 border-signature-crimson/20 bg-signature-crimson/5">
+              <AlertDescription className="text-sm text-ink">
                 Email verified successfully. You can now sign in.
               </AlertDescription>
             </Alert>
@@ -83,7 +83,7 @@ export default function Login() {
                 required
                 autoComplete="email"
                 placeholder="you@example.com"
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
             </div>
             <div className="space-y-2">
@@ -93,7 +93,7 @@ export default function Login() {
                 </Label>
                 <Link
                   to="/account/forgot-password"
-                  className="text-xs text-teal-deep transition-colors hover:text-teal"
+                  className="text-xs text-ink transition-colors hover:text-signature-crimson"
                 >
                   Forgot?
                 </Link>
@@ -106,12 +106,12 @@ export default function Login() {
                 required
                 autoComplete="current-password"
                 placeholder="••••••••"
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
             </div>
             <Button
               type="submit"
-              className="h-12 w-full bg-teal-deep text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-teal"
+              className="h-12 w-full bg-ink text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-signature-crimson"
               disabled={loading}
             >
               {loading ? (
@@ -133,7 +133,7 @@ export default function Login() {
 
           <p className="mt-6 text-center text-sm text-ink-soft">
             No account?{" "}
-            <Link to="/account/signup" className="font-medium text-teal-deep transition-colors hover:text-teal">
+            <Link to="/account/signup" className="font-medium text-ink transition-colors hover:text-signature-crimson">
               Create one
             </Link>
           </p>

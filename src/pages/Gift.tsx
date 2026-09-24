@@ -26,7 +26,7 @@ export default function Gift() {
     <PageLayout>
       <main>
         <section className="container pt-16 pb-12 text-center">
-          <p className="text-xs tracking-[0.42em] uppercase text-teal mb-4">
+          <p className="text-xs tracking-[0.42em] uppercase text-signature-crimson mb-4">
             Modern Heirlooms
           </p>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance leading-tight max-w-3xl mx-auto">
@@ -42,8 +42,8 @@ export default function Gift() {
             <div className="space-y-8">
               <div className="grid sm:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-teal-deep/10 flex items-center justify-center">
-                    <GiftIcon className="w-5 h-5 text-teal-deep" />
+                  <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center">
+                    <GiftIcon className="w-5 h-5 text-ink" />
                   </div>
                   <h3 className="font-serif text-xl text-ink">Jasmine wrapping</h3>
                   <p className="text-sm text-ink-soft font-light leading-relaxed">
@@ -51,8 +51,8 @@ export default function Gift() {
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-teal-deep/10 flex items-center justify-center">
-                    <Feather className="w-5 h-5 text-teal-deep" />
+                  <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center">
+                    <Feather className="w-5 h-5 text-ink" />
                   </div>
                   <h3 className="font-serif text-xl text-ink">Keepsake card</h3>
                   <p className="text-sm text-ink-soft font-light leading-relaxed">
@@ -60,8 +60,8 @@ export default function Gift() {
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-teal-deep/10 flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-teal-deep" />
+                  <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-ink" />
                   </div>
                   <h3 className="font-serif text-xl text-ink">Hand-delivered feel</h3>
                   <p className="text-sm text-ink-soft font-light leading-relaxed">
@@ -69,8 +69,8 @@ export default function Gift() {
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-teal-deep/10 flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-teal-deep" />
+                  <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-ink" />
                   </div>
                   <h3 className="font-serif text-xl text-ink">Worldwide, insured</h3>
                   <p className="text-sm text-ink-soft font-light leading-relaxed">
@@ -82,14 +82,14 @@ export default function Gift() {
               <div className="border-t border-border pt-8">
                 <h2 className="font-serif text-2xl text-ink mb-4">Gift order</h2>
                 {submitted ? (
-                  <div className="bg-teal-deep/5 border border-teal-deep/20 rounded-lg p-6 text-center">
-                    <Heart className="w-8 h-8 text-teal-deep mx-auto mb-3" />
+                  <div className="bg-ink/5 border border-ink/20 rounded-lg p-6 text-center">
+                    <Heart className="w-8 h-8 text-ink mx-auto mb-3" />
                     <p className="text-ink font-serif text-lg">Your gift note is saved.</p>
                     <p className="text-sm text-ink-soft font-light mt-2">
                       Add a saree to your bag and proceed to checkout — your gift message will
                       be hand-written on our keepsake card.
                     </p>
-                    <Button asChild className="mt-4 rounded-full bg-teal-deep text-jasmine hover:bg-teal">
+                    <Button asChild className="mt-4 rounded-full bg-ink text-jasmine hover:bg-signature-crimson">
                       <Link to="/collections">
                         View collections <ArrowRight className="h-4 w-4 ml-1" />
                       </Link>
@@ -126,7 +126,7 @@ export default function Gift() {
                     </div>
                     <Button
                       type="submit"
-                      className="rounded-full bg-teal-deep text-jasmine hover:bg-teal transition-colors duration-500"
+                      className="rounded-full bg-ink text-jasmine hover:bg-signature-crimson transition-colors duration-500"
                     >
                       Save gift note
                     </Button>
@@ -141,7 +141,7 @@ export default function Gift() {
             <div className="aspect-[4/5] rounded-md bg-jasmine-deep overflow-hidden">
               <div className="w-full h-full flex items-center justify-center p-8">
                 <div className="text-center">
-                  <Heart className="w-16 h-16 text-teal-deep/30 mx-auto mb-6" />
+                  <Heart className="w-16 h-16 text-ink/30 mx-auto mb-6" />
                   <p className="font-serif italic text-2xl text-ink-soft/60 leading-snug max-w-xs mx-auto">
 
                   </p>

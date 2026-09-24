@@ -14,7 +14,7 @@ function formatPrice(paise: number): string {
 function PaymentStatusBadge({ status }: { status: string }) {
   if (status === "paid") {
     return (
-      <span className="inline-flex items-center gap-1.5 text-xs text-teal-deep font-medium">
+      <span className="inline-flex items-center gap-1.5 text-xs text-ink font-medium">
         <Check className="h-3.5 w-3.5" /> Paid
       </span>
     );
@@ -57,9 +57,9 @@ export default function OrderConfirmation() {
       <main className="container pt-28 pb-24">
         <div className="max-w-2xl mx-auto">
           <div className="text-center py-8">
-            <div className="mx-auto w-16 h-16 rounded-full bg-teal-deep/10 flex items-center justify-center mb-6">
+            <div className="mx-auto w-16 h-16 rounded-full bg-ink/10 flex items-center justify-center mb-6">
               {detail?.paymentStatus === "paid" || !detail ? (
-                <Check className="h-8 w-8 text-teal-deep" />
+                <Check className="h-8 w-8 text-ink" />
               ) : (
                 <Clock className="h-8 w-8 text-amber-600" />
               )}
@@ -83,7 +83,7 @@ export default function OrderConfirmation() {
 
           {isLoading && (
             <div className="flex items-center justify-center py-12">
-              <div className="w-5 h-5 border-2 border-teal-deep/30 border-t-teal-deep rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-ink/30 border-t-ink rounded-full animate-spin" />
             </div>
           )}
 

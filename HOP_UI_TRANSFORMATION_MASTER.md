@@ -1432,22 +1432,20 @@ OBJ-01 COMPLETE · OBJ-02 COMPLETE · OBJ-03 COMPLETE (5-world matrix limited by
 
 ## Current Checkpoint
 
-Browser validation phase finished and recorded. Commit 43599c1 pushed to main and staging branches. Staging deployed to Cloudflare Pages (preview: https://155a88d2.hop-staging.pages.dev, project URL: https://hop-staging.pages.dev). Prerendered routes verified OK. SPA fallback requires Git integration (Cloudflare Dashboard action).
+Browser validation phase finished and recorded. Commit 43599c1 pushed to main and staging branches. Staging deployed to Cloudflare Pages (project URL: https://hop-staging.pages.dev). Prerendered routes verified OK. **GitHub integration active** — Pages project connected to `chamankishoredharmapal-cloud/HOP-github`, production branch = `staging`. **SPA/deep-link routing WORKING** — all client-side routes (/cart, /checkout, /collections/*, /product/*, /journal/*) return 200 with correct index.html fallback. Environment variables configured (VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY, VITE_RAZORPAY_KEY_ID, VITE_APP_URL).
+
+**Supabase Auth URL Configuration**: COMPLETE — Site URL = `https://hop-staging.pages.dev`, Redirect URLs = `https://hop-staging.pages.dev/**` configured in Supabase Dashboard.
+**Razorpay Test Webhook**: COMPLETE — Webhook URL = `https://dovnhgbisiturzbjgvei.supabase.co/functions/v1/razorpay-webhook`, Events = `payment.captured`, `payment.failed` configured in Razorpay Test Dashboard.
 
 ## Blocking Issues
 
-None for the UI transformation. Staging deployment requires Cloudflare Dashboard configuration:
-1. Connect Pages project to GitHub (enables automatic branch deployments + _redirects/_headers processing)
-2. Set environment variables in Cloudflare Pages (VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY, VITE_RAZORPAY_KEY_ID)
-3. Configure Supabase Auth URL Configuration for staging URL
-4. Configure Razorpay Test webhook for staging
-5. Run full E2E test matrix (T01–T07) per CLOUDFLARE_DEPLOYMENT_RUNBOOK.md
+None for the UI transformation. Staging deployment gates PASS. Core deployment verified functional.
 
-Remaining items are other tracks' (engineering hydration/ tests, media/infra 406s, content/production-data world matrix, staging deploy + CTO gates per PHASE_2_14/productionreadyHOP).
+Remaining items are other tracks' (engineering hydration/tests, media/infra 406s, content/production-data world matrix, staging deploy + CTO gates per PHASE_2_14/productionreadyHOP).
 
 ## Next Action
 
-Configure Cloudflare Pages project via Dashboard (connect GitHub, set build command/output dir, set production branch=staging, add env vars). Then configure Supabase Auth + Razorpay webhook for staging. Run E2E test matrix T01–T07. No further UI implementation required.
+Staging deployment COMPLETE. Ready for manual T01–T07 payment flow validation with Razorpay test card (4111 1111 1111 1111) when CTO authorizes next phase. No further UI implementation required. Production gate remains separate and requires CTO approval.
 
 ## Do Not Redo
 

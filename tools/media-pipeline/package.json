@@ -1,0 +1,18 @@
+{
+  "name": "@hop/media-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/cli.mjs",
+  "scripts": {
+    "audit": "node src/cli.mjs audit",
+    "optimize": "node src/cli.mjs optimize"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "execa": "^9.3.0",
+    "sharp": "^0.33.5",
+    "ssim.js": "^3.5.0"
+  }
+}

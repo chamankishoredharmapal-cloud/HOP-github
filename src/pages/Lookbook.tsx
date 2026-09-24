@@ -33,13 +33,13 @@ const Lookbook = () => {
             <div className="absolute inset-0 bg-black/10" />
           </div>
           
-          <div className="relative z-10 text-center px-6 mt-32">
+          <div className="relative z-10 text-center px-6 mt-header">
             <h1 className="font-serif text-5xl md:text-7xl text-jasmine mb-6 drop-shadow-sm">Lookbook.</h1>
           </div>
         </section>
 
         {/* Section I: The Architecture of Silk */}
-        <section className="py-32 px-6">
+        <section className="py-section-lg px-6">
           <div className="max-w-6xl mx-auto">
             <div className="max-w-2xl mx-auto text-center mb-24">
 
@@ -55,7 +55,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-teal/30 pl-4 py-1">
+                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
                   Kalyani Brocade. Hand-twisted silver zari over forty days.
                 </figcaption>
               </figure>
@@ -69,7 +69,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-teal/30 pl-4 py-1">
+                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
                   Viara Tissue. The tension between the warp and weft.
                 </figcaption>
               </figure>
@@ -83,7 +83,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-teal/30 pl-4 py-1">
+                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
                   The dense, heavy border of the Megham collection.
                 </figcaption>
               </figure>
@@ -92,7 +92,7 @@ const Lookbook = () => {
         </section>
 
         {/* Section II: The Drape */}
-        <section className="py-32 px-6 bg-[#EBE7E0]">
+        <section className="py-section-lg px-6 bg-paper-alt">
           <div className="max-w-6xl mx-auto">
             <div className="max-w-2xl mx-auto text-center mb-24">
 
@@ -107,7 +107,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-teal/30 pl-4 py-1">
+                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
                   The unhurried fall of Kanchipuram silk.
                 </figcaption>
               </figure>
@@ -120,7 +120,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-teal/30 pl-4 py-1">
+                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
                   Linen holding its structure.
                 </figcaption>
               </figure>
@@ -129,7 +129,7 @@ const Lookbook = () => {
         </section>
 
         {/* Closure */}
-        <section className="py-32 px-6 text-center">
+        <section className="py-section-lg px-6 text-center">
           <div className="max-w-lg mx-auto space-y-12">
             <div className="aspect-square overflow-hidden bg-white/50 p-8 rounded-sm">
               <img 
@@ -142,7 +142,7 @@ const Lookbook = () => {
             <div>
               <Link 
                 to="/collections" 
-                className="inline-block border border-teal text-teal px-8 py-3 text-sm tracking-widest uppercase hover:bg-teal hover:text-jasmine transition-colors"
+                className="inline-block border border-signature-crimson text-signature-crimson px-8 py-3 text-sm tracking-widest uppercase hover:bg-signature-crimson hover:text-jasmine transition-colors"
               >
                 View collections
               </Link>

@@ -36,7 +36,7 @@ export default function AccountSidebar() {
               to={link.to}
               className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? "bg-teal-deep/10 text-teal-deep"
+                  ? "bg-ink/10 text-ink"
                   : "text-ink-soft hover:text-ink hover:bg-ink/5"
               }`}
             >

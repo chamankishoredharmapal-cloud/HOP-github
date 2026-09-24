@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import giftImg from "@/assets/hop-gift.jpg";
 
 export const ModernHeirlooms = () => (
-  <section className="container py-16 sm:py-24">
+  <section className="container py-section-sm">
     <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
       <div className="order-2 lg:order-1 space-y-6 max-w-md">
         <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft">Modern Heirlooms</p>

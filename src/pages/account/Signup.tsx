@@ -46,7 +46,7 @@ export default function Signup() {
         <div className="container max-w-lg py-20 md:py-32">
           <div className="mx-auto max-w-sm text-center">
             <div className="mb-6 flex justify-center">
-              <div className="h-px w-16 bg-teal/40" />
+              <div className="h-px w-16 bg-signature-crimson/40" />
             </div>
             <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
               Check your email
@@ -70,7 +70,7 @@ export default function Signup() {
         <div className="mx-auto max-w-sm">
           <div className="mb-10 text-center">
             <div className="mb-4 flex justify-center">
-              <div className="h-px w-16 bg-teal/40" />
+              <div className="h-px w-16 bg-signature-crimson/40" />
             </div>
             <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
               Create account
@@ -96,7 +96,7 @@ export default function Signup() {
                 required
                 autoComplete="name"
                 placeholder="Your full name"
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
             </div>
             <div className="space-y-2">
@@ -111,7 +111,7 @@ export default function Signup() {
                 required
                 autoComplete="email"
                 placeholder="you@example.com"
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
             </div>
             <div className="space-y-2">
@@ -127,7 +127,7 @@ export default function Signup() {
                 autoComplete="new-password"
                 placeholder="At least 8 characters"
                 minLength={8}
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
             </div>
             <div className="space-y-2">
@@ -137,20 +137,20 @@ export default function Signup() {
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
                   required
-                  className="mt-0.5 w-4 h-4 rounded border-border accent-teal-deep shrink-0"
+                  className="mt-0.5 w-4 h-4 rounded border-border accent-ink shrink-0"
                 />
                 <span className="text-xs text-ink-soft font-light leading-relaxed">
                   I agree to the{" "}
-                  <Link to="/terms" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Terms & Conditions</Link>,{" "}
-                  <Link to="/privacy-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Privacy Policy</Link>,{" "}
-                  <Link to="/shipping-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Shipping Policy</Link>, and{" "}
-                  <Link to="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Returns & Refund Policy</Link>.
+                  <Link to="/terms" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Terms & Conditions</Link>,{" "}
+                  <Link to="/privacy-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Privacy Policy</Link>,{" "}
+                  <Link to="/shipping-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Shipping Policy</Link>, and{" "}
+                  <Link to="/returns-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Returns & Refund Policy</Link>.
                 </span>
               </label>
             </div>
             <Button
               type="submit"
-              className="h-12 w-full bg-teal-deep text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-teal"
+              className="h-12 w-full bg-ink text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-signature-crimson"
               disabled={loading}
             >
               {loading ? (
@@ -172,7 +172,7 @@ export default function Signup() {
 
           <p className="mt-6 text-center text-sm text-ink-soft">
             Already have an account?{" "}
-            <Link to="/account/login" className="font-medium text-teal-deep transition-colors hover:text-teal">
+            <Link to="/account/login" className="font-medium text-ink transition-colors hover:text-signature-crimson">
               Sign in
             </Link>
           </p>

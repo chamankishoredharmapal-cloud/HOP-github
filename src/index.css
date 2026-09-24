@@ -9,68 +9,74 @@
 
 @layer base {
   :root {
-    /* HOP Evolved Palette — honest tokens, AA-checked */
-    --jasmine: 38 38% 94%;        /* Warm Ivory — GROUND #F6F1EB */
-    --jasmine-deep: 38 30% 89%;   /* Deep Ivory — GROUND_ALT #EDE7D9 */
-    --teal: 350 70% 30%;          /* Alta Crimson — SIGNATURE ACCENT #8B1E2D (kept name for compat, now honest) */
-    --teal-deep: 0 0% 10%;        /* Ink — #1A1A18 warm near-black */
-    --sand: 36 45% 81%;           /* Golden Sand — MATERIAL #E4D3BA */
-    --sakura: 8 31% 73%;          /* Sakura Dust — MATERIAL2 #CFA9A2 */
-    --ink: 0 0% 10%;              /* Ink — #1A1A18 */
-    --ink-soft: 28 6% 42%;        /* Ink Soft — #6B6560 warm muted */
-    --crimson: var(--teal);       /* Alta Crimson alias */
-    --peacock: 174 16% 44%;       /* Coastal Teal restored #5D817E — optional per-collection, not global */
-    --champagne: 38 42% 62%;      /* Champagne Gold #C7A96D — flat, never gradient */
-    --warm-white: 38 38% 94%;
-    --warm-white-bright: 38 55% 98%;
+    --paper-ivory: 30 24% 94%;
+    --paper-bright: 36 60% 97%;
+    --paper-alt: 42 28% 89%;
+    --ink: 60 4% 10%;
+    --ink-soft: 30 6% 40%;
+    --line: 43 23% 82%;
+    --signature-crimson: 351 64% 33%;
+    --signature-crimson-deep: 349 64% 24%;
+    --material-sand: 39 38% 81%;
+    --material-sakura: 8 31% 73%;
+    --material-peacock: 176 20% 44%;
+    --champagne: 40 45% 60%;
+
+    --jasmine: var(--paper-ivory);
+    --jasmine-deep: var(--paper-alt);
+    --sand: var(--material-sand);
+    --sakura: var(--material-sakura);
+    --peacock: var(--material-peacock);
+    --warm-white: var(--paper-ivory);
+    --warm-white-bright: var(--paper-bright);
 
     /* Semantic tokens */
-    --background: var(--jasmine);
+    --background: var(--paper-ivory);
     --foreground: var(--ink);
 
-    --nav-background: var(--crimson);
-    --nav-foreground: var(--warm-white);
-    --nav-hover: var(--warm-white-bright);
+    --nav-background: var(--signature-crimson);
+    --nav-foreground: var(--paper-bright);
+    --nav-hover: var(--paper-ivory);
 
-    --primary: var(--teal-deep);
-    --primary-foreground: var(--jasmine);
+    --primary: var(--ink);
+    --primary-foreground: var(--paper-ivory);
     --primary-hover: var(--ink-soft);
 
-    --secondary: var(--jasmine-deep);
+    --secondary: var(--paper-alt);
     --secondary-foreground: var(--ink);
 
     --muted: var(--jasmine-deep);
     --muted-foreground: var(--ink-soft);
 
-    --accent: var(--sand);
+    --accent: var(--material-sand);
     --accent-foreground: var(--ink);
 
-    --border: 38 22% 84%; /* #E0D8C8 */
-    --input: 38 22% 84%;
-    --ring: 28 6% 42%;
+    --border: var(--line);
+    --input: var(--line);
+    --ring: var(--signature-crimson);
 
     --card: 0 0% 100%;
     --card-foreground: var(--ink);
 
-    --popover: var(--jasmine);
+    --popover: var(--paper-ivory);
     --popover-foreground: var(--ink);
 
-    --destructive: 350 70% 30%;
-    --destructive-foreground: var(--jasmine);
+    --destructive: var(--signature-crimson-deep);
+    --destructive-foreground: var(--paper-ivory);
 
     --radius: 0.75rem;
 
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-background: var(--jasmine);
+    --sidebar-background: var(--paper-ivory);
     --sidebar-foreground: var(--ink);
-    --sidebar-primary: var(--teal-deep);
-    --sidebar-primary-foreground: var(--jasmine);
-    --sidebar-accent: var(--jasmine-deep);
+    --sidebar-primary: var(--ink);
+    --sidebar-primary-foreground: var(--paper-ivory);
+    --sidebar-accent: var(--paper-alt);
     --sidebar-accent-foreground: var(--ink);
-    --sidebar-border: 38 22% 84%;
-    --sidebar-ring: 28 6% 42%;
+    --sidebar-border: var(--line);
+    --sidebar-ring: var(--signature-crimson);
   }
 
   .dark {
@@ -114,6 +120,8 @@
   /* Fraunces display serif (OBJ-01 ADOPT-SCOPED): optical sizing on.
      Applied ONLY to collection/product/journal names — headings stay Cormorant. */
   .font-editorial {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 400;
     font-optical-sizing: auto;
   }
   /* Tabular numerals for prices and counts — figures with posture. */

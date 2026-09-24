@@ -1,0 +1,184 @@
+[
+  {
+    "page": "Homepage (Desktop)",
+    "url": "http://localhost:4174/",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 7.9000000059604645,
+      "domInteractive": 601.2999999970198,
+      "loadEventEnd": 4918,
+      "transferSize": 31173
+    },
+    "vitals": {
+      "lcp": 1792,
+      "cls": 0.00011569773984053499,
+      "fcp": 632,
+      "longTasks": [
+        53
+      ],
+      "tbt": 3
+    }
+  },
+  {
+    "page": "Homepage (Mobile)",
+    "url": "http://localhost:4174/",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 1.6000000089406967,
+      "domInteractive": 318,
+      "loadEventEnd": 2008.0999999940395,
+      "transferSize": 31173
+    },
+    "vitals": {
+      "lcp": 380,
+      "cls": 0,
+      "fcp": 336,
+      "longTasks": [],
+      "tbt": 0
+    }
+  },
+  {
+    "page": "Collections (Desktop)",
+    "url": "http://localhost:4174/collections",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 1.4000000059604645,
+      "domInteractive": 368.09999999403954,
+      "loadEventEnd": 2089.199999988079,
+      "transferSize": 56784
+    },
+    "vitals": {
+      "lcp": 480,
+      "cls": 0.005082184063946759,
+      "fcp": 408,
+      "longTasks": [],
+      "tbt": 0
+    }
+  },
+  {
+    "page": "Collections (Mobile)",
+    "url": "http://localhost:4174/collections",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 1.4000000059604645,
+      "domInteractive": 631.4000000059605,
+      "loadEventEnd": 5928.9000000059605,
+      "transferSize": 56784
+    },
+    "vitals": {
+      "lcp": 724,
+      "cls": 0.0016466068537089094,
+      "fcp": 656,
+      "longTasks": [],
+      "tbt": 0
+    }
+  },
+  {
+    "page": "Collection Detail - Kalyani (Desktop)",
+    "url": "http://localhost:4174/collections/kalyani",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 1.4000000059604645,
+      "domInteractive": 465,
+      "loadEventEnd": 1406.199999988079,
+      "transferSize": 50467
+    },
+    "vitals": {
+      "lcp": 1212,
+      "cls": 0.00005546647269375857,
+      "fcp": 488,
+      "longTasks": [],
+      "tbt": 0
+    }
+  },
+  {
+    "page": "Collection Detail - Kalyani (Mobile)",
+    "url": "http://localhost:4174/collections/kalyani",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 2.0999999940395355,
+      "domInteractive": 952.3999999910593,
+      "loadEventEnd": 2361.5999999940395,
+      "transferSize": 50467
+    },
+    "vitals": {
+      "lcp": 1840,
+      "cls": 0.011469110442839133,
+      "fcp": 980,
+      "longTasks": [],
+      "tbt": 0
+    }
+  },
+  {
+    "page": "About - Our Story (Desktop)",
+    "url": "http://localhost:4174/about",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 1.5999999940395355,
+      "domInteractive": 488.70000000298023,
+      "loadEventEnd": 1013.5,
+      "transferSize": 43956
+    },
+    "vitals": {
+      "lcp": 572,
+      "cls": 0.0005335344060785322,
+      "fcp": 520,
+      "longTasks": [],
+      "tbt": 0
+    }
+  },
+  {
+    "page": "Customer Care (Desktop)",
+    "url": "http://localhost:4174/customer-care",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 1.5,
+      "domInteractive": 387.29999999701977,
+      "loadEventEnd": 1138,
+      "transferSize": 46740
+    },
+    "vitals": {
+      "lcp": 476,
+      "cls": 0.00005546647269375857,
+      "fcp": 416,
+      "longTasks": [],
+      "tbt": 0
+    }
+  },
+  {
+    "page": "Product Detail (Desktop)",
+    "url": "http://localhost:4174/product/3d123e03-be1b-4454-a0c3-14e809146d92",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 2.2999999970197678,
+      "domInteractive": 853.1999999880791,
+      "loadEventEnd": 2126.2999999970198,
+      "transferSize": 55343
+    },
+    "vitals": {
+      "lcp": 1928,
+      "cls": 0.00014799031073173868,
+      "fcp": 888,
+      "longTasks": [],
+      "tbt": 0
+    }
+  },
+  {
+    "page": "Product Detail (Mobile)",
+    "url": "http://localhost:4174/product/3d123e03-be1b-4454-a0c3-14e809146d92",
+    "status": 200,
+    "navTiming": {
+      "ttfb": 2.2999999970197678,
+      "domInteractive": 390.79999999701977,
+      "loadEventEnd": 1846.2000000029802,
+      "transferSize": 55343
+    },
+    "vitals": {
+      "lcp": 828,
+      "cls": 0.00010485347567540872,
+      "fcp": 424,
+      "longTasks": [],
+      "tbt": 0
+    }
+  }
+]

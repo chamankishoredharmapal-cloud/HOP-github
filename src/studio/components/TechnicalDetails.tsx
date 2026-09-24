@@ -77,7 +77,7 @@ export function TechnicalDetails({ form, onChange }: TechnicalDetailsProps) {
               type="checkbox"
               checked={form.blouse_included}
               onChange={(e) => onChange("blouse_included", e.target.checked)}
-              className="h-4 w-4 rounded border-input text-teal-deep focus:ring-ring"
+              className="h-4 w-4 rounded border-input text-ink focus:ring-ring"
             />
             <span className="text-sm text-muted-foreground">Blouse piece included</span>
           </label>

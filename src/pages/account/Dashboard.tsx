@@ -59,10 +59,10 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Link
           to="/account/orders"
-          className="flex items-center gap-4 p-4 rounded-lg border border-border hover:border-teal-deep/30 transition-colors"
+          className="flex items-center gap-4 p-4 rounded-lg border border-border hover:border-ink/30 transition-colors"
         >
-          <div className="w-10 h-10 rounded-full bg-teal-deep/10 flex items-center justify-center shrink-0">
-            <Package className="w-5 h-5 text-teal-deep" />
+          <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center shrink-0">
+            <Package className="w-5 h-5 text-ink" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-lg font-semibold text-ink">
@@ -75,10 +75,10 @@ export default function Dashboard() {
 
         <Link
           to="/account/wishlist"
-          className="flex items-center gap-4 p-4 rounded-lg border border-border hover:border-teal-deep/30 transition-colors"
+          className="flex items-center gap-4 p-4 rounded-lg border border-border hover:border-ink/30 transition-colors"
         >
-          <div className="w-10 h-10 rounded-full bg-teal-deep/10 flex items-center justify-center shrink-0">
-            <Heart className="w-5 h-5 text-teal-deep" />
+          <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center shrink-0">
+            <Heart className="w-5 h-5 text-ink" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-lg font-semibold text-ink">
@@ -91,10 +91,10 @@ export default function Dashboard() {
 
         <Link
           to="/account/addresses"
-          className="flex items-center gap-4 p-4 rounded-lg border border-border hover:border-teal-deep/30 transition-colors"
+          className="flex items-center gap-4 p-4 rounded-lg border border-border hover:border-ink/30 transition-colors"
         >
-          <div className="w-10 h-10 rounded-full bg-teal-deep/10 flex items-center justify-center shrink-0">
-            <MapPin className="w-5 h-5 text-teal-deep" />
+          <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center shrink-0">
+            <MapPin className="w-5 h-5 text-ink" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-lg font-semibold text-ink">
@@ -119,7 +119,7 @@ export default function Dashboard() {
               <Link
                 key={order.id}
                 to={`/account/orders/${order.id}`}
-                className="block p-4 rounded-lg border border-border hover:border-teal-deep/30 transition-colors"
+                className="block p-4 rounded-lg border border-border hover:border-ink/30 transition-colors"
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-medium text-ink">

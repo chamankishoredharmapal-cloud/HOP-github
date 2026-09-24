@@ -4,7 +4,7 @@ import heroImg from "@/assets/hop-hero.jpg";
 
 export const CraftSection = () => (
   <section className="border-t border-ink/10">
-    <div className="container py-20 sm:py-28">
+    <div className="container py-section">
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
         <div className="lg:col-span-5 max-w-md">
           <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-4">The House</p>

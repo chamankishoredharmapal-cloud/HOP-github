@@ -210,7 +210,7 @@ export default function Addresses() {
               className="p-4 rounded-lg border border-border relative group"
             >
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-teal-deep shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-ink shrink-0 mt-0.5" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-ink">{addr.recipient_name}</p>
                   <p className="text-sm text-ink-soft">{addr.address}</p>

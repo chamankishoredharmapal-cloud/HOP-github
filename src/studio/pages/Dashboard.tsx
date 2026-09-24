@@ -88,7 +88,7 @@ export default function Dashboard() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs text-muted-foreground uppercase tracking-wide">Avg Order Value</p>
-              <TrendingUp className="h-4 w-4 text-teal-deep" />
+              <TrendingUp className="h-4 w-4 text-ink" />
             </div>
             {metrics.isLoading ? (
               <Skeleton className="h-7 w-24" />

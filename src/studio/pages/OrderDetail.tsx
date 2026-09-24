@@ -26,8 +26,8 @@ const statusStyles: Record<string, string> = {
   pending_payment: "bg-sakura/20 text-ink",
   confirmed: "bg-sand/30 text-ink",
   processing: "bg-sand/30 text-ink",
-  shipped: "bg-teal/10 text-teal-deep",
-  delivered: "bg-teal-deep/10 text-teal-deep",
+  shipped: "bg-signature-crimson/10 text-ink",
+  delivered: "bg-ink/10 text-ink",
   cancelled: "bg-muted text-muted-foreground",
   returned: "bg-muted text-muted-foreground",
 };
@@ -44,15 +44,15 @@ const statusLabels: Record<string, string> = {
 
 const paymentStatusStyles: Record<string, string> = {
   pending: "bg-sakura/20 text-ink",
-  paid: "bg-teal-deep/10 text-teal-deep",
+  paid: "bg-ink/10 text-ink",
   failed: "bg-muted text-destructive",
   refunded: "bg-muted text-muted-foreground",
   partially_refunded: "bg-sand/30 text-ink",
   deposit_pending: "bg-sakura/20 text-ink",
-  deposit_paid: "bg-teal/10 text-teal-deep",
+  deposit_paid: "bg-signature-crimson/10 text-ink",
   partially_paid: "bg-sand/30 text-ink",
   balance_due: "bg-amber/10 text-amber",
-  fully_paid: "bg-teal-deep/10 text-teal-deep",
+  fully_paid: "bg-ink/10 text-ink",
 };
 
 function formatCurrency(paise: number): string {
@@ -335,7 +335,7 @@ export default function OrderDetail() {
                     </div>
                     <div>
                       <span className="text-muted-foreground block">Paid</span>
-                      <span className="text-teal-deep font-medium">{formatCurrency(order.paid_amount)}</span>
+                      <span className="text-ink font-medium">{formatCurrency(order.paid_amount)}</span>
                     </div>
                     <div>
                       <span className="text-muted-foreground block">Remaining</span>
@@ -433,7 +433,7 @@ export default function OrderDetail() {
                         { onSuccess: () => setEditShipping(false) }
                       );
                     }}
-                    className="bg-teal-deep text-jasmine hover:bg-teal w-full"
+                    className="bg-ink text-jasmine hover:bg-signature-crimson w-full"
                   >
                     Save Shipping Info
                   </Button>
@@ -467,7 +467,7 @@ export default function OrderDetail() {
                     className={`w-full gap-2 ${
                       action === "cancelled"
                         ? "bg-destructive/10 text-destructive hover:bg-destructive/20 border border-destructive/30"
-                        : "bg-teal-deep text-jasmine hover:bg-teal"
+                        : "bg-ink text-jasmine hover:bg-signature-crimson"
                     }`}
                     size="sm"
                     disabled={updateStatus.isPending}
@@ -549,7 +549,7 @@ export default function OrderDetail() {
               className={`${
                 confirmAction === "cancelled"
                   ? "bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                  : "bg-teal-deep text-jasmine hover:bg-teal"
+                  : "bg-ink text-jasmine hover:bg-signature-crimson"
               }`}
             >
               {confirmAction === "cancelled" ? "Cancel Order" : "Confirm"}

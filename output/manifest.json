@@ -1,0 +1,100 @@
+{
+  "pipelineVersion": "1.0.0",
+  "generatedAt": "2026-09-07T19:56:56.264Z",
+  "summary": {
+    "totalSourcesProcessed": 1,
+    "totalDerivativesGenerated": 6,
+    "originalTotalBytes": 2786827,
+    "derivativeTotalBytes": 631705,
+    "totalSavingsBytes": 2155122,
+    "overallReductionPercent": 77.33
+  },
+  "assets": [
+    {
+      "source": {
+        "path": "src/assets/hero-image.png",
+        "filename": "hero-image.png",
+        "hash": "047f3403217d8af6297f7698a46078c781dbfed653d866e2e8182b2e012de838",
+        "format": "png",
+        "width": 1824,
+        "height": 1216,
+        "sizeBytes": 2786827
+      },
+      "profile": "hero",
+      "derivatives": [
+        {
+          "path": "output/images/hero-image/hero-image-1824w.avif",
+          "format": "avif",
+          "width": 1824,
+          "height": 1216,
+          "sizeBytes": 161374,
+          "quality": 75,
+          "sizeRatio": 0.0579,
+          "reductionPercent": 94.21,
+          "ssim": 0.9974,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "output/images/hero-image/hero-image-1824w.webp",
+          "format": "webp",
+          "width": 1824,
+          "height": 1216,
+          "sizeBytes": 123222,
+          "quality": 80,
+          "sizeRatio": 0.0442,
+          "reductionPercent": 95.58,
+          "ssim": 0.9961,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "output/images/hero-image/hero-image-1600w.avif",
+          "format": "avif",
+          "width": 1600,
+          "height": 1067,
+          "sizeBytes": 122847,
+          "quality": 75,
+          "sizeRatio": 0.0441,
+          "reductionPercent": 95.59,
+          "ssim": 0.9968,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "output/images/hero-image/hero-image-1600w.webp",
+          "format": "webp",
+          "width": 1600,
+          "height": 1067,
+          "sizeBytes": 95328,
+          "quality": 80,
+          "sizeRatio": 0.0342,
+          "reductionPercent": 96.58,
+          "ssim": 0.9953,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "output/images/hero-image/hero-image-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 800,
+          "sizeBytes": 72382,
+          "quality": 75,
+          "sizeRatio": 0.026,
+          "reductionPercent": 97.4,
+          "ssim": 0.9961,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "output/images/hero-image/hero-image-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 800,
+          "sizeBytes": 56552,
+          "quality": 80,
+          "sizeRatio": 0.0203,
+          "reductionPercent": 97.97,
+          "ssim": 0.9941,
+          "validationStatus": "PASS"
+        }
+      ]
+    }
+  ]
+}

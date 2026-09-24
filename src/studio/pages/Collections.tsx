@@ -6,7 +6,7 @@ import { useStudioCollections } from "../hooks/useCollections";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-jasmine-deep text-ink",
-  published: "bg-teal-deep/10 text-teal-deep",
+  published: "bg-ink/10 text-ink",
 };
 
 export default function StudioCollections() {
@@ -21,7 +21,7 @@ export default function StudioCollections() {
         </h2>
         <Button
           onClick={() => navigate("/studio/collections/new")}
-          className="gap-1.5 bg-teal-deep text-jasmine hover:bg-teal transition-colors"
+          className="gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
           size="sm"
         >
           <Plus className="h-4 w-4" />
@@ -62,7 +62,7 @@ export default function StudioCollections() {
             <button
               key={c.id}
               onClick={() => navigate(`/studio/collections/${c.id}`)}
-              className="w-full text-left p-4 rounded-lg border border-border/40 bg-card hover:border-teal/30 hover:shadow-sm transition-all"
+              className="w-full text-left p-4 rounded-lg border border-border/40 bg-card hover:border-signature-crimson/30 hover:shadow-sm transition-all"
             >
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1">
@@ -74,7 +74,7 @@ export default function StudioCollections() {
                       {c.status}
                     </span>
                     {c.featured_on_homepage && (
-                      <span className="text-[10px] uppercase tracking-[0.12em] text-teal-deep font-medium">
+                      <span className="text-[10px] uppercase tracking-[0.12em] text-ink font-medium">
                         Featured
                       </span>
                     )}

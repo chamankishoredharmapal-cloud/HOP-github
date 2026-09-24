@@ -9,8 +9,13 @@ import {
 
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 
+type ProductGalleryImage = {
+  url: string;
+  altText?: string | null;
+};
+
 type ProductGalleryProps = {
-  images: string[];
+  images: ProductGalleryImage[];
   aspectRatio?: "4/5" | "16/9" | "1/1";
   enableZoom?: boolean;
 };
@@ -116,6 +121,9 @@ export const ProductGallery = React.memo(function ProductGallery({
     return () => node.removeEventListener("keydown", handleKeyDown);
   }, [scrollPrev, scrollNext, isZoomed]);
 
+  const getImageAlt = (image: ProductGalleryImage, index: number) =>
+    image.altText?.trim() || `Product view ${index + 1}`;
+
   const handleZoomToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!enableZoom) return;
@@ -128,8 +136,8 @@ export const ProductGallery = React.memo(function ProductGallery({
       <div className="relative overflow-hidden rounded-sm bg-jasmine-deep" ref={emblaRef}>
         <div className="flex">
           {images.map((image, index) => {
-            const optimizedSrc = getSupabaseOptimizedUrl(image, { width: 800 });
-            const srcSet = getSupabaseSrcSet(image, [480, 800, 1200]);
+            const optimizedSrc = getSupabaseOptimizedUrl(image.url, { width: 800 });
+            const srcSet = getSupabaseSrcSet(image.url, [480, 800, 1200]);
             return (
               <div key={index} className="min-w-0 shrink-0 grow-0 basis-full">
                 <div className={`relative ${aspectRatioClass} w-full`} style={{ transform: isZoomed ? `scale(${zoomLevel})` : "scale(1)", transformOrigin: "center" }}>
@@ -137,7 +145,7 @@ export const ProductGallery = React.memo(function ProductGallery({
                     src={optimizedSrc}
                     srcSet={srcSet || undefined}
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
-                    alt={`Product view ${index + 1}`}
+                    alt={getImageAlt(image, index)}
                     className={`absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-out ${enableZoom ? (isZoomed ? "cursor-zoom-out" : "cursor-zoom-in") : ""}`}
                     loading={index === 0 ? "eager" : "lazy"}
                     decoding={index === 0 ? "sync" : "async"}
@@ -150,7 +158,7 @@ export const ProductGallery = React.memo(function ProductGallery({
                       if (!target.dataset.fallback) {
                         target.dataset.fallback = "true";
                         target.srcset = "";
-                        target.src = image;
+                        target.src = image.url;
                       }
                     }}
                     style={{ transitionProperty: "transform" }}
@@ -189,7 +197,7 @@ export const ProductGallery = React.memo(function ProductGallery({
 
       <div className="mt-4 grid grid-cols-4 gap-3">
         {images.map((image, index) => {
-          const thumbSrc = getSupabaseOptimizedUrl(image, { width: 160, height: 160, resize: "cover" });
+          const thumbSrc = getSupabaseOptimizedUrl(image.url, { width: 160, height: 160, resize: "cover" });
           return (
             <button
               key={index}
@@ -199,6 +207,8 @@ export const ProductGallery = React.memo(function ProductGallery({
                   ? "border-ink shadow-sm"
                   : "border-transparent opacity-70 hover:opacity-100"
               }`}
+              aria-label={`Show product image ${index + 1}`}
+              aria-pressed={index === selectedIndex}
             >
               <img
                 src={thumbSrc}
@@ -210,7 +220,7 @@ export const ProductGallery = React.memo(function ProductGallery({
                   const target = e.currentTarget;
                   if (!target.dataset.fallback) {
                     target.dataset.fallback = "true";
-                    target.src = image;
+                    target.src = image.url;
                   }
                 }}
               />

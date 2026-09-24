@@ -39,7 +39,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <path d="M28 20 Q40 8 52 20 Q40 32 28 20" stroke="currentColor" strokeWidth="0.8" fill="none" />
               </svg>
             </div>
-            <p className="text-xs tracking-[0.4em] uppercase text-teal mb-4">
+            <p className="text-xs tracking-[0.4em] uppercase text-signature-crimson mb-4">
               Something slipped
             </p>
             <h1 className="font-serif text-4xl md:text-5xl text-ink mb-6 leading-tight">
@@ -52,7 +52,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex items-center justify-center gap-4">
               <button
                 onClick={this.handleRetry}
-                className="inline-flex items-center gap-2 bg-teal-deep text-jasmine px-6 py-3 text-[0.7rem] tracking-[0.32em] uppercase rounded-full hover:bg-teal transition-colors"
+                className="inline-flex items-center gap-2 bg-ink text-jasmine px-6 py-3 text-[0.7rem] tracking-[0.32em] uppercase rounded-full hover:bg-signature-crimson transition-colors"
               >
                 Try again
               </button>

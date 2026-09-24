@@ -40,7 +40,7 @@ export default function ForgotPassword() {
         <div className="mx-auto max-w-sm">
           <div className="mb-10 text-center">
             <div className="mb-4 flex justify-center">
-              <div className="h-px w-16 bg-teal/40" />
+              <div className="h-px w-16 bg-signature-crimson/40" />
             </div>
             <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
               Reset password
@@ -52,8 +52,8 @@ export default function ForgotPassword() {
 
           {sent ? (
             <div className="space-y-6">
-              <Alert className="border-teal/20 bg-teal/5">
-                <AlertDescription className="text-sm text-teal-deep">
+              <Alert className="border-signature-crimson/20 bg-signature-crimson/5">
+                <AlertDescription className="text-sm text-ink">
                   A reset link has been sent to <strong className="text-ink">{email}</strong>.
                 </AlertDescription>
               </Alert>
@@ -81,12 +81,12 @@ export default function ForgotPassword() {
                     required
                     autoComplete="email"
                     placeholder="you@example.com"
-                    className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-teal/40 focus-visible:ring-1 focus-visible:ring-teal/20"
+                    className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="h-12 w-full bg-teal-deep text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-teal"
+                  className="h-12 w-full bg-ink text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-signature-crimson"
                   disabled={loading}
                 >
                   {loading ? (
@@ -100,7 +100,7 @@ export default function ForgotPassword() {
                 </Button>
               </form>
               <p className="mt-6 text-center text-sm text-ink-soft">
-                <Link to="/account/login" className="font-medium text-teal-deep transition-colors hover:text-teal">
+                <Link to="/account/login" className="font-medium text-ink transition-colors hover:text-signature-crimson">
                   Back to sign in
                 </Link>
               </p>

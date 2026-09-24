@@ -21,7 +21,7 @@ const editorial = [
 ];
 
 const getLinkClassName = () => {
-  return `hover:text-[#8B1E2D] transition-colors duration-500 whitespace-nowrap font-medium text-[#1F1F1F]`;
+  return `hover:text-signature-crimson transition-colors duration-500 whitespace-nowrap font-medium text-ink`;
 };
 
 const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
@@ -31,7 +31,8 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
   const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
-  const menuTriggerRef = useRef<HTMLButtonElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuCloseButtonRef = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
   const { totalItems } = useCart();
   const { totalItems: wishlistCount } = useWishlist();
@@ -56,11 +57,41 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
 
   const closeMenu = useCallback(() => {
     setOpen(false);
-    menuTriggerRef.current?.focus();
+    menuButtonRef.current?.focus();
   }, []);
 
+  const handleMenuKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      closeMenu();
+      return;
+    }
+    if (event.key !== "Tab" || !menuRef.current) return;
+    const focusable = Array.from(menuRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"));
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }, [closeMenu]);
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusTimer = window.setTimeout(() => menuCloseButtonRef.current?.focus(), 0);
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 text-[#1F1F1F] transition-transform duration-300 ease-in-out ${hidden && !open ? "-translate-y-full" : "translate-y-0"} ${transparent && !scrolled && !open ? "bg-transparent" : "bg-[#FBF5EB]/95 backdrop-blur-sm shadow-[0_1px_0_rgba(31,31,31,0.08)]"}`}>
+    <header className={`fixed top-0 inset-x-0 z-50 text-ink transition-transform duration-300 ease-in-out ${hidden && !open ? "-translate-y-full" : "translate-y-0"} ${transparent && !scrolled && !open ? "bg-transparent" : "bg-paper-ivory/95 backdrop-blur-sm shadow-[0_1px_0_rgba(31,31,31,0.08)]"}`}>
       {/* Top banner removed due to brand guideline violation (No aggressive sales tactics/mass-market tropes) */}
       <div className="container flex items-center justify-between h-[72px] md:h-[80px] gap-4 md:gap-6">
         <nav
@@ -82,9 +113,12 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
         </nav>
 
         <button
-          className="lg:hidden p-2 text-[#1F1F1F] hover:text-[#8B1E2D] transition-colors duration-300"
+          className="lg:hidden p-2 text-ink hover:text-signature-crimson transition-colors duration-300"
           onClick={() => setOpen(true)}
+          ref={menuButtonRef}
           aria-label="Open menu"
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
         >
           <Menu className="w-5 h-5" strokeWidth={1.5} />
         </button>
@@ -95,34 +129,34 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
           aria-label="House of Padmavati home"
         >
           <Monogram variant="signature" className="h-8 md:h-10" />
-          <span className="mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.28em] sm:tracking-[0.32em] uppercase whitespace-nowrap text-[#8B1E2D]">
+          <span className="mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.28em] sm:tracking-[0.32em] uppercase whitespace-nowrap text-signature-crimson">
             HOUSE OF PADMAVATI
           </span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-4 xl:gap-6 text-[#1F1F1F] w-1/3 justify-end">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6 text-ink w-1/3 justify-end">
           <button
             onClick={() => setSearchOpen(true)}
             aria-label="Search"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-[#8B1E2D] transition-colors duration-300"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-signature-crimson transition-colors duration-300"
           >
             <Search className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </button>
           <Link
             to="/account"
             aria-label="Account"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-[#8B1E2D] transition-colors duration-300"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-signature-crimson transition-colors duration-300"
           >
             <User className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </Link>
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-[#8B1E2D] transition-colors duration-300 relative"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-signature-crimson transition-colors duration-300 relative"
           >
             <Heart className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
             {wishlistCount > 0 && (
-              <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-[#8B1E2D] text-[#FBF5EB] text-[0.55rem] font-medium rounded-full flex items-center justify-center">
+              <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-signature-crimson text-paper-ivory text-[0.55rem] font-medium rounded-full flex items-center justify-center">
                 {wishlistCount}
               </span>
             )}
@@ -130,7 +164,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
           <Link
             to="/cart"
             aria-label="Bag"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-[#8B1E2D] transition-colors duration-300 gap-2"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-signature-crimson transition-colors duration-300 gap-2"
           >
             <ShoppingBag className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
             <span className="text-[0.75rem] font-light tnum">({totalItems})</span>
@@ -139,12 +173,12 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
 
         <Link
           to="/cart"
-          className="lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center text-[#1F1F1F] hover:text-[#8B1E2D] transition-colors duration-300 relative"
+          className="lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center text-ink hover:text-signature-crimson transition-colors duration-300 relative"
           aria-label="Bag"
         >
           <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
           {totalItems > 0 && (
-            <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-[#8B1E2D] text-[#FBF5EB] text-[0.55rem] font-medium rounded-full flex items-center justify-center">
+            <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-signature-crimson text-paper-ivory text-[0.55rem] font-medium rounded-full flex items-center justify-center">
               {totalItems}
             </span>
           )}
@@ -155,18 +189,19 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
       {open && (
         <div
           ref={menuRef}
-          className="lg:hidden fixed inset-0 z-50 bg-[#FBF5EB] text-[#1F1F1F] animate-fade-in overflow-y-auto"
+          id="mobile-navigation"
+          className="lg:hidden fixed inset-0 z-50 bg-paper-ivory text-ink animate-fade-in overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          onKeyDown={(e) => { if (e.key === "Escape") closeMenu(); }}
+          onKeyDown={handleMenuKeyDown}
         >
-          <div className="container flex items-center justify-between h-16 border-b border-[#87817A]/15">
+          <div className="container flex items-center justify-between h-16 border-b border-line/15">
             <div className="flex items-center gap-3">
               <Monogram variant="signature" className="h-9" />
-              <span className="font-serif text-[0.65rem] tracking-[0.32em] uppercase text-[#8B1E2D]">HOUSE OF PADMAVATI</span>
+              <span className="font-serif text-[0.65rem] tracking-[0.32em] uppercase text-signature-crimson">HOUSE OF PADMAVATI</span>
             </div>
-            <button onClick={closeMenu} aria-label="Close menu" ref={menuTriggerRef}>
+            <button onClick={closeMenu} aria-label="Close menu" ref={menuCloseButtonRef}>
               <X className="w-5 h-5" strokeWidth={1.5} />
             </button>
           </div>
@@ -176,13 +211,13 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
             aria-label="Mobile navigation"
           >
             <div className="space-y-4">
-              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-[#1F1F1F]/50">The House</p>
+              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-ink/50">The House</p>
               {editorial.map((c) => (
                 <Link
                   key={c.href}
                   to={c.href}
                   onClick={closeMenu}
-                  className="block text-xl md:text-2xl font-sans font-light hover:text-[#8B1E2D] transition-colors duration-300 tracking-wide"
+                  className="block text-xl md:text-2xl font-sans font-light hover:text-signature-crimson transition-colors duration-300 tracking-wide"
                   aria-current={pathname === c.href || (c.href === "/about" && pathname.startsWith("/about")) ? "page" : undefined}
                 >
                   {c.label}
@@ -190,22 +225,22 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
               ))}
             </div>
             <div className="space-y-4">
-              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-[#1F1F1F]/50">Collections</p>
+              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-ink/50">Collections</p>
               {collections.map((c) => (
                 <Link
                   key={c.href}
                   to={c.href}
                   onClick={closeMenu}
-                  className="block text-xl md:text-2xl font-serif font-light hover:text-[#8B1E2D] transition-colors duration-300"
+                  className="block text-xl md:text-2xl font-serif font-light hover:text-signature-crimson transition-colors duration-300"
                 >
                   {c.label}
                 </Link>
               ))}
             </div>
-            <div className="flex items-center gap-2 pt-2 border-t border-[#87817A]/15">
+            <div className="flex items-center gap-2 pt-2 border-t border-line/15">
               <button
                 onClick={() => { closeMenu(); setSearchOpen(true); }}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-[#8B1E2D] transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
                 aria-label="Search"
               >
                 <Search className="w-4 h-4" strokeWidth={1.5} /> Search
@@ -213,7 +248,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
               <Link
                 to="/account"
                 onClick={closeMenu}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-[#8B1E2D] transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
                 aria-label="Account"
               >
                 <User className="w-4 h-4" strokeWidth={1.5} /> Account
@@ -221,7 +256,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
               <Link
                 to="/wishlist"
                 onClick={closeMenu}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-[#8B1E2D] transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
                 aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4" strokeWidth={1.5} /> Saved
@@ -233,7 +268,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
 
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
       {!transparent && (
-        <div aria-hidden="true" className="absolute bottom-0 inset-x-0 h-px bg-[#87817A]/15" />
+        <div aria-hidden="true" className="absolute bottom-0 inset-x-0 h-px bg-line/15" />
       )}
     </header>
   );

@@ -58,7 +58,7 @@ export default function WishlistPage() {
           <div key={productId} className="group relative rounded-lg border border-border overflow-hidden">
             <Link to={`/product/${productId}`}>
               <div className="aspect-square bg-ink/5 flex items-center justify-center">
-                <Heart className="w-8 h-8 text-teal-deep/30" />
+                <Heart className="w-8 h-8 text-ink/30" />
               </div>
             </Link>
             <button

@@ -93,12 +93,12 @@ const TermsOfService = () => {
 
             <section>
               <h2 className="font-serif text-2xl text-ink mb-3">8. Shipping</h2>
-              <p>Shipping and delivery terms are outlined in our <a href="/shipping-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Shipping Policy</a>, which is incorporated by reference into these terms.</p>
+              <p>Shipping and delivery terms are outlined in our <a href="/shipping-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Shipping Policy</a>, which is incorporated by reference into these terms.</p>
             </section>
 
             <section>
               <h2 className="font-serif text-2xl text-ink mb-3">9. Returns and Refunds</h2>
-              <p>Return and refund terms are outlined in our <a href="/returns-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Returns & Refund Policy</a>, which is incorporated by reference into these terms.</p>
+              <p>Return and refund terms are outlined in our <a href="/returns-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Returns & Refund Policy</a>, which is incorporated by reference into these terms.</p>
             </section>
 
             <section>
@@ -122,7 +122,7 @@ const TermsOfService = () => {
 
             <section>
               <h2 className="font-serif text-2xl text-ink mb-3">12. Privacy</h2>
-              <p>Our <a href="/privacy-policy" className="text-teal hover:text-teal-deep underline underline-offset-4 decoration-1">Privacy Policy</a> governs how we collect, use, and protect your personal information. By using this website, you agree to the practices described in the Privacy Policy.</p>
+              <p>Our <a href="/privacy-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Privacy Policy</a> governs how we collect, use, and protect your personal information. By using this website, you agree to the practices described in the Privacy Policy.</p>
             </section>
 
             <section>

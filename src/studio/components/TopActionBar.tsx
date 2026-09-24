@@ -13,7 +13,7 @@ const statusLabels: Record<ProductStatus, string> = {
 const statusStyles: Record<ProductStatus, string> = {
   draft: "bg-jasmine-deep text-ink",
   review: "bg-sand/60 text-ink",
-  published: "bg-teal-deep/10 text-teal-deep",
+  published: "bg-ink/10 text-ink",
   archived: "bg-muted text-muted-foreground",
 };
 
@@ -67,7 +67,7 @@ export function TopActionBar({
           <Save className="h-3.5 w-3.5" />
           {saving ? "Saving..." : "Save Draft"}
         </Button>
-        <Button size="sm" onClick={onPublish} disabled={saving || !canPublish} className="gap-1.5 bg-teal-deep text-jasmine hover:bg-teal transition-colors">
+        <Button size="sm" onClick={onPublish} disabled={saving || !canPublish} className="gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors">
           <Send className="h-3.5 w-3.5" />
           Publish
         </Button>

@@ -141,7 +141,7 @@ export default function CollectionWorkspace() {
               Preview
             </Button>
           )}
-          <Button size="sm" onClick={handleSave} disabled={saving} className="gap-1.5 bg-teal-deep text-jasmine hover:bg-teal transition-colors">
+          <Button size="sm" onClick={handleSave} disabled={saving} className="gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors">
             <Save className="h-3.5 w-3.5" />
             {saving ? "Saving..." : isNew ? "Create Collection" : "Save Changes"}
           </Button>
@@ -245,7 +245,7 @@ export default function CollectionWorkspace() {
                 type="checkbox"
                 checked={form.featured_on_homepage}
                 onChange={(e) => updateField("featured_on_homepage", e.target.checked)}
-                className="h-4 w-4 rounded border-input text-teal-deep focus:ring-ring"
+                className="h-4 w-4 rounded border-input text-ink focus:ring-ring"
               />
               <span className="text-sm text-muted-foreground">Show on homepage hero</span>
             </label>
@@ -270,7 +270,7 @@ export default function CollectionWorkspace() {
                 </button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center aspect-[4/5] rounded-lg border-2 border-dashed border-border/60 cursor-pointer hover:border-teal/50 transition-colors bg-card">
+              <label className="flex flex-col items-center justify-center aspect-[4/5] rounded-lg border-2 border-dashed border-border/60 cursor-pointer hover:border-signature-crimson/50 transition-colors bg-card">
                 <Upload className="h-6 w-6 text-muted-foreground/50 mb-2" />
                 <span className="text-xs text-muted-foreground/60">
                   {uploadingImage ? "Uploading..." : "Upload image"}
@@ -305,7 +305,7 @@ export default function CollectionWorkspace() {
                 </button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center aspect-[16/9] rounded-lg border-2 border-dashed border-border/60 cursor-pointer hover:border-teal/50 transition-colors bg-card">
+              <label className="flex flex-col items-center justify-center aspect-[16/9] rounded-lg border-2 border-dashed border-border/60 cursor-pointer hover:border-signature-crimson/50 transition-colors bg-card">
                 <Upload className="h-6 w-6 text-muted-foreground/50 mb-2" />
                 <span className="text-xs text-muted-foreground/60">
                   {uploadingVideo ? "Uploading..." : "Upload video"}

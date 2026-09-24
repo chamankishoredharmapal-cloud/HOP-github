@@ -81,7 +81,7 @@ export const STOCK_STATUS_LABELS: Record<StockStatus, string> = {
 };
 
 export const STOCK_STATUS_STYLES: Record<StockStatus, string> = {
-  healthy: "bg-teal-deep/10 text-teal-deep",
+  healthy: "bg-ink/10 text-ink",
   low_stock: "bg-sakura/20 text-ink",
   out_of_stock: "bg-muted text-muted-foreground",
 };

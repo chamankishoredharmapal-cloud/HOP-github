@@ -11,12 +11,12 @@ const PageLayout = ({ children, transparent = false }: PageLayoutProps) => {
     <div className="min-h-screen bg-background text-foreground">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-teal-deep focus:text-jasmine focus:text-sm focus:rounded focus:outline-none focus:ring-2 focus:ring-teal"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-ink focus:text-jasmine focus:text-sm focus:rounded focus:outline-none focus:ring-2 focus:ring-signature-crimson"
       >
         Skip to main content
       </a>
       <HopHeader transparent={transparent} />
-      <div id="main-content" className="pt-24 sm:pt-28 md:pt-32">
+      <div id="main-content" className="pt-header">
         {children}
       </div>
       <HopFooter />

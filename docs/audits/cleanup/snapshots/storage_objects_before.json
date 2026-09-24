@@ -1,0 +1,14 @@
+﻿[
+    {
+        "id":  "c1b7bca1-2e0e-4b9a-a579-645898f9827d",
+        "bucket_id":  "product-images",
+        "name":  "5215d2f7-82b1-4b98-8d5b-e5d68e3bf034/a8c8eaf9-3bb2-4d87-b452-f785851d9d72.png",
+        "created_at":  "2026-08-05 08:23:11.153578+00"
+    },
+    {
+        "id":  "e2895b98-268c-4cfd-a25d-9b98f5dec731",
+        "bucket_id":  "product-images",
+        "name":  "3d123e03-be1b-4454-a0c3-14e809146d92/4de69a01-5526-4486-b99c-17b100f29201.png",
+        "created_at":  "2026-08-05 08:35:57.541097+00"
+    }
+]

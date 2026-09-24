@@ -20,17 +20,23 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
-    if (open) {
-      setQuery("");
-      setResults([]);
-      setSearched(false);
-      setActiveIndex(-1);
-      setTimeout(() => inputRef.current?.focus(), 50);
-    }
+    if (!open) return;
+    previouslyFocusedRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setQuery("");
+    setResults([]);
+    setSearched(false);
+    setActiveIndex(-1);
+    const focusTimer = window.setTimeout(() => inputRef.current?.focus(), 50);
+    return () => {
+      window.clearTimeout(focusTimer);
+      previouslyFocusedRef.current?.focus();
+    };
   }, [open]);
 
   useEffect(() => {
@@ -83,11 +89,26 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
 
   useEffect(() => {
     if (!open) return;
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled]), input:not([disabled])"));
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
 
   useEffect(() => {
@@ -110,7 +131,8 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
     >
       <div className="fixed inset-0 bg-ink/60 backdrop-blur-sm" onClick={onClose} />
       <div
-        className="relative w-full max-w-2xl mx-4 bg-background border border-border/60 rounded-lg shadow-2xl animate-fade-in"
+         ref={dialogRef}
+         className="relative w-full max-w-2xl mx-4 bg-background border border-border/60 rounded-lg shadow-2xl animate-fade-in"
         onKeyDown={handleKeyDown}
       >
         <div className="flex items-center gap-3 border-b border-border/60 px-4 py-3">
@@ -136,7 +158,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
         <div ref={listRef} className="max-h-[60vh] overflow-y-auto p-2" role="listbox">
           {loading && (
             <div className="flex items-center justify-center py-12">
-              <div className="w-5 h-5 border-2 border-teal-deep/30 border-t-teal-deep rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-ink/30 border-t-ink rounded-full animate-spin" />
             </div>
           )}
 
@@ -161,7 +183,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                   aria-selected={index === activeIndex}
                   className={`flex items-center gap-4 p-3 rounded-md transition-colors ${
                     index === activeIndex
-                      ? "bg-teal-deep/10 text-ink"
+                      ? "bg-ink/10 text-ink"
                       : "hover:bg-jasmine-deep text-ink"
                   }`}
                 >

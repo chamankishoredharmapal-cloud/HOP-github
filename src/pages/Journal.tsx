@@ -53,7 +53,7 @@ const Journal = () => {
               </div>
               <div className="mt-8 max-w-3xl">
                 <p className="text-[0.6rem] tracking-[0.42em] uppercase text-ink-soft">{featured.tag} · Featured</p>
-                <h2 className="mt-3 font-editorial font-light text-3xl md:text-5xl leading-[1.08] text-balance text-ink">
+                <h2 className="mt-3 font-editorial text-3xl md:text-5xl leading-[1.08] text-balance text-ink">
                   {featured.title}
                 </h2>
                 <p className="mt-4 text-ink-soft font-light text-base sm:text-lg leading-relaxed">{featured.dek}</p>
@@ -93,7 +93,7 @@ const Journal = () => {
                     </div>
                     <div className="min-w-0">
                       <p className="text-[0.6rem] tracking-[0.32em] uppercase text-ink-soft">{article.tag}</p>
-                      <h3 className="mt-1.5 font-editorial font-light text-xl sm:text-2xl text-ink leading-snug text-balance">
+                      <h3 className="mt-1.5 font-editorial text-xl sm:text-2xl text-ink leading-snug text-balance">
                         {article.title}
                       </h3>
                       <p className="mt-1 text-sm text-ink-soft font-light leading-relaxed hidden sm:block">

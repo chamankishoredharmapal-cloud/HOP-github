@@ -93,7 +93,7 @@ const ProductDetail = () => {
   if (isLoading) {
     return (
       <PageLayout>
-        <main className="container pt-10 pb-24 animate-pulse">
+        <main className="container pt-10 pb-section animate-pulse">
           <div className="h-4 w-64 rounded-sm bg-jasmine-deep mb-10" />
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
             <div className="aspect-[4/5] rounded-sm bg-jasmine-deep" />
@@ -112,7 +112,7 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <PageLayout>
-        <main className="container pt-10 pb-24">
+        <main className="container pt-10 pb-section">
           <Breadcrumb className="mb-10">
             <BreadcrumbList className="text-[0.7rem] tracking-[0.3em] uppercase text-ink-soft">
               <BreadcrumbItem>
@@ -131,18 +131,20 @@ const ProductDetail = () => {
   }
 
   const gallery = product.images.length > 0
-    ? product.images.map((img) => img.url)
+    ? product.images.map((img) => ({ url: img.url, altText: img.alt_text }))
     : [];
 
   const wishlistId = `product-${product.id}`;
   const saved = isWishlisted(wishlistId);
 
   const handleAddToCart = () => {
+    if (product.stock <= 0) return;
     addItem({
       id: wishlistId,
       productId: product.id,
       name: product.name,
       price: product.selling_price,
+      stock: product.stock,
       formattedPrice: formatPrice(product.selling_price),
       image: gallery[0] ?? "",
       size: `Drape · ${product.length || "5.5m"}${product.blouse_included ? " + 0.8m blouse" : ""}`,
@@ -170,7 +172,7 @@ const ProductDetail = () => {
 
   return (
     <PageLayout>
-      <main className="container pt-10 pb-24">
+      <main className="container pt-10 pb-section">
         <Breadcrumb className="mb-10">
           <BreadcrumbList className="text-[0.7rem] tracking-[0.3em] uppercase text-ink-soft">
             <BreadcrumbItem>
@@ -209,17 +211,21 @@ const ProductDetail = () => {
                   {product.collection_name}
                 </p>
               )}
-              <h1 className="mt-3 font-editorial font-light text-4xl md:text-5xl text-ink leading-[1.05]">
+              <h1 className="mt-3 font-editorial text-4xl md:text-5xl text-ink leading-[1.05]">
                 {product.name}
               </h1>
               <p className="mt-4 text-xl font-normal text-ink tnum">
                 {formatPrice(product.selling_price)}
               </p>
-              {product.stock > 0 && product.stock <= 3 && (
+              {product.stock <= 0 ? (
+                <p className="mt-2 text-xs font-medium tracking-wide text-signature-crimson">
+                  Currently unavailable
+                </p>
+              ) : product.stock <= 3 ? (
                 <p className="mt-2 text-xs font-light tracking-wide text-ink-soft">
                   One of a small batch from this loom — {product.stock} {product.stock === 1 ? "drape remains" : "drapes remain"}.
                 </p>
-              )}
+              ) : null}
             </div>
 
             <p className="text-ink-soft font-light leading-relaxed max-w-md">
@@ -236,9 +242,11 @@ const ProductDetail = () => {
             <div className="flex items-center gap-4 pt-2">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-ink text-jasmine px-7 py-4 text-[0.65rem] tracking-[0.32em] uppercase rounded-full hover:bg-ink-soft transition-colors duration-300"
+                disabled={product.stock <= 0}
+                aria-disabled={product.stock <= 0}
+                className="flex-1 bg-ink text-jasmine px-7 py-4 text-[0.65rem] tracking-[0.32em] uppercase rounded-full hover:bg-ink-soft transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Add to bag
+                {product.stock <= 0 ? "Unavailable" : "Add to bag"}
               </button>
               <button
                 onClick={handleToggleWishlist}
@@ -246,7 +254,7 @@ const ProductDetail = () => {
                 aria-pressed={saved}
                 className="w-12 h-12 rounded-full border border-ink/20 flex items-center justify-center hover:border-ink/50 transition-colors"
               >
-                <Heart className={`w-4 h-4 transition-colors ${saved ? "fill-[#8B1E2D] text-[#8B1E2D]" : "text-ink"}`} />
+                <Heart className={`w-4 h-4 transition-colors ${saved ? "fill-signature-crimson text-signature-crimson" : "text-ink"}`} />
               </button>
             </div>
 
@@ -273,7 +281,7 @@ const ProductDetail = () => {
               <AccordionItem value="shipping" className="border-b border-border">
                 <AccordionTrigger className="text-sm tracking-wider uppercase">Shipping & Returns</AccordionTrigger>
                 <AccordionContent className="text-ink-soft font-light leading-relaxed space-y-3">
-                  <p>Dispatched within 1 business day.</p>
+                   <p>Dispatch estimated within {product.estimated_dispatch_days} {product.estimated_dispatch_days === 1 ? "business day" : "business days"}.</p>
                   <p>Return and replacement eligibility depends on the number of sarees in your order. See the <Link to="/returns-policy" className="text-ink border-b border-ink/30 hover:border-ink transition-colors">Returns & Refund Policy</Link> for complete details.</p>
                 </AccordionContent>
               </AccordionItem>
@@ -282,7 +290,7 @@ const ProductDetail = () => {
         </div>
 
         {relatedProducts && relatedProducts.length > 0 && (
-          <section className="mt-24 sm:mt-32 border-t border-ink/10 pt-12 sm:pt-16">
+          <section className="mt-section border-t border-ink/10 pt-12 sm:pt-16">
             <div className="flex items-end justify-between mb-10">
               <h2 className="font-serif font-light text-2xl sm:text-3xl md:text-4xl text-ink">Related pieces.</h2>
               <Link

@@ -1,0 +1,55 @@
+﻿{
+  "build_config": {
+    "build_command": "pnpm run build",
+    "destination_dir": "dist",
+    "root_dir": ""
+  },
+  "deployment_configs": {
+    "production": {
+      "branch": "staging",
+      "env_vars": {
+        "VITE_SUPABASE_URL": {
+          "type": "plain_text",
+          "value": "https://dovnhgbisiturzbjgvei.supabase.co"
+        },
+        "VITE_SUPABASE_PUBLISHABLE_KEY": {
+          "type": "plain_text",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvdm5oZ2Jpc2l0dXJ6YmpndmVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk0ODc1OTMsImV4cCI6MjEwNTA2MzU5M30.aEMWfZNVYQVMul9AvLsfruixeqALealjehXvnM6FaVE"
+        },
+        "VITE_RAZORPAY_KEY_ID": {
+          "type": "plain_text",
+          "value": "rzp_test_TcXqw4nezbIA2b"
+        },
+        "VITE_APP_URL": {
+          "type": "plain_text",
+          "value": "https://hop-staging.pages.dev"
+        }
+      }
+    },
+    "preview": {
+      "branch": "main",
+      "env_vars": {
+        "VITE_SUPABASE_URL": {
+          "type": "plain_text",
+          "value": "https://dovnhgbisiturzbjgvei.supabase.co"
+        },
+        "VITE_SUPABASE_PUBLISHABLE_KEY": {
+          "type": "plain_text",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvdm5oZ2Jpc2l0dXJ6YmpndmVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk0ODc1OTMsImV4cCI6MjEwNTA2MzU5M30.aEMWfZNVYQVMul9AvLsfruixeqALealjehXvnM6FaVE"
+        },
+        "VITE_RAZORPAY_KEY_ID": {
+          "type": "plain_text",
+          "value": "rzp_test_TcXqw4nezbIA2b"
+        },
+        "VITE_APP_URL": {
+          "type": "plain_text",
+          "value": "https://hop-staging.pages.dev"
+        }
+      }
+    }
+  },
+  "git_integration": {
+    "repository": "https://github.com/chamankishoredharmapal-cloud/HOP-github",
+    "branch": "staging"
+  }
+}

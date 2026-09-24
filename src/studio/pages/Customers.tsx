@@ -30,8 +30,8 @@ function orderStatusBadge(status: string) {
     pending_payment: "bg-sakura/20 text-ink",
     confirmed: "bg-sand/30 text-ink",
     processing: "bg-sand/30 text-ink",
-    shipped: "bg-teal/10 text-teal-deep",
-    delivered: "bg-teal-deep/10 text-teal-deep",
+    shipped: "bg-signature-crimson/10 text-ink",
+    delivered: "bg-ink/10 text-ink",
     cancelled: "bg-muted text-muted-foreground",
     returned: "bg-muted text-muted-foreground",
   };

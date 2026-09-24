@@ -4,7 +4,7 @@
  * Motion: subtle draw from left (700ms) — stillness is house style, movement the rare guest.
  */
 export const Selvedge = ({
-  accent = "hsl(var(--teal))",
+  accent = "hsl(var(--signature-crimson))",
   className = "",
 }: {
   accent?: string;
@@ -16,6 +16,6 @@ export const Selvedge = ({
   </div>
 );
 
-export const SelvedgeInline = ({ accent = "hsl(var(--teal))" }: { accent?: string }) => (
+export const SelvedgeInline = ({ accent = "hsl(var(--signature-crimson))" }: { accent?: string }) => (
   <span className="inline-block h-px w-8 align-middle mr-3" style={{ background: accent }} aria-hidden="true" />
 );

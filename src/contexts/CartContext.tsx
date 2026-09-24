@@ -8,6 +8,7 @@ export type CartItem = {
   price: number;
   formattedPrice: string;
   quantity: number;
+  stock?: number;
   image: string;
   size?: string;
 };
@@ -27,23 +28,34 @@ function cartReducer(state: CartState, action: CartAction): CartState {
     case "ADD_ITEM": {
       const existing = state.items.find((i) => i.id === action.payload.id);
       if (existing) {
+        if (existing.stock !== undefined && existing.quantity >= existing.stock) {
+          return state;
+        }
         return {
           items: state.items.map((i) =>
             i.id === action.payload.id ? { ...i, quantity: i.quantity + 1 } : i
           ),
         };
       }
+      if (action.payload.stock !== undefined && action.payload.stock <= 0) {
+        return state;
+      }
       return { items: [...state.items, { ...action.payload, quantity: 1 }] };
     }
     case "REMOVE_ITEM":
       return { items: state.items.filter((i) => i.id !== action.payload) };
     case "UPDATE_QUANTITY": {
-      if (action.payload.quantity <= 0) {
+      const item = state.items.find((i) => i.id === action.payload.id);
+      if (!item) return state;
+      const nextQuantity = item.stock === undefined
+        ? action.payload.quantity
+        : Math.min(action.payload.quantity, item.stock);
+      if (nextQuantity <= 0) {
         return { items: state.items.filter((i) => i.id !== action.payload.id) };
       }
       return {
         items: state.items.map((i) =>
-          i.id === action.payload.id ? { ...i, quantity: action.payload.quantity } : i
+          i.id === action.payload.id ? { ...i, quantity: nextQuantity } : i
         ),
       };
     }

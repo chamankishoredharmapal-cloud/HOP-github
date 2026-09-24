@@ -86,7 +86,7 @@ const Collections = () => {
                       {getChapterLabel(i)}
                       {c.tagline ? ` · ${c.tagline}` : world ? ` · ${world.accentName}` : ""}
                     </p>
-                    <h2 className="font-editorial font-light text-3xl sm:text-4xl leading-[1.08] text-balance text-ink">
+                    <h2 className="font-editorial text-3xl sm:text-4xl leading-[1.08] text-balance text-ink">
                       {c.name}
                     </h2>
                     {(c.editorial_story ?? c.description) && (

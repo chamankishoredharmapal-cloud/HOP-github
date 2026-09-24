@@ -17,8 +17,8 @@ const AboutSidebar = () => {
             className={({ isActive }) =>
               `block py-2 text-sm font-light tracking-wide transition-all ${
                 isActive
-                  ? 'text-teal-deep underline decoration-1 underline-offset-4'
-                  : 'text-ink-soft hover:text-teal'
+                  ? 'text-ink underline decoration-1 underline-offset-4'
+                  : 'text-ink-soft hover:text-signature-crimson'
               }`
             }
           >

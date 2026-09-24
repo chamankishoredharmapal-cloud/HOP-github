@@ -1,0 +1,16 @@
+﻿[
+    {
+        "id":  "a0a858ba-a982-480a-92f9-eb97df4e86ad",
+        "email":  "abcd123@gmail.com",
+        "full_name":  "abcd 123",
+        "phone":  "7878787878",
+        "created_at":  "2026-07-08 13:34:54.445348+00"
+    },
+    {
+        "id":  "2e2f333a-cb06-44b2-843f-804768f043cf",
+        "email":  "siddhanveg@gmail.com",
+        "full_name":  "ninja hatori",
+        "phone":  "01010101010",
+        "created_at":  "2026-07-17 15:40:55.76929+00"
+    }
+]

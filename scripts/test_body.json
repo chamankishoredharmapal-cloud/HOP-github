@@ -1,0 +1,1 @@
+{"event":"payment.captured","payload":{"payment":{"entity":{"id":"pay_test_dup_check","order_id":"order_test_dup_check","status":"captured","amount":50000,"currency":"INR"}}},"created_at":1700000000}

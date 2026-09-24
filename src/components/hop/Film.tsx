@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { Pause, Play } from "lucide-react";
 
 /**
  * Cinematic media frame — uses native <video> with poster fallback.
@@ -12,6 +13,7 @@ export const Film = ({
   className = "",
   isCinematic = false,
   preload = "metadata",
+  priority = false,
 }: {
   src?: string;
   poster: string;
@@ -19,6 +21,7 @@ export const Film = ({
   className?: string;
   isCinematic?: boolean;
   preload?: "auto" | "metadata" | "none";
+  priority?: boolean;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -31,6 +34,7 @@ export const Film = ({
       typeof window !== "undefined" &&
       !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
   );
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const doPlay = useCallback(
     (v: HTMLVideoElement) => {
@@ -38,10 +42,22 @@ export const Film = ({
       v.playsInline = true;
       // Respect visitors who ask for reduced motion — leave the still frame.
       if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-      v.play().catch(() => undefined);
+      v.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
     },
     [],
   );
+
+  const togglePlayback = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      doPlay(video);
+    } else {
+      video.pause();
+    }
+  }, [doPlay]);
 
   // Only load / play the film when its frame enters the viewport.
   // Prevents 5+ simultaneous autoplays on collection feeds.
@@ -87,6 +103,7 @@ export const Film = ({
   const handleVideoError = useCallback(() => {
     // Poster remains — a still frame is an acceptable, quiet fallback.
     setVideoReady(false);
+    setIsPlaying(false);
   }, []);
 
   return (
@@ -97,7 +114,9 @@ export const Film = ({
           <img
             src={poster}
             alt={alt}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            {...(priority ? { fetchpriority: "high" } : {})}
             className="w-full h-full object-cover"
           />
         ) : (
@@ -123,20 +142,23 @@ export const Film = ({
             muted
             loop
             playsInline
-            preload={preload}
+            preload={priority ? "auto" : preload}
             aria-label={alt}
             onLoadedData={handleLoadedData}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onEnded={() => setIsPlaying(false)}
             onError={handleVideoError}
           />
-          {isCinematic && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-jasmine/90 backdrop-blur-sm flex items-center justify-center opacity-80">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-teal-deep ml-0.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M8 5.14L19 12 8 18.86V5.14z"/>
-                </svg>
-              </div>
-            </div>
-          )}
+           <button
+             type="button"
+             onClick={togglePlayback}
+             className="absolute bottom-4 right-4 min-h-[44px] min-w-[44px] rounded-full bg-ink/70 p-3 text-paper-ivory backdrop-blur-sm transition-colors hover:bg-ink/90"
+             aria-label={isPlaying ? "Pause film" : "Play film"}
+             aria-pressed={!isPlaying}
+           >
+             {isPlaying ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
+           </button>
         </div>
       )}
     </div>

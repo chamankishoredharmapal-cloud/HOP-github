@@ -9,7 +9,7 @@ interface DashboardCardProps {
 
 export function DashboardCard({ label, value, icon: Icon, loading }: DashboardCardProps) {
   return (
-    <Card className="border border-border/50 bg-card transition-colors hover:border-teal/30">
+    <Card className="border border-border/50 bg-card transition-colors hover:border-signature-crimson/30">
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="space-y-1">
@@ -24,7 +24,7 @@ export function DashboardCard({ label, value, icon: Icon, loading }: DashboardCa
               </p>
             )}
           </div>
-          <div className="rounded-full bg-jasmine-deep p-3 text-teal-deep">
+          <div className="rounded-full bg-jasmine-deep p-3 text-ink">
             <Icon className="h-5 w-5" />
           </div>
         </div>

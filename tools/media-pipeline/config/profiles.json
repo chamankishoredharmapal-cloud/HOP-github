@@ -1,0 +1,46 @@
+{
+  "hero": {
+    "targetWidths": [1920, 1600, 1200],
+    "formats": ["avif", "webp"],
+    "quality": { "avif": 75, "webp": 80, "jpg": 82 },
+    "chromaSubsampling": "4:4:4",
+    "jpegFallback": false
+  },
+  "product": {
+    "targetWidths": [1200, 800, 480],
+    "formats": ["avif", "webp"],
+    "quality": { "avif": 80, "webp": 82, "jpg": 85 },
+    "chromaSubsampling": "4:4:4",
+    "jpegFallback": false
+  },
+  "collection": {
+    "targetWidths": [1600, 1200, 768],
+    "formats": ["avif", "webp"],
+    "quality": { "avif": 78, "webp": 82, "jpg": 84 },
+    "chromaSubsampling": "4:2:0",
+    "jpegFallback": false
+  },
+  "editorial": {
+    "targetWidths": [1600, 1200, 768],
+    "formats": ["avif", "webp"],
+    "quality": { "avif": 80, "webp": 84, "jpg": 85 },
+    "chromaSubsampling": "4:2:0",
+    "jpegFallback": false
+  },
+  "general": {
+    "targetWidths": [1200, 768, 480],
+    "formats": ["avif", "webp"],
+    "quality": { "avif": 75, "webp": 80, "jpg": 82 },
+    "chromaSubsampling": "4:2:0",
+    "jpegFallback": false
+  },
+  "video": {
+    "resolutions": [
+      { "name": "1080p", "width": 1920, "height": 1080, "crf": 23 },
+      { "name": "720p", "width": 1280, "height": 720, "crf": 26 }
+    ],
+    "codecs": ["h264", "vp9"],
+    "posterTimestamp": 0.5,
+    "posterFormats": ["avif", "webp"]
+  }
+}

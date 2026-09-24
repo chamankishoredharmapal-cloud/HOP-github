@@ -18,7 +18,7 @@ const statusLabel: Record<string, string> = {
 
 const statusColor: Record<string, string> = {
   pending_payment: "text-amber-600 bg-amber-50",
-  confirmed: "text-teal-deep bg-teal-deep/10",
+  confirmed: "text-ink bg-ink/10",
   processing: "text-blue-600 bg-blue-50",
   shipped: "text-purple-600 bg-purple-50",
   delivered: "text-green-600 bg-green-50",
@@ -56,7 +56,7 @@ export default function OrderHistory() {
             <Link
               key={order.id}
               to={`/account/orders/${order.id}`}
-              className="block p-4 rounded-lg border border-border hover:border-teal-deep/30 transition-colors group"
+              className="block p-4 rounded-lg border border-border hover:border-ink/30 transition-colors group"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

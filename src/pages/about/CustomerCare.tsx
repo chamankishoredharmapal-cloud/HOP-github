@@ -81,8 +81,8 @@ const SareeCare = () => {
               We welcome your thoughts and questions. Please leave a message below, and we will respond with care.
             </p>
             {success ? (
-              <div className="max-w-2xl p-8 border border-teal-deep/20 rounded-lg bg-teal-deep/5 text-center">
-                <CheckCircle className="h-12 w-12 text-teal-deep mx-auto mb-4" />
+              <div className="max-w-2xl p-8 border border-ink/20 rounded-lg bg-ink/5 text-center">
+                <CheckCircle className="h-12 w-12 text-ink mx-auto mb-4" />
                 <p className="font-serif text-xl text-ink mb-2">Thank you for writing to us.</p>
                 <p className="text-sm text-ink-soft font-light">
                   We have received your message and will reply within two business days.
@@ -159,7 +159,7 @@ const SareeCare = () => {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="rounded-full bg-teal-deep hover:bg-teal text-jasmine tracking-[0.3em] uppercase text-xs px-8 py-6"
+                  className="rounded-full bg-ink hover:bg-signature-crimson text-jasmine tracking-[0.3em] uppercase text-xs px-8 py-6"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">

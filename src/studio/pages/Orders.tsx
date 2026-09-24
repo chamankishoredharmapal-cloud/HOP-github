@@ -32,8 +32,8 @@ const statusStyles: Record<string, string> = {
   pending_payment: "bg-sakura/20 text-ink",
   confirmed: "bg-sand/30 text-ink",
   processing: "bg-sand/30 text-ink",
-  shipped: "bg-teal/10 text-teal-deep",
-  delivered: "bg-teal-deep/10 text-teal-deep",
+  shipped: "bg-signature-crimson/10 text-ink",
+  delivered: "bg-ink/10 text-ink",
   cancelled: "bg-muted text-muted-foreground",
   returned: "bg-muted text-muted-foreground",
 };
@@ -150,7 +150,7 @@ export default function Orders() {
                   onClick={() => setPaymentFilter(opt.value)}
                   className={
                     paymentFilter === opt.value
-                      ? "bg-teal-deep text-jasmine hover:bg-teal"
+                      ? "bg-ink text-jasmine hover:bg-signature-crimson"
                       : "border-border/50 text-muted-foreground"
                   }
                 >
@@ -167,7 +167,7 @@ export default function Orders() {
                 onClick={() => setStatusFilter(tab.value)}
                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                   statusFilter === tab.value
-                    ? "bg-teal-deep text-jasmine"
+                    ? "bg-ink text-jasmine"
                     : "bg-jasmine-deep/50 text-muted-foreground hover:bg-jasmine-deep"
                 }`}
               >
@@ -258,11 +258,11 @@ export default function Orders() {
                         <span
                           className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
                             order.payment_status === "paid"
-                              ? "bg-teal-deep/10 text-teal-deep"
+                              ? "bg-ink/10 text-ink"
                               : order.payment_status === "pending"
                                 ? "bg-sakura/20 text-ink"
                                 : order.payment_status === "deposit_paid"
-                                ? "bg-teal/10 text-teal-deep"
+                                ? "bg-signature-crimson/10 text-ink"
                                 : order.payment_status === "partially_paid" || order.payment_status === "balance_due"
                                 ? "bg-amber/10 text-amber"
                                 : "bg-muted text-muted-foreground"
@@ -276,7 +276,7 @@ export default function Orders() {
                           if (order.paid_amount && order.remaining_amount && order.total_amount) {
                             return (
                               <div className="text-xs">
-                                <span className="text-teal-deep">Paid: {formatCurrency(order.paid_amount)}</span>
+                                <span className="text-ink">Paid: {formatCurrency(order.paid_amount)}</span>
                                 <span className="text-amber ml-2">Due: {formatCurrency(order.remaining_amount)}</span>
                               </div>
                             );

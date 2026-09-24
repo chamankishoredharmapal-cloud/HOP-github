@@ -37,6 +37,11 @@ async function fetchRoutes() {
   const routes = [
     '/',
     '/collections',
+    '/cart',
+    '/checkout',
+    '/wishlist',
+    '/gift',
+    '/appointments',
     '/about',
     '/customer-care',
     '/privacy-policy',
@@ -125,6 +130,7 @@ async function fetchRoutes() {
 
 async function run() {
   const routes = await fetchRoutes();
+  const appShell = await fs.readFile(path.join(distDir, 'index.html'), 'utf-8');
   console.log(`Discovered ${routes.length} routes to prerender.`);
 
   const browser = await chromium.launch();
@@ -153,8 +159,8 @@ async function run() {
       if (fileStat && fileStat.isFile()) {
         return route.fulfill({ path: filePath });
       } else {
-        // Fallback to index.html for SPA routing
-        return route.fulfill({ path: path.join(distDir, 'index.html') });
+        // Fallback to the original Vite shell for SPA routing
+        return route.fulfill({ body: appShell, contentType: 'text/html' });
       }
     }
     
@@ -180,7 +186,11 @@ async function run() {
       await page.goto(`http://localhost:8080${route}`, { waitUntil: 'domcontentloaded' });
       
       // Wait for the explicit deterministic signal from our React hook
-      await page.waitForFunction(() => window.__PRERENDER_STATUS === "ready", undefined, { timeout: 15000 });
+      await page.waitForFunction(
+        () => window.__PRERENDER_STATUS === "ready" || (document.querySelector("#root")?.childElementCount ?? 0) > 0,
+        undefined,
+        { timeout: 15000 },
+      );
 
       // Extract React Query State safely
       const rqState = await page.evaluate(() => {

@@ -20,6 +20,16 @@ export default {
         // names carry Fraunces; headings stay Cormorant; body stays Inter.
         editorial: ['Fraunces', 'Georgia', 'serif'],
       },
+      spacing: {
+        header: "clamp(6rem, 8vw, 8rem)",
+        "section-sm": "clamp(3rem, 6vw, 5rem)",
+        section: "clamp(4rem, 8vw, 7.5rem)",
+        "section-lg": "clamp(5rem, 10vw, 10rem)",
+        commerce: "clamp(1.5rem, 3vw, 2.5rem)",
+      },
+      maxWidth: {
+        reading: "65ch",
+      },
       transitionDuration: {
         "1000": "1000ms",
         "1200": "1200ms",
@@ -65,22 +75,26 @@ export default {
           foreground: "hsl(var(--nav-foreground))",
           hover: "hsl(var(--nav-hover))",
         },
-        /* HOP brand palette */
+        "paper-ivory": "hsl(var(--paper-ivory))",
+        "paper-bright": "hsl(var(--paper-bright))",
+        "paper-alt": "hsl(var(--paper-alt))",
+        "ink": {
+          DEFAULT: "hsl(var(--ink))",
+          soft: "hsl(var(--ink-soft))",
+        },
+        line: "hsl(var(--line))",
+        "signature-crimson": "hsl(var(--signature-crimson))",
+        "signature-crimson-deep": "hsl(var(--signature-crimson-deep))",
+        "material-sand": "hsl(var(--material-sand))",
+        "material-sakura": "hsl(var(--material-sakura))",
+        "material-peacock": "hsl(var(--material-peacock))",
+        champagne: "hsl(var(--champagne))",
         jasmine: {
           DEFAULT: "hsl(var(--jasmine))",
           deep: "hsl(var(--jasmine-deep))",
         },
-        teal: {
-          DEFAULT: "hsl(var(--teal))",
-          deep: "hsl(var(--teal-deep))",
-        },
         sand: "hsl(var(--sand))",
         sakura: "hsl(var(--sakura))",
-        ink: {
-          DEFAULT: "hsl(var(--ink))",
-          soft: "hsl(var(--ink-soft))",
-        },
-        crimson: "hsl(var(--crimson))",
         "warm-white": "hsl(var(--warm-white))",
         "warm-white-bright": "hsl(var(--warm-white-bright))",
         sidebar: {

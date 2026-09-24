@@ -361,7 +361,7 @@ export default function Settings() {
                     key={role}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer border transition-colors ${
                       form.security.allowed_roles.includes(role)
-                        ? "bg-teal/10 text-teal-deep border-teal/30"
+                        ? "bg-signature-crimson/10 text-ink border-signature-crimson/30"
                         : "bg-muted/30 text-muted-foreground border-border/50"
                     }`}
                   >

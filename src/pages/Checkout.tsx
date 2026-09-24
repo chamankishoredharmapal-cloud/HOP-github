@@ -62,6 +62,10 @@ function formatPhone(phone: string): string {
   return digits;
 }
 
+function formatRupees(amountInPaise: number): string {
+  return `₹ ${(amountInPaise / 100).toLocaleString("en-IN")}`;
+}
+
 export default function Checkout() {
   useMetadata({
     title: "Checkout — House of Padmavati",
@@ -86,7 +90,7 @@ export default function Checkout() {
   const validatedRef = useRef(false);
   const [returnPolicyAccepted, setReturnPolicyAccepted] = useState(false);
 
-  const shippingCost = totalPrice >= 2499 ? 0 : 99;
+  const shippingCost = 0;
   const totalRupees = totalPrice + shippingCost;
   const DEPOSIT_AMOUNT = 20000; // ₹200 in paise
 
@@ -266,15 +270,17 @@ export default function Checkout() {
                   Email address
                 </Label>
                 <Input
-                  id="email"
-                  type="email"
+                   id="email"
+                   aria-invalid={!!errors.email}
+                   aria-describedby={errors.email ? "email-error" : undefined}
+                   type="email"
                   value={form.email}
                   onChange={(e) => handleChange("email", e.target.value)}
                   placeholder="you@example.com"
                   className={`mt-1.5 rounded-none ${errors.email ? "border-destructive" : ""}`}
                 />
                 {errors.email && (
-                  <p className="text-[0.7rem] text-destructive mt-1">{errors.email}</p>
+                   <p id="email-error" className="text-[0.7rem] text-destructive mt-1">{errors.email}</p>
                 )}
               </div>
             </section>
@@ -290,13 +296,15 @@ export default function Checkout() {
                       First name
                     </Label>
                     <Input
-                      id="firstName"
-                      value={form.firstName}
+                       id="firstName"
+                       aria-invalid={!!errors.firstName}
+                       aria-describedby={errors.firstName ? "first-name-error" : undefined}
+                       value={form.firstName}
                       onChange={(e) => handleChange("firstName", e.target.value)}
                       className={`mt-1.5 rounded-none ${errors.firstName ? "border-destructive" : ""}`}
                     />
                     {errors.firstName && (
-                      <p className="text-[0.7rem] text-destructive mt-1">{errors.firstName}</p>
+                       <p id="first-name-error" className="text-[0.7rem] text-destructive mt-1">{errors.firstName}</p>
                     )}
                   </div>
                   <div>
@@ -304,13 +312,15 @@ export default function Checkout() {
                       Last name
                     </Label>
                     <Input
-                      id="lastName"
-                      value={form.lastName}
+                       id="lastName"
+                       aria-invalid={!!errors.lastName}
+                       aria-describedby={errors.lastName ? "last-name-error" : undefined}
+                       value={form.lastName}
                       onChange={(e) => handleChange("lastName", e.target.value)}
                       className={`mt-1.5 rounded-none ${errors.lastName ? "border-destructive" : ""}`}
                     />
                     {errors.lastName && (
-                      <p className="text-[0.7rem] text-destructive mt-1">{errors.lastName}</p>
+                       <p id="last-name-error" className="text-[0.7rem] text-destructive mt-1">{errors.lastName}</p>
                     )}
                   </div>
                 </div>
@@ -320,14 +330,16 @@ export default function Checkout() {
                     Address
                   </Label>
                   <Input
-                    id="address"
-                    value={form.address}
+                     id="address"
+                     aria-invalid={!!errors.address}
+                     aria-describedby={errors.address ? "address-error" : undefined}
+                     value={form.address}
                     onChange={(e) => handleChange("address", e.target.value)}
                     placeholder="Street address"
                     className={`mt-1.5 rounded-none ${errors.address ? "border-destructive" : ""}`}
                   />
                   {errors.address && (
-                    <p className="text-[0.7rem] text-destructive mt-1">{errors.address}</p>
+                     <p id="address-error" className="text-[0.7rem] text-destructive mt-1">{errors.address}</p>
                   )}
                 </div>
 
@@ -337,13 +349,15 @@ export default function Checkout() {
                       City
                     </Label>
                     <Input
-                      id="city"
-                      value={form.city}
+                       id="city"
+                       aria-invalid={!!errors.city}
+                       aria-describedby={errors.city ? "city-error" : undefined}
+                       value={form.city}
                       onChange={(e) => handleChange("city", e.target.value)}
                       className={`mt-1.5 rounded-none ${errors.city ? "border-destructive" : ""}`}
                     />
                     {errors.city && (
-                      <p className="text-[0.7rem] text-destructive mt-1">{errors.city}</p>
+                       <p id="city-error" className="text-[0.7rem] text-destructive mt-1">{errors.city}</p>
                     )}
                   </div>
                   <div>
@@ -351,13 +365,15 @@ export default function Checkout() {
                       Postal code
                     </Label>
                     <Input
-                      id="postalCode"
-                      value={form.postalCode}
+                       id="postalCode"
+                       aria-invalid={!!errors.postalCode}
+                       aria-describedby={errors.postalCode ? "postal-code-error" : undefined}
+                       value={form.postalCode}
                       onChange={(e) => handleChange("postalCode", e.target.value)}
                       className={`mt-1.5 rounded-none ${errors.postalCode ? "border-destructive" : ""}`}
                     />
                     {errors.postalCode && (
-                      <p className="text-[0.7rem] text-destructive mt-1">{errors.postalCode}</p>
+                      <p id="postal-code-error" className="text-[0.7rem] text-destructive mt-1">{errors.postalCode}</p>
                     )}
                   </div>
                 </div>
@@ -367,14 +383,16 @@ export default function Checkout() {
                     Country
                   </Label>
                   <Input
-                    id="country"
-                    value={form.country}
+                     id="country"
+                     aria-invalid={!!errors.country}
+                     aria-describedby={errors.country ? "country-error" : undefined}
+                     value={form.country}
                     onChange={(e) => handleChange("country", e.target.value)}
                     placeholder="India"
                     className={`mt-1.5 rounded-none ${errors.country ? "border-destructive" : ""}`}
                   />
                   {errors.country && (
-                    <p className="text-[0.7rem] text-destructive mt-1">{errors.country}</p>
+                     <p id="country-error" className="text-[0.7rem] text-destructive mt-1">{errors.country}</p>
                   )}
                 </div>
 
@@ -402,7 +420,7 @@ export default function Checkout() {
                     type="checkbox"
                     checked={isGift}
                     onChange={(e) => setIsGift(e.target.checked)}
-                    className="w-4 h-4 rounded border-border accent-teal-deep"
+                    className="w-4 h-4 rounded border-border accent-ink"
                   />
                   <span>This is a gift</span>
                 </label>
@@ -454,7 +472,7 @@ export default function Checkout() {
                       value="full"
                       checked={paymentOption === 'full'}
                       onChange={() => setPaymentOption('full')}
-                      className="w-4 h-4 border-border accent-teal-deep focus:ring-teal-deep"
+                      className="w-4 h-4 border-border accent-ink focus:ring-ink"
                     />
                     <span className="text-sm text-ink font-light">Pay ₹{totalRupees.toLocaleString()} in full online</span>
                   </label>
@@ -465,7 +483,7 @@ export default function Checkout() {
                       value="deposit"
                       checked={paymentOption === 'deposit'}
                       onChange={() => setPaymentOption('deposit')}
-                      className="w-4 h-4 border-border accent-teal-deep focus:ring-teal-deep"
+                      className="w-4 h-4 border-border accent-ink focus:ring-ink"
                     />
                     <span className="text-sm text-ink font-light">Pay ₹{depositAmountRupees} now, remaining ₹{remainingAmountRupees.toLocaleString()} at delivery</span>
                   </label>
@@ -481,7 +499,7 @@ export default function Checkout() {
             </section>
           </div>
 
-          <aside className="lg:col-span-2 lg:sticky lg:top-32 lg:self-start">
+           <aside className="order-first lg:order-last lg:col-span-2 lg:sticky lg:top-32 lg:self-start">
             <div className="border border-border/60 p-6 md:p-8">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-6">
                 Summary
@@ -514,7 +532,7 @@ export default function Checkout() {
                       <p className="text-xs text-ink-soft mt-0.5">Qty {item.quantity}</p>
                     </div>
                     <p className="text-sm text-ink font-light whitespace-nowrap">
-                      {item.formattedPrice}
+                       {formatRupees(item.price * item.quantity)}
                     </p>
                   </div>
                 ))}
@@ -603,7 +621,7 @@ export default function Checkout() {
                     checked={returnPolicyAccepted}
                     onChange={(e) => setReturnPolicyAccepted(e.target.checked)}
                     required
-                    className="mt-0.5 w-4 h-4 rounded border-border accent-teal-deep shrink-0"
+                    className="mt-0.5 w-4 h-4 rounded border-border accent-ink shrink-0"
                   />
                   <span className="text-xs text-ink-soft font-light leading-relaxed">
                     I acknowledge and accept the{" "}

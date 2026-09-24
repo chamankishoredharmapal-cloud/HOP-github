@@ -7,7 +7,7 @@ const HopFooter = () => {
   const [joined, setJoined] = useState(false);
 
   return (
-    <footer className="bg-teal-deep text-jasmine mt-24 sm:mt-32">
+    <footer className="bg-ink text-jasmine mt-section">
       <div className="container py-16 sm:py-20 grid gap-14 lg:grid-cols-[1.2fr_2fr]">
         {/* Brand column */}
         <div className="space-y-6">

@@ -23,7 +23,7 @@ const Appointments = () => {
 
   return (
     <PageLayout>
-      <main className="min-h-screen bg-[#F7F4EE]">
+      <main className="min-h-screen bg-paper-ivory">
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-80px)]">
           {/* Left: Imagery */}
           <section className="relative h-[40vh] lg:h-auto order-2 lg:order-1">
@@ -35,7 +35,7 @@ const Appointments = () => {
           </section>
 
           {/* Right: The Form */}
-          <section className="order-1 lg:order-2 flex flex-col justify-center px-6 py-24 lg:p-24 bg-[#F7F4EE]">
+          <section className="order-1 lg:order-2 flex flex-col justify-center px-6 py-section lg:p-section bg-paper-ivory">
             <div className="max-w-md w-full mx-auto space-y-12">
               <div className="space-y-6">
                 <h1 className="font-serif text-4xl text-ink">Appointments.</h1>
@@ -45,7 +45,7 @@ const Appointments = () => {
               </div>
 
               {status === "success" ? (
-                <div className="bg-sand/20 p-8 border border-teal/10 text-center space-y-4">
+                <div className="bg-sand/20 p-8 border border-signature-crimson/10 text-center space-y-4">
                   <h3 className="font-serif text-2xl text-ink">Request received.</h3>
                   <p className="text-ink-soft text-sm">
                     We will contact you shortly to confirm the details of your appointment.
@@ -61,7 +61,7 @@ const Appointments = () => {
                       type="text"
                       id="name"
                       required
-                      className="w-full bg-transparent border-b border-teal/30 py-3 text-ink focus:outline-none focus:border-teal transition-colors placeholder:text-ink-soft/30"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/30"
                       placeholder="Your name"
                     />
                   </div>
@@ -74,7 +74,7 @@ const Appointments = () => {
                       type="email"
                       id="email"
                       required
-                      className="w-full bg-transparent border-b border-teal/30 py-3 text-ink focus:outline-none focus:border-teal transition-colors placeholder:text-ink-soft/30"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/30"
                       placeholder="Your email address"
                     />
                   </div>
@@ -85,7 +85,7 @@ const Appointments = () => {
                     </label>
                     <select
                       id="type"
-                      className="w-full bg-transparent border-b border-teal/30 py-3 text-ink focus:outline-none focus:border-teal transition-colors appearance-none rounded-none"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors appearance-none rounded-none"
                     >
                       <option value="bridal">Bridal Consultation</option>
                       <option value="custom">Custom Weaving Query</option>
@@ -99,7 +99,7 @@ const Appointments = () => {
                     </label>
                     <select
                       id="location"
-                      className="w-full bg-transparent border-b border-teal/30 py-3 text-ink focus:outline-none focus:border-teal transition-colors appearance-none rounded-none"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors appearance-none rounded-none"
                     >
                       <option value="atelier">Pondicherry Atelier</option>
                       <option value="virtual">Virtual</option>
@@ -113,7 +113,7 @@ const Appointments = () => {
                     <textarea
                       id="notes"
                       rows={3}
-                      className="w-full bg-transparent border-b border-teal/30 py-3 text-ink focus:outline-none focus:border-teal transition-colors resize-none placeholder:text-ink-soft/30"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors resize-none placeholder:text-ink-soft/30"
                       placeholder="Optional notes"
                     />
                   </div>
@@ -121,7 +121,7 @@ const Appointments = () => {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="w-full border border-teal text-teal py-4 text-sm tracking-widest uppercase hover:bg-teal hover:text-jasmine transition-colors disabled:opacity-50"
+                    className="w-full border border-signature-crimson text-signature-crimson py-4 text-sm tracking-widest uppercase hover:bg-signature-crimson hover:text-jasmine transition-colors disabled:opacity-50"
                   >
                     {status === "submitting" ? "Sending..." : "Request appointment"}
                   </button>

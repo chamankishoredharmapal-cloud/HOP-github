@@ -28,7 +28,7 @@ export default function AccountLayout() {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 rounded-md text-sm transition-colors duration-200 ${
                     isActive
-                      ? "bg-teal-deep/10 text-teal-deep font-medium"
+                      ? "bg-ink/10 text-ink font-medium"
                       : "text-ink-soft hover:text-ink hover:bg-ink/5"
                   }`
                 }

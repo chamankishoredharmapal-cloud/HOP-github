@@ -15,7 +15,7 @@ const statusLabels: Record<ProductStatus, string> = {
 const statusStyles: Record<ProductStatus, string> = {
   draft: "bg-jasmine-deep text-ink",
   review: "bg-sand/60 text-ink",
-  published: "bg-teal-deep/10 text-teal-deep",
+  published: "bg-ink/10 text-ink",
   archived: "bg-muted text-muted-foreground",
 };
 
@@ -37,7 +37,7 @@ export default function Products() {
         </h2>
         <Button
           onClick={() => navigate("/studio/products/new")}
-          className="gap-1.5 bg-teal-deep text-jasmine hover:bg-teal transition-colors"
+          className="gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
           size="sm"
         >
           <Plus className="h-4 w-4" />
@@ -91,7 +91,7 @@ function ProductCard({ product, onClick }: { product: ProductsListResponse; onCl
   return (
     <button
       onClick={onClick}
-      className="text-left w-full p-4 rounded-lg border border-border/40 bg-card hover:border-teal/30 hover:shadow-sm transition-all"
+      className="text-left w-full p-4 rounded-lg border border-border/40 bg-card hover:border-signature-crimson/30 hover:shadow-sm transition-all"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">

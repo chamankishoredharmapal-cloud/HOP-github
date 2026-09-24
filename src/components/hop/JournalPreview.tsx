@@ -5,7 +5,7 @@ import { articles } from "@/data/journalArticles";
 export const JournalPreview = () => {
   const preview = articles.slice(0, 3);
   return (
-  <section className="container py-16 sm:py-24 border-t border-ink/10">
+  <section className="container py-section-sm border-t border-ink/10">
     <div className="flex items-end justify-between mb-10 sm:mb-14 gap-4">
       <div>
         <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-3">The Journal</p>

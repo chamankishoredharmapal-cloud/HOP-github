@@ -179,7 +179,7 @@ export default function Inventory() {
                 onClick={() => setStatusFilter(f.value)}
                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                   statusFilter === f.value
-                    ? "bg-teal-deep text-jasmine"
+                    ? "bg-ink text-jasmine"
                     : "bg-jasmine-deep/50 text-muted-foreground hover:bg-jasmine-deep"
                 }`}
               >
@@ -257,7 +257,7 @@ export default function Inventory() {
                       <td className="py-3 pr-3">
                         <button
                           onClick={() => openHistory(item.id)}
-                          className="text-foreground font-medium text-sm hover:text-teal-deep transition-colors"
+                          className="text-foreground font-medium text-sm hover:text-ink transition-colors"
                         >
                           {item.name}
                         </button>
@@ -286,7 +286,7 @@ export default function Inventory() {
                             variant="ghost"
                             size="sm"
                             onClick={() => openAdjust(item, "add")}
-                            className="h-7 w-7 p-0 text-teal-deep hover:text-teal hover:bg-teal/10"
+                            className="h-7 w-7 p-0 text-ink hover:text-signature-crimson hover:bg-signature-crimson/10"
                             title="Add Stock"
                           >
                             <Plus className="h-3.5 w-3.5" />
@@ -354,7 +354,7 @@ export default function Inventory() {
                       <tr key={entry.id} className="border-b border-border/30 last:border-0">
                         <td className="py-2 pr-3 text-xs text-muted-foreground whitespace-nowrap">{formatDate(entry.created_at)}</td>
                         <td className={`py-2 pr-3 text-right text-xs font-medium tabular-nums ${
-                          entry.change > 0 ? "text-teal-deep" : "text-sakura"
+                          entry.change > 0 ? "text-ink" : "text-sakura"
                         }`}>
                           {entry.change > 0 ? `+${entry.change}` : entry.change}
                         </td>
@@ -394,7 +394,7 @@ export default function Inventory() {
                 variant={adjustMode === "add" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setAdjustMode("add")}
-                className={adjustMode === "add" ? "bg-teal-deep text-jasmine" : "border-border/50"}
+                className={adjustMode === "add" ? "bg-ink text-jasmine" : "border-border/50"}
               >
                 <Plus className="h-3.5 w-3.5 mr-1" /> Add
               </Button>
@@ -476,7 +476,7 @@ export default function Inventory() {
               size="sm"
               disabled={adjust.isPending}
               onClick={handleAdjust}
-              className={adjustMode === "add" ? "bg-teal-deep text-jasmine" : "bg-sakura text-ink"}
+              className={adjustMode === "add" ? "bg-ink text-jasmine" : "bg-sakura text-ink"}
             >
               {adjust.isPending ? "Adjusting..." : adjustMode === "add" ? "Add Stock" : "Remove Stock"}
             </Button>

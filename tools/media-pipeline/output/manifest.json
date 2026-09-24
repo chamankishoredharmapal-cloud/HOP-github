@@ -1,0 +1,2778 @@
+{
+  "pipelineVersion": "1.0.0",
+  "generatedAt": "2026-09-07T22:07:21.192Z",
+  "summary": {
+    "totalSourcesProcessed": 32,
+    "totalDerivativesGenerated": 193,
+    "originalTotalBytes": 26205315,
+    "derivativeTotalBytes": 9271921,
+    "totalSavingsBytes": 16933394,
+    "overallReductionPercent": 64.62
+  },
+  "assets": [
+    {
+      "source": {
+        "path": "src/assets/circular-collection.png",
+        "filename": "circular-collection.png",
+        "hash": "7da47af7c5091eaa46481262879db92fd03e8654f6e8be8bd632cbf9b133426e",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1530070
+      },
+      "profile": "collection",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_circular-collection_png/src_assets_circular-collection_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 136098,
+          "quality": 78,
+          "sizeRatio": 0.0889,
+          "reductionPercent": 91.11,
+          "ssim": 0.9983,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_circular-collection_png/src_assets_circular-collection_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 115984,
+          "quality": 82,
+          "sizeRatio": 0.0758,
+          "reductionPercent": 92.42,
+          "ssim": 0.997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_circular-collection_png/src_assets_circular-collection_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 80797,
+          "quality": 78,
+          "sizeRatio": 0.0528,
+          "reductionPercent": 94.72,
+          "ssim": 0.9978,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_circular-collection_png/src_assets_circular-collection_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 67448,
+          "quality": 82,
+          "sizeRatio": 0.0441,
+          "reductionPercent": 95.59,
+          "ssim": 0.9957,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/earrings-collection.png",
+        "filename": "earrings-collection.png",
+        "hash": "69fe6b2b9032f4da858b3e0001a4850bcb23eb8d1dc6e071448bce085bb427ad",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1466460
+      },
+      "profile": "product",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_earrings-collection_png/src_assets_earrings-collection_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 125507,
+          "quality": 80,
+          "sizeRatio": 0.0856,
+          "reductionPercent": 91.44,
+          "ssim": 0.9978,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_earrings-collection_png/src_assets_earrings-collection_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 98414,
+          "quality": 82,
+          "sizeRatio": 0.0671,
+          "reductionPercent": 93.29,
+          "ssim": 0.9959,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_earrings-collection_png/src_assets_earrings-collection_png-800w.avif",
+          "format": "avif",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 85831,
+          "quality": 80,
+          "sizeRatio": 0.0585,
+          "reductionPercent": 94.15,
+          "ssim": 0.997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_earrings-collection_png/src_assets_earrings-collection_png-800w.webp",
+          "format": "webp",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 65812,
+          "quality": 82,
+          "sizeRatio": 0.0449,
+          "reductionPercent": 95.51,
+          "ssim": 0.9939,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_earrings-collection_png/src_assets_earrings-collection_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 41490,
+          "quality": 80,
+          "sizeRatio": 0.0283,
+          "reductionPercent": 97.17,
+          "ssim": 0.9951,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_earrings-collection_png/src_assets_earrings-collection_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 28548,
+          "quality": 82,
+          "sizeRatio": 0.0195,
+          "reductionPercent": 98.05,
+          "ssim": 0.99,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/eclipse.jpg",
+        "filename": "eclipse.jpg",
+        "hash": "ff66d5cf46923b872e3fa72b68fe2dd0aee34e9750ebccf68e2d0f44ec8accfc",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1920,
+        "sizeBytes": 590927
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_eclipse_jpg/src_assets_eclipse_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 32114,
+          "quality": 75,
+          "sizeRatio": 0.0543,
+          "reductionPercent": 94.57,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_eclipse_jpg/src_assets_eclipse_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 40440,
+          "quality": 80,
+          "sizeRatio": 0.0684,
+          "reductionPercent": 93.16,
+          "ssim": 0.9995,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_eclipse_jpg/src_assets_eclipse_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 19234,
+          "quality": 75,
+          "sizeRatio": 0.0325,
+          "reductionPercent": 96.75,
+          "ssim": 0.9997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_eclipse_jpg/src_assets_eclipse_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 22228,
+          "quality": 80,
+          "sizeRatio": 0.0376,
+          "reductionPercent": 96.24,
+          "ssim": 0.9994,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_eclipse_jpg/src_assets_eclipse_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 10803,
+          "quality": 75,
+          "sizeRatio": 0.0183,
+          "reductionPercent": 98.17,
+          "ssim": 0.9996,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_eclipse_jpg/src_assets_eclipse_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 12180,
+          "quality": 80,
+          "sizeRatio": 0.0206,
+          "reductionPercent": 97.94,
+          "ssim": 0.9992,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_eclipse_jpg/src_assets_eclipse_jpg-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 5663,
+          "quality": 75,
+          "sizeRatio": 0.0096,
+          "reductionPercent": 99.04,
+          "ssim": 0.9994,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_eclipse_jpg/src_assets_eclipse_jpg-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 5944,
+          "quality": 80,
+          "sizeRatio": 0.0101,
+          "reductionPercent": 98.99,
+          "ssim": 0.9988,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/founders.png",
+        "filename": "founders.png",
+        "hash": "700a5f5d97a0301f4d550adbca511cb3d1eede6c6d9cfd69b102c4a6aef384ca",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 675415
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_founders_png/src_assets_founders_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 67206,
+          "quality": 75,
+          "sizeRatio": 0.0995,
+          "reductionPercent": 90.05,
+          "ssim": 0.9967,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_founders_png/src_assets_founders_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 51368,
+          "quality": 80,
+          "sizeRatio": 0.0761,
+          "reductionPercent": 92.39,
+          "ssim": 0.9951,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_founders_png/src_assets_founders_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 36386,
+          "quality": 75,
+          "sizeRatio": 0.0539,
+          "reductionPercent": 94.61,
+          "ssim": 0.9954,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_founders_png/src_assets_founders_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 29128,
+          "quality": 80,
+          "sizeRatio": 0.0431,
+          "reductionPercent": 95.69,
+          "ssim": 0.9939,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_founders_png/src_assets_founders_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 15372,
+          "quality": 75,
+          "sizeRatio": 0.0228,
+          "reductionPercent": 97.72,
+          "ssim": 0.9942,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_founders_png/src_assets_founders_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 11920,
+          "quality": 80,
+          "sizeRatio": 0.0176,
+          "reductionPercent": 98.24,
+          "ssim": 0.9914,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/halo.jpg",
+        "filename": "halo.jpg",
+        "hash": "66d1ee44f1680b9fb386e580a42d376a46968d0762b6e8b67ddd6c527a92de46",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1920,
+        "sizeBytes": 642208
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_halo_jpg/src_assets_halo_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 29567,
+          "quality": 75,
+          "sizeRatio": 0.046,
+          "reductionPercent": 95.4,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_halo_jpg/src_assets_halo_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 40472,
+          "quality": 80,
+          "sizeRatio": 0.063,
+          "reductionPercent": 93.7,
+          "ssim": 0.9996,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_halo_jpg/src_assets_halo_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 19200,
+          "quality": 75,
+          "sizeRatio": 0.0299,
+          "reductionPercent": 97.01,
+          "ssim": 0.9997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_halo_jpg/src_assets_halo_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 24986,
+          "quality": 80,
+          "sizeRatio": 0.0389,
+          "reductionPercent": 96.11,
+          "ssim": 0.9995,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_halo_jpg/src_assets_halo_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 11825,
+          "quality": 75,
+          "sizeRatio": 0.0184,
+          "reductionPercent": 98.16,
+          "ssim": 0.9996,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_halo_jpg/src_assets_halo_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 14162,
+          "quality": 80,
+          "sizeRatio": 0.0221,
+          "reductionPercent": 97.79,
+          "ssim": 0.9992,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_halo_jpg/src_assets_halo_jpg-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 6392,
+          "quality": 75,
+          "sizeRatio": 0.01,
+          "reductionPercent": 99,
+          "ssim": 0.9994,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_halo_jpg/src_assets_halo_jpg-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 7114,
+          "quality": 80,
+          "sizeRatio": 0.0111,
+          "reductionPercent": 98.89,
+          "ssim": 0.9988,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hero-image.png",
+        "filename": "hero-image.png",
+        "hash": "047f3403217d8af6297f7698a46078c781dbfed653d866e2e8182b2e012de838",
+        "format": "png",
+        "width": 1824,
+        "height": 1216,
+        "sizeBytes": 2786827
+      },
+      "profile": "hero",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hero-image_png/src_assets_hero-image_png-1824w.avif",
+          "format": "avif",
+          "width": 1824,
+          "height": 1216,
+          "sizeBytes": 161374,
+          "quality": 75,
+          "sizeRatio": 0.0579,
+          "reductionPercent": 94.21,
+          "ssim": 0.9974,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hero-image_png/src_assets_hero-image_png-1824w.webp",
+          "format": "webp",
+          "width": 1824,
+          "height": 1216,
+          "sizeBytes": 123222,
+          "quality": 80,
+          "sizeRatio": 0.0442,
+          "reductionPercent": 95.58,
+          "ssim": 0.9961,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hero-image_png/src_assets_hero-image_png-1600w.avif",
+          "format": "avif",
+          "width": 1600,
+          "height": 1067,
+          "sizeBytes": 122847,
+          "quality": 75,
+          "sizeRatio": 0.0441,
+          "reductionPercent": 95.59,
+          "ssim": 0.9968,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hero-image_png/src_assets_hero-image_png-1600w.webp",
+          "format": "webp",
+          "width": 1600,
+          "height": 1067,
+          "sizeBytes": 95328,
+          "quality": 80,
+          "sizeRatio": 0.0342,
+          "reductionPercent": 96.58,
+          "ssim": 0.9953,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hero-image_png/src_assets_hero-image_png-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 800,
+          "sizeBytes": 72382,
+          "quality": 75,
+          "sizeRatio": 0.026,
+          "reductionPercent": 97.4,
+          "ssim": 0.9961,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hero-image_png/src_assets_hero-image_png-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 800,
+          "sizeBytes": 56552,
+          "quality": 80,
+          "sizeRatio": 0.0203,
+          "reductionPercent": 97.97,
+          "ssim": 0.9941,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-brand-board.png",
+        "filename": "hop-brand-board.png",
+        "hash": "a835c35a5e961f9c425bffdf3d807d6df065769c572db3d5eec33ba65d4b6e3e",
+        "format": "png",
+        "width": 1402,
+        "height": 1122,
+        "sizeBytes": 1839094
+      },
+      "profile": "hero",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-brand-board_png/src_assets_hop-brand-board_png-1402w.avif",
+          "format": "avif",
+          "width": 1402,
+          "height": 1122,
+          "sizeBytes": 132570,
+          "quality": 75,
+          "sizeRatio": 0.0721,
+          "reductionPercent": 92.79,
+          "ssim": 0.998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-brand-board_png/src_assets_hop-brand-board_png-1402w.webp",
+          "format": "webp",
+          "width": 1402,
+          "height": 1122,
+          "sizeBytes": 124472,
+          "quality": 80,
+          "sizeRatio": 0.0677,
+          "reductionPercent": 93.23,
+          "ssim": 0.9961,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-brand-board_png/src_assets_hop-brand-board_png-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 960,
+          "sizeBytes": 106188,
+          "quality": 75,
+          "sizeRatio": 0.0577,
+          "reductionPercent": 94.23,
+          "ssim": 0.9981,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-brand-board_png/src_assets_hop-brand-board_png-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 960,
+          "sizeBytes": 96076,
+          "quality": 80,
+          "sizeRatio": 0.0522,
+          "reductionPercent": 94.78,
+          "ssim": 0.9965,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-collection-linen.jpg",
+        "filename": "hop-collection-linen.jpg",
+        "hash": "89fa2361b48919c5eddbab2f283fbeaf48442cb9db0182b5698d6f845a6628c4",
+        "format": "jpg",
+        "width": 1080,
+        "height": 1920,
+        "sizeBytes": 95470
+      },
+      "profile": "collection",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-linen_jpg/src_assets_hop-collection-linen_jpg-1080w.avif",
+          "format": "avif",
+          "width": 1080,
+          "height": 1920,
+          "sizeBytes": 51636,
+          "quality": 78,
+          "sizeRatio": 0.5409,
+          "reductionPercent": 45.91,
+          "ssim": 0.9982,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-linen_jpg/src_assets_hop-collection-linen_jpg-1080w.webp",
+          "format": "webp",
+          "width": 1080,
+          "height": 1920,
+          "sizeBytes": 49874,
+          "quality": 82,
+          "sizeRatio": 0.5224,
+          "reductionPercent": 47.76,
+          "ssim": 0.9964,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-linen_jpg/src_assets_hop-collection-linen_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 1365,
+          "sizeBytes": 29526,
+          "quality": 78,
+          "sizeRatio": 0.3093,
+          "reductionPercent": 69.07,
+          "ssim": 0.997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-linen_jpg/src_assets_hop-collection-linen_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 1365,
+          "sizeBytes": 31336,
+          "quality": 82,
+          "sizeRatio": 0.3282,
+          "reductionPercent": 67.18,
+          "ssim": 0.9949,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-collection-organza.jpg",
+        "filename": "hop-collection-organza.jpg",
+        "hash": "d5a585cd61fd613657e73230f267803a07e743c5747c8276d4fe4e1a1ccacb4d",
+        "format": "jpg",
+        "width": 1080,
+        "height": 1920,
+        "sizeBytes": 101894
+      },
+      "profile": "collection",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-organza_jpg/src_assets_hop-collection-organza_jpg-1080w.avif",
+          "format": "avif",
+          "width": 1080,
+          "height": 1920,
+          "sizeBytes": 53880,
+          "quality": 78,
+          "sizeRatio": 0.5288,
+          "reductionPercent": 47.12,
+          "ssim": 0.9984,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-organza_jpg/src_assets_hop-collection-organza_jpg-1080w.webp",
+          "format": "webp",
+          "width": 1080,
+          "height": 1920,
+          "sizeBytes": 55234,
+          "quality": 82,
+          "sizeRatio": 0.5421,
+          "reductionPercent": 45.79,
+          "ssim": 0.9964,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-organza_jpg/src_assets_hop-collection-organza_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 1365,
+          "sizeBytes": 31639,
+          "quality": 78,
+          "sizeRatio": 0.3105,
+          "reductionPercent": 68.95,
+          "ssim": 0.9972,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-organza_jpg/src_assets_hop-collection-organza_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 1365,
+          "sizeBytes": 35418,
+          "quality": 82,
+          "sizeRatio": 0.3476,
+          "reductionPercent": 65.24,
+          "ssim": 0.9948,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-collection-pattu.jpg",
+        "filename": "hop-collection-pattu.jpg",
+        "hash": "3197cdce54e2df504ff60f03b1a4819e5a8781ca88a41be2c2e23f3522761d57",
+        "format": "jpg",
+        "width": 1080,
+        "height": 1920,
+        "sizeBytes": 210610
+      },
+      "profile": "collection",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-pattu_jpg/src_assets_hop-collection-pattu_jpg-1080w.avif",
+          "format": "avif",
+          "width": 1080,
+          "height": 1920,
+          "sizeBytes": 152058,
+          "quality": 78,
+          "sizeRatio": 0.722,
+          "reductionPercent": 27.8,
+          "ssim": 0.9991,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-pattu_jpg/src_assets_hop-collection-pattu_jpg-1080w.webp",
+          "format": "webp",
+          "width": 1080,
+          "height": 1920,
+          "sizeBytes": 153000,
+          "quality": 82,
+          "sizeRatio": 0.7265,
+          "reductionPercent": 27.35,
+          "ssim": 0.9981,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-pattu_jpg/src_assets_hop-collection-pattu_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 1365,
+          "sizeBytes": 99205,
+          "quality": 78,
+          "sizeRatio": 0.471,
+          "reductionPercent": 52.9,
+          "ssim": 0.9985,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-collection-pattu_jpg/src_assets_hop-collection-pattu_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 1365,
+          "sizeBytes": 104722,
+          "quality": 82,
+          "sizeRatio": 0.4972,
+          "reductionPercent": 50.28,
+          "ssim": 0.9972,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-fabric.jpg",
+        "filename": "hop-fabric.jpg",
+        "hash": "560a6fef671b2ffe8716c3b6f9446917ddc261f913b5ea1b745c8289352f68a5",
+        "format": "jpg",
+        "width": 1080,
+        "height": 1920,
+        "sizeBytes": 262800
+      },
+      "profile": "editorial",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-fabric_jpg/src_assets_hop-fabric_jpg-1080w.avif",
+          "format": "avif",
+          "width": 1080,
+          "height": 1920,
+          "sizeBytes": 216403,
+          "quality": 80,
+          "sizeRatio": 0.8235,
+          "reductionPercent": 17.65,
+          "ssim": 0.9991,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-fabric_jpg/src_assets_hop-fabric_jpg-1080w.webp",
+          "format": "webp",
+          "width": 1080,
+          "height": 1920,
+          "sizeBytes": 247234,
+          "quality": 84,
+          "sizeRatio": 0.9408,
+          "reductionPercent": 5.92,
+          "ssim": 0.9981,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-fabric_jpg/src_assets_hop-fabric_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 1365,
+          "sizeBytes": 147577,
+          "quality": 80,
+          "sizeRatio": 0.5616,
+          "reductionPercent": 43.84,
+          "ssim": 0.9984,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-fabric_jpg/src_assets_hop-fabric_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 1365,
+          "sizeBytes": 170704,
+          "quality": 84,
+          "sizeRatio": 0.6496,
+          "reductionPercent": 35.04,
+          "ssim": 0.9971,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-gift.jpg",
+        "filename": "hop-gift.jpg",
+        "hash": "d67aed71e67266db692bc88f3d650e317a3baad1f722957d4588ce63ce615d8d",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1080,
+        "sizeBytes": 169557
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-gift_jpg/src_assets_hop-gift_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1080,
+          "sizeBytes": 111801,
+          "quality": 75,
+          "sizeRatio": 0.6594,
+          "reductionPercent": 34.06,
+          "ssim": 0.9969,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-gift_jpg/src_assets_hop-gift_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1080,
+          "sizeBytes": 114340,
+          "quality": 80,
+          "sizeRatio": 0.6743,
+          "reductionPercent": 32.57,
+          "ssim": 0.9932,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-gift_jpg/src_assets_hop-gift_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 675,
+          "sizeBytes": 44970,
+          "quality": 75,
+          "sizeRatio": 0.2652,
+          "reductionPercent": 73.48,
+          "ssim": 0.9946,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-gift_jpg/src_assets_hop-gift_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 675,
+          "sizeBytes": 43064,
+          "quality": 80,
+          "sizeRatio": 0.254,
+          "reductionPercent": 74.6,
+          "ssim": 0.9906,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-gift_jpg/src_assets_hop-gift_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 432,
+          "sizeBytes": 17552,
+          "quality": 75,
+          "sizeRatio": 0.1035,
+          "reductionPercent": 89.65,
+          "ssim": 0.9916,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-gift_jpg/src_assets_hop-gift_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 432,
+          "sizeBytes": 16738,
+          "quality": 80,
+          "sizeRatio": 0.0987,
+          "reductionPercent": 90.13,
+          "ssim": 0.9871,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-gift_jpg/src_assets_hop-gift_jpg-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 270,
+          "sizeBytes": 8584,
+          "quality": 75,
+          "sizeRatio": 0.0506,
+          "reductionPercent": 94.94,
+          "ssim": 0.9834,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-gift_jpg/src_assets_hop-gift_jpg-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 270,
+          "sizeBytes": 8262,
+          "quality": 80,
+          "sizeRatio": 0.0487,
+          "reductionPercent": 95.13,
+          "ssim": 0.9769,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-hero.jpg",
+        "filename": "hop-hero.jpg",
+        "hash": "5470ff8e9c0cb4ace4e29ccdc5554b387a14ffdd9641be2c9f99c55ff703c177",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1080,
+        "sizeBytes": 120268
+      },
+      "profile": "hero",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-hero_jpg/src_assets_hop-hero_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1080,
+          "sizeBytes": 70737,
+          "quality": 75,
+          "sizeRatio": 0.5882,
+          "reductionPercent": 41.18,
+          "ssim": 0.997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-hero_jpg/src_assets_hop-hero_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1080,
+          "sizeBytes": 62892,
+          "quality": 80,
+          "sizeRatio": 0.5229,
+          "reductionPercent": 47.71,
+          "ssim": 0.9949,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-hero_jpg/src_assets_hop-hero_jpg-1600w.avif",
+          "format": "avif",
+          "width": 1600,
+          "height": 900,
+          "sizeBytes": 54803,
+          "quality": 75,
+          "sizeRatio": 0.4557,
+          "reductionPercent": 54.43,
+          "ssim": 0.9966,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-hero_jpg/src_assets_hop-hero_jpg-1600w.webp",
+          "format": "webp",
+          "width": 1600,
+          "height": 900,
+          "sizeBytes": 47384,
+          "quality": 80,
+          "sizeRatio": 0.394,
+          "reductionPercent": 60.6,
+          "ssim": 0.9947,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-hero_jpg/src_assets_hop-hero_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 675,
+          "sizeBytes": 36648,
+          "quality": 75,
+          "sizeRatio": 0.3047,
+          "reductionPercent": 69.53,
+          "ssim": 0.9956,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-hero_jpg/src_assets_hop-hero_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 675,
+          "sizeBytes": 30798,
+          "quality": 80,
+          "sizeRatio": 0.2561,
+          "reductionPercent": 74.39,
+          "ssim": 0.9935,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-logo-primary.png",
+        "filename": "hop-logo-primary.png",
+        "hash": "45cf913345273029e3d75042c5c87c5dc31d9399f7e913d6b63e723372a85c0f",
+        "format": "png",
+        "width": 800,
+        "height": 533,
+        "sizeBytes": 295949
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-primary_png/src_assets_hop-logo-primary_png-800w.avif",
+          "format": "avif",
+          "width": 800,
+          "height": 533,
+          "sizeBytes": 7423,
+          "quality": 75,
+          "sizeRatio": 0.0251,
+          "reductionPercent": 97.49,
+          "ssim": 0.9976,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-primary_png/src_assets_hop-logo-primary_png-800w.webp",
+          "format": "webp",
+          "width": 800,
+          "height": 533,
+          "sizeBytes": 8994,
+          "quality": 80,
+          "sizeRatio": 0.0304,
+          "reductionPercent": 96.96,
+          "ssim": 0.9965,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-primary_png/src_assets_hop-logo-primary_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 512,
+          "sizeBytes": 7073,
+          "quality": 75,
+          "sizeRatio": 0.0239,
+          "reductionPercent": 97.61,
+          "ssim": 0.9973,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-primary_png/src_assets_hop-logo-primary_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 512,
+          "sizeBytes": 8472,
+          "quality": 80,
+          "sizeRatio": 0.0286,
+          "reductionPercent": 97.14,
+          "ssim": 0.9963,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-primary_png/src_assets_hop-logo-primary_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 320,
+          "sizeBytes": 3964,
+          "quality": 75,
+          "sizeRatio": 0.0134,
+          "reductionPercent": 98.66,
+          "ssim": 0.9957,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-primary_png/src_assets_hop-logo-primary_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 320,
+          "sizeBytes": 4344,
+          "quality": 80,
+          "sizeRatio": 0.0147,
+          "reductionPercent": 98.53,
+          "ssim": 0.9943,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-logo-seal.png",
+        "filename": "hop-logo-seal.png",
+        "hash": "9435c7218b816b0cc9d494615ead063d8de0fefc73430b64fbb24bfcc0b29d32",
+        "format": "png",
+        "width": 800,
+        "height": 800,
+        "sizeBytes": 580481
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-seal_png/src_assets_hop-logo-seal_png-800w.avif",
+          "format": "avif",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 25139,
+          "quality": 75,
+          "sizeRatio": 0.0433,
+          "reductionPercent": 95.67,
+          "ssim": 0.9987,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-seal_png/src_assets_hop-logo-seal_png-800w.webp",
+          "format": "webp",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 31504,
+          "quality": 80,
+          "sizeRatio": 0.0543,
+          "reductionPercent": 94.57,
+          "ssim": 0.9973,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-seal_png/src_assets_hop-logo-seal_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 23710,
+          "quality": 75,
+          "sizeRatio": 0.0408,
+          "reductionPercent": 95.92,
+          "ssim": 0.9986,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-seal_png/src_assets_hop-logo-seal_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 29644,
+          "quality": 80,
+          "sizeRatio": 0.0511,
+          "reductionPercent": 94.89,
+          "ssim": 0.9971,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-seal_png/src_assets_hop-logo-seal_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 13475,
+          "quality": 75,
+          "sizeRatio": 0.0232,
+          "reductionPercent": 97.68,
+          "ssim": 0.9987,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-seal_png/src_assets_hop-logo-seal_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 15768,
+          "quality": 80,
+          "sizeRatio": 0.0272,
+          "reductionPercent": 97.28,
+          "ssim": 0.9971,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/hop-logo-signature.png",
+        "filename": "hop-logo-signature.png",
+        "hash": "6e35c07f29c5d00f1fa3cf63c965dd8f700cc8ba1a6e686a493a390ff589d529",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "sizeBytes": 55075
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-signature_png/src_assets_hop-logo-signature_png-1254w.avif",
+          "format": "avif",
+          "width": 1254,
+          "height": 1254,
+          "sizeBytes": 18874,
+          "quality": 75,
+          "sizeRatio": 0.3427,
+          "reductionPercent": 65.73,
+          "ssim": 1,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-signature_png/src_assets_hop-logo-signature_png-1254w.webp",
+          "format": "webp",
+          "width": 1254,
+          "height": 1254,
+          "sizeBytes": 25634,
+          "quality": 80,
+          "sizeRatio": 0.4654,
+          "reductionPercent": 53.46,
+          "ssim": 1,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-signature_png/src_assets_hop-logo-signature_png-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 31897,
+          "quality": 75,
+          "sizeRatio": 0.5792,
+          "reductionPercent": 42.08,
+          "ssim": 0.9997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-signature_png/src_assets_hop-logo-signature_png-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 49738,
+          "quality": 80,
+          "sizeRatio": 0.9031,
+          "reductionPercent": 9.69,
+          "ssim": 0.9613,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-signature_png/src_assets_hop-logo-signature_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 18081,
+          "quality": 75,
+          "sizeRatio": 0.3283,
+          "reductionPercent": 67.17,
+          "ssim": 0.9992,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-signature_png/src_assets_hop-logo-signature_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 27946,
+          "quality": 80,
+          "sizeRatio": 0.5074,
+          "reductionPercent": 49.26,
+          "ssim": 0.9319,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-signature_png/src_assets_hop-logo-signature_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 10097,
+          "quality": 75,
+          "sizeRatio": 0.1833,
+          "reductionPercent": 81.67,
+          "ssim": 0.9979,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_hop-logo-signature_png/src_assets_hop-logo-signature_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 15110,
+          "quality": 80,
+          "sizeRatio": 0.2744,
+          "reductionPercent": 72.56,
+          "ssim": 0.9013,
+          "validationStatus": "WARN_NEEDS_HUMAN_REVIEW"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/link-bracelet.png",
+        "filename": "link-bracelet.png",
+        "hash": "c3941f5c4abf7253376a5ca9a03a3d80d9aede3cecf55b10cca4fe005d5fa091",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1105914
+      },
+      "profile": "product",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_link-bracelet_png/src_assets_link-bracelet_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 83392,
+          "quality": 80,
+          "sizeRatio": 0.0754,
+          "reductionPercent": 92.46,
+          "ssim": 0.9978,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_link-bracelet_png/src_assets_link-bracelet_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 65294,
+          "quality": 82,
+          "sizeRatio": 0.059,
+          "reductionPercent": 94.1,
+          "ssim": 0.9964,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_link-bracelet_png/src_assets_link-bracelet_png-800w.avif",
+          "format": "avif",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 56932,
+          "quality": 80,
+          "sizeRatio": 0.0515,
+          "reductionPercent": 94.85,
+          "ssim": 0.9973,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_link-bracelet_png/src_assets_link-bracelet_png-800w.webp",
+          "format": "webp",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 43736,
+          "quality": 82,
+          "sizeRatio": 0.0395,
+          "reductionPercent": 96.05,
+          "ssim": 0.9954,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_link-bracelet_png/src_assets_link-bracelet_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 25687,
+          "quality": 80,
+          "sizeRatio": 0.0232,
+          "reductionPercent": 97.68,
+          "ssim": 0.9965,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_link-bracelet_png/src_assets_link-bracelet_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 18970,
+          "quality": 82,
+          "sizeRatio": 0.0172,
+          "reductionPercent": 98.28,
+          "ssim": 0.9938,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/lintel.jpg",
+        "filename": "lintel.jpg",
+        "hash": "ef40065d0c402d9baab8e37d70fb63569ca0c15f58741cccd0626f35aa0337b5",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1920,
+        "sizeBytes": 558835
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_lintel_jpg/src_assets_lintel_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 26892,
+          "quality": 75,
+          "sizeRatio": 0.0481,
+          "reductionPercent": 95.19,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_lintel_jpg/src_assets_lintel_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 40642,
+          "quality": 80,
+          "sizeRatio": 0.0727,
+          "reductionPercent": 92.73,
+          "ssim": 0.9995,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_lintel_jpg/src_assets_lintel_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 16758,
+          "quality": 75,
+          "sizeRatio": 0.03,
+          "reductionPercent": 97,
+          "ssim": 0.9997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_lintel_jpg/src_assets_lintel_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 23180,
+          "quality": 80,
+          "sizeRatio": 0.0415,
+          "reductionPercent": 95.85,
+          "ssim": 0.9995,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_lintel_jpg/src_assets_lintel_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 9680,
+          "quality": 75,
+          "sizeRatio": 0.0173,
+          "reductionPercent": 98.27,
+          "ssim": 0.9995,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_lintel_jpg/src_assets_lintel_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 12520,
+          "quality": 80,
+          "sizeRatio": 0.0224,
+          "reductionPercent": 97.76,
+          "ssim": 0.9992,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_lintel_jpg/src_assets_lintel_jpg-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 5151,
+          "quality": 75,
+          "sizeRatio": 0.0092,
+          "reductionPercent": 99.08,
+          "ssim": 0.9993,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_lintel_jpg/src_assets_lintel_jpg-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 6180,
+          "quality": 80,
+          "sizeRatio": 0.0111,
+          "reductionPercent": 98.89,
+          "ssim": 0.9987,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/oblique.jpg",
+        "filename": "oblique.jpg",
+        "hash": "99ba9fd4dc367e6e458f6e007c578ed306296d2376249ba0a5e2c7bed0bb896c",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1920,
+        "sizeBytes": 448025
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_oblique_jpg/src_assets_oblique_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 23526,
+          "quality": 75,
+          "sizeRatio": 0.0525,
+          "reductionPercent": 94.75,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_oblique_jpg/src_assets_oblique_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 34078,
+          "quality": 80,
+          "sizeRatio": 0.0761,
+          "reductionPercent": 92.39,
+          "ssim": 0.9996,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_oblique_jpg/src_assets_oblique_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 14290,
+          "quality": 75,
+          "sizeRatio": 0.0319,
+          "reductionPercent": 96.81,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_oblique_jpg/src_assets_oblique_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 18134,
+          "quality": 80,
+          "sizeRatio": 0.0405,
+          "reductionPercent": 95.95,
+          "ssim": 0.9995,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_oblique_jpg/src_assets_oblique_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 7868,
+          "quality": 75,
+          "sizeRatio": 0.0176,
+          "reductionPercent": 98.24,
+          "ssim": 0.9996,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_oblique_jpg/src_assets_oblique_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 9236,
+          "quality": 80,
+          "sizeRatio": 0.0206,
+          "reductionPercent": 97.94,
+          "ssim": 0.9993,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_oblique_jpg/src_assets_oblique_jpg-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 4108,
+          "quality": 75,
+          "sizeRatio": 0.0092,
+          "reductionPercent": 99.08,
+          "ssim": 0.9994,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_oblique_jpg/src_assets_oblique_jpg-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 4280,
+          "quality": 80,
+          "sizeRatio": 0.0096,
+          "reductionPercent": 99.04,
+          "ssim": 0.9989,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/organic-earring.png",
+        "filename": "organic-earring.png",
+        "hash": "6b3c2fb1db16c5b16949eb8d4e2036c476de299bf3bd1172a8ce8e9038bbccc5",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1605142
+      },
+      "profile": "product",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_organic-earring_png/src_assets_organic-earring_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 140758,
+          "quality": 80,
+          "sizeRatio": 0.0877,
+          "reductionPercent": 91.23,
+          "ssim": 0.9981,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_organic-earring_png/src_assets_organic-earring_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 102364,
+          "quality": 82,
+          "sizeRatio": 0.0638,
+          "reductionPercent": 93.62,
+          "ssim": 0.9962,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_organic-earring_png/src_assets_organic-earring_png-800w.avif",
+          "format": "avif",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 94164,
+          "quality": 80,
+          "sizeRatio": 0.0587,
+          "reductionPercent": 94.13,
+          "ssim": 0.9973,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_organic-earring_png/src_assets_organic-earring_png-800w.webp",
+          "format": "webp",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 66952,
+          "quality": 82,
+          "sizeRatio": 0.0417,
+          "reductionPercent": 95.83,
+          "ssim": 0.9941,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_organic-earring_png/src_assets_organic-earring_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 41378,
+          "quality": 80,
+          "sizeRatio": 0.0258,
+          "reductionPercent": 97.42,
+          "ssim": 0.9956,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_organic-earring_png/src_assets_organic-earring_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 27854,
+          "quality": 82,
+          "sizeRatio": 0.0174,
+          "reductionPercent": 98.26,
+          "ssim": 0.9907,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/pantheon.jpg",
+        "filename": "pantheon.jpg",
+        "hash": "c488911bbce65997e9b48210828a1fd139f279504440f34bbbb149bf19936f85",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1920,
+        "sizeBytes": 92115
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_pantheon_jpg/src_assets_pantheon_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 16530,
+          "quality": 75,
+          "sizeRatio": 0.1794,
+          "reductionPercent": 82.06,
+          "ssim": 0.9999,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_pantheon_jpg/src_assets_pantheon_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 24104,
+          "quality": 80,
+          "sizeRatio": 0.2617,
+          "reductionPercent": 73.83,
+          "ssim": 0.9999,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_pantheon_jpg/src_assets_pantheon_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 9080,
+          "quality": 75,
+          "sizeRatio": 0.0986,
+          "reductionPercent": 90.14,
+          "ssim": 0.9999,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_pantheon_jpg/src_assets_pantheon_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 12002,
+          "quality": 80,
+          "sizeRatio": 0.1303,
+          "reductionPercent": 86.97,
+          "ssim": 0.9999,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_pantheon_jpg/src_assets_pantheon_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 5012,
+          "quality": 75,
+          "sizeRatio": 0.0544,
+          "reductionPercent": 94.56,
+          "ssim": 0.9999,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_pantheon_jpg/src_assets_pantheon_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 5882,
+          "quality": 80,
+          "sizeRatio": 0.0639,
+          "reductionPercent": 93.61,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_pantheon_jpg/src_assets_pantheon_jpg-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 2671,
+          "quality": 75,
+          "sizeRatio": 0.029,
+          "reductionPercent": 97.1,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_pantheon_jpg/src_assets_pantheon_jpg-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 2690,
+          "quality": 80,
+          "sizeRatio": 0.0292,
+          "reductionPercent": 97.08,
+          "ssim": 0.9996,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/rings-collection.png",
+        "filename": "rings-collection.png",
+        "hash": "e3e6d00d572a8fb5dffddd42f867250202fc9e8f265e8b546d54231526c9d241",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1342010
+      },
+      "profile": "collection",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_rings-collection_png/src_assets_rings-collection_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 74998,
+          "quality": 78,
+          "sizeRatio": 0.0559,
+          "reductionPercent": 94.41,
+          "ssim": 0.9975,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_rings-collection_png/src_assets_rings-collection_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 73052,
+          "quality": 82,
+          "sizeRatio": 0.0544,
+          "reductionPercent": 94.56,
+          "ssim": 0.996,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_rings-collection_png/src_assets_rings-collection_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 48612,
+          "quality": 78,
+          "sizeRatio": 0.0362,
+          "reductionPercent": 96.38,
+          "ssim": 0.9971,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_rings-collection_png/src_assets_rings-collection_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 46960,
+          "quality": 82,
+          "sizeRatio": 0.035,
+          "reductionPercent": 96.5,
+          "ssim": 0.9953,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/shadowline-1.jpg",
+        "filename": "shadowline-1.jpg",
+        "hash": "75dce0cd11ec82f1ce0031459349d007a2880dc9b12fc609ba3277ebaae4096a",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1920,
+        "sizeBytes": 414456
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline-1_jpg/src_assets_shadowline-1_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 48949,
+          "quality": 75,
+          "sizeRatio": 0.1181,
+          "reductionPercent": 88.19,
+          "ssim": 0.9987,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline-1_jpg/src_assets_shadowline-1_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 59180,
+          "quality": 80,
+          "sizeRatio": 0.1428,
+          "reductionPercent": 85.72,
+          "ssim": 0.9985,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline-1_jpg/src_assets_shadowline-1_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 28833,
+          "quality": 75,
+          "sizeRatio": 0.0696,
+          "reductionPercent": 93.04,
+          "ssim": 0.9984,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline-1_jpg/src_assets_shadowline-1_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 32474,
+          "quality": 80,
+          "sizeRatio": 0.0784,
+          "reductionPercent": 92.16,
+          "ssim": 0.9982,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline-1_jpg/src_assets_shadowline-1_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 16103,
+          "quality": 75,
+          "sizeRatio": 0.0389,
+          "reductionPercent": 96.11,
+          "ssim": 0.9979,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline-1_jpg/src_assets_shadowline-1_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 17122,
+          "quality": 80,
+          "sizeRatio": 0.0413,
+          "reductionPercent": 95.87,
+          "ssim": 0.9975,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline-1_jpg/src_assets_shadowline-1_jpg-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 8139,
+          "quality": 75,
+          "sizeRatio": 0.0196,
+          "reductionPercent": 98.04,
+          "ssim": 0.9975,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline-1_jpg/src_assets_shadowline-1_jpg-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 8092,
+          "quality": 80,
+          "sizeRatio": 0.0195,
+          "reductionPercent": 98.05,
+          "ssim": 0.9966,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "src/assets/shadowline.jpg",
+        "filename": "shadowline.jpg",
+        "hash": "a8f4fc1185ae543e3943a251809134435d4eeed2c6f4143ffffc9dde033da36c",
+        "format": "jpg",
+        "width": 1920,
+        "height": 1920,
+        "sizeBytes": 891342
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline_jpg/src_assets_shadowline_jpg-1920w.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 67312,
+          "quality": 75,
+          "sizeRatio": 0.0755,
+          "reductionPercent": 92.45,
+          "ssim": 1,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline_jpg/src_assets_shadowline_jpg-1920w.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1920,
+          "sizeBytes": 76134,
+          "quality": 80,
+          "sizeRatio": 0.0854,
+          "reductionPercent": 91.46,
+          "ssim": 0.9999,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline_jpg/src_assets_shadowline_jpg-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 36940,
+          "quality": 75,
+          "sizeRatio": 0.0414,
+          "reductionPercent": 95.86,
+          "ssim": 0.9999,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline_jpg/src_assets_shadowline_jpg-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 41192,
+          "quality": 80,
+          "sizeRatio": 0.0462,
+          "reductionPercent": 95.38,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline_jpg/src_assets_shadowline_jpg-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 20216,
+          "quality": 75,
+          "sizeRatio": 0.0227,
+          "reductionPercent": 97.73,
+          "ssim": 0.9998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline_jpg/src_assets_shadowline_jpg-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 21836,
+          "quality": 80,
+          "sizeRatio": 0.0245,
+          "reductionPercent": 97.55,
+          "ssim": 0.9997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline_jpg/src_assets_shadowline_jpg-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 10062,
+          "quality": 75,
+          "sizeRatio": 0.0113,
+          "reductionPercent": 98.87,
+          "ssim": 0.9997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/src_assets_shadowline_jpg/src_assets_shadowline_jpg-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 10212,
+          "quality": 80,
+          "sizeRatio": 0.0115,
+          "reductionPercent": 98.85,
+          "ssim": 0.9993,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "public/apple-touch-icon.png",
+        "filename": "apple-touch-icon.png",
+        "hash": "667583a4b00cb4d1b9c377e9ef43c666b01d1e5a6168a3231254ed5222c978c6",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "sizeBytes": 942407
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/public_apple-touch-icon_png/public_apple-touch-icon_png-1254w.avif",
+          "format": "avif",
+          "width": 1254,
+          "height": 1254,
+          "sizeBytes": 18844,
+          "quality": 75,
+          "sizeRatio": 0.02,
+          "reductionPercent": 98,
+          "ssim": 0.9964,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_apple-touch-icon_png/public_apple-touch-icon_png-1254w.webp",
+          "format": "webp",
+          "width": 1254,
+          "height": 1254,
+          "sizeBytes": 23800,
+          "quality": 80,
+          "sizeRatio": 0.0253,
+          "reductionPercent": 97.47,
+          "ssim": 0.9962,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_apple-touch-icon_png/public_apple-touch-icon_png-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 17550,
+          "quality": 75,
+          "sizeRatio": 0.0186,
+          "reductionPercent": 98.14,
+          "ssim": 0.9969,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_apple-touch-icon_png/public_apple-touch-icon_png-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 22112,
+          "quality": 80,
+          "sizeRatio": 0.0235,
+          "reductionPercent": 97.65,
+          "ssim": 0.9963,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_apple-touch-icon_png/public_apple-touch-icon_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 9634,
+          "quality": 75,
+          "sizeRatio": 0.0102,
+          "reductionPercent": 98.98,
+          "ssim": 0.998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_apple-touch-icon_png/public_apple-touch-icon_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 11466,
+          "quality": 80,
+          "sizeRatio": 0.0122,
+          "reductionPercent": 98.78,
+          "ssim": 0.9968,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_apple-touch-icon_png/public_apple-touch-icon_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 5004,
+          "quality": 75,
+          "sizeRatio": 0.0053,
+          "reductionPercent": 99.47,
+          "ssim": 0.9973,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_apple-touch-icon_png/public_apple-touch-icon_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 5652,
+          "quality": 80,
+          "sizeRatio": 0.006,
+          "reductionPercent": 99.4,
+          "ssim": 0.9961,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "public/arcus-bracelet.png",
+        "filename": "arcus-bracelet.png",
+        "hash": "8957d8a22a6af1a5a2532004529751e455206f4e7f73fe11c18a11999868cce0",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1483146
+      },
+      "profile": "product",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/public_arcus-bracelet_png/public_arcus-bracelet_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 187593,
+          "quality": 80,
+          "sizeRatio": 0.1265,
+          "reductionPercent": 87.35,
+          "ssim": 0.9984,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_arcus-bracelet_png/public_arcus-bracelet_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 136524,
+          "quality": 82,
+          "sizeRatio": 0.0921,
+          "reductionPercent": 90.79,
+          "ssim": 0.9971,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_arcus-bracelet_png/public_arcus-bracelet_png-800w.avif",
+          "format": "avif",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 116981,
+          "quality": 80,
+          "sizeRatio": 0.0789,
+          "reductionPercent": 92.11,
+          "ssim": 0.9979,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_arcus-bracelet_png/public_arcus-bracelet_png-800w.webp",
+          "format": "webp",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 83774,
+          "quality": 82,
+          "sizeRatio": 0.0565,
+          "reductionPercent": 94.35,
+          "ssim": 0.9959,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_arcus-bracelet_png/public_arcus-bracelet_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 38461,
+          "quality": 80,
+          "sizeRatio": 0.0259,
+          "reductionPercent": 97.41,
+          "ssim": 0.9972,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_arcus-bracelet_png/public_arcus-bracelet_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 26832,
+          "quality": 82,
+          "sizeRatio": 0.0181,
+          "reductionPercent": 98.19,
+          "ssim": 0.9937,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "public/earrings-collection.png",
+        "filename": "earrings-collection.png",
+        "hash": "69fe6b2b9032f4da858b3e0001a4850bcb23eb8d1dc6e071448bce085bb427ad",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1466460
+      },
+      "profile": "product",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/public_earrings-collection_png/public_earrings-collection_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 125507,
+          "quality": 80,
+          "sizeRatio": 0.0856,
+          "reductionPercent": 91.44,
+          "ssim": 0.9978,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_earrings-collection_png/public_earrings-collection_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 98414,
+          "quality": 82,
+          "sizeRatio": 0.0671,
+          "reductionPercent": 93.29,
+          "ssim": 0.9959,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_earrings-collection_png/public_earrings-collection_png-800w.avif",
+          "format": "avif",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 85831,
+          "quality": 80,
+          "sizeRatio": 0.0585,
+          "reductionPercent": 94.15,
+          "ssim": 0.997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_earrings-collection_png/public_earrings-collection_png-800w.webp",
+          "format": "webp",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 65812,
+          "quality": 82,
+          "sizeRatio": 0.0449,
+          "reductionPercent": 95.51,
+          "ssim": 0.9939,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_earrings-collection_png/public_earrings-collection_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 41490,
+          "quality": 80,
+          "sizeRatio": 0.0283,
+          "reductionPercent": 97.17,
+          "ssim": 0.9951,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_earrings-collection_png/public_earrings-collection_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 28548,
+          "quality": 82,
+          "sizeRatio": 0.0195,
+          "reductionPercent": 98.05,
+          "ssim": 0.99,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "public/favicon.png",
+        "filename": "favicon.png",
+        "hash": "667583a4b00cb4d1b9c377e9ef43c666b01d1e5a6168a3231254ed5222c978c6",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "sizeBytes": 942407
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/public_favicon_png/public_favicon_png-1254w.avif",
+          "format": "avif",
+          "width": 1254,
+          "height": 1254,
+          "sizeBytes": 18844,
+          "quality": 75,
+          "sizeRatio": 0.02,
+          "reductionPercent": 98,
+          "ssim": 0.9964,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_favicon_png/public_favicon_png-1254w.webp",
+          "format": "webp",
+          "width": 1254,
+          "height": 1254,
+          "sizeBytes": 23800,
+          "quality": 80,
+          "sizeRatio": 0.0253,
+          "reductionPercent": 97.47,
+          "ssim": 0.9962,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_favicon_png/public_favicon_png-1200w.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 17550,
+          "quality": 75,
+          "sizeRatio": 0.0186,
+          "reductionPercent": 98.14,
+          "ssim": 0.9969,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_favicon_png/public_favicon_png-1200w.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 1200,
+          "sizeBytes": 22112,
+          "quality": 80,
+          "sizeRatio": 0.0235,
+          "reductionPercent": 97.65,
+          "ssim": 0.9963,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_favicon_png/public_favicon_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 9634,
+          "quality": 75,
+          "sizeRatio": 0.0102,
+          "reductionPercent": 98.98,
+          "ssim": 0.998,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_favicon_png/public_favicon_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 11466,
+          "quality": 80,
+          "sizeRatio": 0.0122,
+          "reductionPercent": 98.78,
+          "ssim": 0.9968,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_favicon_png/public_favicon_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 5004,
+          "quality": 75,
+          "sizeRatio": 0.0053,
+          "reductionPercent": 99.47,
+          "ssim": 0.9973,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_favicon_png/public_favicon_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 5652,
+          "quality": 80,
+          "sizeRatio": 0.006,
+          "reductionPercent": 99.4,
+          "ssim": 0.9961,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "public/founders.png",
+        "filename": "founders.png",
+        "hash": "700a5f5d97a0301f4d550adbca511cb3d1eede6c6d9cfd69b102c4a6aef384ca",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 675415
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/public_founders_png/public_founders_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 67206,
+          "quality": 75,
+          "sizeRatio": 0.0995,
+          "reductionPercent": 90.05,
+          "ssim": 0.9967,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_founders_png/public_founders_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 51368,
+          "quality": 80,
+          "sizeRatio": 0.0761,
+          "reductionPercent": 92.39,
+          "ssim": 0.9951,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_founders_png/public_founders_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 36386,
+          "quality": 75,
+          "sizeRatio": 0.0539,
+          "reductionPercent": 94.61,
+          "ssim": 0.9954,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_founders_png/public_founders_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 29128,
+          "quality": 80,
+          "sizeRatio": 0.0431,
+          "reductionPercent": 95.69,
+          "ssim": 0.9939,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_founders_png/public_founders_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 15372,
+          "quality": 75,
+          "sizeRatio": 0.0228,
+          "reductionPercent": 97.72,
+          "ssim": 0.9942,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_founders_png/public_founders_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 11920,
+          "quality": 80,
+          "sizeRatio": 0.0176,
+          "reductionPercent": 98.24,
+          "ssim": 0.9914,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "public/placeholder.svg",
+        "filename": "placeholder.svg",
+        "hash": "64badf7aabda0b9630b87020ffb6095cb858ccbcf66b355c2aa08b1063954d3b",
+        "format": "svg",
+        "width": 0,
+        "height": 0,
+        "sizeBytes": 3253
+      },
+      "profile": "general",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/public_placeholder_svg/placeholder.svg",
+          "format": "svg",
+          "width": 0,
+          "height": 0,
+          "sizeBytes": 3253,
+          "quality": 100,
+          "sizeRatio": 1,
+          "reductionPercent": 0,
+          "ssim": 1,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "public/rings-collection.png",
+        "filename": "rings-collection.png",
+        "hash": "e3e6d00d572a8fb5dffddd42f867250202fc9e8f265e8b546d54231526c9d241",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1342010
+      },
+      "profile": "collection",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/public_rings-collection_png/public_rings-collection_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 74998,
+          "quality": 78,
+          "sizeRatio": 0.0559,
+          "reductionPercent": 94.41,
+          "ssim": 0.9975,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_rings-collection_png/public_rings-collection_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 73052,
+          "quality": 82,
+          "sizeRatio": 0.0544,
+          "reductionPercent": 94.56,
+          "ssim": 0.996,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_rings-collection_png/public_rings-collection_png-768w.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 48612,
+          "quality": 78,
+          "sizeRatio": 0.0362,
+          "reductionPercent": 96.38,
+          "ssim": 0.9971,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_rings-collection_png/public_rings-collection_png-768w.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 768,
+          "sizeBytes": 46960,
+          "quality": 82,
+          "sizeRatio": 0.035,
+          "reductionPercent": 96.5,
+          "ssim": 0.9953,
+          "validationStatus": "PASS"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "public/span-bracelet.png",
+        "filename": "span-bracelet.png",
+        "hash": "de2423a1c28f1d40060dfe7014d4fd91b2f159969ac675f3d253fd06d871e1f6",
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "sizeBytes": 1469273
+      },
+      "profile": "product",
+      "derivatives": [
+        {
+          "path": "tools/media-pipeline/output/images/public_span-bracelet_png/public_span-bracelet_png-1024w.avif",
+          "format": "avif",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 177800,
+          "quality": 80,
+          "sizeRatio": 0.121,
+          "reductionPercent": 87.9,
+          "ssim": 0.9983,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_span-bracelet_png/public_span-bracelet_png-1024w.webp",
+          "format": "webp",
+          "width": 1024,
+          "height": 1024,
+          "sizeBytes": 123242,
+          "quality": 82,
+          "sizeRatio": 0.0839,
+          "reductionPercent": 91.61,
+          "ssim": 0.9968,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_span-bracelet_png/public_span-bracelet_png-800w.avif",
+          "format": "avif",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 117098,
+          "quality": 80,
+          "sizeRatio": 0.0797,
+          "reductionPercent": 92.03,
+          "ssim": 0.9979,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_span-bracelet_png/public_span-bracelet_png-800w.webp",
+          "format": "webp",
+          "width": 800,
+          "height": 800,
+          "sizeBytes": 79146,
+          "quality": 82,
+          "sizeRatio": 0.0539,
+          "reductionPercent": 94.61,
+          "ssim": 0.9956,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_span-bracelet_png/public_span-bracelet_png-480w.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 46704,
+          "quality": 80,
+          "sizeRatio": 0.0318,
+          "reductionPercent": 96.82,
+          "ssim": 0.997,
+          "validationStatus": "PASS"
+        },
+        {
+          "path": "tools/media-pipeline/output/images/public_span-bracelet_png/public_span-bracelet_png-480w.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 480,
+          "sizeBytes": 31842,
+          "quality": 82,
+          "sizeRatio": 0.0217,
+          "reductionPercent": 97.83,
+          "ssim": 0.994,
+          "validationStatus": "PASS"
+        }
+      ]
+    }
+  ]
+}

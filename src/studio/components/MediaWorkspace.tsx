@@ -58,7 +58,7 @@ export function MediaWorkspace({
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         className={`relative aspect-[4/5] rounded-lg border-2 border-dashed transition-colors overflow-hidden ${
-          dragOver ? "border-teal bg-teal/5" : "border-border/60"
+          dragOver ? "border-signature-crimson bg-signature-crimson/5" : "border-border/60"
         } ${hero ? "" : "flex items-center justify-center"}`}
       >
         {hero ? (
@@ -78,7 +78,7 @@ export function MediaWorkspace({
 
         {uploading && (
           <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
-            <div className="h-6 w-6 rounded-full border-2 border-teal border-t-transparent animate-spin" />
+            <div className="h-6 w-6 rounded-full border-2 border-signature-crimson border-t-transparent animate-spin" />
           </div>
         )}
       </div>
@@ -136,7 +136,7 @@ export function MediaWorkspace({
       <button
         onClick={() => inputRef.current?.click()}
         disabled={uploading}
-        className="w-full py-2 rounded-md border border-dashed border-border/60 text-sm text-muted-foreground hover:text-foreground hover:border-teal/50 transition-colors disabled:opacity-50"
+        className="w-full py-2 rounded-md border border-dashed border-border/60 text-sm text-muted-foreground hover:text-foreground hover:border-signature-crimson/50 transition-colors disabled:opacity-50"
       >
         {uploading ? "Uploading..." : "Add Image"}
       </button>
