@@ -21,7 +21,7 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <PageLayout>
-        <main className="container pt-28 pb-24">
+        <main className="hop-page hop-page__room hop-page__section pt-28 pb-24">
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <ShoppingBag className="h-12 w-12 text-ink-soft/30 mb-6" strokeWidth={1} aria-hidden="true" />
             <h1 className="font-serif font-light text-3xl sm:text-4xl text-ink mb-4">Your bag is empty.</h1>
@@ -127,7 +127,7 @@ export default function Cart() {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="border border-ink/15 p-8 rounded-sm">
+             <div className="hop-page__panel p-8">
               <h2 className="text-[0.7rem] tracking-[0.25em] uppercase text-ink font-medium mb-6">
                 Summary
               </h2>

@@ -7,19 +7,15 @@ const aboutPages = [
 
 const AboutSidebar = () => {
   return (
-    <aside className="hidden md:block w-64 sticky top-32 h-fit px-6">
+    <aside className="hop-page__side-nav sticky top-32 h-fit">
       <nav className="space-y-1">
-        <h3 className="font-serif text-2xl text-ink mb-6">The House</h3>
+        <h3 className="hop-page__side-nav-title mb-6">The House</h3>
         {aboutPages.map((page) => (
           <NavLink
             key={page.path}
             to={page.path}
             className={({ isActive }) =>
-              `block py-2 text-sm font-light tracking-wide transition-all ${
-                isActive
-                  ? 'text-ink underline decoration-1 underline-offset-4'
-                  : 'text-ink-soft hover:text-signature-crimson'
-              }`
+              `hop-page__side-nav-link ${isActive ? 'is-active' : ''}`
             }
           >
             {page.name}

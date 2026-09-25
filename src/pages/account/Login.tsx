@@ -42,13 +42,13 @@ export default function Login() {
 
   return (
     <PageLayout>
-      <div className="container max-w-lg py-20 md:py-32">
-        <div className="mx-auto max-w-sm">
+       <main className="hop-auth-shell">
+         <div className="hop-auth-card">
           <div className="mb-10 text-center">
             <div className="mb-4 flex justify-center">
               <div className="h-px w-16 bg-signature-crimson/40" />
             </div>
-            <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
+            <h1                className="hop-page__title hop-page__title--small">
               Sign in
             </h1>
             <p className="mt-3 text-sm text-ink-soft leading-relaxed">
@@ -70,7 +70,7 @@ export default function Login() {
             </Alert>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+           <form onSubmit={handleSubmit} className="hop-form-shell space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-xs font-medium text-ink tracking-wider uppercase">
                 Email
@@ -111,7 +111,7 @@ export default function Login() {
             </div>
             <Button
               type="submit"
-              className="h-12 w-full bg-ink text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-signature-crimson"
+               className="hop-cta-primary w-full"
               disabled={loading}
             >
               {loading ? (
@@ -138,7 +138,7 @@ export default function Login() {
             </Link>
           </p>
         </div>
-      </div>
-    </PageLayout>
+       </main>
+     </PageLayout>
   );
 }

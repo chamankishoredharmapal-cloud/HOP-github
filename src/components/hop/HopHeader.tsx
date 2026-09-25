@@ -9,9 +9,9 @@ import { SearchModal } from "@/components/search/SearchModal";
 const collections = [
   { label: "Kalyani", href: "/collections/kalyani" },
   { label: "Viara", href: "/collections/viara" },
-  { label: "Arya", href: "/collections/megham" },
-  { label: "Padma", href: "/collections/oosi-kattam" },
-  { label: "Spandana", href: "/collections/designer-wear" },
+  { label: "Arya", href: "/collections/arya" },
+  { label: "Padma", href: "/collections/padma" },
+  { label: "Spandana", href: "/collections/spandana" },
 ];
 
 const editorial = [
@@ -20,15 +20,16 @@ const editorial = [
   { label: "About", href: "/about" },
 ];
 
-const getLinkClassName = () => {
-  return `hover:text-signature-crimson transition-colors duration-500 whitespace-nowrap font-medium text-ink`;
+const getLinkClassName = (inverse = false) => {
+  return `hover:text-rasa-gold transition-colors duration-500 whitespace-nowrap font-medium ${inverse ? "text-rasa-cream" : "text-ink"}`;
 };
 
-const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
+const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolean; dark?: boolean }) => {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const inverseHeader = dark && transparent && !scrolled && !open;
   const lastScrollY = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -91,7 +92,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
   }, [open]);
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 text-ink transition-transform duration-300 ease-in-out ${hidden && !open ? "-translate-y-full" : "translate-y-0"} ${transparent && !scrolled && !open ? "bg-transparent" : "bg-paper-ivory/95 backdrop-blur-sm shadow-[0_1px_0_rgba(31,31,31,0.08)]"}`}>
+    <header className={`fixed top-0 inset-x-0 z-50 transition-transform duration-300 ease-in-out ${hidden && !open ? "-translate-y-full" : "translate-y-0"} ${inverseHeader ? "bg-transparent text-rasa-cream" : "bg-paper-ivory/95 text-ink backdrop-blur-sm shadow-[0_1px_0_rgba(31,31,31,0.08)]"}`}>
       {/* Top banner removed due to brand guideline violation (No aggressive sales tactics/mass-market tropes) */}
       <div className="container flex items-center justify-between h-[72px] md:h-[80px] gap-4 md:gap-6">
         <nav
@@ -103,7 +104,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
             <Link
               key={c.href}
               to={c.href}
-              className={getLinkClassName()}
+              className={getLinkClassName(inverseHeader)}
               aria-current={pathname === c.href || (c.href === "/about" && pathname.startsWith("/about")) ? "page" : undefined}
               aria-label={`${c.label} page${pathname === c.href ? " (current)" : ""}`}
             >
@@ -113,7 +114,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
         </nav>
 
         <button
-          className="lg:hidden p-2 text-ink hover:text-signature-crimson transition-colors duration-300"
+          className={`lg:hidden p-2 transition-colors duration-300 ${inverseHeader ? "text-rasa-cream hover:text-rasa-gold" : "text-ink hover:text-rasa-gold"}`}
           onClick={() => setOpen(true)}
           ref={menuButtonRef}
           aria-label="Open menu"
@@ -129,30 +130,30 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
           aria-label="House of Padmavati home"
         >
           <Monogram variant="signature" className="h-8 md:h-10" />
-          <span className="mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.28em] sm:tracking-[0.32em] uppercase whitespace-nowrap text-signature-crimson">
+           <span className={`mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.28em] sm:tracking-[0.32em] uppercase whitespace-nowrap ${inverseHeader ? "text-rasa-gold" : "text-rasa-mulberry"}`}>
             HOUSE OF PADMAVATI
           </span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-4 xl:gap-6 text-ink w-1/3 justify-end">
+        <div className={`hidden lg:flex items-center gap-4 xl:gap-6 w-1/3 justify-end ${inverseHeader ? "text-rasa-cream" : "text-ink"}`}>
           <button
             onClick={() => setSearchOpen(true)}
             aria-label="Search"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-signature-crimson transition-colors duration-300"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-rasa-gold transition-colors duration-300"
           >
             <Search className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </button>
           <Link
             to="/account"
             aria-label="Account"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-signature-crimson transition-colors duration-300"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-rasa-gold transition-colors duration-300"
           >
             <User className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </Link>
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-signature-crimson transition-colors duration-300 relative"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-rasa-gold transition-colors duration-300 relative"
           >
             <Heart className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
             {wishlistCount > 0 && (
@@ -164,7 +165,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
           <Link
             to="/cart"
             aria-label="Bag"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-signature-crimson transition-colors duration-300 gap-2"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-rasa-gold transition-colors duration-300 gap-2"
           >
             <ShoppingBag className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
             <span className="text-[0.75rem] font-light tnum">({totalItems})</span>
@@ -173,7 +174,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
 
         <Link
           to="/cart"
-          className="lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center text-ink hover:text-signature-crimson transition-colors duration-300 relative"
+           className={`lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors duration-300 relative ${inverseHeader ? "text-rasa-cream" : "text-ink"}`}
           aria-label="Bag"
         >
           <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
@@ -217,7 +218,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
                   key={c.href}
                   to={c.href}
                   onClick={closeMenu}
-                  className="block text-xl md:text-2xl font-sans font-light hover:text-signature-crimson transition-colors duration-300 tracking-wide"
+                  className="block text-xl md:text-2xl font-sans font-light hover:text-rasa-gold transition-colors duration-300 tracking-wide"
                   aria-current={pathname === c.href || (c.href === "/about" && pathname.startsWith("/about")) ? "page" : undefined}
                 >
                   {c.label}
@@ -231,7 +232,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
                   key={c.href}
                   to={c.href}
                   onClick={closeMenu}
-                  className="block text-xl md:text-2xl font-serif font-light hover:text-signature-crimson transition-colors duration-300"
+                  className="block text-xl md:text-2xl font-serif font-light hover:text-rasa-gold transition-colors duration-300"
                 >
                   {c.label}
                 </Link>
@@ -240,7 +241,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
             <div className="flex items-center gap-2 pt-2 border-t border-line/15">
               <button
                 onClick={() => { closeMenu(); setSearchOpen(true); }}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
                 aria-label="Search"
               >
                 <Search className="w-4 h-4" strokeWidth={1.5} /> Search
@@ -248,7 +249,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
               <Link
                 to="/account"
                 onClick={closeMenu}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
                 aria-label="Account"
               >
                 <User className="w-4 h-4" strokeWidth={1.5} /> Account
@@ -256,7 +257,7 @@ const HopHeader = ({ transparent = false }: { transparent?: boolean }) => {
               <Link
                 to="/wishlist"
                 onClick={closeMenu}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
                 aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4" strokeWidth={1.5} /> Saved

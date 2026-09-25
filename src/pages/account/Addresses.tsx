@@ -143,7 +143,7 @@ export default function Addresses() {
               Add address
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-lg">
+           <DialogContent className="max-w-lg">
             <DialogHeader>
               <DialogTitle>{editingId ? "Edit address" : "Add address"}</DialogTitle>
             </DialogHeader>
@@ -152,7 +152,7 @@ export default function Addresses() {
                 <AlertDescription className="text-sm">{error}</AlertDescription>
               </Alert>
             )}
-            <form onSubmit={handleSubmit} className="space-y-4">
+             <form onSubmit={handleSubmit} className="hop-form-shell space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="recipient">Recipient name</Label>
@@ -207,7 +207,7 @@ export default function Addresses() {
           {addresses.map((addr) => (
             <div
               key={addr.id}
-              className="p-4 rounded-lg border border-border relative group"
+               className="hop-page__panel p-4 relative group"
             >
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-ink shrink-0 mt-0.5" />

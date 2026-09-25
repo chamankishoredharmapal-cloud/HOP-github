@@ -132,10 +132,10 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       <div className="fixed inset-0 bg-ink/60 backdrop-blur-sm" onClick={onClose} />
       <div
          ref={dialogRef}
-         className="relative w-full max-w-2xl mx-4 bg-background border border-border/60 rounded-lg shadow-2xl animate-fade-in"
+         className="hop-search-dialog relative mx-4 animate-fade-in"
         onKeyDown={handleKeyDown}
       >
-        <div className="flex items-center gap-3 border-b border-border/60 px-4 py-3">
+        <div className="hop-search-dialog__input-row">
           <Search className="h-5 w-5 text-ink-soft/70 shrink-0" />
           <Input
             ref={inputRef}
@@ -155,7 +155,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
           </button>
         </div>
 
-        <div ref={listRef} className="max-h-[60vh] overflow-y-auto p-2" role="listbox">
+        <div ref={listRef} className="hop-search-dialog__results" role="listbox">
           {loading && (
             <div className="flex items-center justify-center py-12">
               <div className="w-5 h-5 border-2 border-ink/30 border-t-ink rounded-full animate-spin" />
@@ -181,13 +181,13 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                   onClick={onClose}
                   role="option"
                   aria-selected={index === activeIndex}
-                  className={`flex items-center gap-4 p-3 rounded-md transition-colors ${
+                   className={`hop-search-dialog__result flex items-center gap-4 p-3 transition-colors ${
                     index === activeIndex
                       ? "bg-ink/10 text-ink"
                       : "hover:bg-jasmine-deep text-ink"
                   }`}
                 >
-                  <div className="w-12 h-16 shrink-0 rounded bg-jasmine-deep overflow-hidden">
+                   <div className="hop-search-dialog__result-image">
                     {result.image ? (
                       <img src={result.image} alt="" className="w-full h-full object-cover" />
                     ) : (
@@ -198,7 +198,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-ink truncate">{result.name}</p>
-                    <p className="text-xs text-ink-soft mt-0.5 capitalize">{result.type}</p>
+                     <p className="hop-search-dialog__result-type">{result.type}</p>
                   </div>
                   {result.price !== undefined && (
                     <p className="text-sm text-ink-soft font-light shrink-0">
@@ -221,7 +221,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
         </div>
 
         {results.length > 0 && (
-          <div className="border-t border-border/60 px-4 py-2.5 text-center">
+             <div className="hop-search-dialog__footer">
               <span className="text-xs text-ink-soft">
               {results.length} result{results.length !== 1 ? "s" : ""} · Use ↑↓ to navigate, Enter to select
             </span>

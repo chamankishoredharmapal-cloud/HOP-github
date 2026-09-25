@@ -56,7 +56,7 @@ export default function OrderHistory() {
             <Link
               key={order.id}
               to={`/account/orders/${order.id}`}
-              className="block p-4 rounded-lg border border-border hover:border-ink/30 transition-colors group"
+               className="hop-page__panel block p-4 transition-colors hover:border-ink/30 group"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -93,7 +93,7 @@ export default function OrderHistory() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 text-ink-soft">
+         <div className="hop-page__state text-ink-soft">
           <Package className="w-10 h-10 mx-auto mb-4 opacity-30" />
           <p className="text-sm mb-1">No orders yet.</p>
         </div>

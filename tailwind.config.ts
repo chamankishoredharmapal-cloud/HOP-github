@@ -13,12 +13,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        // Fraunces: display serif for collection/product/journal NAMES only.
-        // Decision: OBJ-01 ADOPT-SCOPED (HOP_UI_TRANSFORMATION_MASTER.md) —
-        // names carry Fraunces; headings stay Cormorant; body stays Inter.
-        editorial: ['Fraunces', 'Georgia', 'serif'],
+        serif: ['"Canela Deck"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        sans: ['"Suisse Int\'l"', 'Inter', 'system-ui', 'sans-serif'],
+        editorial: ['"Fraunces"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        reading: ['"Newsreader"', 'Georgia', 'serif'],
       },
       spacing: {
         header: "clamp(6rem, 8vw, 8rem)",
@@ -97,6 +95,16 @@ export default {
         sakura: "hsl(var(--sakura))",
         "warm-white": "hsl(var(--warm-white))",
         "warm-white-bright": "hsl(var(--warm-white-bright))",
+        "rasa-lac": "hsl(var(--rasa-lac))",
+        "rasa-lac-secondary": "hsl(var(--rasa-lac-secondary))",
+        "rasa-cream": "hsl(var(--rasa-cream))",
+        "rasa-cream-bright": "hsl(var(--rasa-cream-bright))",
+        "rasa-rose": "hsl(var(--rasa-rose))",
+        "rasa-mulberry": "hsl(var(--rasa-mulberry))",
+        "rasa-gold": "hsl(var(--rasa-gold))",
+        "rasa-eucalyptus": "hsl(var(--rasa-eucalyptus))",
+        "rasa-border": "hsl(var(--rasa-border))",
+        "rasa-ink": "hsl(var(--rasa-ink))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

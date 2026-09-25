@@ -25,8 +25,8 @@ export default function Gift() {
   return (
     <PageLayout>
       <main>
-        <section className="container pt-16 pb-12 text-center">
-          <p className="text-xs tracking-[0.42em] uppercase text-signature-crimson mb-4">
+         <section className="hop-page__room hop-page__section pt-16 pb-12 text-center">
+             <p className="text-xs tracking-[0.42em] uppercase text-rasa-mulberry mb-4">
             Modern Heirlooms
           </p>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance leading-tight max-w-3xl mx-auto">
@@ -37,21 +37,21 @@ export default function Gift() {
           </p>
         </section>
 
-        <section className="container pb-20">
+         <section className="hop-page__room pb-20">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="space-y-8">
               <div className="grid sm:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center">
+                   <div className="hop-service-icon">
                     <GiftIcon className="w-5 h-5 text-ink" />
                   </div>
-                  <h3 className="font-serif text-xl text-ink">Jasmine wrapping</h3>
+                   <h2 className="font-serif text-xl text-ink">Jasmine wrapping</h2>
                   <p className="text-sm text-ink-soft font-light leading-relaxed">
                     Hand-folded in our signature jasmine paper with a cotton ribbon seal.
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center">
+                   <div className="hop-service-icon">
                     <Feather className="w-5 h-5 text-ink" />
                   </div>
                   <h3 className="font-serif text-xl text-ink">Keepsake card</h3>
@@ -60,7 +60,7 @@ export default function Gift() {
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center">
+                   <div className="hop-service-icon">
                     <Sparkles className="w-5 h-5 text-ink" />
                   </div>
                   <h3 className="font-serif text-xl text-ink">Hand-delivered feel</h3>
@@ -69,7 +69,7 @@ export default function Gift() {
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center">
+                   <div className="hop-service-icon">
                     <Shield className="w-5 h-5 text-ink" />
                   </div>
                   <h3 className="font-serif text-xl text-ink">Worldwide, insured</h3>
@@ -82,7 +82,7 @@ export default function Gift() {
               <div className="border-t border-border pt-8">
                 <h2 className="font-serif text-2xl text-ink mb-4">Gift order</h2>
                 {submitted ? (
-                  <div className="bg-ink/5 border border-ink/20 rounded-lg p-6 text-center">
+                   <div className="hop-page__panel p-6 text-center">
                     <Heart className="w-8 h-8 text-ink mx-auto mb-3" />
                     <p className="text-ink font-serif text-lg">Your gift note is saved.</p>
                     <p className="text-sm text-ink-soft font-light mt-2">
@@ -96,7 +96,7 @@ export default function Gift() {
                     </Button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+                   <form onSubmit={handleSubmit} className="hop-form-shell space-y-4 max-w-md">
                     <div>
                       <label htmlFor="gift-recipient" className="text-sm text-ink-soft font-light">
                         Recipient name <span className="text-ink-soft">(optional)</span>
@@ -106,7 +106,7 @@ export default function Gift() {
                         value={recipient}
                         onChange={(e) => setRecipient(e.target.value)}
                         placeholder="Who is this for?"
-                        className="mt-1.5 rounded-none"
+                         className="hop-form-control mt-1.5"
                       />
                     </div>
                     <div>
@@ -118,7 +118,7 @@ export default function Gift() {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Your message"
-                        className="mt-1.5 rounded-md min-h-[120px]"
+                         className="hop-form-control mt-1.5 min-h-[120px]"
                       />
                       <p className="text-[0.65rem] text-ink-soft mt-1">
                         Handwritten on our keepsake card. Maximum 150 characters.
@@ -126,7 +126,7 @@ export default function Gift() {
                     </div>
                     <Button
                       type="submit"
-                      className="rounded-full bg-ink text-jasmine hover:bg-signature-crimson transition-colors duration-500"
+                       className="hop-cta-primary"
                     >
                       Save gift note
                     </Button>
@@ -152,7 +152,7 @@ export default function Gift() {
         </section>
 
         <section className="bg-sand/30">
-          <div className="container py-20 text-center">
+           <div className="hop-page__room py-20 text-center">
             <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">
               Need assistance?
             </h2>

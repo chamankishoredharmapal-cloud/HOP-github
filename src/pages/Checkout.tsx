@@ -217,7 +217,7 @@ export default function Checkout() {
   if (items.length === 0) {
     return (
       <PageLayout>
-        <main className="container pt-28 pb-24">
+        <main className="hop-page hop-page__room hop-page__section pt-28 pb-24">
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <ShoppingBag className="h-12 w-12 text-ink-soft/30 mb-6" strokeWidth={1} aria-hidden="true" />
             <h1 className="font-serif font-light text-3xl text-ink mb-4">Your bag is empty.</h1>
@@ -241,7 +241,7 @@ export default function Checkout() {
 
   return (
     <PageLayout>
-      <main className="container pt-16 pb-24">
+      <main className="hop-page hop-page__room hop-page__section pt-16 pb-24">
         <Link
           to="/cart"
           className="inline-flex items-center gap-1.5 text-[0.65rem] tracking-[0.25em] uppercase text-ink-soft hover:text-ink transition-colors mb-8"
@@ -261,7 +261,7 @@ export default function Checkout() {
 
         <form onSubmit={handleSubmit} className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           <div className="lg:col-span-3 space-y-10">
-            <section>
+            <section className="hop-form-section">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
                 Contact
               </h2>
@@ -285,7 +285,7 @@ export default function Checkout() {
               </div>
             </section>
 
-            <section>
+            <section className="hop-form-section">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
                 Delivery address
               </h2>
@@ -412,7 +412,7 @@ export default function Checkout() {
               </div>
             </section>
 
-            <section>
+            <section className="hop-form-section">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
                 <label className="flex items-center gap-3 cursor-pointer" htmlFor="isGift">
                   <input
@@ -455,7 +455,7 @@ export default function Checkout() {
               )}
             </section>
 
-            <section>
+            <section className="hop-form-section">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
                 Payment
               </h2>

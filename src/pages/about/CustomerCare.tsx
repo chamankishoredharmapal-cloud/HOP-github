@@ -81,7 +81,7 @@ const SareeCare = () => {
               We welcome your thoughts and questions. Please leave a message below, and we will respond with care.
             </p>
             {success ? (
-              <div className="max-w-2xl p-8 border border-ink/20 rounded-lg bg-ink/5 text-center">
+               <div className="hop-page__panel max-w-2xl p-8 text-center">
                 <CheckCircle className="h-12 w-12 text-ink mx-auto mb-4" />
                 <p className="font-serif text-xl text-ink mb-2">Thank you for writing to us.</p>
                 <p className="text-sm text-ink-soft font-light">
@@ -89,14 +89,14 @@ const SareeCare = () => {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl" noValidate>
+               <form onSubmit={handleSubmit} className="hop-form-shell space-y-6 max-w-2xl" noValidate>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <Input
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       onBlur={() => handleBlur("firstName")}
-                      className="rounded-none border-x-0 border-t-0 border-b border-border bg-transparent px-0"
+                       className="hop-form-control"
                       placeholder="First name"
                       aria-label="First name"
                       aria-invalid={!!errors.firstName}
@@ -108,7 +108,7 @@ const SareeCare = () => {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       onBlur={() => handleBlur("lastName")}
-                      className="rounded-none border-x-0 border-t-0 border-b border-border bg-transparent px-0"
+                       className="hop-form-control"
                       placeholder="Last name"
                       aria-label="Last name"
                       aria-invalid={!!errors.lastName}
@@ -141,7 +141,7 @@ const SareeCare = () => {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onBlur={() => handleBlur("message")}
-                    className="rounded-md min-h-[140px]"
+                     className="hop-form-control min-h-[140px]"
                     placeholder="How may we help you."
                     aria-label="Message"
                     aria-invalid={!!errors.message}
@@ -159,7 +159,7 @@ const SareeCare = () => {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="rounded-full bg-ink hover:bg-signature-crimson text-jasmine tracking-[0.3em] uppercase text-xs px-8 py-6"
+                   className="hop-cta-primary"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">

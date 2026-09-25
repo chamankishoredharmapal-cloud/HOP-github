@@ -43,12 +43,12 @@ export default function Signup() {
   if (success) {
     return (
       <PageLayout>
-        <div className="container max-w-lg py-20 md:py-32">
-          <div className="mx-auto max-w-sm text-center">
+         <main className="hop-auth-shell">
+           <div className="hop-auth-card text-center">
             <div className="mb-6 flex justify-center">
               <div className="h-px w-16 bg-signature-crimson/40" />
             </div>
-            <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
+            <h1                className="hop-page__title hop-page__title--small">
               Check your email
             </h1>
             <p className="mt-4 text-sm text-ink-soft leading-relaxed">
@@ -59,20 +59,20 @@ export default function Signup() {
               <Link to="/account/login">Back to sign in</Link>
             </Button>
           </div>
-        </div>
-      </PageLayout>
+         </main>
+       </PageLayout>
     );
   }
 
   return (
-    <PageLayout>
-      <div className="container max-w-lg py-20 md:py-32">
-        <div className="mx-auto max-w-sm">
+     <PageLayout>
+       <main className="hop-auth-shell">
+         <div className="hop-auth-card">
           <div className="mb-10 text-center">
             <div className="mb-4 flex justify-center">
               <div className="h-px w-16 bg-signature-crimson/40" />
             </div>
-            <h1 className="font-serif text-3xl md:text-4xl text-ink tracking-tight">
+            <h1                className="hop-page__title hop-page__title--small">
               Create account
             </h1>
 
@@ -84,7 +84,7 @@ export default function Signup() {
             </Alert>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+           <form onSubmit={handleSubmit} className="hop-form-shell space-y-6">
             <div className="space-y-2">
               <Label htmlFor="fullName" className="text-xs font-medium text-ink tracking-wider uppercase">
                 Full name
@@ -141,16 +141,16 @@ export default function Signup() {
                 />
                 <span className="text-xs text-ink-soft font-light leading-relaxed">
                   I agree to the{" "}
-                  <Link to="/terms" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Terms & Conditions</Link>,{" "}
-                  <Link to="/privacy-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Privacy Policy</Link>,{" "}
-                  <Link to="/shipping-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Shipping Policy</Link>, and{" "}
-                  <Link to="/returns-policy" className="text-signature-crimson hover:text-ink underline underline-offset-4 decoration-1">Returns & Refund Policy</Link>.
+                  <Link to="/terms-of-service" className="text-rasa-mulberry hover:text-ink underline underline-offset-4 decoration-1">Terms & Conditions</Link>,{" "}
+                  <Link to="/privacy-policy" className="text-rasa-mulberry hover:text-ink underline underline-offset-4 decoration-1">Privacy Policy</Link>,{" "}
+                  <Link to="/shipping-policy" className="text-rasa-mulberry hover:text-ink underline underline-offset-4 decoration-1">Shipping Policy</Link>, and{" "}
+                  <Link to="/returns-policy" className="text-rasa-mulberry hover:text-ink underline underline-offset-4 decoration-1">Returns & Refund Policy</Link>.
                 </span>
               </label>
             </div>
             <Button
               type="submit"
-              className="h-12 w-full bg-ink text-sm tracking-widest uppercase text-jasmine transition-all duration-300 hover:bg-signature-crimson"
+               className="hop-cta-primary w-full"
               disabled={loading}
             >
               {loading ? (
@@ -176,8 +176,8 @@ export default function Signup() {
               Sign in
             </Link>
           </p>
-        </div>
-      </div>
-    </PageLayout>
+         </div>
+       </main>
+     </PageLayout>
   );
 }

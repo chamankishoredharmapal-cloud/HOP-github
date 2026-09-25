@@ -12,9 +12,9 @@ const ShippingPolicy = () => {
   return (
     <PageLayout>
       <main>
-        <div className="max-w-3xl mx-auto px-6 py-20">
+         <div className="hop-page__room hop-page__section max-w-3xl">
           <header className="mb-12 text-center">
-            <h1 className="font-serif text-5xl text-ink mb-3">Shipping</h1>
+             <h1 className="hop-page__title hop-page__title--small">Shipping</h1>
             <p className="text-sm text-ink-soft">Last updated · July 2026</p>
           </header>
 

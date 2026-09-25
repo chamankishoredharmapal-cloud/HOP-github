@@ -23,7 +23,7 @@ const Appointments = () => {
 
   return (
     <PageLayout>
-      <main className="min-h-screen bg-paper-ivory">
+       <main className="hop-page min-h-screen bg-paper-ivory">
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-80px)]">
           {/* Left: Imagery */}
           <section className="relative h-[40vh] lg:h-auto order-2 lg:order-1">
@@ -38,21 +38,21 @@ const Appointments = () => {
           <section className="order-1 lg:order-2 flex flex-col justify-center px-6 py-section lg:p-section bg-paper-ivory">
             <div className="max-w-md w-full mx-auto space-y-12">
               <div className="space-y-6">
-                <h1 className="font-serif text-4xl text-ink">Appointments.</h1>
+                 <h1 className="hop-page__title hop-page__title--small">Appointments.</h1>
                 <p className="text-ink-soft leading-relaxed">
                   Request a private viewing or bridal consultation at our Pondicherry atelier.
                 </p>
               </div>
 
               {status === "success" ? (
-                <div className="bg-sand/20 p-8 border border-signature-crimson/10 text-center space-y-4">
+                 <div className="hop-page__panel p-8 text-center space-y-4">
                   <h3 className="font-serif text-2xl text-ink">Request received.</h3>
                   <p className="text-ink-soft text-sm">
                     We will contact you shortly to confirm the details of your appointment.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-8">
+                 <form onSubmit={handleSubmit} className="hop-form-shell space-y-8">
                   <div className="space-y-2">
                     <label htmlFor="name" className="block text-xs uppercase tracking-widest text-ink-soft">
                       Name
@@ -121,7 +121,7 @@ const Appointments = () => {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="w-full border border-signature-crimson text-signature-crimson py-4 text-sm tracking-widest uppercase hover:bg-signature-crimson hover:text-jasmine transition-colors disabled:opacity-50"
+                     className="w-full border border-rasa-mulberry text-rasa-mulberry py-4 text-sm tracking-widest uppercase hover:bg-rasa-mulberry hover:text-jasmine transition-colors disabled:opacity-50"
                   >
                     {status === "submitting" ? "Sending..." : "Request appointment"}
                   </button>

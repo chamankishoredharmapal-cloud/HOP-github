@@ -93,7 +93,7 @@ const ProductDetail = () => {
   if (isLoading) {
     return (
       <PageLayout>
-        <main className="container pt-10 pb-section animate-pulse">
+        <main className="hop-page hop-page__room hop-page__section pt-10 pb-section animate-pulse">
           <div className="h-4 w-64 rounded-sm bg-jasmine-deep mb-10" />
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
             <div className="aspect-[4/5] rounded-sm bg-jasmine-deep" />
@@ -112,7 +112,7 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <PageLayout>
-        <main className="container pt-10 pb-section">
+        <main className="hop-page hop-page__room hop-page__section pt-10 pb-section">
           <Breadcrumb className="mb-10">
             <BreadcrumbList className="text-[0.7rem] tracking-[0.3em] uppercase text-ink-soft">
               <BreadcrumbItem>
@@ -146,7 +146,7 @@ const ProductDetail = () => {
       price: product.selling_price,
       stock: product.stock,
       formattedPrice: formatPrice(product.selling_price),
-      image: gallery[0] ?? "",
+       image: gallery[0]?.url ?? "",
       size: `Drape · ${product.length || "5.5m"}${product.blouse_included ? " + 0.8m blouse" : ""}`,
     });
     toast("Added to bag", {
@@ -161,7 +161,7 @@ const ProductDetail = () => {
       name: product.name,
       price: product.selling_price,
       formattedPrice: formatPrice(product.selling_price),
-      image: gallery[0] ?? "",
+       image: gallery[0]?.url ?? "",
       collection: product.collection_name ?? "",
     });
     toast(saved ? "Removed from wishlist" : "Added to wishlist", {

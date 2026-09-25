@@ -18,11 +18,11 @@ const Journal = () => {
   return (
     <PageLayout>
       <main>
-        <section className="container pt-16 sm:pt-20 pb-10 sm:pb-14 text-center">
+        <section className="hop-page__room hop-page__section pt-16 sm:pt-20 pb-10 sm:pb-14 text-center">
           <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-4">
             The Journal
           </p>
-          <h1 className="font-serif font-light text-4xl sm:text-5xl md:text-6xl text-balance leading-[1.05] text-ink">
+          <h1 className="hop-page__title mx-auto">
             Field notes &amp; reflections.
           </h1>
           <p className="mt-5 text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-xl mx-auto">
@@ -31,9 +31,9 @@ const Journal = () => {
         </section>
 
         {featured && (
-          <section className="container pb-16 sm:pb-24">
-            <Link to={`/journal/${featured.slug}`} className="group block">
-              <div className="aspect-[16/9] overflow-hidden rounded-sm bg-jasmine-deep">
+           <section className="hop-page__room pb-16 sm:pb-24">
+             <Link to={`/journal/${featured.slug}`} className="hop-journal-feature group">
+               <div className="hop-journal-feature__image">
                 {featured.assetPath ? (
                   <OptimizedImage
                     assetPath={featured.assetPath}
@@ -51,7 +51,7 @@ const Journal = () => {
                   />
                 )}
               </div>
-              <div className="mt-8 max-w-3xl">
+               <div className="max-w-3xl">
                 <p className="text-[0.6rem] tracking-[0.42em] uppercase text-ink-soft">{featured.tag} · Featured</p>
                 <h2 className="mt-3 font-editorial text-3xl md:text-5xl leading-[1.08] text-balance text-ink">
                   {featured.title}
@@ -67,7 +67,7 @@ const Journal = () => {
 
         {rest.length > 0 && (
           <section className="border-t border-ink/10">
-            <div className="container py-14 sm:py-20">
+             <div className="hop-page__room py-14 sm:py-20">
               <p className="text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft mb-10">
                 Earlier entries · {rest.length}
               </p>

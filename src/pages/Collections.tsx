@@ -15,12 +15,12 @@ const Collections = () => {
     title: "Collections — House of Padmavati",
     description: "Five ways of wearing tradition.",
   });
-  const { data: collections, isLoading } = useQuery({
+  const { data: collections, isLoading, isError } = useQuery({
     queryKey: ["storefront", "collections"],
     queryFn: fetchCollections,
   });
 
-  usePrerenderReady(true);
+  usePrerenderReady(!isLoading && !isError);
 
   const getChapterLabel = (index: number) => {
     return `Chapter ${String(index + 1).padStart(2, "0")}`;
@@ -28,13 +28,13 @@ const Collections = () => {
 
   return (
     <PageLayout>
-      <main>
-        <section className="container pt-12 sm:pt-16 pb-10 sm:pb-14 text-center">
+      <main className="hop-page">
+        <section className="hop-page__room hop-page__section pt-12 sm:pt-16 pb-10 sm:pb-14 text-center">
           <Monogram className="h-10 sm:h-12 mx-auto mb-5 sm:mb-6 opacity-70" />
-          <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-3 sm:mb-4">
+          <p className="hop-page__kicker justify-center">
             The Collections
           </p>
-          <h1 className="font-serif font-light text-4xl sm:text-5xl md:text-6xl text-balance leading-[1.05] text-ink">
+          <h1 className="hop-page__title mx-auto mt-5">
             Five ways of wearing tradition.
           </h1>
           <p className="mt-5 text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-xl mx-auto">
@@ -42,7 +42,7 @@ const Collections = () => {
           </p>
         </section>
 
-        <section className="container pb-20 sm:pb-28">
+        <section className="hop-page__room pb-20 sm:pb-28">
           {isLoading ? (
             <div className="space-y-16 sm:space-y-20 lg:space-y-24">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -56,9 +56,23 @@ const Collections = () => {
                 </div>
               ))}
             </div>
+          ) : isError ? (
+            <div className="hop-page__state">
+              <div>
+                <p className="hop-page__kicker justify-center">The house is quiet</p>
+                <h2 className="hop-page__state-title">A thread came loose.</h2>
+                <p className="hop-page__state-copy">The collections could not be reached. Please try again, or return to the House.</p>
+                <Link to="/" className="hop-page__state-action">Return to the House <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></Link>
+              </div>
+            </div>
           ) : !collections || collections.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-ink-soft text-sm font-light">No collections yet.</p>
+            <div className="hop-page__state">
+              <div>
+                <p className="hop-page__kicker justify-center">The house is preparing</p>
+                <h2 className="hop-page__state-title">No collections yet.</h2>
+                <p className="hop-page__state-copy">The next drape is still being chosen. Begin with the House story while the collection takes form.</p>
+                <Link to="/about" className="hop-page__state-action">Meet the House <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></Link>
+              </div>
             </div>
           ) : (
             <div className="space-y-12 sm:space-y-16 lg:space-y-20">

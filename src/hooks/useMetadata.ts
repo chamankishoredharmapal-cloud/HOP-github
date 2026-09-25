@@ -55,7 +55,7 @@ export function useMetadata(config: MetadataConfig) {
     link.setAttribute("href", canonical);
 
     setMeta("viewport", "width=device-width, initial-scale=1", "name");
-    setMeta("theme-color", "#F7F4EE", "name");
+    setMeta("theme-color", "#2B0E17", "name");
     setMeta("format-detection", "telephone=no", "name");
   }, [title, description, ogImage, ogType, noIndex]);
 }

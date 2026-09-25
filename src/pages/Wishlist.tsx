@@ -18,7 +18,7 @@ export default function Wishlist() {
   if (items.length === 0) {
     return (
       <PageLayout>
-        <main className="container pt-28 pb-24">
+        <main className="hop-page hop-page__room hop-page__section pt-28 pb-24">
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <Heart className="h-12 w-12 text-ink-soft/30 mb-6" strokeWidth={1} aria-hidden="true" />
             <h1 className="font-serif font-light text-3xl sm:text-4xl text-ink mb-4">Nothing kept yet.</h1>
@@ -71,8 +71,8 @@ export default function Wishlist() {
 
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 sm:gap-x-6 lg:gap-x-10 gap-y-12">
           {items.map((item) => (
-            <div key={item.id} className="group">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-jasmine-deep">
+             <div key={item.id} className="hop-product-card group">
+               <div className="hop-product-card__image relative aspect-[3/4] overflow-hidden rounded-sm bg-jasmine-deep">
                 <Link to={`/product/${item.id.replace("product-", "")}`} aria-label={`View ${item.name}`}>
                   <img
                     src={getSupabaseOptimizedUrl(item.image, { width: 480, resize: "cover" })}
@@ -99,7 +99,7 @@ export default function Wishlist() {
                   </button>
                 </div>
               </div>
-              <div className="mt-4 space-y-1">
+               <div className="hop-product-card__meta mt-4 space-y-1">
                 {item.collection && (
                   <p className="text-[0.6rem] tracking-[0.38em] uppercase text-ink-soft">{item.collection}</p>
                 )}

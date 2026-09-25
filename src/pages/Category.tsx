@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ChevronDown, Heart } from "lucide-react";
+import { ChevronDown, Heart, ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import PageLayout from "@/components/layout/PageLayout";
 import {
@@ -45,14 +45,14 @@ const Category = () => {
   const [sort, setSort] = useState<SortValue>("newest");
   const { toggleItem, isWishlisted } = useWishlist();
 
-  const { data: collection, isLoading: collectionLoading } = useQuery({
+  const { data: collection, isLoading: collectionLoading, isError: collectionError } = useQuery({
     queryKey: ["storefront", "collection", slug],
     queryFn: () => fetchCollectionBySlug(slug),
     enabled: slug !== "all",
     staleTime: 5 * 60 * 1000,
   });
 
-  const { data, isLoading: productsLoading } = useQuery({
+  const { data, isLoading: productsLoading, isError: productsError } = useQuery({
     queryKey: ["storefront", "products", slug],
     queryFn: () => fetchProductsByCollection(slug),
     staleTime: 5 * 60 * 1000,
@@ -108,6 +108,23 @@ const Category = () => {
     }
   }, [sort, data]);
 
+  if (slug !== "all" && !collectionLoading && !collection && !collectionError) {
+    return (
+      <PageLayout>
+        <main className="hop-page">
+          <div className="hop-page__state">
+            <div>
+              <p className="hop-page__kicker justify-center">Collection not found</p>
+              <h1 className="hop-page__state-title">This room is not open.</h1>
+              <p className="hop-page__state-copy">The collection you entered is no longer part of the house.</p>
+              <Link to="/collections" className="hop-page__state-action">Return to Collections <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></Link>
+            </div>
+          </div>
+        </main>
+      </PageLayout>
+    );
+  }
+
   const handleToggleWishlist = (productId: string, name: string, price: number, image?: string) => {
     const id = `product-${productId}`;
     const wasWishlisted = isWishlisted(id);
@@ -127,7 +144,7 @@ const Category = () => {
 
   return (
     <PageLayout>
-      <main>
+      <main className="hop-page">
         <div className="w-full aspect-[2/1] overflow-hidden bg-jasmine-deep">
           {collectionLoading ? (
             <div className="w-full h-full bg-jasmine-deep animate-pulse" />
@@ -153,7 +170,7 @@ const Category = () => {
           )}
         </div>
 
-        <div className="container">
+        <div className="hop-page__room">
           <div className="pt-6 pb-2">
             <Breadcrumb>
               <BreadcrumbList className="text-[0.7rem] tracking-[0.3em] uppercase text-ink-soft">
@@ -232,6 +249,14 @@ const Category = () => {
                 </div>
               ))}
             </div>
+          ) : productsError ? (
+            <div className="hop-page__state pb-16">
+              <div>
+                <p className="hop-page__kicker justify-center">The house is quiet</p>
+                <h2 className="hop-page__state-title">The collection could not be reached.</h2>
+                <p className="hop-page__state-copy">Please try again before choosing a drape.</p>
+              </div>
+            </div>
           ) : sortedProducts.length === 0 ? (
             <div className="text-center pb-28 pt-6">
               <p className="font-serif font-light text-2xl text-ink">Nothing here yet.</p>
@@ -252,8 +277,8 @@ const Category = () => {
               {sortedProducts.map((p) => {
                 const heroImage = p.images[0]?.url;
                 return (
-                  <div key={p.id} className="group">
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-jasmine-deep">
+                  <div key={p.id} className="hop-product-card group">
+                    <div className="hop-product-card__image relative aspect-[4/5] overflow-hidden rounded-sm bg-jasmine-deep">
                       <Link to={`/product/${p.id}`} aria-label={`View ${p.name}`}>
                         {heroImage ? (
                           <img
@@ -293,7 +318,7 @@ const Category = () => {
                         />
                       </button>
                     </div>
-                    <div className="mt-4 space-y-1">
+                    <div className="hop-product-card__meta mt-4 space-y-1">
                       <Link to={`/product/${p.id}`}>
                         <h3 className="font-serif font-light text-base sm:text-lg md:text-xl text-ink leading-tight">
                           {p.name}

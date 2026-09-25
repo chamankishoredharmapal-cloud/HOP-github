@@ -21,14 +21,14 @@ const Lookbook = () => {
 
   return (
     <PageLayout>
-      <main className="bg-sand/20 min-h-screen">
+       <main className="hop-page bg-sand/20 min-h-screen">
         {/* Hero Section */}
-        <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+         <section className="hop-lookbook__hero relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img
               src={fabricImg}
               alt="Macro detail of hand-twisted silver zari on a Kalyani border"
-              className="w-full h-full object-cover object-center"
+               className="hop-lookbook__hero"
             />
             <div className="absolute inset-0 bg-black/10" />
           </div>
@@ -55,7 +55,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
+                 <figcaption className="hop-lookbook__caption">
                   Kalyani Brocade. Hand-twisted silver zari over forty days.
                 </figcaption>
               </figure>
@@ -69,7 +69,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
+                 <figcaption className="hop-lookbook__caption">
                   Viara Tissue. The tension between the warp and weft.
                 </figcaption>
               </figure>
@@ -83,7 +83,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
+                 <figcaption className="hop-lookbook__caption">
                   The dense, heavy border of the Megham collection.
                 </figcaption>
               </figure>
@@ -107,7 +107,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
+                 <figcaption className="hop-lookbook__caption">
                   The unhurried fall of Kanchipuram silk.
                 </figcaption>
               </figure>
@@ -120,7 +120,7 @@ const Lookbook = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <figcaption className="text-sm font-light text-ink-soft border-l border-signature-crimson/30 pl-4 py-1">
+                 <figcaption className="hop-lookbook__caption">
                   Linen holding its structure.
                 </figcaption>
               </figure>
@@ -142,7 +142,7 @@ const Lookbook = () => {
             <div>
               <Link 
                 to="/collections" 
-                className="inline-block border border-signature-crimson text-signature-crimson px-8 py-3 text-sm tracking-widest uppercase hover:bg-signature-crimson hover:text-jasmine transition-colors"
+                 className="inline-block border border-rasa-mulberry text-rasa-mulberry px-8 py-3 text-sm tracking-widest uppercase hover:bg-rasa-mulberry hover:text-jasmine transition-colors"
               >
                 View collections
               </Link>

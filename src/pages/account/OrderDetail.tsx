@@ -93,7 +93,7 @@ export default function OrderDetail() {
       </div>
 
       {order.shippingAddress && (
-        <section className="mb-6 p-4 rounded-lg border border-border">
+         <section className="hop-page__panel mb-6 p-4">
           <h3 className="text-sm font-medium text-ink mb-2">Shipping address</h3>
           <p className="text-sm text-ink-soft">{order.shippingAddress.recipientName}</p>
           <p className="text-sm text-ink-soft">{order.shippingAddress.address}</p>
@@ -113,7 +113,7 @@ export default function OrderDetail() {
           {order.items.map((item, i) => (
             <div
               key={i}
-              className="flex items-center gap-4 p-3 rounded-lg border border-border"
+               className="hop-page__panel flex items-center gap-4 p-3"
             >
               {item.imageUrl ? (
                 <img
@@ -149,7 +149,7 @@ export default function OrderDetail() {
         </div>
       </section>
 
-      <section className="p-4 rounded-lg border border-border">
+       <section className="hop-page__panel p-4">
         <h3 className="text-sm font-medium text-ink mb-3">Order summary</h3>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between text-ink-soft">

@@ -56,7 +56,7 @@ export default function Profile() {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-full bg-ink/10 flex items-center justify-center">
+           <div className="hop-service-icon">
           <User className="w-6 h-6 text-ink" />
         </div>
         <div>
@@ -86,7 +86,7 @@ export default function Profile() {
           e.preventDefault();
           mutation.mutate();
         }}
-        className="space-y-5 max-w-sm"
+         className="hop-form-shell space-y-5 max-w-sm"
       >
         <div className="space-y-2">
           <Label htmlFor="name">Full name</Label>
@@ -114,7 +114,7 @@ export default function Profile() {
             Email cannot be changed.
           </p>
         </div>
-        <Button type="submit" disabled={mutation.isPending}>
+         <Button type="submit" className="hop-cta-primary" disabled={mutation.isPending}>
           {mutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
           {mutation.isPending ? "Saving…" : "Save"}
         </Button>

@@ -43,7 +43,7 @@ export default function WishlistPage() {
 
   if (!wishlistIds || wishlistIds.length === 0) {
     return (
-      <div className="text-center py-16 text-ink-soft">
+       <div className="hop-page__state text-ink-soft">
         <Heart className="w-10 h-10 mx-auto mb-4 opacity-30" />
         <p className="text-sm mb-1">Your wishlist is empty.</p>
       </div>
@@ -55,7 +55,7 @@ export default function WishlistPage() {
       <h2 className="font-serif text-xl text-ink mb-6">Wishlist.</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {wishlistIds.map((productId) => (
-          <div key={productId} className="group relative rounded-lg border border-border overflow-hidden">
+           <div key={productId} className="hop-page__panel group relative overflow-hidden">
             <Link to={`/product/${productId}`}>
               <div className="aspect-square bg-ink/5 flex items-center justify-center">
                 <Heart className="w-8 h-8 text-ink/30" />

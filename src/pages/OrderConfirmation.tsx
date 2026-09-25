@@ -54,7 +54,7 @@ export default function OrderConfirmation() {
 
   return (
     <PageLayout>
-      <main className="container pt-28 pb-24">
+       <main className="hop-page__room hop-page__section pt-28 pb-24">
         <div className="max-w-2xl mx-auto">
           <div className="text-center py-8">
             <div className="mx-auto w-16 h-16 rounded-full bg-ink/10 flex items-center justify-center mb-6">
@@ -64,7 +64,7 @@ export default function OrderConfirmation() {
                 <Clock className="h-8 w-8 text-amber-600" />
               )}
             </div>
-            <h1 className="font-serif text-3xl md:text-4xl text-ink mb-2">
+             <h1 className="hop-page__title hop-page__title--small">
               {detail?.paymentStatus === "paid" ? "Order confirmed" : "Order placed"}
             </h1>
             {orderNumber && (
@@ -100,7 +100,7 @@ export default function OrderConfirmation() {
               </div>
 
               {detail.items.length > 0 && (
-                <div className="border border-border/60 p-6">
+                <div className="hop-page__panel p-6">
                   <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">Items</h2>
                   <div className="space-y-4">
                     {detail.items.map((item, i) => (
@@ -158,7 +158,7 @@ export default function OrderConfirmation() {
               )}
 
               {detail.shipping && (
-                <div className="border border-border/60 p-6">
+                <div className="hop-page__panel p-6">
                   <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-3">Shipping to</h2>
                   <p className="text-sm text-ink-soft font-light leading-relaxed">
                     {detail.shipping.city}
@@ -177,7 +177,7 @@ export default function OrderConfirmation() {
           )}
 
           <div className="text-center mt-10">
-            <Button asChild variant="outline">
+             <Button asChild variant="outline" className="hop-cta-secondary">
               <Link to="/collections">Return to collections</Link>
             </Button>
           </div>

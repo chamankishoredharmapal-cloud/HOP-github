@@ -18,7 +18,7 @@ const ImageTextBlock = ({
   assetPath,
 }: ImageTextBlockProps) => {
   return (
-    <div className={`flex flex-col ${imagePosition === 'right' ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 items-center`}>
+    <div className={`hop-page__split ${imagePosition === 'right' ? 'hop-page__split--reverse' : ''}`}>
       <div className="flex-1">
         {assetPath ? (
           <OptimizedImage

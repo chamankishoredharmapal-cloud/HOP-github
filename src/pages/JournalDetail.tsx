@@ -47,7 +47,7 @@ const JournalDetail = () => {
   if (!article) {
     return (
       <PageLayout>
-        <main className="container pt-28 pb-24 text-center">
+         <main className="hop-page__state">
           <p className="font-serif font-light text-2xl text-ink">This entry is not on the shelf.</p>
           <p className="mt-3 text-sm text-ink-soft font-light">It may have been moved to the archive.</p>
           <Link to="/journal" className="mt-8 inline-flex items-center gap-1.5 text-[0.65rem] tracking-[0.32em] uppercase text-ink border-b border-ink/30 pb-1 hover:border-ink transition-colors">
@@ -61,7 +61,7 @@ const JournalDetail = () => {
 
   return (
     <PageLayout>
-      <main className="container pt-12 sm:pt-16 pb-24">
+       <main className="hop-page__room hop-page__section pt-12 sm:pt-16 pb-24">
         <Link to="/journal" className="inline-flex items-center gap-1.5 text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft hover:text-ink transition-colors mb-10">
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
           Back to Journal
@@ -69,7 +69,7 @@ const JournalDetail = () => {
 
         <div className="max-w-3xl mx-auto">
           <p className="text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">{article.tag}</p>
-          <h1 className="mt-4 font-serif font-light text-4xl md:text-5xl text-ink leading-[1.08] text-balance">
+           <h1 className="mt-4 hop-page__title hop-page__title--small">
             {article.title}
           </h1>
 

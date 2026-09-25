@@ -55,9 +55,9 @@ const HopFooter = () => {
           <FooterCol title="Collections">
             <FooterLink to="/collections/kalyani">Kalyani</FooterLink>
             <FooterLink to="/collections/viara">Viara</FooterLink>
-            <FooterLink to="/collections/megham">Arya</FooterLink>
-            <FooterLink to="/collections/oosi-kattam">Padma</FooterLink>
-            <FooterLink to="/collections/designer-wear">Spandana</FooterLink>
+            <FooterLink to="/collections/arya">Arya</FooterLink>
+            <FooterLink to="/collections/padma">Padma</FooterLink>
+            <FooterLink to="/collections/spandana">Spandana</FooterLink>
           </FooterCol>
           <FooterCol title="The House">
             <FooterLink to="/about">Our Story</FooterLink>
