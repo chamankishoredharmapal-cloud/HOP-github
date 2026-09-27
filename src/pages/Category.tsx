@@ -148,10 +148,10 @@ const Category = () => {
         <div className="w-full aspect-[2/1] overflow-hidden bg-jasmine-deep">
           {collectionLoading ? (
             <div className="w-full h-full bg-jasmine-deep animate-pulse" />
-          ) : COLLECTION_VIDEOS[slug] && collection?.hero_image_url ? (
+          ) : (collection?.hero_video_url || COLLECTION_VIDEOS[slug]) ? (
               <Film
-                src={COLLECTION_VIDEOS[slug]}
-                poster={collection.hero_image_url}
+                src={collection?.hero_video_url || COLLECTION_VIDEOS[slug]}
+                poster={collection?.hero_image_url || ""}
                 alt={`${displayName} — collection film`}
                 className="aspect-[2/1]"
                 preload="metadata"

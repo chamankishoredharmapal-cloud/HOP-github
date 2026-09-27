@@ -1,11 +1,7 @@
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import { useEffect } from "react";
 import PageLayout from "@/components/layout/PageLayout";
-import { HeroSection } from "@/components/hop/HeroSection";
-import { CollectionStage } from "@/components/hop/CollectionStage";
-import { CraftSection } from "@/components/hop/CraftSection";
-import { ModernHeirlooms } from "@/components/hop/ModernHeirlooms";
-import { JournalPreview } from "@/components/hop/JournalPreview";
+import HomepageExperience from "@/components/hop/HomepageExperience";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 
 const Index = () => {
@@ -41,14 +37,8 @@ const Index = () => {
   }, []);
 
   return (
-    <PageLayout transparent>
-      <main>
-        <HeroSection />
-        <CollectionStage />
-        <ModernHeirlooms />
-        <CraftSection />
-        <JournalPreview />
-      </main>
+    <PageLayout transparent darkHero>
+      <HomepageExperience />
     </PageLayout>
   );
 };

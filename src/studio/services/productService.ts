@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import type { Product, ProductFormData, ProductImage, ProductStatus, Collection, ProductsListResponse } from "../types/product";
+import { activityService } from "./activityService";
 
 interface ProductRow {
   id: string;
@@ -176,6 +177,15 @@ export async function createProduct(data: ProductFormData): Promise<Product> {
     .select()
     .single();
   if (error) throw error;
+
+  await activityService.log({
+    action: "product_created",
+    entityType: "product",
+    entityId: row.id,
+    entityName: row.name,
+    details: { sku: row.sku, slug: row.slug, status: row.status },
+  });
+
   return mapRow(row as unknown as ProductRow);
 }
 
@@ -194,11 +204,27 @@ export async function updateProduct(id: string, data: Partial<ProductFormData>):
   }
   const { error } = await supabase.from("products").update(payload as unknown as Database["public"]["Tables"]["products"]["Update"]).eq("id", id);
   if (error) throw error;
+
+  await activityService.log({
+    action: "product_updated",
+    entityType: "product",
+    entityId: id,
+    entityName: (data.name as string) || id,
+    details: payload,
+  });
 }
 
 export async function updateProductStatus(id: string, status: ProductStatus): Promise<void> {
   const { error } = await supabase.from("products").update({ status }).eq("id", id);
   if (error) throw error;
+
+  await activityService.log({
+    action: status === "published" ? "product_published" : "product_status_changed",
+    entityType: "product",
+    entityId: id,
+    entityName: id,
+    details: { status },
+  });
 }
 
 export async function uploadImage(

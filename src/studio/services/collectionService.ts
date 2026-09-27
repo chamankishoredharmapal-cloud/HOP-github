@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import type { CollectionDetail } from "@/types/collection";
+import { activityService } from "./activityService";
 
 export type CollectionFormData = {
   name: string;
@@ -86,6 +87,15 @@ export async function createCollection(data: CollectionFormData): Promise<Collec
     .select()
     .single();
   if (error) throw error;
+
+  await activityService.log({
+    action: "collection_created",
+    entityType: "collection",
+    entityId: row.id,
+    entityName: row.name,
+    details: { slug: row.slug, status: row.status },
+  });
+
   return mapRow(row as CollectionRow);
 }
 
@@ -100,6 +110,14 @@ export async function updateCollection(id: string, data: Partial<CollectionFormD
   }
   const { error } = await supabase.from("collections").update(payload as unknown as Database["public"]["Tables"]["collections"]["Update"]).eq("id", id);
   if (error) throw error;
+
+  await activityService.log({
+    action: data.hero_video_url !== undefined ? "film_updated" : "collection_updated",
+    entityType: "collection",
+    entityId: id,
+    entityName: data.name || id,
+    details: payload,
+  });
 }
 
 export async function uploadCollectionFile(
@@ -112,10 +130,22 @@ export async function uploadCollectionFile(
 
   const { error: uploadErr } = await supabase.storage
     .from("HOP-films")
-    .upload(filePath, file);
+    .upload(filePath, file, {
+      cacheControl: "31536000",
+      upsert: true,
+    });
   if (uploadErr) throw uploadErr;
 
   const { data: urlData } = supabase.storage.from("HOP-films").getPublicUrl(filePath);
+
+  await activityService.log({
+    action: type === "video" ? "film_uploaded" : "poster_uploaded",
+    entityType: "film",
+    entityId: collectionId,
+    entityName: file.name,
+    details: { filePath, publicUrl: urlData.publicUrl, sizeBytes: file.size },
+  });
+
   return urlData.publicUrl;
 }
 
@@ -126,6 +156,12 @@ export async function deleteCollectionFile(url: string): Promise<void> {
     const storagePath = url.substring(idx + bucketBase.length);
     if (storagePath) {
       await supabase.storage.from("HOP-films").remove([storagePath]);
+      await activityService.log({
+        action: "film_deleted",
+        entityType: "film",
+        entityName: storagePath,
+        details: { url },
+      });
     }
   }
 }

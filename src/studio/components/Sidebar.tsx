@@ -8,6 +8,7 @@ import {
   Users,
   BookOpen,
   Image,
+  History,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -27,13 +28,14 @@ import type { StudioNavItem } from "../types";
 
 const navItems: StudioNavItem[] = [
   { label: "Dashboard", path: "/studio", icon: LayoutDashboard },
-  { label: "Orders", path: "/studio/orders", icon: ShoppingBag },
-  { label: "Products", path: "/studio/products", icon: Package },
   { label: "Collections", path: "/studio/collections", icon: Layers },
+  { label: "Products", path: "/studio/products", icon: Package },
+  { label: "Media Library", path: "/studio/media", icon: Image },
+  { label: "Orders", path: "/studio/orders", icon: ShoppingBag },
   { label: "Inventory", path: "/studio/inventory", icon: Warehouse },
   { label: "Customers", path: "/studio/customers", icon: Users },
   { label: "Journal", path: "/studio/journal", icon: BookOpen },
-  { label: "Media Library", path: "/studio/media", icon: Image },
+  { label: "Activity", path: "/studio/activity", icon: History },
   { label: "Settings", path: "/studio/settings", icon: Settings },
 ];
 

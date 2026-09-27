@@ -9,12 +9,17 @@ export interface MediaItem {
   file_size: number;
   width: number | null;
   height: number | null;
+  duration?: number | null;
   folder: string | null;
   alt_text: string | null;
   created_at: string;
   updated_at: string;
   product_id: string | null;
   product_name: string | null;
+  collection_id?: string | null;
+  collection_name?: string | null;
+  usage_context?: string | null;
+  bucket?: "product-images" | "HOP-films";
 }
 
 export interface MediaListParams {
@@ -33,4 +38,9 @@ export interface MediaListResponse {
   page: number;
   totalPages: number;
   folders: string[];
+}
+
+export interface MediaUsageCheck {
+  inUse: boolean;
+  references: string[];
 }

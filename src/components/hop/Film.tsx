@@ -14,6 +14,7 @@ export const Film = ({
   isCinematic = false,
   preload = "metadata",
   priority = false,
+  showControls = true,
 }: {
   src?: string;
   poster: string;
@@ -22,6 +23,7 @@ export const Film = ({
   isCinematic?: boolean;
   preload?: "auto" | "metadata" | "none";
   priority?: boolean;
+  showControls?: boolean;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -150,15 +152,17 @@ export const Film = ({
             onEnded={() => setIsPlaying(false)}
             onError={handleVideoError}
           />
-           <button
-             type="button"
-             onClick={togglePlayback}
-             className="absolute bottom-4 right-4 min-h-[44px] min-w-[44px] rounded-full bg-ink/70 p-3 text-paper-ivory backdrop-blur-sm transition-colors hover:bg-ink/90"
-             aria-label={isPlaying ? "Pause film" : "Play film"}
-             aria-pressed={!isPlaying}
-           >
-             {isPlaying ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
-           </button>
+            {showControls && (
+              <button
+                type="button"
+                onClick={togglePlayback}
+                className="absolute bottom-4 right-4 min-h-[44px] min-w-[44px] rounded-full bg-ink/70 p-3 text-paper-ivory backdrop-blur-sm transition-colors hover:bg-ink/90"
+                aria-label={isPlaying ? "Pause film" : "Play film"}
+                aria-pressed={!isPlaying}
+              >
+                {isPlaying ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
+              </button>
+            )}
         </div>
       )}
     </div>

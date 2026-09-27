@@ -3,10 +3,11 @@ import { toast } from "sonner";
 import {
   fetchMediaList,
   uploadMedia,
-  updateMedia,
+  updateMediaAlt,
   deleteMedia,
+  checkMediaUsage,
 } from "../services/mediaService";
-import type { MediaListParams } from "../types/media";
+import type { MediaItem, MediaListParams } from "../types/media";
 
 export function useMediaList(params: MediaListParams) {
   return useQuery({
@@ -15,14 +16,29 @@ export function useMediaList(params: MediaListParams) {
   });
 }
 
+export function useCheckMediaUsage(url: string | null) {
+  return useQuery({
+    queryKey: ["studio", "media-usage", url],
+    queryFn: () => (url ? checkMediaUsage(url) : { inUse: false, references: [] }),
+    enabled: !!url,
+  });
+}
+
 export function useUploadMedia() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({ file, altText }: { file: File; altText?: string }) =>
-      uploadMedia(file, altText),
+    mutationFn: ({
+      file,
+      altText,
+      targetBucket,
+    }: {
+      file: File;
+      altText?: string;
+      targetBucket?: "product-images" | "HOP-films";
+    }) => uploadMedia(file, altText, targetBucket),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["studio", "media"] });
-      toast.success("Media uploaded");
+      toast.success("Media uploaded successfully");
     },
     onError: (err) => {
       toast.error(err instanceof Error ? err.message : "Upload failed");
@@ -34,10 +50,10 @@ export function useUpdateMedia() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, alt_text }: { id: string; alt_text?: string | null }) =>
-      updateMedia(id, { alt_text }),
+      updateMediaAlt(id, alt_text ?? null),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["studio", "media"] });
-      toast.success("Media updated");
+      toast.success("Media details updated");
     },
     onError: (err) => {
       toast.error(err instanceof Error ? err.message : "Update failed");
@@ -48,10 +64,10 @@ export function useUpdateMedia() {
 export function useDeleteMedia() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => deleteMedia(id),
+    mutationFn: (item: MediaItem) => deleteMedia(item),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["studio", "media"] });
-      toast.success("Media deleted");
+      toast.success("Media deleted safely");
     },
     onError: (err) => {
       toast.error(err instanceof Error ? err.message : "Delete failed");

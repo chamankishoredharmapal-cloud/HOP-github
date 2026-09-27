@@ -6,6 +6,7 @@ import {
   createCollection,
   updateCollection,
   uploadCollectionFile,
+  deleteCollectionFile,
 } from "../services/collectionService";
 import type { CollectionFormData } from "../services/collectionService";
 
@@ -30,7 +31,9 @@ export function useCreateCollection() {
     mutationFn: (data: CollectionFormData) => createCollection(data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["studio", "collections"] });
-      toast.success("Collection created");
+      qc.invalidateQueries({ queryKey: ["storefront", "collections"] });
+      qc.invalidateQueries({ queryKey: ["storefront", "featuredCollection"] });
+      toast.success("Collection created successfully");
     },
     onError: (err) => {
       toast.error(err instanceof Error ? err.message : "Failed to create collection");
@@ -46,7 +49,9 @@ export function useUpdateCollection() {
     onSuccess: (_data, vars) => {
       qc.invalidateQueries({ queryKey: ["studio", "collections"] });
       qc.invalidateQueries({ queryKey: ["studio", "collection", vars.id] });
-      toast.success("Collection updated");
+      qc.invalidateQueries({ queryKey: ["storefront", "collections"] });
+      qc.invalidateQueries({ queryKey: ["storefront", "featuredCollection"] });
+      toast.success("Collection saved");
     },
     onError: (err) => {
       toast.error(err instanceof Error ? err.message : "Failed to update collection");
@@ -65,11 +70,23 @@ export function useUploadCollectionFile() {
       file: File;
       type: "image" | "video";
     }) => uploadCollectionFile(collectionId, file, type),
-    onSuccess: () => {
-      toast.success("File uploaded");
+    onSuccess: (_url, vars) => {
+      toast.success(`${vars.type === "video" ? "Collection film" : "Image"} uploaded successfully`);
     },
     onError: (err) => {
       toast.error(err instanceof Error ? err.message : "Failed to upload file");
+    },
+  });
+}
+
+export function useDeleteCollectionFile() {
+  return useMutation({
+    mutationFn: (url: string) => deleteCollectionFile(url),
+    onSuccess: () => {
+      toast.success("File removed from storage");
+    },
+    onError: (err) => {
+      toast.error(err instanceof Error ? err.message : "Failed to remove file");
     },
   });
 }

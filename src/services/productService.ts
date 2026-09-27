@@ -135,6 +135,31 @@ export async function fetchProductById(id: string): Promise<StorefrontProduct | 
   return mapProduct(data as unknown as ProductRow, images);
 }
 
+export async function fetchFeaturedProduct(): Promise<StorefrontProduct | null> {
+  const { data, error } = await supabase
+    .from("products")
+    .select(`*, collections!left(name)`)
+    .eq("status", "published")
+    .order("featured", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) {
+    if (error.code === "PGRST116") return null;
+    throw error;
+  }
+
+  if (!data) return null;
+  const product = data as unknown as ProductRow;
+  const { data: imageRows } = await supabase
+    .from("product_images")
+    .select("*")
+    .eq("product_id", product.id)
+    .order("sort_order", { ascending: true });
+
+  return mapProduct(product, mapImages((imageRows ?? []) as ProductImageRow[]));
+}
+
 interface RelatedProductRow {
   id: string;
   name: string;
