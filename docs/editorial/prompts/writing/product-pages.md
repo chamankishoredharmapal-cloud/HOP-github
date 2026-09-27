@@ -109,7 +109,8 @@ hero → intro → body (1-2) → pull-quote → body → system-2 → closure
 - [ ] wearingContext is a specific occasion, not a generic one
 - [ ] Every sentence serves the Desire emotional stage
 - [ ] Brand palette colours are used for all colour references
-- [ ] Weaver is named or attributed
+- [ ] Maker is named only where verified for that exact product (never assume or generalize a production method)
+- [ ] No unverified production-method claim (handwoven, handloom, handmade, artisan-made, manually produced) and no invented weaving time or provenance
 - [ ] System-2 block is complete and verifiable
 - [ ] No forbidden words, no generic praise
 - [ ] Closure is weaver-focused or woman-focused, not product-focused

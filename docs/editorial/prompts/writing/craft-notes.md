@@ -14,7 +14,7 @@ Explain a craft concept clearly and beautifully. The reader should understand th
 
 ## Audience
 
-Women who want to understand what makes handwoven sarees different. They are curious about craft but not experts. The note should make them feel more knowledgeable without making them feel lectured.
+Women who want to understand what makes considered sarees different. They are curious about craft but not experts. The note should make them feel more knowledgeable without making them feel lectured. Frame every technique as education about that technique — never as a claim that every HOP saree is made that way. Never state a production method, weaving time, provenance, or artisan story unless it is verified for the linked product or collection.
 
 ## Tone
 

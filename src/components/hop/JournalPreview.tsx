@@ -11,7 +11,7 @@ export const JournalPreview = () => {
         <p className="text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft mb-3">The Journal</p>
         <h2 className="font-serif font-light text-3xl sm:text-4xl md:text-5xl text-ink">Field notes &amp; reflections.</h2>
         <p className="mt-4 text-sm sm:text-base text-ink-soft font-light max-w-md">
-          Dispatches from the loom, histories of the weave, and conversations on the art of choosing well.
+          Dispatches on cloth and craft, histories of the weave, and conversations on the art of choosing well.
         </p>
       </div>
       <Link to="/journal" className="hidden md:inline text-[0.7rem] tracking-[0.32em] uppercase text-ink border-b border-ink/30 pb-1 hover:border-ink transition-colors">

@@ -37,7 +37,7 @@ Kalyani is not named after a place or a technique. She is named after the feelin
 type: body
 ---
 
-The border of every Kalyani saree is woven with a temple pattern that Gangamma learned from her grandmother. The pattern has not changed in three generations. It does not need to. Some designs arrive complete — they only need to be continued.
+The border of every Kalyani saree carries a temple pattern that Gangamma learned from her grandmother. The pattern has not changed in three generations. It does not need to. Some designs arrive complete — they only need to be continued.
 
 The sarees in this collection share a palette: warm golds, deep teals, soft blushes. These are not bridal colours in the conventional sense. They are the colours of late afternoon before a winter ceremony — the gold of the setting sun, the teal of the sky just after, the blush of the last light on stone.
 
@@ -53,7 +53,7 @@ width: full
 type: body
 ---
 
-Each Kalyani saree is woven in pure Mulberry silk with hand-spun zari. The weave takes twenty-one days on a traditional pit loom. The border is woven first, then the body, then the pallu. Each section requires a separate setup on the loom. The weaver must adjust the thread tension twice an hour — in summer it is tighter, in monsoon it relaxes. The loom tells you what it needs. The weaver does not rush. The cloth does not allow it.
+Each Kalyani saree is composed in pure Mulberry silk with fine zari detailing. The border is composed first in the design, then the body, then the pallu — each section carrying its own rhythm and proportion. Thread tension shifts with the season — tighter in summer, more relaxed in monsoon — and the cloth asks for patience. Nothing here is rushed.
 
 ---
 type: system-2
@@ -61,8 +61,8 @@ title: "The Weave"
 ---
 
 - **Fabric:** Pure Mulberry silk, 12-momme
-- **Zari:** Hand-spun, real silver with gold wash
-- **Weave:** Temple border on pit loom
+- **Zari:** Fine metal-thread detailing with gold wash
+- **Detail:** Temple border
 - **Origin:** Molakalmuru, Karnataka
 - **Care:** Dry clean only. Store in muslin. Fold with the border facing outward.
 - **Dispatch:** Ships within 5-7 business days

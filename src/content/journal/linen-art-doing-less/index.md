@@ -9,18 +9,18 @@ author: "House of Padmavati"
 tag: Linen
 dek: "Why we must abandon the pursuit of the perfectly crisp crease, and learn to let our clothes live with us."
 hero: ./hero.jpg
-alt: "Soft, rumpled twilight grey handloom linen draped softly"
+alt: "Soft, rumpled twilight grey linen draped softly"
 relatedProducts:
   - "11111111-2222-3333-4444-555555555555"
 seo:
   title: "Linen, and the Art of Doing Less — Journal — House of Padmavati"
-  description: "An editorial on why handloom linen's tendency to soften and crease is a feature of a life well-lived, not a flaw to be ironed out."
+  description: "An editorial on why linen's tendency to soften and crease is a feature of a life well-lived, not a flaw to be ironed out."
 ---
 
 ---
 type: hero
 image: ./hero.jpg
-alt: "Soft, rumpled twilight grey handloom linen draped softly"
+alt: "Soft, rumpled twilight grey linen draped softly"
 caption: "Linen records the friction of your day."
 ---
 
@@ -54,4 +54,4 @@ attribution: "— House of Padmavati"
 type: closure
 ---
 
-The next time you drape a handloom linen saree, let it soften. Let it crease. Do not reach for the starch. Allow the cloth to be exactly what it is, so that you can go about being exactly who you are.
+The next time you drape a linen saree, let it soften. Let it crease. Do not reach for the starch. Allow the cloth to be exactly what it is, so that you can go about being exactly who you are.

@@ -223,7 +223,7 @@ const ProductDetail = () => {
                 </p>
               ) : product.stock <= 3 ? (
                 <p className="mt-2 text-xs font-light tracking-wide text-ink-soft">
-                  One of a small batch from this loom — {product.stock} {product.stock === 1 ? "drape remains" : "drapes remain"}.
+                   One of a small batch — {product.stock} {product.stock === 1 ? "drape remains" : "drapes remain"}.
                 </p>
               ) : null}
             </div>

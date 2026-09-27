@@ -56,7 +56,7 @@ width: full
 type: body
 ---
 
-A single saree takes twenty-one days. Not because the weaving is slow — because it is precise. The zari is hand-spun, which means every strand is slightly different. The tension must be adjusted for each one. The border is woven separately from the body, then attached. Each section requires a different setup.
+A single saree takes many days of precise, unhurried work — not because the weaving is slow, but because it is exact. The zari detailing means every strand behaves slightly differently. The tension must be answered with patience. The border is composed separately from the body, then joined. Each section requires a different setup.
 
 "What do you think about while you weave?" we asked her.
 

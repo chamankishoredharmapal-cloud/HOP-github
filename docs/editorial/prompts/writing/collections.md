@@ -97,7 +97,7 @@ hero → intro → body (2-3) → image → body → system-2 → closure
 ## Acceptance Criteria
 
 - [ ] Collection name is never explained literally — its meaning is conveyed through atmosphere
-- [ ] At least one sentence references the weaver or weaving tradition
+- [ ] At least one sentence references design, textile character, or cultural tradition (name a weaver, village, or technique only when verified for that collection; never imply all HOP sarees share one production method)
 - [ ] Colour is described using the brand palette (Coastal Teal, Golden Sand, etc.)
 - [ ] The occasion or mood is specific, not generic
 - [ ] At least one body block describes how the sarees in this collection feel when worn

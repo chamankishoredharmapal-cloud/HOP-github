@@ -18,7 +18,7 @@ glossaryTerms:
   - handloom
 seo:
   title: "The Pit Loom — Weaving Techniques — House of Padmavati"
-  description: "Discover how pit looms create fabrics that breathe. Understanding the mechanics, the rhythm, and the humanity behind handwoven sarees."
+  description: "Discover how pit looms create fabrics that breathe. Understanding the mechanics, the rhythm, and the humanity behind these sarees."
 ---
 
 ---
@@ -32,7 +32,7 @@ caption: "The treadles of a pit loom are housed below ground level."
 type: intro
 ---
 
-A saree is not woven by a machine. It is woven by a body in motion. To understand why a handwoven drape falls differently, breathes differently, and lasts longer than a mill-made fabric, you must first look at where it is made. For our finest silks and linens, that place is a pit loom.
+Some sarees are shaped as much by the body as by the mechanism. To understand why a pit-loom drape falls differently, breathes differently, and endures, you must first look at where it is made. For some of our finest silks and linens, that place is a pit loom.
 
 ---
 type: body

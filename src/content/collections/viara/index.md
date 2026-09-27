@@ -29,10 +29,10 @@ There is a difference between wanting to be looked at and wanting to be felt. Th
 type: body
 ---
 
-Evening light asks something different of silk. It asks for depth. The Viara silks are woven with exceptionally fine warp counts, creating a drape that is fluid rather than structured. We use deeper dye saturations designed specifically to catch and refract artificial light. The zari placement is subtle—never a broad sheet of gold, but a delicate, deliberate thread that glints when you move. It is a masterclass in restraint.
+Evening light asks something different of silk. It asks for depth. The Viara silks are composed with an exceptionally fine weave structure, creating a drape that is fluid rather than structured. We use deeper dye saturations designed specifically to catch and refract artificial light. The zari placement is subtle—never a broad sheet of gold, but a delicate, deliberate thread that glints when you move. It is a masterclass in restraint.
 
 ---
 type: closure
 ---
 
-An evening carries its own weight. The Viara collection ensures you do not carry it alone. It wraps you in forty-three hours of quiet artistry, allowing you to simply be present.
+An evening carries its own weight. The Viara collection ensures you do not carry it alone. It wraps you in quiet artistry, allowing you to simply be present.

@@ -36,7 +36,7 @@ The zari catches the morning light. Not the harsh noon light, but the soft gold 
 type: body
 ---
 
-There is a reason weavers begin before sunrise. The light at this hour is forgiving — it does not glare, does not distort. It moves across the warp and weft slowly, finding each thread, each twist, each turn. A pit loom in Molakalmuru catches this light through a single window. The weaver adjusts the tension twice an hour. The rhythm is patient. The cloth grows.
+There is a reason weavers begin before sunrise. The light at this hour is forgiving — it does not glare, does not distort. It moves across the warp and weft slowly, finding each thread, each twist, each turn. A pit loom in Molakalmuru catches this light through a single window. The weaver adjusts the tension through the morning. The rhythm is patient. The cloth grows.
 
 In this light, zari does not shine. It glows. The difference is everything. Shine is surface — it catches the eye, demands attention, announces itself. Glow is depth — it emerges from within, waits to be discovered, rewards the patient observer. Morning light teaches zari to glow.
 

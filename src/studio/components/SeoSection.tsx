@@ -59,7 +59,7 @@ export function SeoSection({ form, onChange }: SeoSectionProps) {
             <textarea
               value={form.meta_description}
               onChange={(e) => onChange("meta_description", e.target.value)}
-              placeholder="Discover the Padmini Coastal Pattu — a handwoven Kanchipuram silk saree..."
+               placeholder="Discover the Padmini Coastal Pattu — a Kanchipuram silk saree with temple-border detailing..."
               rows={3}
               className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring resize-y"
             />

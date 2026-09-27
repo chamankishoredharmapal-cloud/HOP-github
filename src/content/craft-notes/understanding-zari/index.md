@@ -10,7 +10,7 @@ tag: Technique
 dek: "What zari is, how it is made, and why real zari behaves differently from imitation."
 readingTime: 6
 hero: ./hero.jpg
-alt: "Close-up of hand-spun zari thread catching light"
+alt: "Close-up of fine zari thread catching light"
 collections:
   - kalyani
 glossaryTerms:
@@ -23,8 +23,8 @@ seo:
 ---
 type: hero
 image: ./hero.jpg
-alt: "Close-up of hand-spun zari thread catching light"
-caption: "Hand-spun zari on a pit loom in Molakalmuru."
+alt: "Close-up of fine zari thread catching light"
+caption: "Fine zari thread on a loom in Molakalmuru."
 ---
 
 ---
@@ -37,9 +37,9 @@ Zari is the metallic thread that turns a woven saree into something that catches
 type: body
 ---
 
-Real zari begins as a thin silver wire. This wire is flattened, then wrapped around a silk core thread. The result is flexible enough to weave but dense enough to catch light. The process is entirely by hand — the spinner draws the wire through a series of progressively finer holes until it reaches the desired thickness. Each pass reduces the diameter. Each pass risks breaking the wire. A single mistake means starting over.
+Real zari begins as a thin silver wire. This wire is flattened, then wrapped around a silk core thread. The result is flexible enough to weave but dense enough to catch light. The process is painstaking — the spinner draws the wire through a series of progressively finer holes until it reaches the desired thickness. Each pass reduces the diameter. Each pass risks breaking the wire. A single mistake means starting over.
 
-After the silver wire is spun around the silk core, it is washed in gold. This gives zari its warm colour and prevents the silver from tarnishing against the skin. The gold layer is measured in microns — too thick and the thread becomes stiff, too thin and it wears off. The balance requires generations of experience.
+After the silver wire is spun around the silk core, it is washed in gold. This gives zari its warm colour and prevents the silver from tarnishing against the skin. The gold layer is measured in microns — too thick and the thread becomes stiff, too thin and it wears off. The balance requires deep, accumulated experience.
 
 ---
 type: image
@@ -77,4 +77,4 @@ title: "How to identify real zari"
 type: closure
 ---
 
-When you buy a saree with hand-spun, real zari, you are not buying a thread. You are buying a technique that has been refined over centuries, a material that will outlive its first wearer, and a glow that cannot be manufactured. The zari knows the difference. Over time, you will too.
+When you choose a saree with fine, real zari, you are not buying a thread. You are choosing a technique refined over long use, a material that can outlive its first wearer, and a glow that rewards attention. The zari knows the difference. Over time, you will too.

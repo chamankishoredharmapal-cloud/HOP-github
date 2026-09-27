@@ -46,7 +46,7 @@ A complete sentence or two that accurately describes the content in HOP voice. N
 Examples:
 - "What zari is, how it is made, and why real zari behaves differently from imitation."
 - "On the soft hour between five and seven, when zari forgets to shine."
-- "A Mulberry silk temple border saree from Molakalmuru, handwoven with hand-spun zari. Reads as teal in shadow and jade in sunlight."
+- "A Mulberry silk temple border saree from Molakalmuru, with fine zari detailing. Reads as teal in shadow and jade in sunlight."
 
 ### OG Image Alt
 
@@ -89,11 +89,13 @@ Example: "A mulberry silk saree in coastal teal draped by a window, afternoon li
 
 | Failure | Symptom | Correction |
 |---------|---------|------------|
-| Keyword stuffing | "Buy silk saree online India handloom pure silk saree wedding" | Write a coherent sentence: "A handwoven Mulberry silk saree from Molakalmuru, with real zari and a temple border." |
+| Keyword stuffing | "Buy silk saree online India handloom pure silk saree wedding" | Write a coherent sentence: "A Mulberry silk saree from Molakalmuru, with real zari and a temple border." |
 | Clickbait title | "You won't believe what makes this saree special" | Be specific: "Understanding zari — House of Padmavati" |
 | Title too long | "How morning light reads a weave and why the soft hour between five and seven is when zari reveals itself to the patient observer — House of Padmavati" (87 chars) | Condense: "How morning light reads a weave. — House of Padmavati" |
 | Description duplicates title | Title and description are identical | Use description to add context the title does not cover. |
 
 ---
+
+**Production-method rule:** never use handwoven, handloom, handmade, artisan-made, or manually produced in SEO copy unless explicitly verified for that exact content subject. Never invent weaving times, provenance, or artisan stories for keyword value. Accuracy comes first.
 
 **Cross-reference:** `docs/research/seo/` (SEO research), each `writing/` document (content-type-specific guidance)

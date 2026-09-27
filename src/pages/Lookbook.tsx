@@ -27,7 +27,7 @@ const Lookbook = () => {
           <div className="absolute inset-0 z-0">
             <img
               src={fabricImg}
-              alt="Macro detail of hand-twisted silver zari on a Kalyani border"
+               alt="Macro detail of fine silver zari on a Kalyani border"
                className="hop-lookbook__hero"
             />
             <div className="absolute inset-0 bg-black/10" />
@@ -56,7 +56,7 @@ const Lookbook = () => {
                   />
                 </div>
                  <figcaption className="hop-lookbook__caption">
-                  Kalyani Brocade. Hand-twisted silver zari over forty days.
+                   Kalyani Brocade. Fine silver zari on a temple border.
                 </figcaption>
               </figure>
 

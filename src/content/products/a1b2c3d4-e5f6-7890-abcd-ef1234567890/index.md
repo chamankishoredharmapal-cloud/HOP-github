@@ -7,7 +7,7 @@ alt: "A mulberry silk saree in coastal teal, draped by a window in afternoon lig
 sensoryStory: "This saree reads as teal in shadow and jade in sunlight — the weft catching each shift. The fabric settles at the hip with a weight that says 'I am here.' The zari border catches the light at certain angles, not all. It does not demand attention. It rewards it."
 wearingContext: "She wore this to her niece's wedding — the one where the whole family gathered after years. It carried her through the ceremony, the dinner, the dancing, and the quiet moment after when she folded it and thought: this one stays."
 system2:
-  weave: "Temple border, pit loom, hand-spun zari"
+  weave: "Temple border with fine zari detailing"
   fabric: "Pure Mulberry silk, 12-momme"
   origin: "Molakalmuru, Karnataka"
   care: "Dry clean only. Store in muslin. Fold with border facing outward."
@@ -21,7 +21,7 @@ glossaryTerms:
   - pattu
 seo:
   title: "Mulberry Silk Temple Border Saree — Coastal Teal — House of Padmavati"
-  description: "A Mulberry silk temple border saree from Molakalmuru, handwoven with hand-spun zari. Reads as teal in shadow and jade in sunlight."
+  description: "A Mulberry silk temple border saree from Molakalmuru, with fine zari detailing. Reads as teal in shadow and jade in sunlight."
 ---
 
 ---
@@ -41,7 +41,7 @@ There is a moment when a saree stops being fabric and becomes something else —
 type: body
 ---
 
-The weave is a temple border, the kind that Gangamma learned from her grandmother. The pattern is geometric but not rigid — the hand of the weaver introduces small variations that no machine could replicate. The border is woven in hand-spun zari on a pure Mulberry silk base. The contrast between the dense, structured border and the fluid, matte body is the saree's quiet signature.
+The weave is a temple border, the kind that Gangamma learned from her grandmother. The pattern is geometric but not rigid — subtle variations in the border give each piece its own character. The border carries fine zari detailing on a pure Mulberry silk base. The contrast between the dense, structured border and the fluid, matte body is the saree's quiet signature.
 
 The colour shifts throughout the day. In the morning light of Pondicherry, it reads as deep teal. In the afternoon sun, jade. Under evening lamps, it settles into a neutral so dark it is almost grey. This is not a colour that announces itself. It is a colour that reveals itself over time.
 
@@ -56,9 +56,9 @@ type: system-2
 title: "Details"
 ---
 
-- **Weave:** Temple border — pit loom
+- **Detail:** Temple border
 - **Fabric:** Pure Mulberry silk, 12-momme
-- **Zari:** Hand-spun, real silver with gold wash
+- **Zari:** Fine metal-thread detailing with gold wash
 - **Length:** 5.5 meters (includes blouse piece)
 - **Width:** 47 inches
 - **Origin:** Molakalmuru, Karnataka

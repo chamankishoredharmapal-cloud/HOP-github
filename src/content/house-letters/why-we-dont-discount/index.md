@@ -17,7 +17,7 @@ seo:
 type: hero
 image: ./hero.jpg
 alt: "A saree folded in muslin, waiting"
-caption: "Every saree folded by hand. Every fold intentional."
+caption: "Every saree folded with care. Every fold intentional."
 ---
 
 ---
@@ -32,7 +32,7 @@ type: body
 
 There are good reasons for this. The first is respect for the woman who bought yesterday at full price. If we discount tomorrow, we tell her she paid too much. We will not do that. Her trust is worth more than a conversion spike.
 
-The second reason is the saree itself. A handwoven saree is not a commodity. It is not interchangeable with another saree of similar weight and colour. It is the work of a specific weaver, in a specific village, over a specific twenty-one days. Discounting it implies that it was overpriced to begin with. It was not. The price reflects the time, the material, the skill, and the generations of knowledge that produced it.
+The second reason is the saree itself. A HOP saree is not a commodity. It is not interchangeable with another saree of similar weight and colour. It is the result of specific care, in a specific place, over considered time. Discounting it implies that it was overpriced to begin with. It was not. The price reflects the material, the detailing, the skill, and the knowledge held in the saree.
 
 ---
 type: pull-quote
@@ -44,7 +44,7 @@ attribution: "— House of Padmavati"
 type: body
 ---
 
-The third reason is the experience. HOP is designed to be a space without pressure. No countdown timers. No stock alerts. No pop-ups. No urgency. A discount is a form of pressure — it asks the woman to decide now, before the offer expires. We do not believe a saree should be chosen under pressure. A saree is chosen the way a saree is woven — slowly, carefully, with intention.
+The third reason is the experience. HOP is designed to be a space without pressure. No countdown timers. No stock alerts. No pop-ups. No urgency. A discount is a form of pressure — it asks the woman to decide now, before the offer expires. We do not believe a saree should be chosen under pressure. A saree is chosen the way it deserves — slowly, carefully, with intention.
 
 ---
 type: closure

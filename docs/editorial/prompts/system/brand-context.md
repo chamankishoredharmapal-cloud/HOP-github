@@ -12,7 +12,7 @@
 
 ## Identity Summary
 
-House of Padmavati is a digital fashion house for handwoven Indian sarees. Not an ecommerce store. A sanctuary where cloth carries memory.
+House of Padmavati is a digital fashion house for Indian sarees. Not an ecommerce store. A sanctuary where cloth carries memory.
 
 ## Brand Territories
 
@@ -31,14 +31,16 @@ Quiet Luxury · Cultural Custodianship · Slow Making · Human Scale · Generati
 | Pillar | Core Message |
 |--------|-------------|
 | Heritage | "This cloth carries memory." |
-| Craft | "Handwoven, not mass-produced." |
+| Craft | "Considered, not mass-produced." |
 | Quietness | "No noise. Only the cloth." |
 | Continuance | "Made to outlive its first wearer." |
 | Intention | "Every detail is a choice." |
 
 ## Brand Promises
 
-No discounts ever · No urgency ever · No mass production · No marketing noise · The weaver is named · A personal note with every order · Wrapped with intention
+No discounts ever · No urgency ever · No mass production · No marketing noise · The maker is named where verified · A personal note with every order · Wrapped with intention
+
+**Production-method rule:** never claim handwoven, handloom, handmade, artisan-made, or manually produced for HOP or any product unless explicitly verified for that exact product or collection. Never invent weaving times, artisan stories, provenance, or processes.
 
 ## Prohibited Identity
 

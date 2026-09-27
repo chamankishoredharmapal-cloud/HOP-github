@@ -6,17 +6,17 @@ published: 2026-07-25
 status: published
 occasion: Milestone
 hero: ./hero.jpg
-alt: "A handwoven silk saree folded in muslin, morning light across the weave"
+alt: "A silk saree folded in muslin, morning light across the weave"
 signature: "— House of Padmavati"
 seo:
-  title: "About House of Padmavati — Handwoven Sarees"
-  description: "The origin story of House of Padmavati. A digital fashion house dedicated to handwoven Indian sarees, named after a real woman."
+  title: "About House of Padmavati — Indian Sarees"
+  description: "The origin story of House of Padmavati. A digital fashion house dedicated to Indian sarees, named after a real woman."
 ---
 
 ---
 type: hero
 image: ./hero.jpg
-alt: "A handwoven silk saree folded in muslin, morning light across the weave"
+alt: "A silk saree folded in muslin, morning light across the weave"
 caption: "Cloth carries memory. This is ours."
 ---
 
@@ -32,9 +32,9 @@ Her name was Padmavati. This house carries her name. Not as a brand. As a dedica
 type: body
 ---
 
-House of Padmavati is a digital fashion house dedicated to handwoven Indian sarees. We exist for a single purpose: to preserve and evolve the handwoven saree as a living art form — worn, carried, and passed on with the same care that made it.
+House of Padmavati is a digital fashion house dedicated to Indian sarees. We exist for a single purpose: to preserve and evolve the saree as a living art form — worn, carried, and passed on with the same care that shaped it.
 
-We are not a marketplace. We are not a platform. We do not aggregate. Every saree that carries our name is handwoven on a pit loom by a weaver we know, in a village we have visited, using materials we have verified. The weaver is named. The region is named. The technique is named. Nothing is anonymous.
+We are not a marketplace. We are not a platform. We do not aggregate. Every saree that carries our name is chosen with care — its material verified, its origin named, its detailing considered. Where a maker, village or technique is part of a saree's story, we name it. Nothing is anonymous.
 
 ---
 type: divider
@@ -52,7 +52,7 @@ Gangamma has been at her pit loom for thirty-one years. She began at twelve. Her
 
 "The border is the signature," she says. "Without it, the saree is a stranger."
 
-A single saree takes twenty-one days. Not because the weaving is slow. Because it is precise. The zari is hand-spun — a core wire of fine silver, coated with gold, flattened into a thread and wound around mulberry silk. Every strand is slightly different. The tension must be adjusted for each one. The border is woven separately from the body, then attached by hand. Each section requires a different setup, a different rhythm, a different hour of the day.
+A single saree takes many days of precise, unhurried work. The zari holds a core of fine silver, coated with gold and wound around mulberry silk. Every strand behaves slightly differently. The tension must be answered with patience. The border is composed separately from the body, each section carrying its own setup, its own rhythm, its own hour of the day.
 
 ---
 type: pull-quote
@@ -68,11 +68,11 @@ We believe a saree is not a product. It is a vessel. It carries the weaver's kno
 
 This belief shapes every decision we make.
 
-We move at the speed of the loom, not the social feed. We do not chase trends. We do not discount. We do not send emails with countdown timers or subject lines that say "last chance." The price reflects the time, the material, the skill, and the generations of knowledge that produced the saree. It is the same price today as it was last month. It will be the same price next month.
+We move at the pace of considered making, not the social feed. We do not chase trends. We do not discount. We do not send emails with countdown timers or subject lines that say "last chance." The price reflects the material, the detailing, the skill, and the knowledge held in the saree. It is the same price today as it was last month. It will be the same price next month.
 
-We are quiet where others are loud. No pop-ups. No stock alerts. No push notifications. No urgency. We designed this house to be a space where a woman can consider a saree the way a saree is woven — slowly, carefully, with intention.
+We are quiet where others are loud. No pop-ups. No stock alerts. No push notifications. No urgency. We designed this house to be a space where a woman can consider a saree the way a saree deserves — slowly, carefully, with intention.
 
-We name the weaver on every saree. Not as a marketing gesture. Because her hands made it. Because her name is as much a part of the cloth as the silk and the zari. Their work is signed, even if the signature is invisible to anyone who does not know where to look.
+We name the maker wherever a maker is part of a saree's story. Not as a marketing gesture. Because human care shaped it. Because their name is as much a part of the cloth as the silk and the zari. Their work is signed, even if the signature is invisible to anyone who does not know where to look.
 
 ---
 type: divider
@@ -84,11 +84,11 @@ type: body
 
 When you receive a saree from this house, it arrives wrapped in jasmine paper with a cotton ribbon. No plastic. No branded tape. Inside, a handwritten keepsake card with the name of the weaver who made it. This is not packaging. This is how we believe cloth should travel — gently, with care, carrying the intention of everyone who touched it.
 
-We do not run sales. We do not run promotions. We do not mark down a saree that took twenty-one days to make. If we discount, we tell the woman who bought yesterday that she paid too much. We will not do that. Her trust is worth more than a conversion.
+We do not run sales. We do not run promotions. We do not mark down a saree that was made with such care. If we discount, we tell the woman who bought yesterday that she paid too much. We will not do that. Her trust is worth more than a conversion.
 
 We do not claim to be something we are not. We are not the biggest. We are not the fastest. We are not trying to be. We are trying to be the most respectful — of the craft, of the women who make it, and of the women who choose it.
 
-These are not marketing principles. They are promises. We keep them because the alternative — urgency, noise, pressure, anonymity — is the opposite of everything a handwoven saree represents.
+These are not marketing principles. They are promises. We keep them because the alternative — urgency, noise, pressure, anonymity — is the opposite of everything a considered saree represents.
 
 ---
 type: closure

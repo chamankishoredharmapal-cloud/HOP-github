@@ -37,17 +37,17 @@ Add depth to existing HOP content by elaborating on what is already there. The e
 |--------------|-----|
 | "The zari border is beautiful." | Sensory description of how the zari catches light, how it feels, how it behaves over time. |
 | "She wore it to a wedding." | Context: whose wedding, when, what kind of ceremony, how it carried her through the day. |
-| "This weave takes twenty-one days." | Why: because the warp must be set, the border woven first, the zari spun by hand. |
-| "Handwoven in Karnataka." | Specific village, weaver name, weaving tradition, generational context. |
+| "This weave carries a temple border." | Why it matters: the border's proportion, contrast, and how it moves with the body (only verified design detail — never invent process, duration, or provenance). |
+| "Made in Karnataka." | Specific verified detail only: village, maker name, or textile tradition where confirmed for that product. Never invent or generalize a production method. |
 | "This saree is made of silk." | What kind of silk, what weight, how it behaves differently from other silks. |
 
 ## Examples
 
-**Original:** "This saree is handwoven in pure Mulberry silk with a temple border."
+**Original:** "This saree is composed in pure Mulberry silk with a temple border."
 
-**Expanded:** "This saree is woven from pure Mulberry silk, 12-momme, on a pit loom in Molakalmuru. The temple border is Gangamma's signature — a pattern she learned from her grandmother, unchanged in three generations. The border is woven first, then the body, then the pallu. Each section requires a separate setup."
+**Expanded:** "This saree is composed in pure Mulberry silk, 12-momme, with a temple border rooted in Molakalmuru. The border carries a geometric pattern in the temple tradition, set against a fluid, matte body. The contrast between dense border and quiet body is the saree's signature." (Maker, village, and process references may be added only where verified for that exact product.)
 
-**What was added:** Weave location, weaver name, generational context, technical detail about the weaving process. No padding — every sentence adds information.
+**What was added:** Verified fabric specification, origin-rooted design reference, sensory contrast. No padding — every sentence adds information. No production method, duration, or artisan story was invented.
 
 ## Common Mistakes
 

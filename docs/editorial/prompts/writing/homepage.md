@@ -42,9 +42,9 @@ First-time visitors who have never heard of HOP. They do not yet know what HOP i
 - Each collection gets one line of atmosphere
 
 ### Craft Section
-- One powerful craft claim: "Sixty hours per drape. No shortcuts."
-- Sensory description of the making process
-- Naming a weaver, a village, a technique
+- One powerful, verifiable detail: a material, design, or cultural reference (never an invented production duration or an unverified production-method claim).
+- Sensory description of the cloth and wearing experience
+- Naming a maker, village, or technique only where verified
 
 ### Journal Preview
 - Article titles and deks
@@ -93,7 +93,7 @@ First-time visitors who have never heard of HOP. They do not yet know what HOP i
 > Wedding Elegance · Heritage Luxury
 
 **Craft section:**
-> Sixty hours per drape. No shortcuts. Hand-spun zari on a pit loom in Molakalmuru, where Gangamma has been weaving the same temple border for thirty-one years. The thread remembers.
+> Mulberry silk with a temple border rooted in Molakalmuru, in colours that shift from teal to jade. Considered detailing, designed to move beautifully with the wearer.
 
 ## Failure Cases
 

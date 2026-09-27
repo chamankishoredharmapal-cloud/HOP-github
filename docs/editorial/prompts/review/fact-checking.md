@@ -87,6 +87,10 @@ Verify:
 
 **Common issues:** Rounding that changes the meaning, conflating different weavers' timelines.
 
+## Production-Method Verification Protocol
+
+Treat every production-method claim (handwoven, handloom, handmade, artisan-made, manually produced, pit loom, hand-spun, weaving time, production duration) as UNVERIFIED unless it is explicitly confirmed for that exact product or collection in a trusted source. Never infer a production method from appearance, fabric name, or region. When the method is unknown, require the writer to describe verified material, design, texture, drape, colour, detailing, cultural reference, and customer experience instead. Educational content about a technique must be scoped to that technique — never generalized to the whole house or catalogue.
+
 ## Verification Protocol
 
 | Claim Type | Verification Method | Pass Criteria |
@@ -117,7 +121,7 @@ Verify:
 | Assuming common knowledge is accurate | Verify everything. Common knowledge about handloom is often wrong. |
 | Trusting AI-generated facts | AI-generated factual claims about craft and culture are frequently fabricated. Verify all of them. |
 | Letting a good story override accuracy | If the factual claim makes the story better but is unverifiable, remove it. |
-| Accepting round numbers | "Twenty-one days" is specific and plausible. "About three weeks" is vague. "Thirty days" is suspiciously round. |
+| Accepting durations without a source | Any weaving or production duration ("twenty-one days," "fourteen days," "forty-three hours") is UNVERIFIED unless confirmed for that exact product in a trusted source. Specificity never substitutes for verification — remove the number. |
 
 ---
 

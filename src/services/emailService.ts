@@ -141,14 +141,14 @@ export function buildDeliveredEmail(data: ShipmentData): EmailPayload {
 }
 
 export function buildNurtureEmail(data: NurtureData): EmailPayload {
-  const body = htmlWrapper("Notes from the loom", `
+  const body = htmlWrapper("Notes from the house", `
     <p>Dear ${data.customerName},</p>
     <p>We have published a new entry in our journal.</p>
     <p style="font-size:16px;font-style:italic;margin-top:24px;">${data.title}</p>
     <p>${data.summary}</p>
     <p style="margin-top:24px;"><a href="${data.link}" style="color:#3D5A5A;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;text-decoration:none;border-bottom:1px solid #3D5A5A;padding-bottom:2px;">Read the full story</a></p>
   `);
-  return { to: "", subject: "Notes from the loom", body, type: "nurture" };
+  return { to: "", subject: "Notes from the house", body, type: "nurture" };
 }
 
 export function buildPasswordResetEmail(data: { customerName: string; resetLink: string }): EmailPayload {

@@ -36,7 +36,7 @@ Some evenings require a different kind of presence. Not the heavy brocades of th
 type: body
 ---
 
-Woven from pure silk, the fabric carries a weight of 650 grams. This specific density is intentional. It allows the saree to fall with structural certainty, holding a perfect pleat through a long gallery opening or a formal reception. It does not wrinkle easily. It maintains its composure so the wearer can maintain hers.
+Composed in pure silk, the fabric carries a weight of 650 grams. This specific density is intentional. It allows the saree to fall with structural certainty, holding a perfect pleat through a long gallery opening or a formal reception. It does not wrinkle easily. It maintains its composure so the wearer can maintain hers.
 
 The body is a soft blush pink, punctuated by minimalist gold motifs. The weave is contemporary, stepping away from dense traditional borders to offer a cleaner, more spacious visual language. Under the warm lamps of an evening event, the gold thread reflects a quiet, contained light.
 
@@ -65,4 +65,4 @@ title: "Details"
 type: closure
 ---
 
-This is the flagship silk. It is woven for the woman who knows that true elegance is never loud. It is undeniable.
+This is the flagship silk. It is designed for the woman who knows that true elegance is never loud. It is undeniable.

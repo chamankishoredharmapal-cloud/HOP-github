@@ -115,6 +115,10 @@ Content units reference each other through frontmatter fields:
 
 All images should be provided as WebP with JPEG fallback. Every image requires `alt` text.
 
+## Production-Method Claim Guardrail (Permanent)
+
+Never describe HOP or a HOP product as handwoven, handloom, handmade, artisan-made, or manually produced unless that exact claim is explicitly verified for the relevant product or collection. Never invent weaving times, production durations, artisan stories, provenance, or manufacturing processes. When production method is unknown, describe the verified material, design, texture, drape, colour, detailing, cultural reference, and customer experience instead. Educational craft notes and weaver portraits describe their own subject — they must never be read as a claim that every HOP saree shares that production method. Universal brand messaging (homepage, house letters, campaigns, SEO) must never imply a single catalogue-wide production method.
+
 ## Related Documents
 
 - Schema files: `src/content/_schemas/`

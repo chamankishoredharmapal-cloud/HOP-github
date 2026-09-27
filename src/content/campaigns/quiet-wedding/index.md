@@ -15,7 +15,7 @@ A wedding is a moment of profound transition. We believe your garment should not
 
 For generations, the standard of bridal wear has been measured in weight. Heavy embellishments and restrictive silhouettes that demand endurance rather than celebration. 
 
-We have curated a new edit of heirloom handlooms. Pieces that offer the visual weight of heritage, but the physical lightness of breathable silk.
+We have curated a new edit of heirloom silks. Pieces that offer the visual weight of heritage, but the physical lightness of breathable silk.
 
 Silks that breathe. Zari that catches the light, not the floor.
 
@@ -32,16 +32,16 @@ House of Padmavati
 **Caption:**
 A bride does not need to be weighed down to be beautiful. We believe the garment should yield to the woman, not the other way around. 
 Explore The Quiet Wedding edit via the link in our bio.
-#HouseOfPadmavati #QuietLuxury #HandloomBridal #KanchipuramSilk
+#HouseOfPadmavati #QuietLuxury #QuietBridal #KanchipuramSilk
 
 ## Post 2: The Edit
 **Image:** Full length shot of the Viara Tissue saree, blowing slightly in a natural breeze.
 **Caption:**
-Silks that breathe. Zari that catches the light, not the floor. The Viara Tissue is woven for the bride who chooses presence over performance. 
-#HouseOfPadmavati #TheQuietWedding #TissueSilk #Handwoven
+Silks that breathe. Zari that catches the light, not the floor. The Viara Tissue is designed for the bride who chooses presence over performance.
+#HouseOfPadmavati #TheQuietWedding #TissueSilk #SilkSaree
 
 ## Post 3: The Second Life
 **Image:** A neatly folded saree resting on unbleached muslin.
 **Caption:**
-A true heirloom is not meant to be boxed away forever. By choosing a pure handloom, you are choosing a garment that will evolve with you—meant to be folded, rested, and worn again to other celebrations. 
+A true heirloom is not meant to be boxed away forever. By choosing a considered heirloom, you are choosing a garment that will evolve with you—meant to be folded, rested, and worn again to other celebrations.
 #HouseOfPadmavati #HeirloomTextiles #SustainableBridal

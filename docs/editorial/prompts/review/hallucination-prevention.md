@@ -89,6 +89,10 @@ Catch content that sounds plausible but is not true. AI models frequently fabric
 
 **Action:** Remove process details that are not verified. Stick to information in the provided research.
 
+## Production-Method Hallucination Rule
+
+Flag any handwoven, handloom, handmade, artisan-made, or manually produced claim that is not explicitly supported by the provided sources for that exact product or collection. Flag any invented weaving time, production duration, artisan story, provenance, or manufacturing process. Universal statements about how "every HOP saree" is made are hallucinations unless the sources verify every product. Require replacement with verified material, design, texture, drape, colour, detailing, cultural reference, or customer-experience language.
+
 ## Common Hallucination Patterns
 
 | Pattern | Example | Why It Is Suspicious |

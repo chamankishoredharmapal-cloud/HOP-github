@@ -7,7 +7,7 @@ alt: "A twilight grey pure linen saree, catching the evening breeze"
 sensoryStory: "This linen is not stiff. It has been woven to soften with body heat, draping close to the skin. The twilight grey holds a quiet depth, shifting in tone as the afternoon moves into evening. At 450 grams, it rests on the shoulder without demanding attention, moving with the wearer rather than holding her still."
 wearingContext: "She chose this for a Tuesday that started with a board meeting and ended with dinner by the sea. The linen kept pace with her day, holding its pleats through the morning and breathing through the evening."
 system2:
-  weave: "Handloom linen"
+  weave: "Linen weave"
   fabric: "Pure Linen"
   origin: "India"
   care: "Gentle hand wash in cold water. Iron while damp."
@@ -16,7 +16,7 @@ collections:
   - arya
 seo:
   title: "Twilight Grey Pure Linen Saree — Megham — House of Padmavati"
-  description: "A pure handwoven linen saree in twilight grey. Lightweight and breathable, designed for the rhythm of a long day."
+  description: "A pure linen saree in twilight grey. Lightweight and breathable, designed for the rhythm of a long day."
 ---
 
 ---
@@ -36,9 +36,9 @@ There are sarees meant to stand still, and there are sarees meant to move. Megha
 type: body
 ---
 
-The fabric is pure handwoven linen, chosen for its breathability and response to body heat. Unlike machine-milled linen that holds rigid angles, this weave softens almost immediately upon draping. It weighs 450 grams — light enough to feel like a second skin, substantial enough to hold a clean, sharp pleat. 
+The fabric is pure linen, chosen for its breathability and response to body heat. Unlike rigid, heavily finished linen that holds stiff angles, this weave softens almost immediately upon draping. It weighs 450 grams — light enough to feel like a second skin, substantial enough to hold a clean, sharp pleat.
 
-The colour is twilight grey. It is not a flat, uniform dye. The handloom process leaves subtle variations in the yarn, allowing the fabric to catch the light differently at two in the afternoon and at seven in the evening. It is a colour of quiet transitions.
+The colour is twilight grey. It is not a flat, uniform dye. Subtle variations in the yarn allow the fabric to catch the light differently at two in the afternoon and at seven in the evening. It is a colour of quiet transitions.
 
 ---
 type: pull-quote
@@ -51,7 +51,7 @@ type: system-2
 title: "Details"
 ---
 
-- **Weave:** Handloom
+- **Weave:** Linen
 - **Fabric:** Pure Linen
 - **Colour:** Twilight Grey
 - **Length:** 5.5 meters (blouse piece not included)

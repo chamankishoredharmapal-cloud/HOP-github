@@ -27,7 +27,7 @@ export const HeroSection = () => {
             Saree. Time. You.
           </h1>
           <p className="mt-5 text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-xl mx-auto text-pretty">
-            Five ways of wearing tradition — woven slowly, chosen quietly.
+            Five ways of wearing tradition — considered deeply, chosen quietly.
           </p>
         </div>
 

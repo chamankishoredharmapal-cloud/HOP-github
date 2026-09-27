@@ -159,7 +159,7 @@ function PaletteCard({ p }: { p: Palette }) {
               Molakalmuru Temple Silk — ₹ 48,000
             </p>
             <p className="text-xs" style={{ color: p.inkSoft }}>
-              Mulberry · 12 momme · pit loom · 21 days
+               Mulberry · 12 momme · temple border · Molakalmuru
             </p>
           </div>
           <div className="h-px" style={{ background: p.border }} />

@@ -6,13 +6,13 @@ published: 2025-07-01
 status: published
 author: "House of Padmavati"
 tag: "Technique"
-dek: "Why hand-embroidery on sheer organza takes fourteen days."
+dek: "Why hand-embroidery on sheer organza asks for unhurried days of work."
 hero: ./hero.jpg
 products:
   - "77777777-8888-9999-0000-111111111111"
 seo:
   title: "Hand-Embroidery on Organza — Craft Notes — House of Padmavati"
-  description: "Discover the meticulous process of hand-embroidering sheer organza. Learn why creating tactile topography on a surface of air takes 14 days."
+  description: "Discover the meticulous process of hand-embroidering sheer organza. Learn why creating tactile topography on a surface of air takes unhurried days of work."
 ---
 
 ---
@@ -32,7 +32,7 @@ This process cannot be rushed, and it cannot be automated if you want the organz
 
 Hand-embroidery on organza is a masterclass in tension control. The artisan must pass the needle through the delicate grid of the fabric just firmly enough to secure the heavy silk thread, but gently enough not to distort the surrounding weave. Every stitch is a negotiation between the weight of the thread and the fragility of the base.
 
-This is why a single pallu requires up to fourteen days of continuous needlework. The artisan is not just drawing a pattern with thread; they are building a three-dimensional topography on a two-dimensional surface of air. The wait time for such a piece is not an administrative delay. It is the physical reality of the craft.
+This is why a single pallu requires extended, unhurried needlework over many days. The artisan is not just drawing a pattern with thread; they are building a three-dimensional topography on a two-dimensional surface of air. The wait time for such a piece is not an administrative delay. It is the physical reality of the craft.
 
 ---
 type: system-2
@@ -41,5 +41,5 @@ title: "Technical Summary"
 
 - **Material Challenge:** Heavy silk thread on lightweight, sheer organza
 - **Process Requirement:** Precise, manual tension control to prevent fabric puckering
-- **Time Investment:** Up to 14 days for a highly detailed pallu
+- **Time Investment:** Extended, unhurried handwork over many days for a highly detailed pallu
 - **Visual Result:** Crisp, dense motifs floating on a sheer background without distortion

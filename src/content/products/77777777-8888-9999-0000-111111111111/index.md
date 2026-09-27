@@ -36,13 +36,13 @@ Organza asks for a specific kind of confidence. It does not drape heavily to the
 type: body
 ---
 
-At 350 grams, the fabric itself is almost weightless. The true weight of this saree is measured in time. The floral motifs are not machine-loomed into the fabric. They are embroidered by hand after the organza is woven. A single pallu requires fourteen days of continuous needlework. The needle must pass through the sheer silk without pulling the warp or weft out of alignment—a tension that requires immense control. 
+At 350 grams, the fabric itself is almost weightless. The true weight of this saree is measured in care. The floral motifs are embroidered onto the organza after weaving, through extended, unhurried needlework. The needle must pass through the sheer silk without pulling the warp or weft out of alignment—a tension that requires immense control.
 
-This is why the Sakura is not dispatched immediately. The fourteen-day wait is not an administrative delay. It is the time required for a pair of hands to build topography on a surface of air.
+This is why the Sakura is not dispatched immediately. The extended timeline is not an administrative delay. It is the time required for careful hands to build topography on a surface of air.
 
 ---
 type: pull-quote
-quote: "The fourteen-day wait is the time required for a pair of hands to build topography on a surface of air."
+  quote: "The wait is the time required for careful hands to build topography on a surface of air."
 attribution: "— House of Padmavati"
 ---
 

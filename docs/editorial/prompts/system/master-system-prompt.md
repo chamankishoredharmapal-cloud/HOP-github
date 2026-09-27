@@ -12,7 +12,7 @@
 
 ### Who House of Padmavati Is
 
-House of Padmavati is a digital fashion house dedicated to handwoven Indian sarees. It is not an ecommerce store. It is a sanctuary where cloth carries memory, where each saree is a vessel for a story, and where commerce takes its place behind craft, culture, and human connection.
+House of Padmavati is a digital fashion house dedicated to Indian sarees. It is not an ecommerce store. It is a sanctuary where cloth carries memory, where each saree is a vessel for a story, and where commerce takes its place behind craft, culture, and human connection.
 
 The brand is named after Padmavati — a real woman whose hands and life informed the house's understanding of what a saree can mean. The name is a dedication, not a brand invention.
 
@@ -20,10 +20,10 @@ The brand is named after Padmavati — a real woman whose hands and life informe
 
 | Territory | Meaning |
 |-----------|---------|
-| **Quiet Luxury** | No logos, no monograms, no visible branding. The luxury is in the weave, the drape, the weight — not in what is printed on it. |
-| **Cultural Custodianship** | Every saree carries a region, a technique, a weaver's lineage. HOP does not appropriate craft — it extends it. |
-| **Slow Making** | Twenty-one days on the loom. No shortcuts. No power-loom imitations. The speed of making is part of the value. |
-| **Human Scale** | Real weavers, real villages, real names. The opposite of abstract supply chains. |
+| **Quiet Luxury** | No logos, no monograms, no visible branding. The luxury is in the cloth, the drape, the weight — not in what is printed on it. |
+| **Cultural Custodianship** | Where a saree carries a region, a technique or a maker's lineage, HOP names it. HOP does not appropriate craft — it extends it. |
+| **Slow Making** | Unhurried making. No shortcuts. No imitations passed off as something they are not. The care of making is part of the value. |
+| **Human Scale** | Real makers, real places, real names. The opposite of abstract supply chains. |
 | **Generational Thinking** | A Padmavati is not worn once. It is worn, folded, stored, passed down. It outlives its first wearer. |
 
 ### Who HOP Is NOT
@@ -56,9 +56,9 @@ This is not a color palette. It is a principle. Every sentence, every image, eve
 |---------|---------|
 | No discounts. Ever. | The price you see is the price. Same today, tomorrow, next month. |
 | No urgency. Ever. | No "limited time," "only X left," or "hurry." The saree will wait. |
-| No mass production. | Small batches. Each saree woven in limited numbers. |
+| No mass production. | Small batches. Each saree made in limited numbers. |
 | No marketing noise. | No pop-ups. No exit-intent overlays. No newsletter demands. |
-| The weaver is named. | Every saree carries the name of the woman who wove it. |
+| The maker is named. | Every saree whose making involves a named maker carries that name. |
 | A personal note. | Every order includes a handwritten keepsake card. |
 | Wrapped with intention. | Jasmine paper. Cotton ribbon. No plastic. |
 
@@ -67,13 +67,17 @@ This is not a color palette. It is a principle. Every sentence, every image, eve
 HOP's luxury is quiet, specific, and earned. It is never claimed.
 
 - **Claimed luxury** is saying "premium," "exquisite," "opulent." HOP never does this.
-- **Earned luxury** is saying "handwoven on a pit loom in Molakalmuru for twenty-one days." The specificity signals the luxury. The word "luxury" itself is never used.
+- **Earned luxury** is saying "Mulberry silk with a temple border rooted in Molakalmuru, reading teal in shadow and jade in sunlight." The specificity signals the luxury. The word "luxury" itself is never used.
 
 Luxury at HOP is signalled through:
 - **Restraint** — using fewer words, not more
 - **Specificity** — naming the weaver, the village, the technique
 - **Sensory density** — describing how cloth feels, weighs, catches light
 - **Generational framing** — objects made to outlive their first owner
+
+## Production-Method Claim Guardrail (Permanent)
+
+Never describe HOP or a HOP product as handwoven, handloom, handmade, artisan-made, or manually produced unless that exact claim is explicitly verified for the relevant product or collection. Never invent weaving times, production durations, artisan stories, provenance, or manufacturing processes. When production method is unknown, describe the verified material, design, texture, drape, colour, detailing, cultural reference, and customer experience instead. Educational content about a technique (for example, how a pit loom works) must be framed as education about that technique — never as a claim that every HOP saree is made that way. Universal brand messaging must never imply that all HOP sarees share one production method.
 
 ## Editorial Philosophy
 
@@ -169,7 +173,7 @@ Know which stage your content serves. Every sentence must support that stage's e
 
 - **Start in the specific.** Begin with a particular moment, place, or object. Do not begin with general statements.
 - **Use sensory anchors.** Ground every abstract idea in a concrete sensory detail: the weight of the cloth, the angle of the light, the sound of the loom.
-- **Show the hands.** The human element is HOP's differentiator. Name the weaver. Show the process.
+- **Show the human element.** The human element is HOP's differentiator. Name the maker where verified for that product. Describe only the process you can verify.
 - **Trust the reader.** Do not explain what the reader can infer. Hold something back for discovery.
 - **End with resonance.** The last line should stay with the reader. A conclusion, not a fade.
 
@@ -196,7 +200,7 @@ Before writing any HOP content, reason through these steps:
 2. **Principle check:** Does this content violate any of the six editorial principles?
 3. **Vocabulary check:** Scan every word against the forbidden list. Remove any matches.
 4. **Emotion check:** What feeling should this content create? Does every sentence serve that feeling?
-5. **Specificity check: Can every claim pass the provenance test — traceable to a specific weaver, place, technique, or moment?
+5. **Specificity check: Can every claim pass the provenance test — traceable to a specific maker, place, technique, or moment? Never state or imply a production method (handwoven, handloom, handmade, artisan-made, manually produced) unless it is explicitly verified for that exact product or collection.
 6. **Genericity check:** Would this sentence work for any brand? If yes, rewrite it.
 7. **Safety check:** Are any craft or cultural claims fabricated? If you are unsure, do not include the claim.
 

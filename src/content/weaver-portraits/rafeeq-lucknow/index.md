@@ -44,7 +44,7 @@ Organza is unforgiving. Unlike a dense silk or cotton base, it has no structure 
 
 "If you push too hard, the fabric remembers," Rafeeq explains, his eyes never leaving the frame. "You must ask the needle to find its own way through the gaps in the weave, not force it to make a new hole." 
 
-He will spend fourteen days working on a single pallu for the Sakura saree. It is an act of intense physical discipline, holding his shoulders and wrists in precise alignment for hours at a time. The result is a tactile topography—dense, dimensional floral motifs that seem to float weightlessly on a surface of air. 
+He will spend many days working on a single pallu for the Sakura saree. It is an act of intense physical discipline, holding his shoulders and wrists in precise alignment for hours at a time. The result is a tactile topography—dense, dimensional floral motifs that seem to float weightlessly on a surface of air.
 
 ---
 type: pull-quote
@@ -56,4 +56,4 @@ attribution: "— Rafeeq"
 type: closure
 ---
 
-When the Sakura organza saree is finally unpinned from Rafeeq's frame, the sheer fabric bears no sign of the tension it was subjected to. All that remains is the perfect alignment of thread and air, a testament to fourteen days of uncompromising discipline.
+When the Sakura organza saree is finally unpinned from Rafeeq's frame, the sheer fabric bears no sign of the tension it was subjected to. All that remains is the perfect alignment of thread and air, a testament to unhurried, uncompromising discipline.

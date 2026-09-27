@@ -44,8 +44,8 @@ Replace generic references with specific details.
 
 | Before | After |
 |--------|-------|
-| "Handwoven by skilled artisans" | "Woven by Gangamma in Molakalmuru, on a pit loom her grandmother used." |
-| "Premium quality zari" | "Hand-spun zari, real silver with gold wash." |
+| "Made with skilled craft" | "A temple border Gangamma learned from her grandmother, in Molakalmuru." (only where verified for that product) |
+| "Premium quality zari" | "Real silver zari with gold wash, flexible and glowing." (only where verified for that product) |
 
 ### 3. Restraint
 Remove words that weaken the impact.
@@ -66,15 +66,15 @@ Frame objects in terms of time and legacy.
 ## Examples
 
 **Before (adequate but not luxurious):**
-"This silk saree is handwoven with gold zari. It is suitable for weddings. The border has a traditional design."
+"This silk saree has gold zari. It is suitable for weddings. The border has a traditional design."
 
 **After (luxury-refined):**
-"Pure Mulberry silk, 12-momme, handwoven on a pit loom in Molakalmuru. The zari is real silver with gold wash — hand-spun, flexible, glowing. The temple border carries a pattern that Gangamma learned from her grandmother. This drape belongs to winter weddings where the light fades by five."
+"Pure Mulberry silk, 12-momme, with a temple border rooted in Molakalmuru. The zari is real silver with gold wash — flexible, glowing. The border carries a pattern that Gangamma learned from her grandmother. This drape belongs to winter weddings where the light fades by five." (Use the maker, village, and technique references only where verified for that exact product. Never add a production-method claim during refinement.)
 
 **What changed:**
 - "silk saree" → "Pure Mulberry silk, 12-momme" (specificity)
-- "handwoven" → "handwoven on a pit loom in Molakalmuru" (specificity)
-- "gold zari" → "real silver with gold wash — hand-spun, flexible, glowing" (sensory + specificity)
+- added verified origin and border reference (specificity, only where verified)
+- "gold zari" → "real silver with gold wash — flexible, glowing" (sensory + specificity)
 - "suitable for weddings" → "belongs to winter weddings where the light fades by five" (specific + sensory)
 - "traditional design" → "temple border, Gangamma's grandmother's pattern" (specific + generational)
 
@@ -83,6 +83,7 @@ Frame objects in terms of time and legacy.
 | Mistake | Correction |
 |---------|------------|
 | Adding forbidden words | "Luxurious fabric" — never. Replace with specific sensory description. |
+| Inventing production method | Adding handwoven, handloom, handmade, or artisan-made during refinement — never, unless verified for that exact product. |
 | Over-writing | More words do not equal more luxury. Restraint is a luxury signal. |
 | Making it cold | Luxury refinement should increase warmth, not decrease it. |
 | Losing clarity | If a sentence becomes harder to understand, the refinement has failed. |

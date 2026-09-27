@@ -29,7 +29,7 @@ She does not dress for an audience. She dresses for her own structure. The Arya 
 type: body
 ---
 
-To design a saree for a working day, you must respect friction. The Arya silks are woven on pit looms with a deliberately tighter warp tension. We use minimal zari, avoiding the heavy, ornate borders that weigh down the hem and catch on office furniture. The resulting drape is resilient, breathable, and moves with the body rather than restricting it. It is silk that remembers how to work.
+To design a saree for a working day, you must respect friction. The Arya silks are composed with a deliberately tighter weave structure. We use minimal zari, avoiding the heavy, ornate borders that weigh down the hem and catch on office furniture. The resulting drape is resilient, breathable, and moves with the body rather than restricting it. It is silk that remembers how to work.
 
 ---
 type: closure

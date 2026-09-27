@@ -42,7 +42,7 @@ Saraswati is a third-generation weaver. She learned to weave from her father, wh
 
 "My father used to say that silk is a conversation, but linen is an argument," she notes, her hands moving over the wooden frame to check the tension. "You do not tell linen what to do. You ask it what it is willing to do today."
 
-It is this constant, micro-level calibration—the weaver responding to the tension of the yarn, the dampness of the air, the feel of the cloth under her fingers—that makes handloom linen what it is. The resulting fabric is softer and more fluid than anything a high-speed industrial machine could produce. It is fabric woven in partnership with a human being.
+It is this constant, micro-level calibration—the weaver responding to the tension of the yarn, the dampness of the air, the feel of the cloth under her fingers—that gives this linen its character. The resulting fabric is softer and more fluid than many hurried, machine-made counterparts. It is fabric shaped in partnership with a human being.
 
 ---
 type: pull-quote

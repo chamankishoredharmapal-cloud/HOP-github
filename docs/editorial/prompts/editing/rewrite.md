@@ -34,24 +34,24 @@ Take any text — product description from a supplier, a draft from a new writer
 
 | Source Problem | HOP Edit |
 |----------------|----------|
-| "Our premium silk saree" | "A Mulberry silk saree, handwoven in Molakalmuru" |
+| "Our premium silk saree" | "A Mulberry silk saree with a temple border rooted in Molakalmuru" (only where verified for that product; never add a production-method claim) |
 | "Beautiful wedding collection" | (Remove "beautiful." Describe what makes it for weddings.) |
 | "Limited edition — only a few left" | (Remove urgency entirely. If the batch is small, state the batch size factually.) |
 | "Elevate your style with this statement piece" | "This drape belongs to winter ceremonies where the light fades by five." |
-| "Expertly crafted by skilled artisans" | "Woven by Gangamma, on a loom her grandmother used." |
+| "Expertly crafted by skilled artisans" | "A temple border Gangamma learned from her grandmother." (only where verified for that product; never invent a maker, provenance, or process) |
 
 ## Examples
 
 **Source:** "This stunning saree is crafted from premium quality silk and features exquisite zari work. It's perfect for weddings and special occasions. Limited stock available — order now!"
 
-**Rewrite:** "This saree is woven from pure Mulberry silk with hand-spun zari. The temple border carries a pattern that Gangamma learned from her grandmother. It belongs to weddings — the ones where the whole family gathers after years."
+**Rewrite:** "This saree is composed in pure Mulberry silk with fine zari detailing. The temple border carries a pattern rooted in Molakalmuru. It belongs to weddings — the ones where the whole family gathers after years." (Maker, village, and technique references may appear only where verified for that exact product. Never add a production-method claim, weaving time, or artisan story during a rewrite.)
 
 **Edit summary:**
 - Removed "stunning," "premium quality," "exquisite" (forbidden generic praise)
 - Removed "Limited stock available — order now!" (urgency never used)
-- Replaced "crafted from" with "woven from" (preferred active verb)
+- Replaced "crafted from" with "composed in" (preferred framing; "woven" only where the weave is verified)
 - Replaced "perfect for" with "belongs to" (preferred framing)
-- Added weaver name and generational detail (specificity principle)
+- Added verified origin and border detail only (specificity principle; nothing invented)
 - Added specific occasion context (human-scale principle)
 
 ## Common Mistakes
