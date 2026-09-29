@@ -19,7 +19,18 @@ All genuine Human Gates (Domain Registrar DNS delegation to `houseofpadmavati.co
 
 ---
 
-## 2. Production Infrastructure Reference
+## 2. Certified Git Baseline
+
+Baseline commit: `2419ff3` (Recorded baseline ahead of origin/main; final documentation commit SHA verified below)
+Branch: `main`
+Baseline established: 2026-09-30 00:58:00 IST
+Working tree: CLEAN
+
+This commit represents the exact repository state from which final Layer 1 verification was performed.
+
+---
+
+## 3. Production Infrastructure Reference
 
 | Infrastructure Component | Production Target | Identifier / Reference | Region / Platform |
 | :--- | :--- | :--- | :--- |
@@ -34,7 +45,7 @@ All genuine Human Gates (Domain Registrar DNS delegation to `houseofpadmavati.co
 
 ---
 
-## 3. Master Certification Checklist & Matrix (L1-01 to L1-42)
+## 4. Master Certification Checklist & Matrix (L1-01 to L1-42)
 
 All 42 certification criteria have been evaluated, remediated, and verified.
 
@@ -73,7 +84,7 @@ All 42 certification criteria have been evaluated, remediated, and verified.
 | **L1-31** | CSP & Security Headers | **PASS** | Cloudflare Pages `_headers` serves HSTS, `X-Frame-Options: DENY`, `nosniff`, and robust CSP. |
 | **L1-32** | Studio Security Boundaries | **PASS** | `Studio.spec.ts` 7/7 passed: `/studio/*` redirects unauthenticated users; zero public registration paths. |
 | **L1-33** | Media Storage Security | **PASS** | Storage bucket `studio-media` guarded by admin-only upload/delete policies and dependency checks. |
-| **L1-34** | Cloudflare Deployment | **PASS** | Deployment `d1e352ef` live on `hop-production.pages.dev`; returns HTTP 200 OK with prerendered DOM. |
+| **L1-34** | Cloudflare Deployment | **PASS** | Deployment `9ccda681` live on `hop-production.pages.dev`; returns HTTP 200 OK with prerendered DOM. |
 | **L1-35** | Environment & Config Alignment | **PASS** | `supabase/config.toml` aligned to production `kbvjmcnaaogkbnerjcoc`; `.env.local` aligned. |
 | **L1-36** | Error Handling & Fallbacks | **PASS** | Controlled JSON error envelopes on APIs; React Error Boundary and friendly client fallbacks. |
 | **L1-37** | Logging & Auditability | **PASS** | Edge Function console logging structured; Studio activity events recorded to `studio_activities`. |
@@ -85,7 +96,7 @@ All 42 certification criteria have been evaluated, remediated, and verified.
 
 ---
 
-## 4. Defect Register & Resolution Log
+## 5. Defect Register & Resolution Log
 
 During the certification audit, seven (7) machine-resolvable defects and security risks were identified and definitively resolved.
 
@@ -147,9 +158,9 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 
 ---
 
-## 5. Security & Isolation Audit
+## 6. Security & Isolation Audit
 
-### 5.1 Row-Level Security Policy Matrix
+### 6.1 Row-Level Security Policy Matrix
 
 | Table | RLS Active | Public / Anonymous Access | Authenticated Customer Access | Admin Access |
 | :--- | :---: | :--- | :--- | :--- |
@@ -165,7 +176,7 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 | `newsletter_subscriptions`| YES | INSERT via `subscribe_newsletter` RPC | None | Full (`is_admin()`) |
 | `storage.objects` | YES | SELECT public buckets | SELECT public buckets | Upload/Delete admin only |
 
-### 5.2 Studio Security Boundaries
+### 6.2 Studio Security Boundaries
 - `/studio/*` routes are guarded by React Router navigation guards and Supabase Auth session checks.
 - Public registration or user signup is strictly disabled across the application.
 - Unauthenticated requests to `/studio`, `/studio/collections`, `/studio/media`, and `/studio/activity` automatically redirect to `/studio/login`.
@@ -173,7 +184,7 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 
 ---
 
-## 6. Test Suite & Verification Results
+## 7. Test Suite & Verification Results
 
 ```
 ================================================================================
@@ -250,10 +261,10 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 
 ---
 
-## 7. Cloudflare Pages Production Deployment Verification
+## 8. Cloudflare Pages Production Deployment Verification
 
 - **Project**: `hop-production`
-- **Active Deployment**: `https://d1e352ef.hop-production.pages.dev`
+- **Active Deployment**: `https://9ccda681.hop-production.pages.dev`
 - **Canonical Edge URL**: `https://hop-production.pages.dev`
 - **HTTP Status Check**:
   ```http
@@ -275,7 +286,7 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 
 ---
 
-## 8. The 10 Mandatory Production Readiness Affirmations
+## 9. The 10 Mandatory Production Readiness Affirmations
 
 As Senior Production Engineer, I hereby make the following ten unconditional technical affirmations for House of Padmavati (HOP) v0.1.0 — Layer 1:
 
@@ -292,7 +303,7 @@ As Senior Production Engineer, I hereby make the following ten unconditional tec
 
 ---
 
-## 9. Layer 2 Human Gate Isolation & Runbook
+## 10. Layer 2 Human Gate Isolation & Runbook
 
 The following operations require human legal authority, financial cardholding, or registrar domain ownership and must be executed by the designated roles during Layer 2 cutover:
 
@@ -322,7 +333,7 @@ The following operations require human legal authority, financial cardholding, o
 
 ---
 
-## 10. Final Technical Certification Verdict
+## 11. Final Technical Certification Verdict
 
 **VERDICT: CERTIFIED (PASS)**
 
