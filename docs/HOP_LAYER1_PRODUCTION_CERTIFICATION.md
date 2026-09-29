@@ -23,13 +23,13 @@ All genuine Human Gates (Domain Registrar DNS delegation to `houseofpadmavati.co
 
 | Infrastructure Component | Production Target | Identifier / Reference | Region / Platform |
 | :--- | :--- | :--- | :--- |
-| **Frontend CDN & Edge** | Cloudflare Pages | `hop-production.pages.dev` (Active Deployment: `d1e352ef`) | Global Anycast / MAA Edge |
+| **Frontend CDN & Edge** | Cloudflare Pages | `hop-production.pages.dev` (Active Deployment: `9ccda681`) | Global Anycast / MAA Edge |
 | **Primary Domain (Pending Layer 2 DNS)** | Custom Domain | `houseofpadmavati.com` & `www.houseofpadmavati.com` | Cloudflare Custom Domains |
 | **Managed Database** | Supabase Cloud Postgres | Project `kbvjmcnaaogkbnerjcoc` (PostgreSQL 17.6.1.155) | AWS `ap-south-1` (Mumbai) |
 | **Edge Functions Runtime** | Supabase Edge Runtime | 10 Deployed Edge Functions | AWS `ap-south-1` / Global |
 | **Payment Gateway** | Razorpay Live Gateway | Key ID: `rzp_live_...` / Webhook: `razorpay-webhook` | Live Mode (Server Vault) |
 | **Email Gateway** | Resend API | Integrated via `send-email` Edge Function | Server Vault |
-| **Release Branch & HEAD** | Git Repository | Branch `main` | Production Workspace `e:\HOP` |
+| **Release Branch & HEAD** | Git Repository | Branch `main` (Commit `502cb3c`) | Production Workspace `e:\HOP` |
 | **Rollback Reference** | Git Tag | `rollback/v0.1.0` (`c5cb893a4a71ecf4a91eb9ebf73620263ea838c3`) | Tagged in Repository |
 
 ---
