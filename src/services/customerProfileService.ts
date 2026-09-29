@@ -25,16 +25,51 @@ export async function upsertProfile(
   return data;
 }
 
+export async function upsertCustomerProfile(
+  email: string,
+  fullName: string,
+  phone?: string | null
+): Promise<{ success: boolean; id: string }> {
+  const { data, error } = await supabase.rpc("upsert_customer_profile", {
+    p_email: email,
+    p_full_name: fullName,
+  });
+  if (error) throw error;
+  return data as { success: boolean; id: string };
+}
+
 export async function updateProfile(
   customerId: string,
   updates: Partial<Pick<CustomerProfile, "full_name" | "phone">>
 ): Promise<CustomerProfile> {
+  // Normalize phone if provided
+  const normalizedUpdates = { ...updates };
+  if (updates.phone !== undefined && updates.phone !== null && updates.phone !== "") {
+    normalizedUpdates.phone = normalizePhone(updates.phone);
+  }
+  
   const { data, error } = await supabase
     .from("customers")
-    .update(updates)
+    .update(normalizedUpdates)
     .eq("id", customerId)
     .select()
     .single();
   if (error) throw error;
   return data;
+}
+
+// Phone normalization utility
+export function normalizePhone(phone: string): string {
+  if (!phone) return phone;
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 10) {
+    return `+91${digits}`;
+  }
+  if (digits.length === 11 && digits.startsWith("0")) {
+    return `+91${digits.slice(1)}`;
+  }
+  if (digits.length === 12 && digits.startsWith("91")) {
+    return `+${digits}`;
+  }
+  return phone;
 }

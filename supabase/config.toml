@@ -1,1 +1,7 @@
-project_id = "dovnhgbisiturzbjgvei"
+project_id = "kbvjmcnaaogkbnerjcoc"
+
+[functions.send-contact-message]
+verify_jwt = false
+
+[functions.subscribe-newsletter]
+verify_jwt = false

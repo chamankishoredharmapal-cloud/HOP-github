@@ -1,4 +1,4 @@
----
+﻿---
 title: 01 Pre-Production Audit
 project: House of Padmavati (HOP)
 version: 1.0.0
@@ -51,7 +51,7 @@ This document covers the end-to-end audit procedures required prior to deploying
 ## 6. Prerequisites
 - The release candidate code is merged into the `release/vX.Y.Z` branch.
 - Access to Supabase production and staging dashboards is secured.
-- Access to the Vercel/Netlify/Hosting deployment dashboard is secured.
+- Access to the Cloudflare Pages/Netlify/Hosting deployment dashboard is secured.
 - Local development environment is correctly configured (Node.js 20+, npm 10+).
 - Access to Razorpay staging/production dashboards is secured.
 
@@ -70,7 +70,7 @@ This document covers the end-to-end audit procedures required prior to deploying
 ## 9. Dependencies
 - Up-time of Supabase services (Database, Auth, Storage, Edge Functions).
 - Availability of Razorpay API endpoints.
-- Accessibility of the CDN provider (e.g., Cloudflare or Vercel Edge Network).
+- Accessibility of the CDN provider (e.g., Cloudflare Pages).
 - Complete synchronization of the Github repository.
 
 ## 10. Execution Order
@@ -160,7 +160,7 @@ The Backend Engineer shall audit the Supabase project configuration.
 
 ### Phase 6: Infrastructure and API Endpoint Health Checks
 The Lead DevOps Engineer shall verify system endpoints and Edge Functions.
-1. Access the deployment dashboard (Vercel/Netlify/Custom VPS). Verify that the staging deployment reflects the exact git commit hash of the release branch.
+1. Access the deployment dashboard (Cloudflare Pages/Netlify/Custom VPS). Verify that the staging deployment reflects the exact git commit hash of the release branch.
 2. Monitor the staging deployment build logs for any anomalies or deprecated warnings.
 3. Verify Supabase Edge Functions:
    - Ensure all functions in `supabase/functions/` are successfully deployed to the staging project.
@@ -293,7 +293,8 @@ The Pre-Production Audit is complete when:
 - The team is authorized to proceed to the subsequent manual and automated testing phases.
 
 ## 26. References to other Production Manual documents
-- → See `00_MASTER_EXECUTION_PLAN.md` for overall pipeline context.
-- → See `02_UI_UX_REVIEW.md` for the immediate next phase.
-- → See `11_ECOMMERCE_AUDIT.md` for specific Razorpay and cart flow validation.
-- → See `17_LAUNCH_CHECKLIST.md` for how the Rollback plan integrates into the final launch.
+- â†’ See `00_MASTER_EXECUTION_PLAN.md` for overall pipeline context.
+- â†’ See `02_UI_UX_REVIEW.md` for the immediate next phase.
+- â†’ See `11_ECOMMERCE_AUDIT.md` for specific Razorpay and cart flow validation.
+- â†’ See `17_LAUNCH_CHECKLIST.md` for how the Rollback plan integrates into the final launch.
+

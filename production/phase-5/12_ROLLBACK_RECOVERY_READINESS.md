@@ -1,10 +1,20 @@
-# Phase 5 — Rollback & Recovery Readiness
+﻿> **⚠️ HISTORICAL DOCUMENT — SUPERSEDED ARCHITECTURE**
+> 
+> This document was created during the Phase 5 audit (2026-08-17) when Vercel was the assumed production hosting platform.
+> **As of 2026-09-26, the authoritative production architecture decision is Cloudflare Pages** (per docs/CLOUDFLARE_DEPLOYMENT_DECISION.md).
+> 
+> All Vercel references in this document reflect the architecture at the time of audit and are preserved for historical/evidence purposes only.
+> For current production execution procedures, see productionTODO.md and production/14_FINAL_PRE_DEPLOYMENT_GO_NO_GO.md.
+>
+> ---
+>
+# Phase 5 â€” Rollback & Recovery Readiness
 
 **Document ID**: HOP-PROD-PH5-012  
-**Audit Phase**: Phase 5 — Independent Reconciliation & Go/No-Go (Part 2 Step 12)  
+**Audit Phase**: Phase 5 â€” Independent Reconciliation & Go/No-Go (Part 2 Step 12)  
 **Execution Timestamp**: 2026-08-17T14:58:00+05:30  
 **Auditor**: Independent Final Audit Authority  
-**Authoritative Status**: **RECOVERY READINESS ESTABLISHED — STOPPED AT DEPLOYMENT GATE**  
+**Authoritative Status**: **RECOVERY READINESS ESTABLISHED â€” STOPPED AT DEPLOYMENT GATE**  
 
 ---
 
@@ -42,7 +52,8 @@ Each recovery mechanism is categorized into exactly one of three proven states:
 
 - **Total Scenarios Evaluated**: 12 critical failure modes.
 - **PROVEN RECOVERY (Empirically Verified)**: 10 scenarios (83.3%).
-- **DOCUMENTED RECOVERY (Standard Operating Procedures)**: 2 scenarios (16.7% — Permanent lost webhook concierge audit, Git release rollback).
+- **DOCUMENTED RECOVERY (Standard Operating Procedures)**: 2 scenarios (16.7% â€” Permanent lost webhook concierge audit, Git release rollback).
 - **THEORETICAL RECOVERY (Unproven / Inadequate)**: **0**.
 
 **Rollback & Recovery Status**: **ROBUST & OPERATIONALLY READY**.
+

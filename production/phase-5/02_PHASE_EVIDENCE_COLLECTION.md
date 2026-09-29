@@ -1,10 +1,20 @@
-# Phase 5 — Phase 1–4 Evidence Collection Inventory
+﻿> **⚠️ HISTORICAL DOCUMENT — SUPERSEDED ARCHITECTURE**
+> 
+> This document was created during the Phase 5 audit (2026-08-17) when Vercel was the assumed production hosting platform.
+> **As of 2026-09-26, the authoritative production architecture decision is Cloudflare Pages** (per docs/CLOUDFLARE_DEPLOYMENT_DECISION.md).
+> 
+> All Vercel references in this document reflect the architecture at the time of audit and are preserved for historical/evidence purposes only.
+> For current production execution procedures, see productionTODO.md and production/14_FINAL_PRE_DEPLOYMENT_GO_NO_GO.md.
+>
+> ---
+>
+# Phase 5 â€” Phase 1â€“4 Evidence Collection Inventory
 
 **Document ID**: HOP-PROD-PH5-002  
-**Audit Phase**: Phase 5 — Independent Reconciliation & Go/No-Go (Part 1 Evidence Collection)  
+**Audit Phase**: Phase 5 â€” Independent Reconciliation & Go/No-Go (Part 1 Evidence Collection)  
 **Execution Timestamp**: 2026-08-17T14:12:00+05:30  
 **Auditor**: Independent Final Audit Authority  
-**Authoritative Status**: **COLLECTION COMPLETE — STOPPED AT PART 1 GATE**  
+**Authoritative Status**: **COLLECTION COMPLETE â€” STOPPED AT PART 1 GATE**  
 
 ---
 
@@ -25,13 +35,13 @@ In strict adherence to the **Evidence Hierarchy Rule** (Actual Runtime Evidence 
 - **Environment Tested**: Local developer workstation (Windows / Node.js v20)
 - **Database / Staging State**: Offline local database fixtures (Supabase CLI local)
 - **Key Findings & Tickets**:
-  - `P1-001` (Critical): ESLint audit — resolved all warnings (0 errors, 0 warnings).
-  - `P1-002` (Critical): TypeScript compiler audit — resolved compiler errors (`tsc --noEmit` exits 0).
-  - `P1-003` (Critical): Dependency vulnerability audit — verified zero high/critical vulnerabilities.
-  - `P1-004` (High): Tailwind CSS audit — verified class pruning and theme consistency.
-  - `P1-005` (High): Build and bundle audit — verified Vite chunk generation.
-  - `P1-006` (High): Supabase import architecture audit — eliminated circular/barrel anti-patterns.
-  - `P1-007` (Medium): Runtime console audit — verified clean browser console on route transitions.
+  - `P1-001` (Critical): ESLint audit â€” resolved all warnings (0 errors, 0 warnings).
+  - `P1-002` (Critical): TypeScript compiler audit â€” resolved compiler errors (`tsc --noEmit` exits 0).
+  - `P1-003` (Critical): Dependency vulnerability audit â€” verified zero high/critical vulnerabilities.
+  - `P1-004` (High): Tailwind CSS audit â€” verified class pruning and theme consistency.
+  - `P1-005` (High): Build and bundle audit â€” verified Vite chunk generation.
+  - `P1-006` (High): Supabase import architecture audit â€” eliminated circular/barrel anti-patterns.
+  - `P1-007` (Medium): Runtime console audit â€” verified clean browser console on route transitions.
   - `P1-008` (Critical): Final Phase 1 verification matrix.
 - **Automated Tests & Evidence**:
   - `npm run lint`: PASSED (0 errors, 0 warnings)
@@ -90,10 +100,10 @@ In strict adherence to the **Evidence Hierarchy Rule** (Actual Runtime Evidence 
   - `F-P3-01` (P3 - Low / Operational): Manual Razorpay refund workflow. Classified as **OPERATIONAL LIMITATION** (luxury concierge business policy).
   - `F-P3-02` (P3 - Low / Testing): Remote webhook integration testing against live Supabase Edge Function. **CLOSED** via live staging execution (20/20 PASSED).
 - **Runtime Webhook Evidence (`PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md`)**:
-  - Test A (Missing signature): 400 Bad Request (`invalid_signature`) — Verified fail-closed.
-  - Test B (Invalid signature): 400 Bad Request (`invalid_signature`) — Verified constant-time rejection.
-  - Test C (Valid signature): 200 OK (`{"received": true}`) — Verified order confirmation & stock deduction.
-  - Test D (Duplicate event): 200 OK (`{"received": true, "already_processed": true}`) — Verified idempotency via `payment_events`.
+  - Test A (Missing signature): 400 Bad Request (`invalid_signature`) â€” Verified fail-closed.
+  - Test B (Invalid signature): 400 Bad Request (`invalid_signature`) â€” Verified constant-time rejection.
+  - Test C (Valid signature): 200 OK (`{"received": true}`) â€” Verified order confirmation & stock deduction.
+  - Test D (Duplicate event): 200 OK (`{"received": true, "already_processed": true}`) â€” Verified idempotency via `payment_events`.
 - **Database State Transition Evidence (Verified on Staging PostgreSQL)**:
   - Product `b0000000-0000-0000-0000-000000000001`: Stock transitioned `10 -> 9`.
   - Order `135841f0-b73b-42ed-983a-385d2519d647`: Status transitioned `pending_payment -> confirmed`.
@@ -128,13 +138,13 @@ In strict adherence to the **Evidence Hierarchy Rule** (Actual Runtime Evidence 
   - `F-P4-07` (Low): Dynamic sitemap expansion. Disposition: **CLOSED** (crawler discovers all published entities).
   - `F-P4-08` (Low): External APM integration. Disposition: **PHASE 5 ENHANCEMENT** (ErrorBoundary handles client exceptions).
 - **Forensic Performance & Quality Evidence (`web_vitals_measurements.json`)**:
-  - Desktop LCP: 380–1928ms (Threshold < 2.5s) — **PASS**
-  - Mobile LCP: 620–1840ms (Threshold < 2.5s) — **PASS**
-  - CLS: 0.0000–0.0115 (Threshold < 0.1) — **PASS**
-  - TBT: 0–3ms (Threshold < 200ms) — **PASS**
-  - FCP: 336–980ms (Threshold < 1.5s) — **PASS**
-  - Main JS Bundle: 71.92 kB gzip (< 200 kB budget) — **PASS**
-  - Initial CSS: 15.98 kB gzip (< 50 kB budget) — **PASS**
+  - Desktop LCP: 380â€“1928ms (Threshold < 2.5s) â€” **PASS**
+  - Mobile LCP: 620â€“1840ms (Threshold < 2.5s) â€” **PASS**
+  - CLS: 0.0000â€“0.0115 (Threshold < 0.1) â€” **PASS**
+  - TBT: 0â€“3ms (Threshold < 200ms) â€” **PASS**
+  - FCP: 336â€“980ms (Threshold < 1.5s) â€” **PASS**
+  - Main JS Bundle: 71.92 kB gzip (< 200 kB budget) â€” **PASS**
+  - Initial CSS: 15.98 kB gzip (< 50 kB budget) â€” **PASS**
 - **Security & Secret Sweep (`leakage_sweep_results.json`)**:
   - 1,940 files scanned: 0 secret leaks, 0 private service keys found in bundle.
 - **Not-Verified Items**:
@@ -177,3 +187,4 @@ In strict adherence to the **Evidence Hierarchy Rule** (Actual Runtime Evidence 
 3. **Execution Gaps**: Live Razorpay live transaction capture and live DNS public routing are the only unexecuted flows, both strictly governed by pre-launch safety rules.
 
 **Evidence Collection Status**: **COMPLETE & CATALOGUED**.
+

@@ -1,4 +1,4 @@
-# Deployment Standards — House of Padmavati
+﻿# Deployment Standards â€” House of Padmavati
 
 ## Branch Deployment Strategy
 
@@ -15,7 +15,7 @@
 - [ ] Lint passes (`pnpm lint`)
 - [ ] TypeScript compiles (`tsc --noEmit`)
 - [ ] Production build succeeds (`pnpm build`)
-- [ ] Lighthouse CI scores ≥ 90
+- [ ] Lighthouse CI scores â‰¥ 90
 - [ ] No known accessibility violations
 - [ ] Database migrations are backward-compatible
 - [ ] Edge Functions deploy successfully
@@ -33,12 +33,12 @@
 
 ## Deployment Process
 
-### Frontend (Vite + Vercel/Netlify)
+### Frontend (Vite + Cloudflare Pages)
 
 1. PR merged to `main`
 2. CI pipeline triggers:
    ```
-   Install → Lint → TypeCheck → Build → Deploy
+   Install â†’ Lint â†’ TypeCheck â†’ Build â†’ Deploy
    ```
 3. Build output in `dist/`
 4. Deploy to hosting provider
@@ -72,10 +72,10 @@ supabase functions deploy
 
 ### Frontend Rollback
 ```bash
-# Vercel
-vercel rollback
+# Cloudflare Pages
+wrangler pages deployment rollback --project-name=hop-production
 
-# Netlify
+# Netlify (if used)
 netlify deploy --prod # with previous deployment
 ```
 
@@ -122,3 +122,4 @@ supabase functions deploy <function-name> --version <previous-version>
 - Database performance
 - Edge Function cold starts
 - Error tracking (Sentry or similar)
+

@@ -1,10 +1,20 @@
-# Phase 5 — Validated Finding Register & Root Cause Determination
+﻿> **⚠️ HISTORICAL DOCUMENT — SUPERSEDED ARCHITECTURE**
+> 
+> This document was created during the Phase 5 audit (2026-08-17) when Vercel was the assumed production hosting platform.
+> **As of 2026-09-26, the authoritative production architecture decision is Cloudflare Pages** (per docs/CLOUDFLARE_DEPLOYMENT_DECISION.md).
+> 
+> All Vercel references in this document reflect the architecture at the time of audit and are preserved for historical/evidence purposes only.
+> For current production execution procedures, see productionTODO.md and production/14_FINAL_PRE_DEPLOYMENT_GO_NO_GO.md.
+>
+> ---
+>
+# Phase 5 â€” Validated Finding Register & Root Cause Determination
 
 **Document ID**: HOP-PROD-PH5-009  
-**Audit Phase**: Phase 5 — Independent Reconciliation & Go/No-Go (Part 2 Step 9)  
+**Audit Phase**: Phase 5 â€” Independent Reconciliation & Go/No-Go (Part 2 Step 9)  
 **Execution Timestamp**: 2026-08-17T14:52:00+05:30  
 **Auditor**: Independent Final Audit Authority  
-**Authoritative Status**: **FINDINGS VALIDATED — STOPPED AT DEPLOYMENT GATE**  
+**Authoritative Status**: **FINDINGS VALIDATED â€” STOPPED AT DEPLOYMENT GATE**  
 
 ---
 
@@ -30,7 +40,7 @@ Each finding is assigned exactly one of the authoritative dispositions:
 | **F-P1-001** | Phase 1 (Critical) | Lint / Code Quality | ESLint warnings in sidebar and metadata hooks. | Unused variables and React Fast Refresh export constraints. | Cleaned up unused exports and fixed hook dependencies. Verified with `npm run lint` (0 errors, 0 warnings). | `npm run lint` exits 0 cleanly. | **CLOSED** | Zero syntax or linter regression in production bundle. |
 | **F-P1-002** | Phase 1 (Critical) | TypeScript Compiler | Strict mode type errors in database service calls. | Missing generated database interface types in early repository state. | Synced `src/types/supabase.ts` with canonical schema. Verified with `npx tsc --noEmit` (0 errors). | `npx tsc --noEmit` exits 0 cleanly. | **CLOSED** | Total end-to-end compile-time type safety. |
 | **F-P1-003** | Phase 1 (Critical) | Security / Dependencies | Potential high/critical package vulnerabilities. | Transitive dependency tree out of sync with security advisories. | Audited `package-lock.json` and pinned secure package versions. Verified via `npm audit` (0 high/crit). | Clean dependency graph. | **CLOSED** | Zero known CVE vulnerabilities in runtime dependencies. |
-| **F-P2-01** | Phase 2 (P1 - High) | Security / Edge Functions | IDOR in `create-razorpay-order` retry flow. | Edge Function fetched order by ID without verifying `order.customers.email === caller.email`. | Added customer email check in `create-razorpay-order/index.ts` lines 96–105. Verified via code trace. | Ownership check actively enforced. | **CLOSED** | Prevents malicious users from hijacking other customers' order retries. |
+| **F-P2-01** | Phase 2 (P1 - High) | Security / Edge Functions | IDOR in `create-razorpay-order` retry flow. | Edge Function fetched order by ID without verifying `order.customers.email === caller.email`. | Added customer email check in `create-razorpay-order/index.ts` lines 96â€“105. Verified via code trace. | Ownership check actively enforced. | **CLOSED** | Prevents malicious users from hijacking other customers' order retries. |
 | **F-P2-02** | Phase 2 (P1 - High) | Security / Cryptography | Timing-unsafe string comparison (`===`) on payment & webhook HMAC. | Standard JavaScript string equality allows byte-by-byte timing discrepancy attacks. | Implemented XOR-based `timingSafeEqual` in `verify-payment` and `razorpay-webhook`. | Constant-time comparison active in both Edge Functions. | **CLOSED** | Cryptographically immune to side-channel signature forgery. |
 | **F-P2-03** | Phase 2 (P0 - Critical) | Identity / Database | Primary key collision when returning guest customer signs up. | Direct `upsert` with `id: auth.uid()` collided with unique `LOWER(email)` constraint on existing guest row. | Created atomic `upsert_customer_profile` RPC linking by email without mutating primary key. | Migration `20260816000000_...sql` applied on staging. | **CLOSED** | Returning guest customers sign up seamlessly; all historical orders preserved. |
 | **F-P2-04** | Phase 2 (P0 - Critical) | Security / Database RLS | `inventory_history` had permissive RLS policies due to Postgres OR-combination. | Re-adding admin policy without dropping legacy `USING (true)` policy allowed authenticated non-admins to write. | `20260816000001_phase2_closure_hardening.sql` explicitly dropped all permissive policies and enforced `public.is_admin()`. | Staging RLS verified. | **CLOSED** | Non-admin users cannot read or tamper with inventory audit logs. |
@@ -53,11 +63,12 @@ Each finding is assigned exactly one of the authoritative dispositions:
 
 - **Total Findings Evaluated**: 18 findings across all phases.
 - **CLOSED**: 13 findings (72.2%).
-- **ACCEPTABLE RISK**: 3 findings (16.7% — Concierge refund model, local read-only env, client ErrorBoundary).
-- **DOCUMENTATION ONLY**: 1 finding (5.6% — `config.toml` template default).
-- **INVALIDATED**: 1 finding (5.6% — Stale migration report discrepancy).
+- **ACCEPTABLE RISK**: 3 findings (16.7% â€” Concierge refund model, local read-only env, client ErrorBoundary).
+- **DOCUMENTATION ONLY**: 1 finding (5.6% â€” `config.toml` template default).
+- **INVALIDATED**: 1 finding (5.6% â€” Stale migration report discrepancy).
 - **PHASE 5 DEPENDENCY / HUMAN ACTION**: 1 finding (Pre-launch DNS cutover).
 - **OPEN DEFECTS**: **0**.
 - **NOT VERIFIED CRITICAL DEFECTS**: **0**.
 
 **Finding Validation Status**: **ALL FINDINGS FORENSICALLY RECONCILED & DISPOSITIONED**.
+

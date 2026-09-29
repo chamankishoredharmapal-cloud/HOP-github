@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { MapPin, Plus, Pencil, Trash2, Loader2 } from "lucide-react";
+import { MapPin, Plus, Pencil, Trash2, Loader2, Star } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   fetchAddresses,
   createAddress,
   updateAddress,
   deleteAddress,
+  setDefaultAddress,
 } from "@/services/customerAddressService";
+import { fetchProfile } from "@/services/customerProfileService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -58,16 +60,25 @@ export default function Addresses() {
   const [form, setForm] = useState<AddressForm>(emptyForm);
   const [error, setError] = useState("");
 
-  const { data: addresses, isLoading } = useQuery({
-    queryKey: ["customer-addresses", user?.id],
-    queryFn: () => fetchAddresses(user!.id),
+  // First fetch the customer profile to get the actual customer_id
+  const { data: profile, isLoading: profileLoading } = useQuery({
+    queryKey: ["customer-profile", user?.email],
+    queryFn: () => fetchProfile(user!.id),
     enabled: !!user,
+  });
+
+  const customerId = profile?.id;
+
+  const { data: addresses, isLoading } = useQuery({
+    queryKey: ["customer-addresses", customerId],
+    queryFn: () => fetchAddresses(customerId!),
+    enabled: !!customerId,
   });
 
   const createMutation = useMutation({
     mutationFn: (input: TablesInsert<"shipping_addresses">) => createAddress(input),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customer-addresses", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["customer-addresses", customerId] });
       resetForm();
     },
     onError: (err) => setError(err instanceof Error ? err.message : "Failed to save"),
@@ -75,19 +86,27 @@ export default function Addresses() {
 
   const updateMutation = useMutation({
     mutationFn: ({ id, updates }: { id: string; updates: TablesUpdate<"shipping_addresses"> }) =>
-      updateAddress(id, updates),
+      updateAddress(id, updates, customerId!),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customer-addresses", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["customer-addresses", customerId] });
       resetForm();
     },
     onError: (err) => setError(err instanceof Error ? err.message : "Failed to update"),
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteAddress(id),
+    mutationFn: (id: string) => deleteAddress(id, customerId!),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customer-addresses", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["customer-addresses", customerId] });
     },
+  });
+
+  const defaultMutation = useMutation({
+    mutationFn: (id: string) => setDefaultAddress(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["customer-addresses", customerId] });
+    },
+    onError: (err) => setError(err instanceof Error ? err.message : "Failed to set default"),
   });
 
   const resetForm = () => {
@@ -212,7 +231,14 @@ export default function Addresses() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-ink shrink-0 mt-0.5" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-ink">{addr.recipient_name}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-medium text-ink">{addr.recipient_name}</p>
+                    {addr.is_default && (
+                      <span className="text-[0.6rem] tracking-[0.2em] uppercase text-rasa-gold bg-jasmine-deep/20 px-2 py-0.5 rounded">
+                        Default
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm text-ink-soft">{addr.address}</p>
                   <p className="text-sm text-ink-soft">
                     {addr.city}, {addr.state} &ndash; {addr.postal_code}
@@ -232,6 +258,16 @@ export default function Addresses() {
                   >
                     <Pencil className="w-4 h-4" />
                   </button>
+                  {!addr.is_default && (
+                    <button
+                      onClick={() => defaultMutation.mutate(addr.id)}
+                      disabled={defaultMutation.isPending}
+                      className="p-1.5 rounded-md text-ink-soft hover:text-rasa-gold hover:bg-jasmine-deep/20"
+                      aria-label="Set as default"
+                    >
+                      <Star className="w-4 h-4" />
+                    </button>
+                  )}
                   <button
                     onClick={() => {
                       if (confirm("Remove this address?")) deleteMutation.mutate(addr.id);

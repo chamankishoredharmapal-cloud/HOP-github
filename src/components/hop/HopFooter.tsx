@@ -1,10 +1,37 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Monogram from "./Monogram";
+import { supabase } from "@/integrations/supabase/client";
 
 const HopFooter = () => {
   const [email, setEmail] = useState("");
-  const [joined, setJoined] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const response = await supabase.functions.invoke("subscribe-newsletter", {
+        body: { email, source: "footer" },
+      });
+
+      if (response.error || response.data?.success === false) {
+        setStatus("error");
+        setErrorMessage(response.data?.error ?? response.error?.message ?? "Subscription failed. Please try again.");
+      } else {
+        setStatus("success");
+        setEmail("");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("We couldn't subscribe you right now. Please try again later.");
+    }
+  };
 
   return (
     <footer className="bg-ink text-jasmine mt-section">
@@ -23,14 +50,38 @@ const HopFooter = () => {
           <p className="text-sm font-light text-jasmine/70 leading-relaxed max-w-sm">
             A house, not a shop — for Indian sarees.
           </p>
-          {joined ? (
+          {status === "success" ? (
             <p className="text-sm font-light text-jasmine/80 max-w-sm" role="status">
               Kept gently. You will hear from the house only when there is something worth saying.
             </p>
+          ) : status === "error" ? (
+            <div className="space-y-2">
+              <p className="text-sm font-light text-destructive/90 max-w-sm" role="alert">{errorMessage}</p>
+              <form
+                className="flex max-w-sm border-b border-jasmine/40 pb-2"
+                onSubmit={handleSubscribe}
+              >
+                <label htmlFor="footer-email" className="sr-only">Email address</label>
+                <input
+                  id="footer-email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email, gently kept"
+                  className="flex-1 bg-transparent text-sm text-jasmine placeholder:text-jasmine/50 outline-none font-light"
+                  aria-label="Email"
+                  disabled={status === "loading"}
+                />
+                <button type="submit" disabled={status === "loading"} className="text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4 opacity-50">
+                  {status === "loading" ? "Subscribing…" : "Try again"}
+                </button>
+              </form>
+            </div>
           ) : (
             <form
               className="flex max-w-sm border-b border-jasmine/40 pb-2"
-              onSubmit={(e) => { e.preventDefault(); if (email.trim()) setJoined(true); }}
+              onSubmit={handleSubscribe}
             >
               <label htmlFor="footer-email" className="sr-only">Email address</label>
               <input
@@ -42,9 +93,10 @@ const HopFooter = () => {
                 placeholder="Your email, gently kept"
                 className="flex-1 bg-transparent text-sm text-jasmine placeholder:text-jasmine/50 outline-none font-light"
                 aria-label="Email"
+                disabled={status === "loading"}
               />
-              <button type="submit" className="text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4">
-                Join
+              <button type="submit" disabled={status === "loading"} className="text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4 opacity-50">
+                {status === "loading" ? "Subscribing…" : "Join"}
               </button>
             </form>
           )}

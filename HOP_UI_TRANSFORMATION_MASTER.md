@@ -477,7 +477,7 @@ World definitions exist as data with in-file debt flags (material provenance mar
 
 ### OBSERVED
 
-- None rendered this session.
+- 2026-09-27 — Production-preview Chromium pass verified the homepage collection stage as five full-viewport `Film` chapters. Kalyani, Viara, Arya, Padma and Spandana each render a centered HOP mark and name over the film/poster, link to the canonical `/collections/:slug` route, and use the existing `Film` viewport gating. Desktop chapters measured 1440×900; mobile chapters measured 390×844. Posters remained visible when video requests were blocked, reduced motion kept the still frame, axe reported no violations, and the staged homepage had no horizontal overflow.
 
 ### INFERRED
 
@@ -510,7 +510,7 @@ Per-world temperature/treatment/composition/accent/imagery/story/material/intera
 
 ## CURRENT IMPLEMENTATION
 
-Data + aliases + 2 usages; detail-page application unknown; imagery/interaction per-world behavior unverified.
+Data + aliases + 3 consuming surfaces. The homepage `CollectionRooms` stage now renders five full-viewport cinematic chapters using `COLLECTION_WORLDS`, `COLLECTION_VIDEOS`, live collection records, the existing `Film` gate and temporary house material studies where staging poster paths are 1×1 placeholders. The collections index and collection detail surfaces were not changed.
 
 ## IMPLEMENTATION TASKS
 
@@ -542,7 +542,7 @@ ADOPT worlds-data direction; APPLIED to detail page this session (Category.tsx n
 
 ## CURRENT CHECKPOINT
 
-3 consuming surfaces (home stage, index, detail). Prerender confirms canonical slugs kalyani/viara/arya/spandana/padma (18 routes OK). Five-world visual matrix outstanding.
+3 consuming surfaces (home stage, index, detail). Prerender confirms canonical slugs kalyani/viara/arya/spandana/padma (18 routes OK). Homepage collection-film stage browser-verified at 1440×900 and 390×844; five-world visual matrix for index/detail remains outstanding.
 
 ## NEXT ACTION
 
@@ -550,12 +550,13 @@ Browser pass: screenshot `/collections` + all five `/collections/:slug` at both 
 
 ## LAST VERIFIED
 
-2026-09-23 — data + 3 usages + build verified this session; visual matrix NOT EXECUTED.
+2026-09-27 — homepage collection-film stage, canonical links, poster fallback, reduced-motion behavior, responsive geometry, route smoke and axe verified in production preview; full index/detail five-world visual matrix remains outstanding.
 
 ## CHANGE LOG
 
 - 2026-09-23: Objective created; status PARTIALLY-IMPLEMENTED.
 - 2026-09-23: Category.tsx had zero world consumption (verified) → integrated (import, world lookup, editorial name, accentName, emotion, accent Selvedge). Zero-effect fields classified as content-track. Status → VALIDATING.
+- 2026-09-27: Homepage collection stage only → replaced dense five-column room grid with five full-viewport `Film` chapters. Reused world data, canonical collection routes, live film URLs, poster data, `Film` viewport gating and HOP mark; no other homepage section or route changed. Verified in production preview at desktop/mobile, including blocked-video poster fallback, reduced motion, axe, console and route smoke. Temporary 1×1 staging posters were replaced with existing house material studies and explicitly labelled as temporary fallbacks.
 
 ---
 

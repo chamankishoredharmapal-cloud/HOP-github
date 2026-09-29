@@ -1,43 +1,40 @@
-import test from "node:test";
-import assert from "node:assert/strict";
+import { describe, it, expect } from "vitest";
 import {
   isSupabaseStorageUrl,
   getSupabaseOptimizedUrl,
   getSupabaseSrcSet,
 } from "../supabaseImage.ts";
 
-test("Supabase Image Utility Suite", async (t) => {
+describe("Supabase Image Utility Suite", () => {
   const canonicalUrl =
     "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/product-images/saree-1.jpg";
 
-  await t.test("isSupabaseStorageUrl correctly classifies URLs", () => {
-    assert.equal(isSupabaseStorageUrl(canonicalUrl), true);
-    assert.equal(
+  it("isSupabaseStorageUrl correctly classifies URLs", () => {
+    expect(isSupabaseStorageUrl(canonicalUrl)).toBe(true);
+    expect(
       isSupabaseStorageUrl(
         "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/render/image/public/product-images/saree-1.jpg"
-      ),
-      false // already transformed
-    );
-    assert.equal(isSupabaseStorageUrl("https://example.com/image.jpg"), false);
-    assert.equal(isSupabaseStorageUrl("/assets/saree.jpg"), false);
-    assert.equal(isSupabaseStorageUrl(null), false);
-    assert.equal(isSupabaseStorageUrl(undefined), false);
-    assert.equal(isSupabaseStorageUrl(""), false);
+      )
+    ).toBe(false); // already transformed
+    expect(isSupabaseStorageUrl("https://example.com/image.jpg")).toBe(false);
+    expect(isSupabaseStorageUrl("/assets/saree.jpg")).toBe(false);
+    expect(isSupabaseStorageUrl(null)).toBe(false);
+    expect(isSupabaseStorageUrl(undefined)).toBe(false);
+    expect(isSupabaseStorageUrl("")).toBe(false);
   });
 
-  await t.test("getSupabaseOptimizedUrl generates deterministic transformed URLs", () => {
+  it("getSupabaseOptimizedUrl generates deterministic transformed URLs", () => {
     const transformed = getSupabaseOptimizedUrl(canonicalUrl, {
       width: 800,
       quality: 80,
     });
 
-    assert.equal(
-      transformed,
+    expect(transformed).toBe(
       "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/render/image/public/product-images/saree-1.jpg?format=webp&quality=80&width=800"
     );
   });
 
-  await t.test("getSupabaseOptimizedUrl enforces strict alphabetical parameter sorting", () => {
+  it("getSupabaseOptimizedUrl enforces strict alphabetical parameter sorting", () => {
     const transformed = getSupabaseOptimizedUrl(canonicalUrl, {
       width: 1200,
       height: 1500,
@@ -46,41 +43,40 @@ test("Supabase Image Utility Suite", async (t) => {
     });
 
     const parsed = new URL(transformed);
-    assert.equal(
-      parsed.search,
+    expect(parsed.search).toBe(
       "?format=webp&height=1500&quality=75&resize=cover&width=1200"
     );
   });
 
-  await t.test("getSupabaseOptimizedUrl defaults to webp format", () => {
+  it("getSupabaseOptimizedUrl defaults to webp format", () => {
     const transformed = getSupabaseOptimizedUrl(canonicalUrl, { width: 480 });
-    assert.ok(transformed.includes("format=webp"));
+    expect(transformed).toContain("format=webp");
   });
 
-  await t.test("getSupabaseOptimizedUrl passes non-Supabase URLs untouched", () => {
+  it("getSupabaseOptimizedUrl passes non-Supabase URLs untouched", () => {
     const external = "https://images.unsplash.com/photo-12345?auto=format";
-    assert.equal(getSupabaseOptimizedUrl(external, { width: 800 }), external);
+    expect(getSupabaseOptimizedUrl(external, { width: 800 })).toBe(external);
 
     const relative = "/optimized/hop-hero/hop-hero-800w.webp";
-    assert.equal(getSupabaseOptimizedUrl(relative, { width: 800 }), relative);
+    expect(getSupabaseOptimizedUrl(relative, { width: 800 })).toBe(relative);
   });
 
-  await t.test("getSupabaseOptimizedUrl handles null/empty/invalid input gracefully", () => {
-    assert.equal(getSupabaseOptimizedUrl(null), "");
-    assert.equal(getSupabaseOptimizedUrl(undefined), "");
-    assert.equal(getSupabaseOptimizedUrl(""), "");
-    assert.equal(getSupabaseOptimizedUrl("not a valid url"), "not a valid url");
+  it("getSupabaseOptimizedUrl handles null/empty/invalid input gracefully", () => {
+    expect(getSupabaseOptimizedUrl(null)).toBe("");
+    expect(getSupabaseOptimizedUrl(undefined)).toBe("");
+    expect(getSupabaseOptimizedUrl("")).toBe("");
+    expect(getSupabaseOptimizedUrl("not a valid url")).toBe("not a valid url");
   });
 
-  await t.test("getSupabaseSrcSet generates responsive candidate set", () => {
+  it("getSupabaseSrcSet generates responsive candidate set", () => {
     const srcset = getSupabaseSrcSet(canonicalUrl, [480, 800, 1200]);
-    assert.ok(srcset.includes("width=480 480w"));
-    assert.ok(srcset.includes("width=800 800w"));
-    assert.ok(srcset.includes("width=1200 1200w"));
-    assert.equal(srcset.split(", ").length, 3);
+    expect(srcset).toContain("width=480 480w");
+    expect(srcset).toContain("width=800 800w");
+    expect(srcset).toContain("width=1200 1200w");
+    expect(srcset.split(", ").length).toBe(3);
   });
 
-  await t.test("getSupabaseSrcSet returns empty string for non-Supabase URLs", () => {
-    assert.equal(getSupabaseSrcSet("/assets/local.jpg", [480, 800]), "");
+  it("getSupabaseSrcSet returns empty string for non-Supabase URLs", () => {
+    expect(getSupabaseSrcSet("/assets/local.jpg", [480, 800])).toBe("");
   });
 });

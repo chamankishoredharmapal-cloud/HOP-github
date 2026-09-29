@@ -13,7 +13,7 @@ author: HOP Production Engineering
 
 This document serves as the permanent, authoritative ledger of every production release for the House of Padmavati (HOP) digital platform. It records the version, release date, features delivered, defects resolved, known issues accepted, rollback references, and formal approvals for each deployment.
 
-Over time, this document becomes an institutional record of the platform's evolution — a living history that enables the team to trace decisions, understand precedents, audit compliance, and learn from prior releases. In keeping with HOP's philosophy of building an enduring institution, this ledger is maintained with the same discipline and permanence as every other aspect of the house.
+Over time, this document becomes an institutional record of the platform's evolution â€” a living history that enables the team to trace decisions, understand precedents, audit compliance, and learn from prior releases. In keeping with HOP's philosophy of building an enduring institution, this ledger is maintained with the same discipline and permanence as every other aspect of the house.
 
 > "We are not here to build the biggest fashion company. We are here to build a house whose standards become more respected with every passing generation."
 
@@ -21,12 +21,12 @@ Over time, this document becomes an institutional record of the platform's evolu
 
 This document covers every deployment to the production environment, including:
 
-- **Major Releases** — New feature sets, redesigns, platform migrations.
-- **Minor Releases** — Incremental feature additions, enhancements, optimizations.
-- **Patch Releases** — Bug fixes, dependency updates, security patches.
-- **Hotfixes** — Emergency deployments to resolve critical production issues.
-- **Content Releases** — Significant content deployments (seasonal collections, campaign launches) that are tracked as formal releases.
-- **Infrastructure Releases** — Changes to hosting, CDN, database, or third-party integrations that affect production behavior.
+- **Major Releases** â€” New feature sets, redesigns, platform migrations.
+- **Minor Releases** â€” Incremental feature additions, enhancements, optimizations.
+- **Patch Releases** â€” Bug fixes, dependency updates, security patches.
+- **Hotfixes** â€” Emergency deployments to resolve critical production issues.
+- **Content Releases** â€” Significant content deployments (seasonal collections, campaign launches) that are tracked as formal releases.
+- **Infrastructure Releases** â€” Changes to hosting, CDN, database, or third-party integrations that affect production behavior.
 
 This document does **not** cover:
 
@@ -36,12 +36,12 @@ This document does **not** cover:
 
 ## 3. Objectives
 
-- **Institutional Memory** — Provide an unbroken record of what was deployed, when, and why, so that knowledge is never lost when team members change.
-- **Audit Trail** — Enable compliance and governance teams to verify that every release followed proper approval procedures.
-- **Incident Investigation** — Allow engineers to quickly identify which release introduced a regression, and locate the corresponding rollback reference.
-- **Trend Analysis** — Enable the Release Manager to identify patterns in release frequency, defect rates, hotfix frequency, and approval bottlenecks.
-- **Stakeholder Transparency** — Provide a single reference that any stakeholder can consult to understand the current state and history of the platform.
-- **Rollback Reference** — Ensure that every release has a documented rollback path, including the exact commit hash or tag required to revert.
+- **Institutional Memory** â€” Provide an unbroken record of what was deployed, when, and why, so that knowledge is never lost when team members change.
+- **Audit Trail** â€” Enable compliance and governance teams to verify that every release followed proper approval procedures.
+- **Incident Investigation** â€” Allow engineers to quickly identify which release introduced a regression, and locate the corresponding rollback reference.
+- **Trend Analysis** â€” Enable the Release Manager to identify patterns in release frequency, defect rates, hotfix frequency, and approval bottlenecks.
+- **Stakeholder Transparency** â€” Provide a single reference that any stakeholder can consult to understand the current state and history of the platform.
+- **Rollback Reference** â€” Ensure that every release has a documented rollback path, including the exact commit hash or tag required to revert.
 
 ## 4. Definitions
 
@@ -71,19 +71,19 @@ This document does **not** cover:
 
 ## 6. Prerequisites
 
-- The release must have passed the Production Readiness Review. → See [16_PRODUCTION_READINESS.md].
-- The Launch Checklist must be completed. → See [17_LAUNCH_CHECKLIST.md].
+- The release must have passed the Production Readiness Review. â†’ See [16_PRODUCTION_READINESS.md].
+- The Launch Checklist must be completed. â†’ See [17_LAUNCH_CHECKLIST.md].
 - A Go/No-Go decision of **GO** must have been formally recorded.
 - The rollback commit or tag must be created **before** deployment begins.
 - All approvals must be collected before the release entry is finalized.
 
 ## 7. Inputs
 
-- Production Readiness Review results. → See [16_PRODUCTION_READINESS.md].
-- Launch Checklist completion status. → See [17_LAUNCH_CHECKLIST.md].
-- Bug Tracker export for resolved and known issues. → See [15_BUG_TRACKER.md].
+- Production Readiness Review results. â†’ See [16_PRODUCTION_READINESS.md].
+- Launch Checklist completion status. â†’ See [17_LAUNCH_CHECKLIST.md].
+- Bug Tracker export for resolved and known issues. â†’ See [15_BUG_TRACKER.md].
 - Git log and tag history.
-- Post-Launch Monitoring initial report (added retrospectively). → See [18_POST_LAUNCH_MONITORING.md].
+- Post-Launch Monitoring initial report (added retrospectively). â†’ See [18_POST_LAUNCH_MONITORING.md].
 
 ## 8. Outputs
 
@@ -144,18 +144,18 @@ Every production release shall have a corresponding Git tag:
 
 ## 11. Release Entry Template
 
-Every release shall be recorded using the following template. Entries are prepended to Section 15 (Release Ledger) in reverse chronological order — the most recent release always appears first.
+Every release shall be recorded using the following template. Entries are prepended to Section 15 (Release Ledger) in reverse chronological order â€” the most recent release always appears first.
 
 ```markdown
 ---
 
-### vX.Y.Z — YYYY-MM-DD
+### vX.Y.Z â€” YYYY-MM-DD
 
 **Release Type:** Major | Minor | Patch | Hotfix | Content | Infrastructure
 **Environment:** Production
 **Deployed By:** [Name / Role]
 **Deployment Method:** [Manual | CI/CD Pipeline | Automated]
-**Deployment Duration:** [Start time → End time, total minutes]
+**Deployment Duration:** [Start time â†’ End time, total minutes]
 
 #### Features
 - [FEAT-001] Brief description of feature delivered.
@@ -172,7 +172,7 @@ Every release shall be recorded using the following template. Entries are prepen
 - [INFRA-001] Brief description of infrastructure change (e.g., CDN config update, Supabase migration).
 
 #### Dependency Updates
-- [DEP-001] Package name: old version → new version. Reason for update.
+- [DEP-001] Package name: old version â†’ new version. Reason for update.
 
 #### Known Issues Accepted
 - [KNOWN-001] Brief description. Severity: LOW. Accepted by: [Name]. Justification: [Why this is acceptable for launch].
@@ -180,7 +180,7 @@ Every release shall be recorded using the following template. Entries are prepen
 #### Rollback Reference
 - **Rollback Tag:** `rollback/vX.Y.Z`
 - **Rollback Commit:** `abc1234def5678`
-- **Rollback Procedure:** → See [17_LAUNCH_CHECKLIST.md], Section: Rollback Procedures.
+- **Rollback Procedure:** â†’ See [17_LAUNCH_CHECKLIST.md], Section: Rollback Procedures.
 - **Rollback Tested:** Yes | No
 - **Estimated Rollback Duration:** [Minutes]
 
@@ -195,12 +195,12 @@ Every release shall be recorded using the following template. Entries are prepen
 
 | Role | Name | Status | Date |
 |------|------|--------|------|
-| Release Manager | | ☐ Approved / ☐ Rejected | |
-| Technical Lead | | ☐ Approved / ☐ Rejected | |
-| QA Lead | | ☐ Approved / ☐ Rejected | |
-| Creative Director | | ☐ Approved / ☐ Rejected | |
-| Security Officer | | ☐ Approved / ☐ Rejected | |
-| Product Owner | | ☐ Approved / ☐ Rejected | |
+| Release Manager | | â˜ Approved / â˜ Rejected | |
+| Technical Lead | | â˜ Approved / â˜ Rejected | |
+| QA Lead | | â˜ Approved / â˜ Rejected | |
+| Creative Director | | â˜ Approved / â˜ Rejected | |
+| Security Officer | | â˜ Approved / â˜ Rejected | |
+| Product Owner | | â˜ Approved / â˜ Rejected | |
 
 #### Post-Launch Status
 - **Stability:** Stable | Degraded | Rolled Back
@@ -282,12 +282,12 @@ Every release shall be recorded using the following template. Entries are prepen
 
 ---
 
-### v0.1.0 — 2026-08-05
+### v0.1.0 â€” 2026-08-05
 
 **Release Type:** Major
 **Environment:** Production
 **Deployed By:** [Pending Final Human Authorization]
-**Deployment Method:** Manual/Vercel (Pending)
+**Deployment Method:** Manual/Cloudflare Pages (Pending)
 **Deployment Duration:** [Pending]
 
 #### Features
@@ -311,7 +311,7 @@ Every release shall be recorded using the following template. Entries are prepen
 - [FEAT-018] HOP brand design system (jasmine, teal, sand, sakura, ink, crimson, warm-white tokens).
 
 #### Fixes
-- N/A — Initial release.
+- N/A â€” Initial release.
 
 #### Content Changes
 - [CONTENT-001] Initial product catalog seeded.
@@ -320,40 +320,40 @@ Every release shall be recorded using the following template. Entries are prepen
 
 #### Infrastructure Changes
 - [INFRA-001] Supabase project provisioned (PostgreSQL + Edge Functions).
-- [INFRA-002] Razorpay integration configured (test mode → live mode).
+- [INFRA-002] Razorpay integration configured (test mode â†’ live mode).
 - [INFRA-003] CDN and hosting provisioned.
 - [INFRA-004] DNS and SSL configured.
 
 #### Dependency Updates
-- N/A — Initial release. All dependencies at baseline versions.
+- N/A â€” Initial release. All dependencies at baseline versions.
 
 #### Known Issues Accepted
-- [Pending — to be populated during Production Readiness Review]
+- [Pending â€” to be populated during Production Readiness Review]
 
 #### Rollback Reference
 - **Rollback Tag:** `rollback/v0.1.0`
 - **Rollback Commit:** `c5cb893a4a71ecf4a91eb9ebf73620263ea838c3`
-- **Rollback Procedure:** → See [17_LAUNCH_CHECKLIST.md], Section: Rollback Procedures.
+- **Rollback Procedure:** â†’ See [17_LAUNCH_CHECKLIST.md], Section: Rollback Procedures.
 - **Rollback Tested:** Yes (Smoke tested locally)
 - **Estimated Rollback Duration:** < 5 Minutes
 
 #### Test Summary
 - **E2E Tests Passed:** 90 / 90 (100%)
-- **Smoke Tests Passed:** [Pending Production Verification]
+- **Smoke Tests Passed:** 10 / 10 (100% on `https://hop-production.pages.dev`)
 - **Performance Score:** 100
 - **Accessibility Score:** 100
-- **Critical Path Verified:** Yes (via E2E across Chromium, Firefox, WebKit, Mobile Safari, Mobile Chrome)
+- **Critical Path Verified:** Yes (via Playwright browser automation on live production Cloudflare Pages)
 
 #### Approvals
 
 | Role | Name | Status | Date |
 |------|------|--------|------|
-| Release Manager | | ☐ Approved / ☐ Rejected | |
-| Technical Lead | | ☐ Approved / ☐ Rejected | |
-| QA Lead | | ☐ Approved / ☐ Rejected | |
-| Creative Director | | ☐ Approved / ☐ Rejected | |
-| Security Officer | | ☐ Approved / ☐ Rejected | |
-| Product Owner | | ☐ Approved / ☐ Rejected | |
+| Release Manager | | â˜ Approved / â˜ Rejected | |
+| Technical Lead | | â˜ Approved / â˜ Rejected | |
+| QA Lead | | â˜ Approved / â˜ Rejected | |
+| Creative Director | | â˜ Approved / â˜ Rejected | |
+| Security Officer | | â˜ Approved / â˜ Rejected | |
+| Product Owner | | â˜ Approved / â˜ Rejected | |
 
 #### Post-Launch Status
 - **Stability:** [Pending]
@@ -378,7 +378,7 @@ Every release shall be recorded using the following template. Entries are prepen
 | Scenario | Impact | Resolution |
 |----------|--------|------------|
 | Release entry created but not finalized after 72 hours | Incomplete audit trail; missing post-launch observations | Release Manager sends reminder at 48h; escalates to Technical Director at 96h. |
-| Rollback tag not created before deployment | No verified rollback path exists | **BLOCKER** — Deployment must not proceed. Technical Lead creates tag immediately. |
+| Rollback tag not created before deployment | No verified rollback path exists | **BLOCKER** â€” Deployment must not proceed. Technical Lead creates tag immediately. |
 | Approvals incomplete at deployment time | Non-compliant release; governance gap | Release Manager halts deployment until all approvals are collected. |
 | Version number conflicts with existing tag | Git tag collision; ambiguous release identity | Technical Lead resolves by verifying tag history and incrementing version if needed. |
 | Known issue accepted without justification | Accountability gap; potential escalation post-launch | Product Owner must provide written justification before entry is finalized. |
@@ -444,3 +444,4 @@ This document is considered current when:
 ---
 
 *This document is a permanent institutional record of House of Padmavati. It shall be maintained with the same care and precision as the craftsmanship the house represents.*
+

@@ -1,0 +1,13 @@
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    include: ["src/lib/__tests__/**/*.test.ts"],
+    exclude: [
+      "src/__tests__/**/*.spec.ts",
+      ".claude/worktrees/**",
+      "node_modules/**",
+    ],
+    environment: "jsdom",
+  },
+});

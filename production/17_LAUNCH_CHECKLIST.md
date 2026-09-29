@@ -1,4 +1,4 @@
----
+﻿---
 document_id: HOP-PROD-017
 title: Launch Checklist
 version: 1.0.0
@@ -27,7 +27,7 @@ This checklist covers all technical, operational, and communication activities r
 - **Go/No-Go Decision**: A formal consensus reached by the Launch Team to proceed with or halt the launch.
 - **War Room**: A designated physical or virtual space (e.g., a dedicated Slack channel or Zoom bridge) where the Launch Team coordinates operations.
 - **Cache Warming**: The process of pre-loading CDN and application caches to ensure fast load times for the first real users.
-- **Critical Path**: The essential user journey: Browse → Product Detail → Cart → Checkout → Payment → Order Confirmation.
+- **Critical Path**: The essential user journey: Browse â†’ Product Detail â†’ Cart â†’ Checkout â†’ Payment â†’ Order Confirmation.
 
 ## Roles & Responsibilities
 
@@ -43,7 +43,7 @@ This checklist covers all technical, operational, and communication activities r
 ## Prerequisites
 - All preceding audits (Pre-Production, UI/UX, Security, Performance, SEO) are completed and signed off.
 - Staging environment is locked (Code Freeze).
-- Production infrastructure (Vercel/AWS/Cloudflare) is provisioned but inactive/hidden.
+- Production infrastructure (Cloudflare Pages/AWS/Cloudflare) is provisioned but inactive/hidden.
 - Third-party accounts (Razorpay, Supabase, Google Analytics, Sentry) are upgraded to production tiers.
 - Launch team roster is finalized and communication channels are established.
 
@@ -60,7 +60,7 @@ This checklist covers all technical, operational, and communication activities r
 - Sign-off documents for all launch phases.
 
 ## Dependencies
-- Availability of core infrastructure providers (Vercel, Supabase).
+- Availability of core infrastructure providers (Cloudflare Pages, Supabase).
 - Functional payment gateway (Razorpay Live Mode).
 - DNS propagation times (varies by provider).
 - Stakeholder availability for final approvals.
@@ -124,7 +124,7 @@ The launch must follow a strict chronological sequence to ensure dependencies ar
 1. **Initiate Build:** Lead Engineer triggers the production build from the `main` branch.
 2. **Build Verification:** Monitor build logs for any warnings or errors. Ensure Vite bundles all assets correctly.
 3. **Database Migration (Final):** Execute final data seeds (e.g., initial catalog data) to the Supabase production database.
-4. **Deploy Application:** Push the build to the production environment (e.g., Vercel).
+4. **Deploy Application:** Push the build to the production environment (e.g., Cloudflare Pages).
 5. **Traffic Routing (DNS):** DevOps updates the primary DNS A/CNAME records to point `houseofpadmavati.com` to the production load balancer/CDN.
 
 ---
@@ -152,7 +152,7 @@ The launch must follow a strict chronological sequence to ensure dependencies ar
 - [ ] Check Edge Function logs to ensure successful initialization.
 
 #### External Integrations Activation
-- [ ] **Razorpay:** Activate Live Mode. Perform a nominal ₹1 test transaction if required by standard operating procedure.
+- [ ] **Razorpay:** Activate Live Mode. Perform a nominal â‚¹1 test transaction if required by standard operating procedure.
 - [ ] **Analytics:** Enable Google Analytics / Tag Manager. Verify real-time traffic is registering (using internal IP exclusion if necessary).
 - [ ] **Error Tracking:** Enable Sentry. Verify source maps are uploaded and errors are flowing to the correct production project.
 - [ ] **Uptime Monitoring:** Activate Pingdom, Datadog, or similar uptime checks targeting the homepage and `/api/health` endpoints.
@@ -168,7 +168,7 @@ The launch must follow a strict chronological sequence to ensure dependencies ar
 
 #### Critical Path Verification
 QA Lead and designated testers must execute the following flows manually on real devices (Mobile/Desktop):
-- [ ] **Browse:** Navigate Homepage → Lookbook → Category Page. Verify image loading and typography (Cormorant Garamond, Inter).
+- [ ] **Browse:** Navigate Homepage â†’ Lookbook â†’ Category Page. Verify image loading and typography (Cormorant Garamond, Inter).
 - [ ] **Product Detail:** Open a product, select variant, add to cart.
 - [ ] **Cart:** Open cart, verify calculation, taxes, and shipping estimates.
 - [ ] **Checkout:** Proceed to checkout, enter shipping details.
@@ -280,9 +280,10 @@ The War Room remains active for 72 hours post-launch.
 - All internal and external communications have been successfully dispatched.
 
 ## References
-- → See `00_MASTER_EXECUTION_PLAN.md`
-- → See `01_PRE_PRODUCTION_AUDIT.md`
-- → See `08_SECURITY_AUDIT.md`
-- → See `11_ECOMMERCE_AUDIT.md`
-- → See `16_PRODUCTION_READINESS.md`
-- → See `18_POST_LAUNCH_MONITORING.md`
+- â†’ See `00_MASTER_EXECUTION_PLAN.md`
+- â†’ See `01_PRE_PRODUCTION_AUDIT.md`
+- â†’ See `08_SECURITY_AUDIT.md`
+- â†’ See `11_ECOMMERCE_AUDIT.md`
+- â†’ See `16_PRODUCTION_READINESS.md`
+- â†’ See `18_POST_LAUNCH_MONITORING.md`
+

@@ -1,17 +1,27 @@
-# Phase 5 — System & Environment Final Baseline
+﻿> **⚠️ HISTORICAL DOCUMENT — SUPERSEDED ARCHITECTURE**
+> 
+> This document was created during the Phase 5 audit (2026-08-17) when Vercel was the assumed production hosting platform.
+> **As of 2026-09-26, the authoritative production architecture decision is Cloudflare Pages** (per docs/CLOUDFLARE_DEPLOYMENT_DECISION.md).
+> 
+> All Vercel references in this document reflect the architecture at the time of audit and are preserved for historical/evidence purposes only.
+> For current production execution procedures, see productionTODO.md and production/14_FINAL_PRE_DEPLOYMENT_GO_NO_GO.md.
+>
+> ---
+>
+# Phase 5 â€” System & Environment Final Baseline
 
 **Document ID**: HOP-PROD-PH5-001  
-**Target Environment**: House of Padmavati (HOP) — Full Stack E-Commerce Platform  
-**Audit Phase**: Phase 5 — Independent Reconciliation & Go/No-Go (Part 1 Baseline)  
+**Target Environment**: House of Padmavati (HOP) â€” Full Stack E-Commerce Platform  
+**Audit Phase**: Phase 5 â€” Independent Reconciliation & Go/No-Go (Part 1 Baseline)  
 **Execution Timestamp**: 2026-08-17T14:10:00+05:30  
 **Auditor**: Independent Final Audit Authority  
-**Authoritative Status**: **PART 1 BASELINE ESTABLISHED — STOPPED AT PART 1 GATE**  
+**Authoritative Status**: **PART 1 BASELINE ESTABLISHED â€” STOPPED AT PART 1 GATE**  
 
 ---
 
 ## 1. Executive Summary & Objective
 
-This document establishes the authoritative system, repository, database, infrastructure, and application baseline for **Phase 5 Part 1: Collect → Reconstruct → Challenge**.
+This document establishes the authoritative system, repository, database, infrastructure, and application baseline for **Phase 5 Part 1: Collect â†’ Reconstruct â†’ Challenge**.
 
 The purpose of this baseline is to fix the exact point-in-time state of the House of Padmavati (HOP) platform across all physical and logical layers, verify environment separation, and measure drift against the baselines established in Phases 1 through 4.
 
@@ -27,17 +37,17 @@ The purpose of this baseline is to fix the exact point-in-time state of the Hous
 | **Working Tree State** | Clean (0 modified, 0 staged, 0 untracked in tracked paths) | `git status --porcelain` | **VERIFIED** |
 | **Branch Divergence** | Ahead of `origin/main` by 9 commits (Local staging/audit commits) | `git status` | **VERIFIED** |
 
-### Recent Commit Trajectory (Phases 1–4 Execution):
-1. `da6158f` — `audit(phase-4): complete infrastructure seo and performance verification`
-2. `05a0225` — `commerce(phase-3): complete application and commerce validation`
-3. `6809389` — `chore(release): finalize phase 3 closure state`
-4. `9edd2c0` — `security(phase-2): complete security and customer identity hardening`
-5. `f649d82` — `docs(release): record pre-launch reconciliation and PRR for v0.1.0`
-6. `c5cb893` — `feat(phase-4): complete Quality Assurance and cross-browser E2E suite`
-7. `a5fc760` — `feat(phase-3): complete technical validation and QG3 approval`
-8. `8f5747b` — `feat(phase-2): complete brand and experience validation`
-9. `1faebee` — `fix(studio): resolve product creation and image upload by aligning products schema with Supabase`
-10. `dab9aab` — `release: complete editorial rewrite and stable storefront foundation`
+### Recent Commit Trajectory (Phases 1â€“4 Execution):
+1. `da6158f` â€” `audit(phase-4): complete infrastructure seo and performance verification`
+2. `05a0225` â€” `commerce(phase-3): complete application and commerce validation`
+3. `6809389` â€” `chore(release): finalize phase 3 closure state`
+4. `9edd2c0` â€” `security(phase-2): complete security and customer identity hardening`
+5. `f649d82` â€” `docs(release): record pre-launch reconciliation and PRR for v0.1.0`
+6. `c5cb893` â€” `feat(phase-4): complete Quality Assurance and cross-browser E2E suite`
+7. `a5fc760` â€” `feat(phase-3): complete technical validation and QG3 approval`
+8. `8f5747b` â€” `feat(phase-2): complete brand and experience validation`
+9. `1faebee` â€” `fix(studio): resolve product creation and image upload by aligning products schema with Supabase`
+10. `dab9aab` â€” `release: complete editorial rewrite and stable storefront foundation`
 
 ---
 
@@ -126,3 +136,4 @@ Verified 7 active Edge Functions deployed on staging project `zalbmbhczouhrdbouc
 The system state is stable, fully synchronized between local repository and remote staging environment (`zalbmbhczouhrdboucfe`), and completely isolated from the untouched production project (`kbvjmcnaaogkbnerjcoc`).
 
 **Phase 5 Baseline Status**: **ESTABLISHED & VERIFIED**.
+

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchProfile, upsertProfile } from "@/services/customerProfileService";
+import { fetchProfile, upsertCustomerProfile } from "@/services/customerProfileService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,7 +20,7 @@ export default function Profile() {
   const queryClient = useQueryClient();
 
   const { data: profile, isLoading } = useQuery({
-    queryKey: ["customer-profile", user?.id],
+    queryKey: ["customer-profile", user?.email],
     queryFn: () => fetchProfile(user!.id),
     enabled: !!user,
   });
@@ -37,9 +37,9 @@ export default function Profile() {
 
   const mutation = useMutation({
     mutationFn: () =>
-      upsertProfile({ id: user!.id, email: user!.email!, full_name: fullName, phone: phone || null }),
+      upsertCustomerProfile(user!.email!, fullName, phone || null),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customer-profile", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["customer-profile", user?.email] });
     },
   });
 
@@ -98,10 +98,11 @@ export default function Profile() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="phone">Phone (optional)</Label>
+          <Label htmlFor="phone">Phone</Label>
           <Input
             id="phone"
             type="tel"
+            required
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+91 98765 43210"

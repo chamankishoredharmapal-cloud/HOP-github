@@ -1,10 +1,20 @@
-# Phase 5 — Consolidated Risk Register & Pre-Deployment Matrix
+﻿> **⚠️ HISTORICAL DOCUMENT — SUPERSEDED ARCHITECTURE**
+> 
+> This document was created during the Phase 5 audit (2026-08-17) when Vercel was the assumed production hosting platform.
+> **As of 2026-09-26, the authoritative production architecture decision is Cloudflare Pages** (per docs/CLOUDFLARE_DEPLOYMENT_DECISION.md).
+> 
+> All Vercel references in this document reflect the architecture at the time of audit and are preserved for historical/evidence purposes only.
+> For current production execution procedures, see productionTODO.md and production/14_FINAL_PRE_DEPLOYMENT_GO_NO_GO.md.
+>
+> ---
+>
+# Phase 5 â€” Consolidated Risk Register & Pre-Deployment Matrix
 
 **Document ID**: HOP-PROD-PH5-010  
-**Audit Phase**: Phase 5 — Independent Reconciliation & Go/No-Go (Part 2 Step 10 & 14)  
+**Audit Phase**: Phase 5 â€” Independent Reconciliation & Go/No-Go (Part 2 Step 10 & 14)  
 **Execution Timestamp**: 2026-08-17T14:54:00+05:30  
 **Auditor**: Independent Final Audit Authority  
-**Authoritative Status**: **RISK REGISTER ESTABLISHED — STOPPED AT DEPLOYMENT GATE**  
+**Authoritative Status**: **RISK REGISTER ESTABLISHED â€” STOPPED AT DEPLOYMENT GATE**  
 
 ---
 
@@ -30,7 +40,7 @@ In accordance with Phase 5 Step 10 and Step 14 governance requirements, all resi
 | Risk ID | Source Finding | Phase | Subsystem | Severity | Evidence | Root Cause | Production Impact | Current Status | Disposition | Owner | Blocking? | Required Action for Final Closure | Evidence Needed for Closure |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | **RSK-01** | `F-P4-04` | Phase 4 | Infrastructure / DNS | P2 | `Resolve-DnsName houseofpadmavati.com` -> NXDOMAIN | Pre-launch DNS unmapped state. | Apex domain will not resolve globally until registrar nameservers point to Vercel. | PRE-LAUNCH READY | **HUMAN ACTION / BLOCKER FOR PUBLIC ACCESS** | Lead DevOps Engineer / Domain Admin | **YES (Blocks public traffic, does not block code GO)** | Configure Apex A/CNAME records in DNS registrar dashboard. | Successful DNS propagation and SSL certificate issuance. |
-| **RSK-02** | `C-19` | Phase 3/5 | Commerce / Payments | P1 | Local/Staging configured with `rzp_test_...` | Live Razorpay merchant keys intentionally unactivated during audit. | Customers cannot complete live real-money credit card/UPI transactions until live key is injected into Vercel production environment. | PRE-LAUNCH READY | **HUMAN ACTION / BLOCKER FOR REAL PAYMENTS** | E-Commerce Manager / Lead DevOps | **YES (Blocks financial capture, does not block code GO)** | Set `VITE_RAZORPAY_KEY_ID` (Live) in Vercel Production Environment and `RAZORPAY_KEY_SECRET` in Production Supabase Secrets. | Live test purchase (₹1 authorization) successfully captured on live gateway. |
+| **RSK-02** | `C-19` | Phase 3/5 | Commerce / Payments | P1 | Local/Staging configured with `rzp_test_...` | Live Razorpay merchant keys intentionally unactivated during audit. | Customers cannot complete live real-money credit card/UPI transactions until live key is injected into Vercel production environment. | PRE-LAUNCH READY | **HUMAN ACTION / BLOCKER FOR REAL PAYMENTS** | E-Commerce Manager / Lead DevOps | **YES (Blocks financial capture, does not block code GO)** | Set `VITE_RAZORPAY_KEY_ID` (Live) in Vercel Production Environment and `RAZORPAY_KEY_SECRET` in Production Supabase Secrets. | Live test purchase (â‚¹1 authorization) successfully captured on live gateway. |
 | **RSK-03** | `F-P3-01` | Phase 3 | Commerce / Operations | P3 | `11_FINDING_REGISTER.md` & `OrderDetail.tsx` | Luxury e-commerce concierge operating model. | Refunds initiated in Studio update DB order status but require manual gateway refund on Razorpay Dashboard. | GOVERNED BY SOP | **ACCEPTABLE RISK / HUMAN ACTION** | Customer Support Lead / Finance Officer | **NO (Non-blocking)** | Finance officer logs into Razorpay dashboard to disburse approved refunds. | Signed refund audit log in internal ERP. |
 | **RSK-04** | `F-P4-01` | Phase 4 | Infrastructure / Config | P3 | Untracked `.env` file | Convenience config for local SSG build crawler. | Local build reads public anon key for read-only SSG product queries; production environment variables are managed securely via Vercel dashboard. | VERIFIED SAFE | **ACCEPTABLE RISK / DOCUMENTATION ONLY** | Frontend Tech Lead | **NO (Non-blocking)** | Maintain `.env` in `.gitignore` and ensure production deployment relies strictly on platform environment variables. | Clean git status with `.env` remaining untracked. |
 | **RSK-05** | `F-P4-06` | Phase 4 | SEO / Routing | P3 | `vercel.json` rewrite + `ProductDetail.tsx` | Single-entrypoint SPA routing architecture. | Non-existent dynamic product IDs return HTTP 200 from Vercel edge but inject `<meta name="robots" content="noindex, nofollow" />` in client DOM. | VERIFIED SAFE | **ACCEPTABLE RISK / ARCHITECTURAL DESIGN** | Frontend Tech Lead | **NO (Non-blocking)** | Verify robots meta tag renders upon missing entity load. | Playwright assertion on missing product route DOM. |
@@ -59,3 +69,4 @@ All architectural, security, database, and commerce risks have been structurally
 **Zero unresolved code, schema, or security defects remain.**
 
 **Consolidated Risk Status**: **READY FOR GO DECISION (SUBJECT TO PRE-LAUNCH HUMAN ACTIONS)**.
+

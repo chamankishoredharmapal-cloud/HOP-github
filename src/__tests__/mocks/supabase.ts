@@ -326,4 +326,86 @@ export async function setupSupabaseMocks(page: Page) {
   await page.route("**/storage/v1/object/public/**", async (route) => {
     route.fulfill({ status: 200, contentType: "image/png", body: "" });
   });
+
+  await page.route("**/auth/v1/user", async (route) => {
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        id: "mock-customer-id-123",
+        email: "test@example.com",
+        app_metadata: { provider: "email" },
+        user_metadata: { full_name: "Test User" },
+        role: "authenticated",
+        aud: "authenticated",
+      }),
+    });
+  });
+
+  await page.route("**/auth/v1/session", async (route) => {
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        access_token: "mock-jwt-token",
+        token_type: "bearer",
+        expires_in: 3600,
+        refresh_token: "mock-refresh-token",
+        user: {
+          id: "mock-customer-id-123",
+          email: "test@example.com",
+          app_metadata: { provider: "email" },
+          user_metadata: { full_name: "Test User" },
+          role: "authenticated",
+          aud: "authenticated",
+        },
+      }),
+    });
+  });
+
+  await page.route("**/auth/v1/token*", async (route) => {
+    const expiresAt = Math.floor(Date.now() / 1000) + 3600;
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        access_token: "mock-jwt-token",
+        token_type: "bearer",
+        expires_in: 3600,
+        expires_at: expiresAt,
+        refresh_token: "mock-refresh-token",
+        user: {
+          id: "mock-customer-id-123",
+          email: "test@example.com",
+          app_metadata: { provider: "email" },
+          user_metadata: { full_name: "Test User" },
+          role: "authenticated",
+          aud: "authenticated",
+          created_at: "2026-01-01T00:00:00.000Z",
+        },
+      }),
+    });
+  });
+
+  await page.addInitScript(() => {
+    const expiresAt = Math.floor(Date.now() / 1000) + 3600;
+    const mockSession = {
+      access_token: "mock-jwt-token",
+      token_type: "bearer",
+      expires_in: 3600,
+      expires_at: expiresAt,
+      refresh_token: "mock-refresh-token",
+      user: {
+        id: "mock-customer-id-123",
+        email: "test@example.com",
+        app_metadata: { provider: "email" },
+        user_metadata: { full_name: "Test User" },
+        role: "authenticated",
+        aud: "authenticated",
+        created_at: "2026-01-01T00:00:00.000Z",
+      },
+    };
+    window.localStorage.setItem("sb-kbvjmcnaaogkbnerjcoc-auth-token", JSON.stringify(mockSession));
+    window.localStorage.setItem("sb-dovnhgbisiturzbjgvei-auth-token", JSON.stringify(mockSession));
+  });
 }

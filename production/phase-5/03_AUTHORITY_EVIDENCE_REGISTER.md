@@ -1,10 +1,20 @@
-# Phase 5 — Authority & Evidence Register
+﻿> **⚠️ HISTORICAL DOCUMENT — SUPERSEDED ARCHITECTURE**
+> 
+> This document was created during the Phase 5 audit (2026-08-17) when Vercel was the assumed production hosting platform.
+> **As of 2026-09-26, the authoritative production architecture decision is Cloudflare Pages** (per docs/CLOUDFLARE_DEPLOYMENT_DECISION.md).
+> 
+> All Vercel references in this document reflect the architecture at the time of audit and are preserved for historical/evidence purposes only.
+> For current production execution procedures, see productionTODO.md and production/14_FINAL_PRE_DEPLOYMENT_GO_NO_GO.md.
+>
+> ---
+>
+# Phase 5 â€” Authority & Evidence Register
 
 **Document ID**: HOP-PROD-PH5-003  
-**Audit Phase**: Phase 5 — Independent Reconciliation & Go/No-Go (Part 1 Evidence Authority)  
+**Audit Phase**: Phase 5 â€” Independent Reconciliation & Go/No-Go (Part 1 Evidence Authority)  
 **Execution Timestamp**: 2026-08-17T14:14:00+05:30  
 **Auditor**: Independent Final Audit Authority  
-**Authoritative Status**: **REGISTER ESTABLISHED — STOPPED AT PART 1 GATE**  
+**Authoritative Status**: **REGISTER ESTABLISHED â€” STOPPED AT PART 1 GATE**  
 
 ---
 
@@ -14,15 +24,15 @@ In strict compliance with the Phase 5 mandate, all claims made by earlier audit 
 
 ```
 ACTUAL RUNTIME EVIDENCE (Level 1 - Highest)
-        ↓
+        â†“
 ACTUAL REPOSITORY IMPLEMENTATION (Level 2)
-        ↓
+        â†“
 DATABASE / INFRASTRUCTURE EVIDENCE (Level 3)
-        ↓
+        â†“
 AUTOMATED TEST EVIDENCE (Level 4)
-        ↓
+        â†“
 DOCUMENTATION (Level 5)
-        ↓
+        â†“
 ASSUMPTION (Level 6 - Lowest)
 ```
 
@@ -49,7 +59,7 @@ No claim is upgraded simply because a previous report recorded a "PASS". If dire
 | **C-13** | Database Inventory | Paid order confirmation decrements product inventory atomically via lock. | `PHASE_3_RUNTIME_WEBHOOK_EVIDENCE.md` | Actual Runtime | 2026-08-17 | Staging DB | Test product stock decremented `10 -> 9` in `zalbmbhczouhrdboucfe`. | **YES** | **NO** |
 | **C-14** | Database Migrations | All 18 canonical migrations are applied on remote staging database. | `phase-4/21_PHASE_4_FINAL_GATE.md` | Infrastructure / Database | 2026-08-17 | Staging DB | `npx supabase migration list --linked` confirms 18/18 applied. | **YES** | **NO** |
 | **C-15** | Environment Isolation| Production project `kbvjmcnaaogkbnerjcoc` is unlinked and untouched. | `phase-4/21_PHASE_4_FINAL_GATE.md` | Infrastructure | 2026-08-17 | Supabase Cloud | `npx supabase projects list` confirms `linked: false`. | **YES** | **NO** |
-| **C-16** | Core Web Vitals | LCP < 2.5s, CLS < 0.1, TBT < 200ms across Desktop and Mobile viewports. | `phase-4/08_PERFORMANCE_MEASUREMENT.md` | Actual Runtime | 2026-08-17 | Local Preview | `web_vitals_measurements.json` confirms LCP 380–1928ms, CLS 0–0.0115, TBT 0–3ms. | **YES** | **NO** |
+| **C-16** | Core Web Vitals | LCP < 2.5s, CLS < 0.1, TBT < 200ms across Desktop and Mobile viewports. | `phase-4/08_PERFORMANCE_MEASUREMENT.md` | Actual Runtime | 2026-08-17 | Local Preview | `web_vitals_measurements.json` confirms LCP 380â€“1928ms, CLS 0â€“0.0115, TBT 0â€“3ms. | **YES** | **NO** |
 | **C-17** | SEO / Prerender | 20 public routes prerender static semantic HTML with Schema.org JSON-LD. | `phase-4/06_RENDERING_SEO_AUDIT.md` | Repository / Build | 2026-08-17 | Local `dist/` | `dist/` contains 20 static route directories with embedded JSON-LD. | **YES** | **NO** |
 | **C-18** | Security Headers | Strict CSP, HSTS, X-Frame-Options: DENY, nosniff configured at edge. | `vercel.json` | Infrastructure Config | 2026-08-17 | Vercel Edge | `vercel.json` contains full security header definition. | **YES** | **NO** |
 | **C-19** | Live Razorpay | Production live payments capture funds and transition orders in production. | Pre-launch Assumption | Assumption | N/A | Production | Live Razorpay keys NOT activated (Safety Policy). | **NOT VERIFIED (Intentionally Blocked)** | **NO** |
@@ -61,8 +71,9 @@ No claim is upgraded simply because a previous report recorded a "PASS". If dire
 
 1. **Total Claims Analyzed**: 20 major architectural and operational claims.
 2. **Independently Verified in Phase 5**: 17 claims (85%).
-3. **Partially Verified (Attacking Matrix Model)**: 1 claim (5%) — Code and RLS rules verified; full live interactive re-injection deferred.
-4. **Intentionally Unverified (Pre-Launch Safety Guardrails)**: 2 claims (10%) — Live Razorpay capture and Live DNS routing.
+3. **Partially Verified (Attacking Matrix Model)**: 1 claim (5%) â€” Code and RLS rules verified; full live interactive re-injection deferred.
+4. **Intentionally Unverified (Pre-Launch Safety Guardrails)**: 2 claims (10%) â€” Live Razorpay capture and Live DNS routing.
 5. **Contradictions Uncovered in Phase 5 Baseline**: **0 Active Conflicts** (All previously reported historical discrepancies have been formally reconciled).
 
 **Authority & Evidence Register Status**: **ESTABLISHED & VALIDATED**.
+

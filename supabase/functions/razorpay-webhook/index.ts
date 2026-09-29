@@ -177,6 +177,97 @@ serve(async (req) => {
             razorpay_payment_id: payment.id,
           }).maybeSingle();
           console.log("[razorpay-webhook] payment_events entry recorded");
+
+          // Send order confirmation email
+          try {
+            console.log("[razorpay-webhook] Sending order confirmation email...");
+            const { data: orderData } = await supabase
+              .from("orders")
+              .select("id, order_number, customer_id, total, shipping_address_id")
+              .eq("id", (confirmResult as Record<string, unknown>).order_id)
+              .maybeSingle();
+
+            if (orderData) {
+              const { data: customerData } = await supabase
+                .from("customers")
+                .select("email, full_name")
+                .eq("id", orderData.customer_id)
+                .maybeSingle();
+
+              if (customerData?.email) {
+                const { data: itemsData } = await supabase
+                  .from("order_items")
+                  .select("product_name, quantity, product_price")
+                  .eq("order_id", orderData.id);
+
+                const { data: shippingAddr } = await supabase
+                  .from("shipping_addresses")
+                  .select("address, city, state, postal_code, country")
+                  .eq("id", orderData.shipping_address_id)
+                  .maybeSingle();
+
+                const itemsHtml = (itemsData ?? []).map((i) =>
+                  `<tr><td style="padding:6px 0">${i.product_name} × ${i.quantity}</td><td style="padding:6px 0;text-align:right">₹${(i.product_price / 100).toLocaleString("en-IN")}</td></tr>`
+                ).join("");
+
+                const shippingAddress = shippingAddr
+                  ? `${shippingAddr.address}, ${shippingAddr.city}, ${shippingAddr.state} ${shippingAddr.postal_code}, ${shippingAddr.country}`
+                  : "";
+
+                const emailBody = `
+                  <!DOCTYPE html>
+                  <html>
+                  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+                    body { font-family: 'Georgia', serif; color: #2D2D2D; background: #F7F4EE; margin: 0; padding: 0; }
+                    .container { max-width: 600px; margin: 0 auto; padding: 40px 24px; }
+                    .header { text-align: center; border-bottom: 1px solid #E0D8CC; padding-bottom: 24px; margin-bottom: 24px; }
+                    .header h1 { font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; color: #3D5A5A; }
+                    .content { font-size: 15px; line-height: 1.7; color: #4A4A4A; }
+                    .footer { text-align: center; font-size: 11px; color: #8A8A8A; border-top: 1px solid #E0D8CC; padding-top: 20px; margin-top: 32px; }
+                    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                    td { padding: 6px 0; }
+                    tr:last-child td { border-top: 1px solid #E0D8CC; font-weight: bold; }
+                  </style></head>
+                  <body>
+                  <div class="container">
+                    <div class="header"><h1>House of Padmavati</h1></div>
+                    <div class="content">
+                      <p>Dear ${customerData.full_name || "valued customer"},</p>
+                      <p>Your piece has been claimed. Order <strong>${confirmResult.order_number}</strong> has been confirmed and is now resting in our atelier before its journey to you.</p>
+                      <table style="width:100%;border-collapse:collapse;margin:20px 0">
+                        ${(await supabase.from("order_items").select("product_name, quantity, product_price").eq("order_id", confirmResult.order_id)).data?.map(i =>
+                          `<tr><td style="padding:6px 0">${i.product_name} × ${i.quantity}</td><td style="padding:6px 0;text-align:right">₹${(i.product_price / 100).toLocaleString("en-IN")}</td></tr>`
+                        ).join("") || ""}
+                        <tr><td style="border-top:1px solid #E0D8CC;padding:8px 0;font-weight:bold">Total</td>
+                        <td style="border-top:1px solid #E0D8CC;padding:8px 0;text-align:right;font-weight:bold">₹${(((confirmResult as Record<string, unknown>).amount as number) || 0 / 100).toLocaleString("en-IN")}</td></tr>
+                      </table>
+                      <p>Shipping to: ${shippingAddress || "N/A"}</p>
+                      <p>We will write to you again once the box leaves Pondicherry.</p>
+                    </div>
+                    <div class="footer"><p>House of Padmavati &middot; Pondicherry, India</p></div>
+                  </body>
+                  </html>
+                `;
+
+                const { error: emailError } = await supabase.functions.invoke("send-email", {
+                  body: {
+                    to: customerData.email,
+                    subject: `Your piece has been claimed — ${confirmResult.order_number}`,
+                    body: "",
+                    type: "order_confirmation"
+                  }
+                });
+
+                if (emailError) {
+                  console.error("[razorpay-webhook] Failed to send order confirmation email:", emailError);
+                } else {
+                  console.log("[razorpay-webhook] Order confirmation email sent successfully");
+                }
+              }
+            }
+          } catch (emailErr) {
+            console.error("[razorpay-webhook] Failed to send order confirmation email:", emailErr);
+          }
         }
 
         break;

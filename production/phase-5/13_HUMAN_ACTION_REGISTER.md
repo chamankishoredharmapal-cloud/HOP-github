@@ -1,10 +1,20 @@
-# Phase 5 — Human Action & Operational Responsibility Register
+﻿> **⚠️ HISTORICAL DOCUMENT — SUPERSEDED ARCHITECTURE**
+> 
+> This document was created during the Phase 5 audit (2026-08-17) when Vercel was the assumed production hosting platform.
+> **As of 2026-09-26, the authoritative production architecture decision is Cloudflare Pages** (per docs/CLOUDFLARE_DEPLOYMENT_DECISION.md).
+> 
+> All Vercel references in this document reflect the architecture at the time of audit and are preserved for historical/evidence purposes only.
+> For current production execution procedures, see productionTODO.md and production/14_FINAL_PRE_DEPLOYMENT_GO_NO_GO.md.
+>
+> ---
+>
+# Phase 5 â€” Human Action & Operational Responsibility Register
 
 **Document ID**: HOP-PROD-PH5-013  
-**Audit Phase**: Phase 5 — Independent Reconciliation & Go/No-Go (Part 2 Step 13)  
+**Audit Phase**: Phase 5 â€” Independent Reconciliation & Go/No-Go (Part 2 Step 13)  
 **Execution Timestamp**: 2026-08-17T15:00:00+05:30  
 **Auditor**: Independent Final Audit Authority  
-**Authoritative Status**: **REGISTER ESTABLISHED — STOPPED AT DEPLOYMENT GATE**  
+**Authoritative Status**: **REGISTER ESTABLISHED â€” STOPPED AT DEPLOYMENT GATE**  
 
 ---
 
@@ -24,7 +34,7 @@ Human actions are categorized as either:
 |---|---|---|---|---|---|---|---|---|
 | **HA-01** | Production Supabase Database Migration | Apply all 18 canonical migrations to the untouched production Supabase project (`kbvjmcnaaogkbnerjcoc`). | Lead Database Engineer / Release Manager | T-minus 2 hours before traffic cutover | Storefront fails to load dynamic products or insert orders due to missing schema. | **BLOCKING HUMAN ACTION** | Output of `supabase migration list` on production showing 18/18 applied. | **PENDING AUTHORIZATION** |
 | **HA-02** | Production Supabase Edge Functions Deployment | Deploy all 7 Edge Functions (`create-razorpay-order`, `verify-payment`, `razorpay-webhook`, etc.) to production Supabase project. | Backend Engineer / DevOps Lead | T-minus 2 hours before traffic cutover | Checkout and payment flows fail with 404/500 errors. | **BLOCKING HUMAN ACTION** | Output of `supabase functions list` on production showing 7 ACTIVE functions. | **PENDING AUTHORIZATION** |
-| **HA-03** | Razorpay Live Gateway Credentials Injection | Configure live production credentials (`VITE_RAZORPAY_KEY_ID=rzp_live_...` in Vercel, `RAZORPAY_KEY_SECRET` in Supabase Secrets). | E-Commerce Manager / DevOps Lead | T-minus 1 hour before traffic cutover | Customers cannot process real-money payments (system remains in test mode). | **BLOCKING HUMAN ACTION** | Successful live ₹1 authorization capture and instant refund test. | **PENDING AUTHORIZATION** |
+| **HA-03** | Razorpay Live Gateway Credentials Injection | Configure live production credentials (`VITE_RAZORPAY_KEY_ID=rzp_live_...` in Vercel, `RAZORPAY_KEY_SECRET` in Supabase Secrets). | E-Commerce Manager / DevOps Lead | T-minus 1 hour before traffic cutover | Customers cannot process real-money payments (system remains in test mode). | **BLOCKING HUMAN ACTION** | Successful live â‚¹1 authorization capture and instant refund test. | **PENDING AUTHORIZATION** |
 | **HA-04** | Razorpay Live Webhook URL Configuration | Add production webhook endpoint (`https://kbvjmcnaaogkbnerjcoc.supabase.co/functions/v1/razorpay-webhook`) in Razorpay Live Dashboard and set secret. | Lead DevOps Engineer | T-minus 1 hour before traffic cutover | Asynchronous payment confirmations fail to update database orders. | **BLOCKING HUMAN ACTION** | Razorpay dashboard webhook ping test returns HTTP 200/400. | **PENDING AUTHORIZATION** |
 | **HA-05** | Production Domain DNS Cutover | Map apex `houseofpadmavati.com` and `www.houseofpadmavati.com` A/CNAME records to Vercel global edge network. | Domain Administrator / Lead DevOps | T-minus 30 mins before launch (Go-Live) | Storefront remains inaccessible at the official brand domain. | **BLOCKING HUMAN ACTION** | `Resolve-DnsName houseofpadmavati.com` returns Vercel IP addresses + valid SSL certificate. | **PENDING AUTHORIZATION** |
 | **HA-06** | Production Vercel Deployment Promotion | Trigger production build and promotion of verified commit (`da6158f`) on Vercel. | Release Manager | T-minus 30 mins before launch | Production domain serves stale or default page. | **BLOCKING HUMAN ACTION** | Vercel production deployment URL returns HTTP 200 with pre-rendered luxury storefront. | **PENDING AUTHORIZATION** |
@@ -44,3 +54,4 @@ Human actions are categorized as either:
 - **Safety Reminder**: The audit authority is strictly **NOT authorized** to execute these actions. Execution requires explicit human management authorization.
 
 **Human Action Register Status**: **DOCUMENTED & PREPARED FOR HUMAN EXECUTION**.
+

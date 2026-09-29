@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingBag, ArrowLeft, Shield, Loader2, AlertTriangle } from "lucide-react";
+import { ShoppingBag, ArrowLeft, Shield, Loader2, AlertTriangle, MapPin } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,10 @@ import { useCart } from "@/contexts/CartContext";
 import { createRazorpayOrder } from "@/services/paymentService";
 import { usePayment } from "@/hooks/usePayment";
 import { validateCheckout } from "@/services/checkoutService";
+import { useAuth } from "@/studio/hooks/useAuth";
+import { fetchAddresses } from "@/services/customerAddressService";
+import type { Tables } from "@/integrations/supabase/types";
+type CustomerAddress = Tables<"shipping_addresses">;
 import { useMetadata } from "@/hooks/useMetadata";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
 
@@ -21,6 +25,7 @@ interface FormData {
   lastName: string;
   address: string;
   city: string;
+  state: string;
   postalCode: string;
   country: string;
   phone: string;
@@ -39,8 +44,10 @@ function validate(form: FormData): FormErrors {
   if (!form.lastName.trim()) errors.lastName = "Last name is required";
   if (!form.address.trim()) errors.address = "Address is required";
   if (!form.city.trim()) errors.city = "City is required";
+  if (!form.state.trim()) errors.state = "State is required";
   if (!form.postalCode.trim()) errors.postalCode = "Postal code is required";
   if (!form.country.trim()) errors.country = "Country is required";
+  if (!form.phone.trim()) errors.phone = "Phone number is required";
   return errors;
 }
 
@@ -50,16 +57,18 @@ const EMPTY_FORM: FormData = {
   lastName: "",
   address: "",
   city: "",
+  state: "",
   postalCode: "",
-  country: "",
+  country: "India",
   phone: "",
 };
 
 function formatPhone(phone: string): string {
   const digits = phone.replace(/\D/g, "");
-  if (digits.startsWith("91") && digits.length >= 12) return `+${digits}`;
   if (digits.length === 10) return `+91${digits}`;
-  return digits;
+  if (digits.length === 11 && digits.startsWith("0")) return `+91${digits.slice(1)}`;
+  if (digits.length === 12 && digits.startsWith("91")) return `+${digits}`;
+  return phone;
 }
 
 function formatRupees(amountInPaise: number): string {
@@ -76,6 +85,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { state: paymentState, startPayment, reset: resetPayment } = usePayment();
+  const { user } = useAuth();
   const [form, setForm] = useState<FormData>(EMPTY_FORM);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
@@ -87,10 +97,44 @@ export default function Checkout() {
   const [giftMessage, setGiftMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [inventoryErrors, setInventoryErrors] = useState<string[]>([]);
+  const [savedAddresses, setSavedAddresses] = useState<CustomerAddress[]>([]);
+  const [addressesLoading, setAddressesLoading] = useState(true);
+  const [addressMode, setAddressMode] = useState<'saved' | 'new'>('saved');
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+  const [firstOrderEligible, setFirstOrderEligible] = useState(false);
+  const [firstOrderReason, setFirstOrderReason] = useState<string>('');
+  const [serverShippingCost, setServerShippingCost] = useState(0);
   const validatedRef = useRef(false);
+
+  useEffect(() => {
+    if (user) {
+      setAddressesLoading(true);
+      fetchAddresses(user.id).then((addresses) => {
+        setSavedAddresses(addresses);
+        if (addresses.length > 0) {
+          const defaultAddr = addresses.find((a) => a.is_default) || addresses[0];
+          setSelectedAddressId(defaultAddr.id);
+          setForm((prev) => ({
+            ...prev,
+            firstName: defaultAddr.recipient_name.split(" ")[0] || "",
+            lastName: defaultAddr.recipient_name.split(" ").slice(1).join(" ") || "",
+            address: defaultAddr.address,
+            city: defaultAddr.city,
+            state: defaultAddr.state || "",
+            postalCode: defaultAddr.postal_code,
+            country: defaultAddr.country,
+            phone: defaultAddr.phone || "",
+          }));
+        }
+        setAddressesLoading(false);
+      });
+    } else {
+      setAddressesLoading(false);
+    }
+  }, [user]);
   const [returnPolicyAccepted, setReturnPolicyAccepted] = useState(false);
 
-  const shippingCost = 0;
+  const shippingCost = serverShippingCost > 0 ? serverShippingCost : 0;
   const totalRupees = totalPrice + shippingCost;
   const DEPOSIT_AMOUNT = 20000; // ₹200 in paise
 
@@ -145,7 +189,7 @@ export default function Checkout() {
           shipping_phone: form.phone,
           shipping_address: form.address,
           shipping_city: form.city,
-          shipping_state: "",
+          shipping_state: form.state,
           shipping_postal_code: form.postalCode,
           shipping_country: form.country,
           shipping_option: "standard",
@@ -161,6 +205,9 @@ export default function Checkout() {
         currentOrderNumber = result.order_number;
         setOrderId(currentOrderId);
         setOrderNumber(currentOrderNumber);
+        setFirstOrderEligible(result.first_order_eligible ?? false);
+        setFirstOrderReason(result.first_order_reason ?? '');
+        setServerShippingCost(result.shipping_cost ?? 0);
       }
 
       await startPayment(
@@ -205,6 +252,38 @@ export default function Checkout() {
     setIsProcessing(false);
     validatedRef.current = false;
   }, [resetPayment]);
+
+  const handleAddressSelect = (addr: CustomerAddress) => {
+    setSelectedAddressId(addr.id);
+    setAddressMode("saved");
+    setForm((prev) => ({
+      ...prev,
+      firstName: addr.recipient_name.split(" ")[0] || "",
+      lastName: addr.recipient_name.split(" ").slice(1).join(" ") || "",
+      address: addr.address,
+      city: addr.city,
+      state: addr.state || "",
+      postalCode: addr.postal_code,
+      country: addr.country,
+      phone: addr.phone || "",
+    }));
+  };
+
+  const handleNewAddress = () => {
+    setAddressMode("new");
+    setSelectedAddressId(null);
+    setForm((prev) => ({
+      ...prev,
+      firstName: "",
+      lastName: "",
+      address: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      country: "India",
+      phone: "",
+    }));
+  };
 
   useEffect(() => {
     if (paymentState.status !== "paid" || !orderNumber) return;
@@ -285,132 +364,211 @@ export default function Checkout() {
               </div>
             </section>
 
-            <section className="hop-form-section">
+<section className="hop-form-section">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
                 Delivery address
               </h2>
               <div className="space-y-4 max-w-md">
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Label htmlFor="firstName" className="text-sm text-ink-soft font-light">
-                      First name
-                    </Label>
-                    <Input
-                       id="firstName"
-                       aria-invalid={!!errors.firstName}
-                       aria-describedby={errors.firstName ? "first-name-error" : undefined}
-                       value={form.firstName}
-                      onChange={(e) => handleChange("firstName", e.target.value)}
-                      className={`mt-1.5 rounded-none ${errors.firstName ? "border-destructive" : ""}`}
-                    />
-                    {errors.firstName && (
-                       <p id="first-name-error" className="text-[0.7rem] text-destructive mt-1">{errors.firstName}</p>
-                    )}
+                {/* Address selector for authenticated users with saved addresses */}
+                {user && savedAddresses.length > 0 && !addressesLoading && (
+                  <div className="space-y-4">
+                    <Label className="text-sm text-ink-soft font-light">Saved addresses</Label>
+                    <div className="space-y-2">
+                      {savedAddresses.map((addr) => (
+                        <label
+                          key={addr.id}
+                          className={`flex items-center gap-3 p-3 rounded-md border-2 transition-colors cursor-pointer ${
+                            selectedAddressId === addr.id
+                              ? "border-ink bg-ink/5"
+                              : "border-border/60 hover:border-ink/30"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="savedAddress"
+                            value={addr.id}
+                            checked={selectedAddressId === addr.id}
+                            onChange={() => handleAddressSelect(addr)}
+                            className="w-4 h-4 border-border accent-ink focus:ring-ink"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-ink">{addr.recipient_name}</p>
+                            <p className="text-xs text-ink-soft truncate">{addr.address}</p>
+                            <p className="text-xs text-ink-soft">
+                              {addr.city}, {addr.state} &ndash; {addr.postal_code}
+                            </p>
+                            {addr.phone && (
+                              <p className="text-xs text-ink-soft">Phone: {addr.phone}</p>
+                            )}
+                            {addr.is_default && (
+                              <span className="text-[0.6rem] tracking-[0.2em] uppercase text-rasa-gold bg-jasmine-deep/20 px-2 py-0.5 rounded">
+                                Default
+                              </span>
+                            )}
+                          </div>
+                        </label>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={handleNewAddress}
+                        className="w-full flex items-center justify-center gap-2 p-3 rounded-md border-2 border-dashed border-border/60 text-ink-soft hover:border-ink hover:text-ink transition-colors"
+                      >
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-sm font-light">Use a different address</span>
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <Label htmlFor="lastName" className="text-sm text-ink-soft font-light">
-                      Last name
-                    </Label>
-                    <Input
-                       id="lastName"
-                       aria-invalid={!!errors.lastName}
-                       aria-describedby={errors.lastName ? "last-name-error" : undefined}
-                       value={form.lastName}
-                      onChange={(e) => handleChange("lastName", e.target.value)}
-                      className={`mt-1.5 rounded-none ${errors.lastName ? "border-destructive" : ""}`}
-                    />
-                    {errors.lastName && (
-                       <p id="last-name-error" className="text-[0.7rem] text-destructive mt-1">{errors.lastName}</p>
-                    )}
-                  </div>
-                </div>
+                )}
+                {/* New address form - shown when no saved addresses or user chooses to enter new */}
+                {(addressMode === 'new' || !user || savedAddresses.length === 0) && (
+                  <div className="space-y-4 max-w-md">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <Label htmlFor="firstName" className="text-sm text-ink-soft font-light">
+                          First name
+                        </Label>
+                        <Input
+                           id="firstName"
+                           aria-invalid={!!errors.firstName}
+                           aria-describedby={errors.firstName ? "first-name-error" : undefined}
+                           value={form.firstName}
+                           onChange={(e) => handleChange("firstName", e.target.value)}
+                           className={`mt-1.5 rounded-none ${errors.firstName ? "border-destructive" : ""}`}
+                         />
+                         {errors.firstName && (
+                            <p id="first-name-error" className="text-[0.7rem] text-destructive mt-1">{errors.firstName}</p>
+                         )}
+                       </div>
+                       <div>
+                         <Label htmlFor="lastName" className="text-sm text-ink-soft font-light">
+                           Last name
+                         </Label>
+                         <Input
+                            id="lastName"
+                            aria-invalid={!!errors.lastName}
+                            aria-describedby={errors.lastName ? "last-name-error" : undefined}
+                            value={form.lastName}
+                           onChange={(e) => handleChange("lastName", e.target.value)}
+                           className={`mt-1.5 rounded-none ${errors.lastName ? "border-destructive" : ""}`}
+                         />
+                         {errors.lastName && (
+                            <p id="last-name-error" className="text-[0.7rem] text-destructive mt-1">{errors.lastName}</p>
+                         )}
+                       </div>
+                     </div>
 
-                <div>
-                  <Label htmlFor="address" className="text-sm text-ink-soft font-light">
-                    Address
-                  </Label>
-                  <Input
-                     id="address"
-                     aria-invalid={!!errors.address}
-                     aria-describedby={errors.address ? "address-error" : undefined}
-                     value={form.address}
-                    onChange={(e) => handleChange("address", e.target.value)}
-                    placeholder="Street address"
-                    className={`mt-1.5 rounded-none ${errors.address ? "border-destructive" : ""}`}
-                  />
-                  {errors.address && (
-                     <p id="address-error" className="text-[0.7rem] text-destructive mt-1">{errors.address}</p>
-                  )}
-                </div>
+                     <div>
+                       <Label htmlFor="address" className="text-sm text-ink-soft font-light">
+                         Address
+                       </Label>
+                       <Input
+                          id="address"
+                          aria-invalid={!!errors.address}
+                          aria-describedby={errors.address ? "address-error" : undefined}
+                          value={form.address}
+                          onChange={(e) => handleChange("address", e.target.value)}
+                          placeholder="Street address"
+                          className={`mt-1.5 rounded-none ${errors.address ? "border-destructive" : ""}`}
+                        />
+                        {errors.address && (
+                           <p id="address-error" className="text-[0.7rem] text-destructive mt-1">{errors.address}</p>
+                         )}
+                       </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Label htmlFor="city" className="text-sm text-ink-soft font-light">
-                      City
-                    </Label>
-                    <Input
-                       id="city"
-                       aria-invalid={!!errors.city}
-                       aria-describedby={errors.city ? "city-error" : undefined}
-                       value={form.city}
-                      onChange={(e) => handleChange("city", e.target.value)}
-                      className={`mt-1.5 rounded-none ${errors.city ? "border-destructive" : ""}`}
-                    />
-                    {errors.city && (
-                       <p id="city-error" className="text-[0.7rem] text-destructive mt-1">{errors.city}</p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="postalCode" className="text-sm text-ink-soft font-light">
-                      Postal code
-                    </Label>
-                    <Input
-                       id="postalCode"
-                       aria-invalid={!!errors.postalCode}
-                       aria-describedby={errors.postalCode ? "postal-code-error" : undefined}
-                       value={form.postalCode}
-                      onChange={(e) => handleChange("postalCode", e.target.value)}
-                      className={`mt-1.5 rounded-none ${errors.postalCode ? "border-destructive" : ""}`}
-                    />
-                    {errors.postalCode && (
-                      <p id="postal-code-error" className="text-[0.7rem] text-destructive mt-1">{errors.postalCode}</p>
-                    )}
-                  </div>
-                </div>
+                       <div className="grid grid-cols-2 gap-3">
+                         <div>
+                           <Label htmlFor="city" className="text-sm text-ink-soft font-light">
+                             City
+                           </Label>
+                           <Input
+                              id="city"
+                              aria-invalid={!!errors.city}
+                              aria-describedby={errors.city ? "city-error" : undefined}
+                              value={form.city}
+                              onChange={(e) => handleChange("city", e.target.value)}
+                              className={`mt-1.5 rounded-none ${errors.city ? "border-destructive" : ""}`}
+                            />
+                            {errors.city && (
+                               <p id="city-error" className="text-[0.7rem] text-destructive mt-1">{errors.city}</p>
+                             )}
+                           </div>
+                           <div>
+                             <Label htmlFor="state" className="text-sm text-ink-soft font-light">
+                               State
+                             </Label>
+                             <Input
+                                id="state"
+                                aria-invalid={!!errors.state}
+                                aria-describedby={errors.state ? "state-error" : undefined}
+                                value={form.state}
+                                onChange={(e) => handleChange("state", e.target.value)}
+                                placeholder="State / Province"
+                                className={`mt-1.5 rounded-none ${errors.state ? "border-destructive" : ""}`}
+                              />
+                              {errors.state && (
+                                 <p id="state-error" className="text-[0.7rem] text-destructive mt-1">{errors.state}</p>
+                               )}
+                           </div>
+                         </div>
 
-                <div>
-                  <Label htmlFor="country" className="text-sm text-ink-soft font-light">
-                    Country
-                  </Label>
-                  <Input
-                     id="country"
-                     aria-invalid={!!errors.country}
-                     aria-describedby={errors.country ? "country-error" : undefined}
-                     value={form.country}
-                    onChange={(e) => handleChange("country", e.target.value)}
-                    placeholder="India"
-                    className={`mt-1.5 rounded-none ${errors.country ? "border-destructive" : ""}`}
-                  />
-                  {errors.country && (
-                     <p id="country-error" className="text-[0.7rem] text-destructive mt-1">{errors.country}</p>
-                  )}
-                </div>
+                         <div className="grid grid-cols-2 gap-3">
+                           <div>
+                             <Label htmlFor="postalCode" className="text-sm text-ink-soft font-light">
+                               Postal code
+                             </Label>
+                             <Input
+                                id="postalCode"
+                                aria-invalid={!!errors.postalCode}
+                                aria-describedby={errors.postalCode ? "postal-code-error" : undefined}
+                                value={form.postalCode}
+                               onChange={(e) => handleChange("postalCode", e.target.value)}
+                               className={`mt-1.5 rounded-none ${errors.postalCode ? "border-destructive" : ""}`}
+                             />
+                             {errors.postalCode && (
+                                <p id="postal-code-error" className="text-[0.7rem] text-destructive mt-1">{errors.postalCode}</p>
+                              )}
+                           </div>
+                         </div>
 
-                <div>
-                  <Label htmlFor="phone" className="text-sm text-ink-soft font-light">
-                    Phone <span className="text-ink-soft">(optional)</span>
-                  </Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={form.phone}
-                    onChange={(e) => handleChange("phone", e.target.value)}
-                    placeholder="+91"
-                    className="mt-1.5 rounded-none"
-                  />
-                </div>
-              </div>
-            </section>
+                         <div>
+                           <Label htmlFor="country" className="text-sm text-ink-soft font-light">
+                             Country
+                           </Label>
+                           <Input
+                              id="country"
+                              aria-invalid={!!errors.country}
+                              aria-describedby={errors.country ? "country-error" : undefined}
+                              value={form.country}
+                             onChange={(e) => handleChange("country", e.target.value)}
+                             placeholder="India"
+                             className={`mt-1.5 rounded-none ${errors.country ? "border-destructive" : ""}`}
+                           />
+                           {errors.country && (
+                              <p id="country-error" className="text-[0.7rem] text-destructive mt-1">{errors.country}</p>
+                            )}
+                         </div>
+
+                         <div>
+                           <Label htmlFor="phone" className="text-sm text-ink-soft font-light">
+                             Phone
+                           </Label>
+                           <Input
+                             id="phone"
+                             type="tel"
+                             required
+                             value={form.phone}
+                             onChange={(e) => handleChange("phone", e.target.value)}
+                             placeholder="+91"
+                             className={`mt-1.5 rounded-none ${errors.phone ? "border-destructive" : ""}`}
+                           />
+                           {errors.phone && (
+                              <p id="phone-error" className="text-[0.7rem] text-destructive mt-1">{errors.phone}</p>
+                            )}
+                         </div>
+                       </div>
+                     )}
+                   </div>
+             </section>
 
             <section className="hop-form-section">
               <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
@@ -545,8 +703,13 @@ export default function Checkout() {
                 </div>
                 <div className="flex justify-between text-sm text-ink-soft font-light">
                   <span>Shipping</span>
-                  <span className="text-ink">
+                  <span className="text-ink flex items-center gap-2">
                     {shippingCost === 0 ? "Free" : `₹ ${shippingCost.toLocaleString()}`}
+                    {firstOrderEligible && firstOrderReason === 'first_order' && (
+                      <span className="text-[0.6rem] tracking-[0.2em] uppercase text-rasa-gold bg-jasmine-deep/20 px-2 py-0.5 rounded">
+                        First order free
+                      </span>
+                    )}
                   </span>
                 </div>
                 <p className="text-xs text-ink-soft font-light text-right">Estimated delivery: 3–5 business days</p>

@@ -15,6 +15,12 @@ const corsHeaders = {
  *
  * Current: Logs emails to console (no-op sending).
  * To enable: Add provider env vars and implement the send() call.
+ * 
+ * Security: 
+ * - Requires authentication via Authorization header (JWT)
+ * - Only admins can send to arbitrary addresses
+ * - Customers can only email themselves
+ * - Service-role calls are accepted (bypass admin check)
  */
 
 interface EmailRequest {
@@ -46,6 +52,8 @@ serve(async (req) => {
     }
 
     const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2.106.2");
+    
+    // Try to validate with ANON key first (for user JWTs)
     const supabaseAuth = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_ANON_KEY")!,
@@ -53,14 +61,35 @@ serve(async (req) => {
     );
     const { data: { user }, error: userError } = await supabaseAuth.auth.getUser();
 
-    if (userError || !user) {
-      return new Response(
-        JSON.stringify({ error: "unauthorized" }),
-        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
-    }
+    let isAdmin = false;
+    let isServiceRole = false;
+    let userEmail: string | null = null;
 
-    const { data: isAdmin } = await supabaseAuth.rpc("is_admin", { user_id: user.id });
+    if (!userError && user) {
+      userEmail = user.email;
+      const { data: adminCheck } = await supabaseAuth.rpc("is_admin", { user_id: user.id });
+      isAdmin = adminCheck === true;
+    } else {
+      // Try validating with service role key (for service-role JWTs)
+      const supabaseService = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+        { global: { headers: { Authorization: authHeader } } }
+      );
+      const { data: { user: serviceUser }, error: serviceError } = await supabaseService.auth.getUser();
+      
+      if (!serviceError && serviceUser) {
+        // Check if it's a service role JWT
+        try {
+          const payload = JSON.parse(atob(authHeader.split('.')[1]));
+          if (payload.role === 'service_role') {
+            isServiceRole = true;
+          }
+        } catch {
+          // Ignore parsing errors
+        }
+      }
+    }
 
     const body: EmailRequest = await req.json();
 
@@ -71,8 +100,11 @@ serve(async (req) => {
       );
     }
 
-    // Security: Only admins can send to arbitrary addresses. Customers can only email themselves.
-    if (!isAdmin && body.to !== user.email) {
+    // Security: 
+    // - Service role calls bypass all checks
+    // - Only admins can send to arbitrary addresses
+    // - Customers can only email themselves
+    if (!isServiceRole && !isAdmin && body.to !== userEmail) {
       return new Response(
         JSON.stringify({ error: "forbidden_recipient" }),
         { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
