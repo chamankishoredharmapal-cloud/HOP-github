@@ -29,8 +29,9 @@ test.describe('Responsive Image Delivery', () => {
             }
           });
 
-          await page.goto(route.path, { waitUntil: 'networkidle' });
+          await page.goto(route.path, { waitUntil: 'load' });
           await page.waitForLoadState('domcontentloaded');
+          await page.locator('img').first().waitFor({ state: 'attached', timeout: 15000 });
 
           const images = await page.locator('img').all();
           expect(images.length).toBeGreaterThan(0);
@@ -56,7 +57,7 @@ test.describe('Responsive Image Delivery', () => {
 
   test.describe('srcset and sizes attributes', () => {
     test('Category page should have responsive product images', async ({ page }) => {
-      await page.goto('/collections', { waitUntil: 'networkidle' });
+      await page.goto('/collections', { waitUntil: 'load' });
 
       const productImages = page.locator('a[href^="/product/"] img');
       const count = await productImages.count();
