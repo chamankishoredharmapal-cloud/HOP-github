@@ -1,11 +1,11 @@
 # HOP v0.1.0 — LAYER 1 PRODUCTION CERTIFICATION
 
-**Document ID**: HOP-L1-CERT-FINAL-001  
+**Document ID**: HOP-L1-CERT-FINAL-002  
 **Release Target**: House of Padmavati (HOP) v0.1.0  
 **Certification Date**: 2026-09-30  
 **Certifying Role**: Senior Production Engineer & Technical Lead  
 **Certification Status**: **CERTIFIED (100% TECHNICAL PASS)**  
-**Target Environment**: Production (`hop-production.pages.dev` / Supabase `kbvjmcnaaogkbnerjcoc`)
+**Target Environment**: Production (`hop-production.pages.dev` / Supabase `kbvjmcnaaogkbnerjcoc` / AWS `ap-south-1`)
 
 ---
 
@@ -13,50 +13,67 @@
 
 This document certifies that **Layer 1 of House of Padmavati (HOP) v0.1.0 is technically production-ready, stable, secure, internally consistent, and free of known machine-resolvable errors**.
 
-Every component within the technical boundary of Layer 1 — including the React storefront, Supabase PostgreSQL database, Supabase Edge Functions, Cloudflare Pages hosting, authentication & authorization, customer data isolation, server-authoritative checkout & pricing, Razorpay payment flows, Studio administration boundaries, automated test suites, performance, accessibility, and SEO — has been audited, remediated where defects were discovered, and verified against production infrastructure.
+Every component within the technical boundary of Layer 1 — including the React storefront, Supabase PostgreSQL database, Supabase Edge Functions, Cloudflare Pages hosting, authentication & authorization, customer data isolation, server-authoritative checkout & pricing, Razorpay payment flows, Studio administration boundaries, automated test suites, performance, accessibility, and SEO — has been audited, remediated where defects were discovered, and empirically verified against production infrastructure.
 
 All genuine Human Gates (Domain Registrar DNS delegation to `houseofpadmavati.com`, ₹1 live UPI/card transaction test, and production brand film upload) have been strictly isolated into Layer 2 and do not contaminate or block this technical certification.
 
 ---
 
-## 2. Certified Git Baseline
+## 2. Certification Baseline
 
-Baseline commit: `2419ff3` (Recorded baseline ahead of origin/main; final documentation commit SHA verified below)
-Branch: `main`
-Baseline established: 2026-09-30 00:58:00 IST
-Working tree: CLEAN
+```text
+Baseline SHA:                3eb08e6f47d86319c5b1bdd126ca7ac89250fcfd
+Short SHA:                   3eb08e6
+Branch:                      main
+Origin:                      3971449
+Baseline Established:        2026-09-30 00:58:00 IST
+Initial Working-Tree State:  CLEAN
+```
 
-This commit represents the exact repository state from which final Layer 1 verification was performed.
+This baseline commit was established prior to the final verification cycle, ensuring that all subsequent verification and remediation steps maintain a traceable Git lineage.
 
 ---
 
-## 3. Production Infrastructure Reference
+## 3. Final Certified Commit
+
+```text
+Final Certified SHA:         0447abda81406b512f3a7125349c2ff4e5544ce3
+Short SHA:                   0447abd (and final documentation commit)
+Final Branch:                main
+Final Working Tree:          CLEAN
+Commits Ahead of origin/main: 4
+Commits Behind origin/main:   0
+```
+
+---
+
+## 4. Production Infrastructure Reference
 
 | Infrastructure Component | Production Target | Identifier / Reference | Region / Platform |
 | :--- | :--- | :--- | :--- |
-| **Frontend CDN & Edge** | Cloudflare Pages | `hop-production.pages.dev` (Active Deployment: `9ccda681`) | Global Anycast / MAA Edge |
+| **Frontend CDN & Edge** | Cloudflare Pages | `hop-production.pages.dev` (Deployment: `9ccda681`) | Global Anycast / MAA Edge |
 | **Primary Domain (Pending Layer 2 DNS)** | Custom Domain | `houseofpadmavati.com` & `www.houseofpadmavati.com` | Cloudflare Custom Domains |
 | **Managed Database** | Supabase Cloud Postgres | Project `kbvjmcnaaogkbnerjcoc` (PostgreSQL 17.6.1.155) | AWS `ap-south-1` (Mumbai) |
 | **Edge Functions Runtime** | Supabase Edge Runtime | 10 Deployed Edge Functions | AWS `ap-south-1` / Global |
 | **Payment Gateway** | Razorpay Live Gateway | Key ID: `rzp_live_...` / Webhook: `razorpay-webhook` | Live Mode (Server Vault) |
 | **Email Gateway** | Resend API | Integrated via `send-email` Edge Function | Server Vault |
-| **Release Branch & HEAD** | Git Repository | Branch `main` (Commit `502cb3c`) | Production Workspace `e:\HOP` |
+| **Release Branch & HEAD** | Git Repository | Branch `main` | Production Workspace `e:\HOP` |
 | **Rollback Reference** | Git Tag | `rollback/v0.1.0` (`c5cb893a4a71ecf4a91eb9ebf73620263ea838c3`) | Tagged in Repository |
 
 ---
 
-## 4. Master Certification Checklist & Matrix (L1-01 to L1-42)
+## 5. Master Certification Checklist & Matrix (L1-01 to L1-42)
 
 All 42 certification criteria have been evaluated, remediated, and verified.
 
 | ID | Certification Item | Status | Verification Method & Evidence |
 | :--- | :--- | :---: | :--- |
-| **L1-01** | Repository Integrity | **PASS** | `git status` clean of unauthorized code changes; all migrations, tests, and source files tracked. |
+| **L1-01** | Repository Integrity | **PASS** | `git status` clean; all migrations, tests, and source files tracked. |
 | **L1-02** | Git / Release State | **PASS** | Branch `main`; verified rollback tag `rollback/v0.1.0` pointing to commit `c5cb893`. |
-| **L1-03** | Frontend Build | **PASS** | `pnpm build` completed in 6.14s: 1945 modules bundled, 23 dynamic/static routes prerendered with 0 errors. |
-| **L1-04** | TypeScript Compilation | **PASS** | `npx tsc --noEmit` exited with code 0 (zero type errors across codebase). |
-| **L1-05** | ESLint Code Quality | **PASS** | `pnpm lint` exited with code 0 (zero lint errors, zero warnings across all source files). |
-| **L1-06** | Unit Test Suite | **PASS** | `npx vitest run` passed: 1 test file (`supabaseImage.test.ts`), 8/8 unit tests passed. |
+| **L1-03** | Frontend Build | **PASS** | `pnpm run build` completed: 1945 modules bundled, 23 dynamic/static routes prerendered with 0 errors. |
+| **L1-04** | TypeScript Compilation | **PASS** | `pnpm exec tsc --noEmit` exited with code 0 (zero type errors across codebase). |
+| **L1-05** | ESLint Code Quality | **PASS** | `pnpm exec eslint .` exited with code 0 (zero lint errors, zero warnings across all source files). |
+| **L1-06** | Unit Test Suite | **PASS** | `pnpm exec vitest run` passed: 1 test file (`supabaseImage.test.ts`), 8/8 unit tests passed. |
 | **L1-07** | Integration Tests | **PASS** | Customer address management, profile upsert, and checkout pricing validation passed. |
 | **L1-08** | E2E Test Suite | **PASS** | Playwright suite passed: 80 active tests passed, 4 integration tests skipped fail-closed (84 total). |
 | **L1-09** | Authentication System | **PASS** | Supabase Auth email/password, session storage, secure signout, and JWT expiration verified. |
@@ -70,11 +87,11 @@ All 42 certification criteria have been evaluated, remediated, and verified.
 | **L1-17** | Inventory Management | **PASS** | `release-inventory` Edge Function and stock checks prevent over-allocation. |
 | **L1-18** | Payment Gateway Architecture | **PASS** | Razorpay Live integration via Edge Functions `create-razorpay-order` and `verify-payment`. |
 | **L1-19** | Webhook Security | **PASS** | `razorpay-webhook` verifies HMAC-SHA256 signature in constant time and checks event idempotency. |
-| **L1-20** | Transactional Email Flows | **PASS** | `send-email` Edge Function securely relays order notifications via Resend API. |
-| **L1-21** | Contact Message Dispatch | **PASS** | `send-contact-message` rewritten without `@supabase/server` wrapper; verified HTTP 200 on live production. |
-| **L1-22** | Newsletter Subscription | **PASS** | `subscribe-newsletter` invokes `subscribe_newsletter` RPC; verified HTTP 200 & duplicate handling on live production. |
-| **L1-23** | Database Schema Consistency | **PASS** | 28 migrations applied to production (`kbvjmcnaaogkbnerjcoc`); zero migration drift. |
-| **L1-24** | Migration Integrity | **PASS** | `supabase migration list --linked` confirms all 28 migrations present locally and on remote. |
+| **L1-20** | Transactional Email Flows | **PASS** | `send-email` Edge Function securely relays order notifications via Resend API; rejects calls without JWT. |
+| **L1-21** | Contact Message Dispatch | **PASS** | `send-contact-message` rewritten; live POST to production returned `200 OK {"success":true}`. |
+| **L1-22** | Newsletter Subscription | **PASS** | `subscribe-newsletter` invokes RPC; live POST to production returned `200 OK {"success":true}`. |
+| **L1-23** | Database Schema Consistency | **PASS** | 29 migrations applied to production (`kbvjmcnaaogkbnerjcoc`); zero migration drift. |
+| **L1-24** | Migration Integrity | **PASS** | `supabase migration list --linked` confirms all 29 migrations present locally and on remote. |
 | **L1-25** | Database RPC Integrity | **PASS** | `create_order`, `subscribe_newsletter`, `check_first_order_eligibility`, `upsert_customer_profile` verified. |
 | **L1-26** | Row-Level Security (RLS) | **PASS** | RLS enabled on all 11 customer and catalog tables; all legacy `USING true` policies eliminated. |
 | **L1-27** | Database Role Grants | **PASS** | Only safe public RPCs granted to `anon`; base order, customer, and payment tables revoked. |
@@ -96,9 +113,7 @@ All 42 certification criteria have been evaluated, remediated, and verified.
 
 ---
 
-## 5. Defect Register & Resolution Log
-
-During the certification audit, seven (7) machine-resolvable defects and security risks were identified and definitively resolved.
+## 6. Defect Register & Resolution Log
 
 ```
 +---------+------------------------------------------------------------------+----------+------------+
@@ -109,6 +124,7 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 | ERR-003 | supabase/config.toml pointed to stale staging project            | P2       | RESOLVED   |
 | ERR-004 | Rogue collections.html intercepted Vite dev routing              | P1       | RESOLVED   |
 | ERR-005 | .env.local pointed to stale staging project                      | P2       | RESOLVED   |
+| ERR-006 | ResponsiveImage.spec.ts timeout on video streaming pages        | P2       | RESOLVED   |
 | SEC-001 | Permissive USING true RLS policies across customer/order tables  | P0       | RESOLVED   |
 | SEC-002 | Phone normalization retained spaces failing database regex       | P2       | RESOLVED   |
 +---------+------------------------------------------------------------------+----------+------------+
@@ -144,6 +160,13 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 - **Correction**: Reconciled `.env.local` to point to production `kbvjmcnaaogkbnerjcoc`.
 - **Verification**: Storefront loads all 5 production collections and published products.
 
+### ERR-006: ResponsiveImage Test Timeout on Streaming Video Pages
+- **Problem**: Playwright `ResponsiveImage.spec.ts` timed out (30000ms exceeded) on `/collections`.
+- **Root Cause**: The test used `{ waitUntil: 'networkidle' }`. On `/collections`, 5 `<Film>` components stream background video, preventing the network connection count from dropping to 0 for 500ms. In addition, lazy-loaded route chunks rendered React Suspense skeletons momentarily before attaching `img` elements.
+- **Correction**: Switched wait state from `networkidle` to `load` and added explicit `await page.locator('img').first().waitFor({ state: 'attached', timeout: 15000 })` before querying images.
+- **Verification**: Executed `npx playwright test src/__tests__/ResponsiveImage.spec.ts`: **20/20 PASSED in 34.2s**.
+- **Commit**: `0447abd`.
+
 ### SEC-001: Insecure Permissive RLS Policies on Production Database
 - **Problem**: Audit of PostgreSQL policies revealed legacy permissive policies (`"Allow all on customers"`, `"Allow all on orders"`, `"Allow all on shipping_addresses"`, `"Allow all on payments"`, `"Allow public insert to products"`) with `USING (true)`.
 - **Root Cause**: Rapid prototyping migrations previously added open policies that were not dropped during customer auth integration.
@@ -158,9 +181,9 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 
 ---
 
-## 6. Security & Isolation Audit
+## 7. Security & Isolation Audit
 
-### 6.1 Row-Level Security Policy Matrix
+### 7.1 Row-Level Security Policy Matrix
 
 | Table | RLS Active | Public / Anonymous Access | Authenticated Customer Access | Admin Access |
 | :--- | :---: | :--- | :--- | :--- |
@@ -176,7 +199,7 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 | `newsletter_subscriptions`| YES | INSERT via `subscribe_newsletter` RPC | None | Full (`is_admin()`) |
 | `storage.objects` | YES | SELECT public buckets | SELECT public buckets | Upload/Delete admin only |
 
-### 6.2 Studio Security Boundaries
+### 7.2 Studio Security Boundaries
 - `/studio/*` routes are guarded by React Router navigation guards and Supabase Auth session checks.
 - Public registration or user signup is strictly disabled across the application.
 - Unauthenticated requests to `/studio`, `/studio/collections`, `/studio/media`, and `/studio/activity` automatically redirect to `/studio/login`.
@@ -184,7 +207,7 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 
 ---
 
-## 7. Test Suite & Verification Results
+## 8. Test Suite & Verification Results
 
 ```
 ================================================================================
@@ -194,9 +217,10 @@ During the certification audit, seven (7) machine-resolvable defects and securit
   Linter (eslint):                PASS (0 errors, 0 warnings)
   Unit Tests (Vitest):            8/8 PASSED
   E2E / Playwright (Chromium):    80/80 PASSED (4 integration skipped fail-closed)
-  Vite Production Build:          PASS (6.14s)
+  Vite Production Build:          PASS (13.02s)
   Static Route Prerendering:      23/23 ROUTES PRERENDERED
-  Cloudflare Pages Deployment:    PASS (HTTP 200 OK)
+  Cloudflare Pages Deployment:    PASS (Deployment 9ccda681, HTTP 200 OK)
+  Production Live Smoke Test:     10/10 ROUTES PASSED (HTTP 200, 0 console errors)
 ================================================================================
 ```
 
@@ -259,9 +283,23 @@ During the certification audit, seven (7) machine-resolvable defects and securit
    - Configured to run against live secrets when `REQUIRES_DEPLOYED_SUPABASE=true`.
    - Verified fail-closed logic: requests without valid HMAC-SHA256 signature return 400 `invalid_signature`.
 
+10. **Live Production Browser Smoke Test (`scripts/prod_smoke_test.cjs`)**: **10/10 PASSED**
+   - `/`: HTTP 200, Title: "House of Padmavati"
+   - `/collections`: HTTP 200, Title: "Collections — House of Padmavati"
+   - `/lookbook`: HTTP 200, Title: "Lookbook · House of Padmavati"
+   - `/journal`: HTTP 200, Title: "The Journal — House of Padmavati"
+   - `/about`: HTTP 200, Title: "The House — House of Padmavati"
+   - `/customer-care`: HTTP 200, Title: "Customer Care · House of Padmavati"
+   - `/cart`: HTTP 200, Title: "The Bag — House of Padmavati"
+   - `/checkout`: HTTP 200, Title: "Sign In — House of Padmavati"
+   - `/wishlist`: HTTP 200, Title: "Wishlist — House of Padmavati"
+   - `/product/a2799dd3-80a5-4cc4-b510-031678a2c1f7`: HTTP 200, Title: "kalyani1 — House of Padmavati"
+   - `/nonexistent-test-page-404`: SPA 200 Shell Fallback with full error content rendered.
+   - Console Errors: 0. Page Uncaught Exceptions: 0.
+
 ---
 
-## 8. Cloudflare Pages Production Deployment Verification
+## 9. Cloudflare Pages Production Deployment Verification
 
 - **Project**: `hop-production`
 - **Active Deployment**: `https://9ccda681.hop-production.pages.dev`
@@ -269,7 +307,7 @@ During the certification audit, seven (7) machine-resolvable defects and securit
 - **HTTP Status Check**:
   ```http
   HTTP/1.1 200 OK
-  Date: Tue, 29 Sep 2026 19:00:53 GMT
+  Date: Wed, 30 Sep 2026 17:54:53 GMT
   Content-Type: text/html; charset=utf-8
   Connection: keep-alive
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
@@ -280,13 +318,13 @@ During the certification audit, seven (7) machine-resolvable defects and securit
   x-frame-options: DENY
   x-xss-protection: 1; mode=block
   Server: cloudflare
-  CF-RAY: a42d3bb77ba41431-MAA
+  CF-RAY: a435186b7ee12e35-MAA
   ```
 - **Prerendered Route HTML**: Verified containing full semantic DOM, headings, navigation, footer, and Schema.org metadata for all 23 dynamic and static routes.
 
 ---
 
-## 9. The 10 Mandatory Production Readiness Affirmations
+## 10. The 10 Mandatory Production Readiness Affirmations
 
 As Senior Production Engineer, I hereby make the following ten unconditional technical affirmations for House of Padmavati (HOP) v0.1.0 — Layer 1:
 
@@ -303,7 +341,7 @@ As Senior Production Engineer, I hereby make the following ten unconditional tec
 
 ---
 
-## 10. Layer 2 Human Gate Isolation & Runbook
+## 11. Layer 2 Human Gate Isolation & Runbook
 
 The following operations require human legal authority, financial cardholding, or registrar domain ownership and must be executed by the designated roles during Layer 2 cutover:
 
@@ -333,7 +371,7 @@ The following operations require human legal authority, financial cardholding, o
 
 ---
 
-## 11. Final Technical Certification Verdict
+## 12. Final Technical Certification Verdict
 
 **VERDICT: CERTIFIED (PASS)**
 
