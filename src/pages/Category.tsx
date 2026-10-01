@@ -193,7 +193,7 @@ const Category = () => {
             <div>
               <h1 className="font-editorial text-3xl sm:text-4xl text-ink leading-tight">{displayName}</h1>
               <p className="mt-2 text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">
-                {displayTagline}{world ? ` · ${world.accentName}` : ""}
+                {displayTagline}
               </p>
               {world && (
                 <p className="mt-2 text-[0.65rem] tracking-wide text-ink-soft font-light">{world.emotion}</p>

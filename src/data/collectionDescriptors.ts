@@ -1,10 +1,8 @@
-const DESCRIPTORS: Record<string, string> = {
-  kalyani: "Timeless. Sacred. Enduring.",
-  viara: "Elegant. Effortless. Refined.",
-  arya: "Bold. Structured. Powerful.",
-  padma: "Rooted. Authentic. Graceful.",
-  spandana: "Expressive. Fearless. Original.",
-};
+// Generic triplet descriptors retired per intelligent collection-card rewrite.
+// The distinct editorial line for each collection now lives in
+// collectionWorlds.ts `emotion` (rendered on all card surfaces).
+// Returning "" keeps existing conditional renders hidden with no layout change.
+const DESCRIPTORS: Record<string, string> = {};
 
 const SLUG_ALIASES: Record<string, string> = {
   megham: "arya",

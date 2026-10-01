@@ -98,7 +98,7 @@ const Collections = () => {
                   <div className="lg:col-span-5 space-y-3 sm:space-y-4">
                     <p className="text-[0.6rem] tracking-[0.42em] uppercase text-ink-soft">
                       {getChapterLabel(i)}
-                      {c.tagline ? ` · ${c.tagline}` : world ? ` · ${world.accentName}` : ""}
+                      {c.tagline ? ` · ${c.tagline}` : ""}
                     </p>
                     <h2 className="font-editorial text-3xl sm:text-4xl leading-[1.08] text-balance text-ink">
                       {c.name}

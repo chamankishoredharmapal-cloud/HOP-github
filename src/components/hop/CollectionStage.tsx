@@ -62,7 +62,7 @@ export const CollectionStage = () => {
                     <div className="flex items-center gap-4">
                       <span className="h-px w-10" style={{ background: world?.accent ?? "hsl(var(--ink) / 0.25)" }} aria-hidden="true" />
                       <p className="text-[0.6rem] sm:text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">
-                        {c.tagline ?? `Chapter ${String(i + 1).padStart(2, "0")}`} {world ? `· ${world.accentName}` : ""}
+                        {c.tagline ?? `Chapter ${String(i + 1).padStart(2, "0")}`}
                       </p>
                     </div>
                     <h3 className="font-editorial leading-[1.02] text-balance text-ink text-4xl sm:text-5xl md:text-6xl">
@@ -73,7 +73,7 @@ export const CollectionStage = () => {
                     </p>
                     {world && (
                       <p className="text-[0.65rem] tracking-wide text-ink-soft font-light max-w-md">
-                        {world.emotion} · {world.material}
+                        {world.emotion}
                       </p>
                     )}
                     <Link
@@ -111,11 +111,6 @@ export const CollectionStage = () => {
                         <div className="absolute inset-x-0 -bottom-px h-px" style={{ background: world.accent }} aria-hidden="true" />
                       )}
                     </div>
-                    {world && (
-                      <p className="mt-3 text-[0.6rem] tracking-[0.2em] uppercase text-ink-soft">
-                        {world.photo}
-                      </p>
-                    )}
                   </div>
                 </div>
               </div>
