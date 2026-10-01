@@ -5,12 +5,13 @@ import { supabase } from "@/integrations/supabase/client";
 
 const HopFooter = () => {
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!email.trim() || !consent) return;
 
     setStatus("loading");
     setErrorMessage("");
@@ -26,6 +27,7 @@ const HopFooter = () => {
       } else {
         setStatus("success");
         setEmail("");
+        setConsent(false);
       }
     } catch {
       setStatus("error");
@@ -100,6 +102,24 @@ const HopFooter = () => {
               </button>
             </form>
           )}
+          {/* Consent checkbox */}
+          <label className="flex items-start gap-2 cursor-pointer text-xs text-jasmine/70">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              required
+              className="mt-0.5 w-3.5 h-3.5 rounded border-jasmine/40 accent-ink shrink-0"
+            />
+            <span className="leading-relaxed">
+              I agree to receive the journal and accept the{" "}
+              <Link to="/privacy-policy" className="underline hover:text-jasmine transition-colors">Privacy Policy</Link>
+              {"."}{" "}
+              Unsubscribe anytime via the link in emails or{" "}
+              <Link to="/unsubscribe" className="underline hover:text-jasmine transition-colors">here</Link>
+              .
+            </span>
+          </label>
         </div>
 
         {/* Link columns */}
@@ -128,7 +148,6 @@ const HopFooter = () => {
             <ul className="space-y-2.5">
               <li><a href="https://instagram.com/houseofpadmavati" target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Instagram</a></li>
               <li><a href="https://pinterest.com/houseofpadmavati" target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Pinterest</a></li>
-              <li><a href="https://wa.me/919999999999" target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">WhatsApp</a></li>
             </ul>
           </div>
         </div>

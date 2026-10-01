@@ -12,17 +12,17 @@ const TermsOfService = () => {
   return (
     <PageLayout>
       <main>
-         <div className="hop-page__room hop-page__section max-w-3xl">
+        <div className="hop-page__room hop-page__section max-w-3xl">
           <header className="mb-12 text-center">
-             <h1 className="hop-page__title hop-page__title--small">Terms</h1>
-            <p className="text-sm text-ink-soft">Last updated · July 2026</p>
+            <h1 className="hop-page__title hop-page__title--small">Terms</h1>
+            <p className="text-sm text-ink-soft">Last updated · October 2026</p>
           </header>
 
           <div className="space-y-10 text-ink-soft font-light leading-relaxed">
             <section>
               <h2 className="font-serif text-2xl text-ink mb-3">1. Introduction</h2>
               <p>These Terms & Conditions govern your use of the House of Padmavati website and your purchase of products from House of Padmavati. By accessing this website or placing an order, you agree to be bound by these terms.</p>
-              <p className="mt-3">House of Padmavati is a sole proprietorship based in Karnataka, India.</p>
+              <p className="mt-3">House of Padmavati is a sole proprietorship based in Bangalore, India.</p>
             </section>
 
             <section>
@@ -31,10 +31,8 @@ const TermsOfService = () => {
                 <p><strong className="text-ink">Business Name:</strong> House of Padmavati</p>
                 <p><strong className="text-ink">Business Type:</strong> Sole Proprietorship</p>
                 <p><strong className="text-ink">Country:</strong> India</p>
-                <p><strong className="text-ink">State:</strong> Karnataka</p>
-                <p><strong className="text-ink">Address:</strong> Near Kongidiyappa College, Doddaballapur, Bangalore Rural, Karnataka – 561203, India</p>
+                <p><strong className="text-ink">City:</strong> Bangalore</p>
                 <p><strong className="text-ink">Email:</strong> houseofpadmavati@gmail.com</p>
-                <p><strong className="text-ink">Phone:</strong> 7975335312</p>
                 <p><strong className="text-ink">GST:</strong> Not Registered</p>
               </div>
             </section>
@@ -72,7 +70,7 @@ const TermsOfService = () => {
               <h3 className="font-serif text-xl text-ink mt-4 mb-2">6.2 Order Acceptance</h3>
               <p>We reserve the right to accept or decline any order for any reason, including but not limited to stock unavailability, pricing errors, or payment verification issues.</p>
               <h3 className="font-serif text-xl text-ink mt-4 mb-2">6.3 Order Cancellation</h3>
-              <p>You may cancel an order any time before dispatch at no charge. No cancellation fee applies. Orders cannot be cancelled after dispatch. To request cancellation, contact us at houseofpadmavati@gmail.com with your order number.</p>
+              <p>You may cancel an order within 1 hour of placing it at no charge. No cancellation fee applies. Orders cannot be cancelled after 1 hour or after dispatch. To request cancellation, contact us at houseofpadmavati@gmail.com with your order number.</p>
               <h3 className="font-serif text-xl text-ink mt-4 mb-2">6.4 Pricing</h3>
               <p>All prices are listed in Indian Rupees (INR) and are inclusive of applicable taxes unless stated otherwise. We reserve the right to modify prices at any time without prior notice. Prices at the time of order placement will apply to that order.</p>
             </section>
@@ -132,8 +130,8 @@ const TermsOfService = () => {
                 <li><strong className="text-ink">Payment Processing:</strong> Razorpay</li>
                 <li><strong className="text-ink">Hosting and Database:</strong> Supabase</li>
                 <li><strong className="text-ink">Email Services:</strong> Resend</li>
-                <li><strong className="text-ink">Deployment:</strong> Vercel</li>
-                <li><strong className="text-ink">Analytics:</strong> Google Analytics, Microsoft Clarity, Meta Pixel (when enabled)</li>
+                <li><strong className="text-ink">Deployment:</strong> Cloudflare Pages</li>
+                <li><strong className="text-ink">Typography:</strong> Google Fonts</li>
               </ul>
               <p className="mt-3">These third parties have their own privacy policies and terms of service. We are not responsible for their practices.</p>
             </section>
@@ -163,8 +161,7 @@ const TermsOfService = () => {
               <p>For questions regarding these Terms & Conditions, please contact us.</p>
               <div className="mt-4 text-sm">
                 <p><strong className="text-ink">Email:</strong> houseofpadmavati@gmail.com</p>
-                <p><strong className="text-ink">Phone:</strong> 7975335312</p>
-                <p><strong className="text-ink">Address:</strong> Near Kongidiyappa College, Doddaballapur, Bangalore Rural, Karnataka – 561203, India</p>
+                <p><strong className="text-ink">Business:</strong> House of Padmavati, Bangalore, India</p>
               </div>
             </section>
           </div>
@@ -175,4 +172,3 @@ const TermsOfService = () => {
 };
 
 export default TermsOfService;
-

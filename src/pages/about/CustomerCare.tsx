@@ -8,6 +8,7 @@ import AboutSidebar from "../../components/about/AboutSidebar";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
+import { Label } from "../../components/ui/label";
 import { submitContactForm } from "@/services/contactService";
 import { useMetadata } from "@/hooks/useMetadata";
 
@@ -22,6 +23,7 @@ const SareeCare = () => {
   const [email, setEmail] = useState("");
   const [orderNumber, setOrderNumber] = useState("");
   const [message, setMessage] = useState("");
+  const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -44,8 +46,8 @@ const SareeCare = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setTouched({ firstName: true, lastName: true, email: true, message: true });
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !email.includes("@") || !message.trim()) return;
+    setTouched({ firstName: true, lastName: true, email: true, message: true, consent: true });
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !email.includes("@") || !message.trim() || !consent) return;
 
     setLoading(true);
     setError("");
@@ -149,6 +151,23 @@ const SareeCare = () => {
                   {errors.message && <p className="text-[0.7rem] text-sakura mt-1">{errors.message}</p>}
                 </div>
 
+                <div className="space-y-2">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      required
+                      className="mt-0.5 w-4 h-4 rounded border-border accent-ink shrink-0"
+                    />
+                    <span className="text-xs text-ink-soft font-light leading-relaxed">
+                      I agree to the{" "}
+                      <a href="/privacy-policy" className="text-rasa-mulberry hover:text-ink underline underline-offset-4 decoration-1">Privacy Policy</a>
+                      {" and consent to my message being stored for customer support purposes."}
+                    </span>
+                  </label>
+                </div>
+
                 {error && (
                   <div className="flex items-center gap-2 text-sm text-sakura">
                     <AlertCircle className="h-4 w-4 shrink-0" />
@@ -183,4 +202,3 @@ const SareeCare = () => {
 };
 
 export default SareeCare;
-

@@ -58,6 +58,29 @@ export async function updateProfile(
   return data;
 }
 
+export async function updateEmail(
+  customerId: string,
+  newEmail: string
+): Promise<void> {
+  const { error } = await supabase.auth.updateUser({
+    email: newEmail,
+  });
+  if (error) throw error;
+  
+  // Also update the email in the customers table
+  const { error: profileError } = await supabase
+    .from("customers")
+    .update({ email: newEmail.toLowerCase() })
+    .eq("id", customerId);
+  if (profileError) throw profileError;
+}
+
+export async function deleteAccount(customerId: string): Promise<void> {
+  // Delete the user from Supabase Auth (this will cascade to related data via RLS policies)
+  const { error } = await supabase.auth.admin.deleteUser(customerId);
+  if (error) throw error;
+}
+
 // Phone normalization utility
 export function normalizePhone(phone: string): string {
   if (!phone) return phone;

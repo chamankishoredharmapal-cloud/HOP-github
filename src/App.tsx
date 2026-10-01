@@ -22,6 +22,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import ReturnsPolicy from "./pages/ReturnsPolicy";
+import UnsubscribePage from "./pages/Unsubscribe";
 import StudioLogin from "./studio/pages/Login";
 import StudioResetPassword from "./studio/pages/ResetPassword";
 import { AuthGuard } from "./studio/components/AuthGuard";
@@ -114,6 +115,7 @@ const App = () => (
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/shipping-policy" element={<ShippingPolicy />} />
               <Route path="/returns-policy" element={<ReturnsPolicy />} />
+              <Route path="/unsubscribe" element={<UnsubscribePage />} />
               <Route path="/campaigns/quiet-wedding" element={<QuietWedding />} />
               <Route path="/lookbook" element={<Lookbook />} />
               <Route path="/appointments" element={<Appointments />} />

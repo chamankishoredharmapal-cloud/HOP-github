@@ -12,16 +12,16 @@ const ReturnsPolicy = () => {
   return (
     <PageLayout>
       <main>
-         <div className="hop-page__room hop-page__section max-w-3xl">
+        <div className="hop-page__room hop-page__section max-w-3xl">
           <header className="mb-12 text-center">
-             <h1 className="hop-page__title hop-page__title--small">Returns & Refund</h1>
-            <p className="text-sm text-ink-soft">Last updated · July 2026</p>
+            <h1 className="hop-page__title hop-page__title--small">Returns & Refund</h1>
+            <p className="text-sm text-ink-soft">Last updated · October 2026</p>
           </header>
 
           <div className="space-y-10 text-ink-soft font-light leading-relaxed">
             <section>
               <h2 className="font-serif text-2xl text-ink mb-3">1. Return and Replacement Eligibility</h2>
-              <p>Return and replacement eligibility depends on the number of sarees in your order. The eligibility window is calculated from the date of delivery.</p>
+              <p>Return and replacement eligibility depends on the number of products in your order. The eligibility window is calculated from the date of delivery.</p>
               <div className="mt-4 overflow-x-auto">
                 <table className="w-full border-collapse text-sm">
                   <thead>
@@ -32,11 +32,11 @@ const ReturnsPolicy = () => {
                   </thead>
                   <tbody>
                     <tr className="border-b border-ink-soft/10">
-                      <td className="py-2 pr-4">1 – 3 sarees per order</td>
+                      <td className="py-2 pr-4">1 – 3 products per order</td>
                       <td className="py-2 pr-4">3 calendar days from delivery</td>
                     </tr>
                     <tr className="border-b border-ink-soft/10">
-                      <td className="py-2 pr-4">4 or more sarees per order</td>
+                      <td className="py-2 pr-4">More than 3 products per order</td>
                       <td className="py-2 pr-4">7 calendar days from delivery</td>
                     </tr>
                   </tbody>
@@ -69,8 +69,6 @@ const ReturnsPolicy = () => {
                 <li>Product damaged after delivery</li>
                 <li>Missing tags or original packaging</li>
                 <li>Clearance or sale items (unless defective)</li>
-                <li>Customised or personalised products (unless defective)</li>
-                <li>Gift cards</li>
               </ul>
             </section>
 
@@ -109,15 +107,14 @@ const ReturnsPolicy = () => {
               <h2 className="font-serif text-2xl text-ink mb-3">8. Refund Process</h2>
               <p>Once we receive and inspect the returned product, we will process your refund. The following terms apply:</p>
               <ul className="list-disc list-inside space-y-2 mt-2">
-                <li>Refunds are processed via bank transfer to your registered bank account (not the original payment method)</li>
-                <li>You will need to provide your bank account details (account number, IFSC code) for the refund</li>
+                <li>Refunds are processed to the original payment method used for the order</li>
                 <li>Refunds are processed within 5 – 7 business days after the returned product passes inspection</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-serif text-2xl text-ink mb-3">9. Cancellation Policy</h2>
-              <p>Orders can be cancelled any time before dispatch. No cancellation fee applies. To cancel an order, email us at houseofpadmavati@gmail.com with your order number. Orders that have already been dispatched cannot be cancelled.</p>
+              <h2 className="font-serif text-2xl text-ink mb-3">9. Cancellation</h2>
+              <p>Orders can be cancelled within 1 hour of placing the order. No cancellation fee applies. To cancel an order, email us at houseofpadmavati@gmail.com with your order number. Orders cannot be cancelled after 1 hour or after dispatch.</p>
             </section>
 
             <section>
@@ -125,8 +122,7 @@ const ReturnsPolicy = () => {
               <p>For any questions about returns, refunds, or exchanges, please contact us:</p>
               <div className="mt-4 text-sm">
                 <p><strong className="text-ink">Email:</strong> houseofpadmavati@gmail.com</p>
-                <p><strong className="text-ink">Phone:</strong> 7975335312</p>
-                <p><strong className="text-ink">Address:</strong> Near Kongidiyappa College, Doddaballapur, Bangalore Rural, Karnataka – 561203, India</p>
+                <p><strong className="text-ink">Business:</strong> House of Padmavati, Bangalore, India</p>
               </div>
             </section>
           </div>
@@ -137,4 +133,3 @@ const ReturnsPolicy = () => {
 };
 
 export default ReturnsPolicy;
-
