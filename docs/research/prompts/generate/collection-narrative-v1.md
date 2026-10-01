@@ -9,7 +9,7 @@
 
 ## Description
 
-Generates the full editorial narrative for a collection — the story that appears on the Collection page and Collection Detail page. A collection is a named woman (Kalyani, Viara, Arya, Padma, Spandana). This prompt creates an emotional connection between the reader and the collection, framing the sarees not as products but as expressions of a character, a mood, and a place.
+Generates the full editorial narrative for a collection — the story that appears on the Collection page and Collection Detail page. A collection is a named woman (Kalyani, Viara, Arya, Padma) — or, in the case of YŪGEN, a contemplative exception. This prompt creates an emotional connection between the reader and the collection, framing the sarees not as products but as expressions of a character, a mood, and a place.
 
 ## Context Requirements
 

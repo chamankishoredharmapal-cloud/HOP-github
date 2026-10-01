@@ -5,7 +5,7 @@ import { Film } from "@/components/hop/Film";
 import { fetchCollections } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { getCollectionDescriptor } from "@/data/collectionDescriptors";
-import { getWorld } from "@/data/collectionWorlds";
+import { getWorld, getCollectionDisplayName, getCollectionRoomSlug } from "@/data/collectionWorlds";
 import { Selvedge } from "./Selvedge";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
@@ -47,6 +47,11 @@ export const CollectionStage = () => {
         {collections?.map((c, i) => {
           const align = i % 2 === 0 ? "left" : "right";
           const world = getWorld(c.slug);
+          // Canonical identity: YŪGEN renders from the world even while
+          // the database row still carries the legacy Spandana name.
+          const roomSlug = getCollectionRoomSlug(c.slug);
+          const displayName = getCollectionDisplayName(c.slug, c.name);
+          const isYugen = world?.slug === "yugen";
           return (
             <article
               key={c.id}
@@ -65,8 +70,8 @@ export const CollectionStage = () => {
                         {c.tagline ?? `Chapter ${String(i + 1).padStart(2, "0")}`}
                       </p>
                     </div>
-                    <h3 className="font-editorial leading-[1.02] text-balance text-ink text-4xl sm:text-5xl md:text-6xl">
-                      {c.name}
+                    <h3 className={isYugen ? "hop-yugen-title text-balance text-ink text-4xl sm:text-5xl md:text-6xl" : "font-editorial leading-[1.02] text-balance text-ink text-4xl sm:text-5xl md:text-6xl"}>
+                      {displayName}
                     </h3>
                     <p className="text-sm sm:text-base text-ink-soft font-light leading-relaxed max-w-md text-pretty">
                       {c.editorial_story ?? c.description ?? ""}
@@ -77,11 +82,11 @@ export const CollectionStage = () => {
                       </p>
                     )}
                     <Link
-                      to={`/collections/${c.slug}`}
+                      to={`/collections/${roomSlug}`}
                       className="group inline-flex items-center gap-3 text-[0.7rem] sm:text-xs tracking-[0.32em] uppercase text-ink border-b pb-1.5 hover:border-ink transition-colors"
                       style={{ borderColor: world?.accent ?? "hsl(var(--ink) / 0.3)" }}
                     >
-                      Explore {c.name}
+                      Explore {displayName}
                       <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                     </Link>
                   </div>
@@ -96,13 +101,13 @@ export const CollectionStage = () => {
                       <Film
                         src={c.hero_video_url ?? COLLECTION_VIDEOS[c.slug] ?? undefined}
                         poster={c.hero_image_url ?? ""}
-                        alt={`${c.name} — collection film`}
+                        alt={`${displayName} — collection film`}
                         className={
                           world?.slug === "padma"
                             ? "aspect-square lg:aspect-[4/3]"
                             : world?.slug === "viara"
                               ? "aspect-[16/10] lg:aspect-[16/10]"
-                              : world?.slug === "spandana"
+                              : world?.slug === "yugen"
                                 ? "aspect-[3/4] lg:aspect-[4/5]"
                                 : "aspect-[4/5] lg:aspect-[5/4]"
                         }

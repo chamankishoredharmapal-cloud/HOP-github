@@ -32,7 +32,7 @@
 ### Truth & Accuracy (0.95)
 - All Kalyani facts verified against content unit (Molakalmuru, pit loom, Mulberry silk, hand-spun zari, 21 days)
 - Other collection descriptions sourced from brand-bible.md and Supabase seed data
-- No fabricated claims. Slight deduction: Viara, Arya, Padma, Spandana lack detailed weaver attribution (documented as knowledge gap, not an error)
+- No fabricated claims. Slight deduction: Viara, Arya, Padma, YŪGEN lack detailed weaver attribution (documented as knowledge gap, not an error)
 
 ### Voice Fidelity (0.92)
 - All 5 voice dimensions hit targets (Formality 3, Warmth 3, Sensory 4, Technical 2, Urgency 0)

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import PageLayout from "@/components/layout/PageLayout";
@@ -14,11 +14,11 @@ import {
 import { useWishlist } from "@/contexts/WishlistContext";
 import { toast } from "sonner";
 import { fetchProductsByCollection } from "@/services/productService";
-import { fetchCollectionBySlug } from "@/services/collectionService";
+import { fetchCollectionBySlugWithLegacyFallback } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { Film } from "@/components/hop/Film";
 import { getCollectionDescriptor } from "@/data/collectionDescriptors";
-import { getWorld } from "@/data/collectionWorlds";
+import { getWorld, getCanonicalCollectionSlug, getCollectionDisplayName } from "@/data/collectionWorlds";
 import { Selvedge } from "@/components/hop/Selvedge";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
@@ -47,22 +47,30 @@ const Category = () => {
 
   const { data: collection, isLoading: collectionLoading, isError: collectionError } = useQuery({
     queryKey: ["storefront", "collection", slug],
-    queryFn: () => fetchCollectionBySlug(slug),
+    queryFn: () => fetchCollectionBySlugWithLegacyFallback(slug),
     enabled: slug !== "all",
     staleTime: 5 * 60 * 1000,
   });
 
+  // Products follow the resolved collection row, so the canonical room
+  // shows the legacy row's products until the migration renames the slug.
+  const productsSlug = collection?.slug ?? slug;
   const { data, isLoading: productsLoading, isError: productsError } = useQuery({
-    queryKey: ["storefront", "products", slug],
-    queryFn: () => fetchProductsByCollection(slug),
+    queryKey: ["storefront", "products", productsSlug],
+    queryFn: () => fetchProductsByCollection(productsSlug),
     staleTime: 5 * 60 * 1000,
   });
+
+  const world = getWorld(slug);
+  // Canonical display name wins for renamed collections, so the room reads
+  // YŪGEN even while the database row still carries the legacy name.
+  const displayName = getCollectionDisplayName(slug, collection?.name) || "The Atelier";
 
   const isLoading = collectionLoading || productsLoading;
   usePrerenderReady(!isLoading);
 
   useMetadata({
-    title: `${collection?.name ?? "The Atelier"} — House of Padmavati`,
+    title: `${displayName} — House of Padmavati`,
     description: collection?.editorial_story ?? collection?.description ?? "Every saree currently in the house.",
     ogImage: collection?.hero_image_url,
   });
@@ -72,7 +80,7 @@ const Category = () => {
     const items = [
       { position: 1, name: "House", item: "/" },
       { position: 2, name: "Collections", item: "/collections" },
-      { position: 3, name: collection?.name ?? "The Atelier", item: `/collections/${slug}` },
+      { position: 3, name: displayName, item: `/collections/${slug}` },
     ];
     addJsonLd({
       "@context": "https://schema.org",
@@ -84,14 +92,12 @@ const Category = () => {
         item: `https://houseofpadmavati.com${item}`,
       })),
     });
-  }, [slug, collection?.name]);
+  }, [slug, displayName]);
 
-  const displayName = collection?.name ?? "The Atelier";
   const displayTagline = collection?.tagline ?? "All weaves · All seasons";
   const displayStory = collection?.editorial_story ?? "";
   const displayNote = collection?.description ?? `Every saree in the house — ${displayName}`;
   const editorial = displayStory || displayNote;
-  const world = getWorld(slug);
 
   const sortedProducts = useMemo(() => {
     if (!data) return [];
@@ -107,6 +113,13 @@ const Category = () => {
         return products;
     }
   }, [sort, data]);
+
+  // Frontend canonicalization works independently of the database
+  // migration: legacy slugs always redirect, even while their row exists.
+  const canonicalRedirect = slug !== "all" ? getCanonicalCollectionSlug(slug) : null;
+  if (canonicalRedirect && canonicalRedirect !== slug) {
+    return <Navigate to={`/collections/${canonicalRedirect}`} replace />;
+  }
 
   if (slug !== "all" && !collectionLoading && !collection && !collectionError) {
     return (
@@ -191,7 +204,7 @@ const Category = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between border-b border-ink/15 pb-6 mt-10">
             <div>
-              <h1 className="font-editorial text-3xl sm:text-4xl text-ink leading-tight">{displayName}</h1>
+              <h1 className={world?.slug === "yugen" ? "hop-yugen-title text-3xl sm:text-4xl text-ink" : "font-editorial text-3xl sm:text-4xl text-ink leading-tight"}>{displayName}</h1>
               <p className="mt-2 text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">
                 {displayTagline}
               </p>

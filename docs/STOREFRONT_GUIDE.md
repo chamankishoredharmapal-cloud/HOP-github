@@ -69,7 +69,7 @@ src/services/
 | Video | Source | Location |
 |-------|--------|----------|
 | Hero | `COLLECTION_VIDEOS.hero` | `src/data/collectionVideos.ts` |
-| Collection | `COLLECTION_VIDEOS[kalyanī]` … `COLLECTION_VIDEOS[spandana]` | Same file (keyed by collection slug) |
+| Collection | `COLLECTION_VIDEOS[kalyanī]` … `COLLECTION_VIDEOS[yugen]` | Same file (keyed by collection slug) |
 
 The `Film` component handles:
 - Auto-play with `play()` on `onLoadedData`

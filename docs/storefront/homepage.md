@@ -59,7 +59,7 @@ COLLECTION_VIDEOS = {
   viara: "...",
   arya: "...",
   padma: "...",
-  spandana: "...",
+  yugen: "...",
 }
 ```
 

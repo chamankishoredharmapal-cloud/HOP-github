@@ -59,12 +59,12 @@ Padma is our weave laboratory — a collection born at the intersection of craft
 
 ---
 
-### 2.5 Spandana
+### 2.5 YŪGEN
 
 **Tagline:** Contemporary Weave · Self-Expression
 
 **Editorial Story:**
-Spandana is where the saree steps out of tradition and into the contemporary frame. Unconventional drapes. Experimental textures. Colours that refuse to sit quietly. These sarees are worn because she chooses to — not because the calendar told her to. Confidence, woven.
+YŪGEN is where the saree steps out of tradition and into the contemporary frame. Unconventional drapes. Experimental textures. Colours that refuse to sit quietly. These sarees are worn because she chooses to — not because the calendar told her to. Confidence, woven.
 
 ---
 

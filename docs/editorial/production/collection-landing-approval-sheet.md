@@ -44,7 +44,7 @@
 1. **Taglines were rewritten** from original seed data to remove forbidden words:
    - Kalyani: "Wedding Elegance · Heritage Luxury" → "Wedding Silk · Heritage Weave"
    - Viara: "Luxury Reception · The Flagship" → "Reception Silk · Quiet Presence"
-   - Spandana: "Contemporary Luxury · Fashion Forward" → "Contemporary Weave · Self-Expression"
+    - YŪGEN: "Contemporary Luxury · Fashion Forward" → "Contemporary Weave · Self-Expression"
    - Arya: "Modern Working Woman · Social" → "Working Silk · Daily Rhythm"
    - Padma: "Geometry · Structure · Craft" → "Geometric Weave · Structure" (minor refinement)
 2. **Collection descriptions** draw from Supabase seed editorial stories (verified against brand-bible.md) and are adjusted for landing-page brevity

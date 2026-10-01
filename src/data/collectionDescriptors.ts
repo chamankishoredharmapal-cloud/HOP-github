@@ -7,7 +7,8 @@ const DESCRIPTORS: Record<string, string> = {};
 const SLUG_ALIASES: Record<string, string> = {
   megham: "arya",
   "oosi-kattam": "padma",
-  "designer-wear": "spandana",
+  "designer-wear": "yugen",
+  spandana: "yugen",
 };
 
 export const getCollectionDescriptor = (name?: string | null, slug?: string | null): string => {

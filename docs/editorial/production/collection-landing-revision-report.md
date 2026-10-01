@@ -6,7 +6,7 @@
 - **Viara:** "sarees woven for evenings…" → Character description from brand-bible.md and Supabase seed migration. No fabricated craft claims. ✅
 - **Arya:** "Light drapes… Linens… Cottons…" → Character from brand-bible.md. No specific weaver attribution claimed. ✅
 - **Padma:** "weave laboratory… thread count shifts by one" → From brand-bible.md seed description. No fabricated technique names. ✅
-- **Spandana:** "Unconventional drapes. Experimental textures." → From brand-bible.md. No fabricated names or claims. ✅
+- **YŪGEN:** "Unconventional drapes. Experimental textures." → From brand-bible.md. No fabricated names or claims. ✅
 - **No fabricated weaver names.** Gangamma is not named in collection cards (only named in Kalyani collection detail content). ✅
 - **Result:** PASS. All claims traceable to verified sources.
 
@@ -38,7 +38,7 @@
 - **Viara:** Desire → "remembered the next morning" ✅
 - **Arya:** Recognition → "moves through her day in layers" ✅
 - **Padma:** Curiosity → "what happens when the thread count shifts by one" ✅
-- **Spandana:** Confidence → "she chooses to" ✅
+- **YŪGEN:** Confidence → "she chooses to" ✅
 - **Close:** Belonging → "chosen, then carried" ✅
 - **Journey:** Curiosity → Wonder → Desire → Recognition → Curiosity → Confidence → Belonging
 - **Result:** PASS. Emotional arc matches page-emotion-map targets (Wonder primary, Desire secondary).

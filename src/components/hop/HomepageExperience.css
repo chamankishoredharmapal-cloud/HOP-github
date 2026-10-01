@@ -404,6 +404,8 @@
   object-position: 50% 42%;
 }
 
+.hop-collection-film-chapter--yugen .hop-collection-film__media img,
+.hop-collection-film-chapter--yugen .hop-collection-film__media video,
 .hop-collection-film-chapter--spandana .hop-collection-film__media img,
 .hop-collection-film-chapter--spandana .hop-collection-film__media video {
   object-position: 46% center;
@@ -1294,5 +1296,35 @@
   .hop-journal-note__image img {
     transform: none;
     transition: none;
+  }
+}
+
+/* ————————————————————————————————————————————————————————————————
+   YŪGEN — relaxed identity
+   Cormorant Light (existing house stack, no new dependency): its U+016A
+   is a single centered glyph, while Fraunces' Ū macron detaches at
+   display sizes. Open tracking, smaller scale and a looser line-height
+   so the name sits inside the film instead of pressing down on it.
+   text-indent re-centers the tracked capitals.
+   ———————————————————————————————————————————————————————————————— */
+.hop-collection-film-chapter--yugen .hop-collection-film__name {
+  max-width: none;
+  margin-top: 2.1rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(2.4rem, 6.2vw, 6rem);
+  letter-spacing: 0.16em;
+  line-height: 1.12;
+  text-indent: 0.16em;
+  text-shadow: 0 0.08em 1.1em color-mix(in srgb, var(--hop-lac) 40%, transparent);
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .hop-collection-film-chapter--yugen .hop-collection-film__name {
+    margin-top: 1.5rem;
+    font-size: clamp(1.9rem, 12vw, 3.2rem);
+    letter-spacing: 0.14em;
+    text-indent: 0.14em;
   }
 }

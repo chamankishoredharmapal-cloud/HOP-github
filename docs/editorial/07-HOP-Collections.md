@@ -8,7 +8,7 @@
 
 At House of Padmavati, a collection is never a mere assortment of products or a seasonal dump. It is an editorial experience, a curated narrative bound by technique, intention, and mood. 
 
-We name our collections after women—Kalyani, Viara, Arya, Padma, Spandana. Each name is a dedication, not a descriptive label. It grounds the cloth in the real, reminding us that every saree is woven for a woman, meant to be lived in, and destined to outlive its first wearer. The collection page itself must feel like walking into a quiet room where the cloth is the only focus.
+We name our collections after women—Kalyani, Viara, Arya, Padma—while YŪGEN stands apart as a study in profound, quiet mystery. Each name is a dedication, not a descriptive label. It grounds the cloth in the real, reminding us that every saree is woven for a woman, meant to be lived in, and destined to outlive its first wearer. The collection page itself must feel like walking into a quiet room where the cloth is the only focus.
 
 ## 2. Naming
 
@@ -17,7 +17,7 @@ We name our collections after women—Kalyani, Viara, Arya, Padma, Spandana. Eac
 - **Viara:** The dawn. Soft, quiet presence, evening light, and sheer textures.
 - **Arya:** The noble rhythm. Grounded, structured, made for daily movement and professional cadence.
 - **Padma:** The lotus. Geometric, precise, fine lines that speak to architectural intent.
-- **Spandana:** The vibration. Contemporary expressions, evolving the handloom vocabulary.
+- **YŪGEN:** Profound grace. Contemporary expressions, evolving the handloom vocabulary.
 
 ### Naming Rules for Future Collections
 - Must be a woman's name of Indian origin.
@@ -102,7 +102,7 @@ Every collection opens with an editorial introduction that sets the emotional to
 - **Viara:** "Sheer silk and evening light. A quiet presence for the hours between dusk and dawn."
 - **Arya:** "The daily rhythm. Linen and tight-warp silks that move with the cadence of the working day."
 - **Padma:** "Fine lines and geometric intent. Where the discipline of the loom meets the poetry of the grid."
-- **Spandana:** "Contemporary breath. The handloom vocabulary, evolved for the modern collector."
+- **YŪGEN:** "Contemporary breath. The handloom vocabulary, evolved for the modern collector."
 
 ## 9. Editorial Rules
 
@@ -158,7 +158,7 @@ Every collection requires specific metadata for SEO and internal architecture.
 - **Origin:** Chettinad, Kota.
 - **Editorial Tone:** Precise, deliberate, focused. "The mathematics of the loom."
 
-### Spandana
+### YŪGEN
 - **Tagline:** Contemporary Expression
 - **Material Focus:** Experimental blends, untraditional yarn combinations.
 - **Motif Focus:** Abstract, negative space, broken symmetry.

@@ -12,7 +12,7 @@
 | 3 — Viara card | Present the flagship/reception collection. Quiet confidence, undeniable presence | Desire, confidence | A winter reception hall, the memory of what she wore | Sensory | → next collection |
 | 4 — Arya card | Present the modern woman collection. Rhythm, movement, ease | Recognition, belonging | Morning boardroom light to evening sea air | Sensory | → next collection |
 | 5 — Padma card | Present the geometric/structural collection. Precision, intellect | Wonder, curiosity | The intersection of thread and mathematics | Sensory | → next collection |
-| 6 — Spandana card | Present the contemporary collection. Boldness, self-expression | Desire, confidence | The choice to wear the saree on her own terms | Sensory | → closing |
+| 6 — YŪGEN card | Present the contemporary collection. Boldness, self-expression | Desire, confidence | The choice to wear the saree on her own terms | Sensory | → closing |
 | 7 — Close | Quiet resolution with pull-quote and link to the brand story | Belonging, trust | A saree is chosen, then carried | Resolution | → About page or browsing |
 
 ## Identity Transformation

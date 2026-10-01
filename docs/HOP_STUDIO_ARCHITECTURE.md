@@ -70,7 +70,7 @@
 
 ### 3.1 Collections (`collections` table)
 - `id`: UUID (Primary Key)
-- `name`: Text (e.g., "Kalyani", "Viara", "Arya", "Padma", "Spandana")
+- `name`: Text (e.g., "Kalyani", "Viara", "Arya", "Padma", "YŪGEN")
 - `slug`: Text (Unique, e.g., "kalyani")
 - `tagline`: Text (Editorial descriptor)
 - `description`: Text (Brief narrative)

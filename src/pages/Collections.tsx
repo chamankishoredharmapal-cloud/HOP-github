@@ -6,7 +6,7 @@ import { Monogram } from "@/components/hop/Monogram";
 import { Film } from "@/components/hop/Film";
 import { fetchCollections } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
-import { getWorld } from "@/data/collectionWorlds";
+import { getWorld, getCollectionDisplayName, getCollectionRoomSlug } from "@/data/collectionWorlds";
 import { useMetadata } from "@/hooks/useMetadata";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
@@ -78,20 +78,25 @@ const Collections = () => {
             <div className="space-y-12 sm:space-y-16 lg:space-y-20">
               {collections.map((c, i) => {
                 const world = getWorld(c.slug);
+                // Canonical identity: YŪGEN renders from the world even while
+                // the database row still carries the legacy Spandana name.
+                const roomSlug = getCollectionRoomSlug(c.slug);
+                const displayName = getCollectionDisplayName(c.slug, c.name);
+                const isYugen = world?.slug === "yugen";
                 return (
                 <Link
                   key={c.id}
-                  to={`/collections/${c.slug}`}
+                  to={`/collections/${roomSlug}`}
                   className={`group grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center ${
                     i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                   }`}
-                  aria-label={`Enter the ${c.name} collection`}
+                  aria-label={`Enter the ${displayName} collection`}
                 >
-                  <div className={`lg:col-span-7 overflow-hidden rounded-sm bg-jasmine-deep ${world?.slug === "padma" ? "aspect-square lg:aspect-[4/3]" : world?.slug === "viara" ? "aspect-[16/10]" : world?.slug === "spandana" ? "aspect-[3/4] lg:aspect-[4/5]" : "aspect-[16/10]"}`}>
+                  <div className={`lg:col-span-7 overflow-hidden rounded-sm bg-jasmine-deep ${world?.slug === "padma" ? "aspect-square lg:aspect-[4/3]" : world?.slug === "viara" ? "aspect-[16/10]" : world?.slug === "yugen" ? "aspect-[3/4] lg:aspect-[4/5]" : "aspect-[16/10]"}`}>
                     <Film
                       src={c.hero_video_url ?? COLLECTION_VIDEOS[c.slug] ?? undefined}
                       poster={c.hero_image_url ?? ""}
-                      alt={c.name}
+                      alt={displayName}
                       className="w-full h-full [&>div>img]:transition-transform [&>div>img]:duration-1000 [&>div>img]:ease-out group-hover:[&>div>img]:scale-[1.02]"
                     />
                   </div>
@@ -100,8 +105,8 @@ const Collections = () => {
                       {getChapterLabel(i)}
                       {c.tagline ? ` · ${c.tagline}` : ""}
                     </p>
-                    <h2 className="font-editorial text-3xl sm:text-4xl leading-[1.08] text-balance text-ink">
-                      {c.name}
+                    <h2 className={isYugen ? "hop-yugen-title text-balance text-ink text-3xl sm:text-4xl" : "font-editorial text-3xl sm:text-4xl leading-[1.08] text-balance text-ink"}>
+                      {displayName}
                     </h2>
                     {(c.editorial_story ?? c.description) && (
                       <p className="text-sm text-ink-soft font-light leading-relaxed max-w-md text-pretty line-clamp-3">

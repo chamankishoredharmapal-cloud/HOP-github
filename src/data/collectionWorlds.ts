@@ -71,9 +71,9 @@ export const COLLECTION_WORLDS: Record<string, CollectionWorld> = {
     vocabulary: "geometry, structure, loom, grid",
     device: "oxide rule + stone ground tint, tight crop",
   },
-  spandana: {
-    slug: "spandana",
-    name: "Spandana",
+  yugen: {
+    slug: "yugen",
+    name: "YŪGEN",
     emotion: "Colour that doesn't sit quietly.",
     temperature: "chromatic tension — controlled, not festive",
     accent: "#D99A2B",
@@ -88,7 +88,51 @@ export const COLLECTION_WORLDS: Record<string, CollectionWorld> = {
 const ALIAS: Record<string, string> = {
   megham: "arya",
   "oosi-kattam": "padma",
-  "designer-wear": "spandana",
+  "designer-wear": "yugen",
+  spandana: "yugen",
+};
+
+/** Legacy slugs that now resolve to a canonical collection slug. */
+export const CANONICAL_COLLECTION_SLUGS: Record<string, string> = {
+  spandana: "yugen",
+  "designer-wear": "yugen",
+};
+
+/**
+ * Database slugs to try (in order) when the canonical slug has no row yet.
+ * Lets the canonical room render the legacy row until the rename migration
+ * has renamed it. No duplicate collection is created.
+ */
+export const LEGACY_COLLECTION_SLUGS: Record<string, string[]> = {
+  yugen: ["spandana", "designer-wear"],
+};
+
+export const getCanonicalCollectionSlug = (slug?: string | null): string | null => {
+  const key = (slug ?? "").toLowerCase();
+  return CANONICAL_COLLECTION_SLUGS[key] ?? null;
+};
+
+/**
+ * Canonical room slug for a database record slug. Renamed collections
+ * resolve to their canonical slug so links, chapter classes, and film
+ * lookups follow the canonical identity before and after migration.
+ */
+export const getCollectionRoomSlug = (recordSlug?: string | null): string => {
+  return getWorld(recordSlug)?.slug ?? (recordSlug ?? "");
+};
+
+/**
+ * Canonical display name for a database record. Renamed collections render
+ * the canonical world name even while the database row still carries the
+ * legacy name. All other collections render the database name.
+ */
+export const getCollectionDisplayName = (
+  recordSlug?: string | null,
+  recordName?: string | null
+): string => {
+  const world = getWorld(recordSlug);
+  if (world?.slug === "yugen") return world.name;
+  return recordName || world?.name || "";
 };
 
 export const getWorld = (slug?: string | null): CollectionWorld | undefined => {

@@ -129,7 +129,7 @@ const HopFooter = () => {
             <FooterLink to="/collections/viara">Viara</FooterLink>
             <FooterLink to="/collections/arya">Arya</FooterLink>
             <FooterLink to="/collections/padma">Padma</FooterLink>
-            <FooterLink to="/collections/spandana">Spandana</FooterLink>
+            <FooterLink to="/collections/yugen">YŪGEN</FooterLink>
           </FooterCol>
           <FooterCol title="The House">
             <FooterLink to="/about">Our Story</FooterLink>

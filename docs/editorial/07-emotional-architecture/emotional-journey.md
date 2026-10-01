@@ -77,7 +77,7 @@ The page loads slowly. The video fails. The white space reads as emptiness rathe
 Gentle fascination, the desire to know more
 
 ### Trigger
-Collection names appear — Kalyani, Viara, Arya, Padma, Spandana. These are women's names, not descriptive labels. The reader wonders: who are they? What do these names mean? The taglines hint but do not explain fully.
+Collection names appear — Kalyani, Viara, Arya, Padma, YŪGEN. These are names, not descriptive labels. The reader wonders: who are they? What do these names mean? The taglines hint but do not explain fully.
 
 ### Pages
 Homepage (CollectionStage), Collections

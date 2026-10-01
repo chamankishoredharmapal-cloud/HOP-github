@@ -9,7 +9,7 @@ import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
 import { articles } from "@/data/journalArticles";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
-import { COLLECTION_WORLDS, getWorld, type CollectionWorld } from "@/data/collectionWorlds";
+import { COLLECTION_WORLDS, getWorld, getCollectionDisplayName, getCollectionRoomSlug, type CollectionWorld } from "@/data/collectionWorlds";
 import { fetchCollections } from "@/services/collectionService";
 import { fetchFeaturedCollection } from "@/services/collectionService";
 import { fetchFeaturedProduct, type StorefrontProduct } from "@/services/productService";
@@ -27,7 +27,7 @@ const WORLD_ORDER: CollectionWorld[] = [
   COLLECTION_WORLDS.viara,
   COLLECTION_WORLDS.arya,
   COLLECTION_WORLDS.padma,
-  COLLECTION_WORLDS.spandana,
+  COLLECTION_WORLDS.yugen,
 ];
 
 const WORLD_COPY: Record<string, { title: string; line: string; image?: string; alt?: string }> = {
@@ -55,11 +55,11 @@ const WORLD_COPY: Record<string, { title: string; line: string; image?: string; 
     image: fabricStill,
     alt: "Temporary visual placeholder for Padma collection photography — not a product image",
   },
-  spandana: {
+  yugen: {
     title: "Color with a pulse",
     line: "Confidence, worn.",
     image: organzaStill,
-    alt: "Temporary visual placeholder for Spandana collection photography — not a product image",
+    alt: "Temporary visual placeholder for YŪGEN collection photography — not a product image",
   },
 };
 
@@ -221,8 +221,10 @@ const CollectionFilmChapter = ({
   const copy = WORLD_COPY[world.slug];
   const poster = record?.hero_image_url || copy?.image || "";
   const film = record?.hero_video_url || COLLECTION_VIDEOS[world.slug];
-  const name = record?.name || world.name;
-  const slug = record?.slug || world.slug;
+  // Canonical identity: the visible title, chapter class, and link follow
+  // the world (YŪGEN), never the legacy database record (Spandana).
+  const name = getCollectionDisplayName(record?.slug, record?.name) || world.name;
+  const slug = getCollectionRoomSlug(record?.slug);
 
   return (
     <article

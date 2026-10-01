@@ -35,8 +35,8 @@ Every page in the HOP experience is designed with a specific emotional outcome a
 - **Secondary user goal:** Select a collection to explore.
 - **Required sections:**
   1. Hero Statement (Philosophy of our collections)
-  2. The Five Pillars (Kalyani, Viara, Arya, Padma, Spandana) - Large imagery, brief evocative copy.
-- **Section hierarchy:** Hero > Kalyani > Viara > Arya > Padma > Spandana
+  2. The Five Pillars (Kalyani, Viara, Arya, Padma, YŪGEN) - Large imagery, brief evocative copy.
+- **Section hierarchy:** Hero > Kalyani > Viara > Arya > Padma > YŪGEN
 - **Content hierarchy:** Collection name, one-sentence philosophy, atmospheric visual, gentle invitation to explore.
 - **Reading flow:** Linear scrolling through distinct emotional territories.
 - **Emotional outcome:** Wonder.

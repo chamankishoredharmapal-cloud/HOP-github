@@ -113,6 +113,16 @@
     font-weight: 400;
     font-optical-sizing: auto;
   }
+  /* YŪGEN voice: Cormorant Light renders U+016A as a single centered
+     glyph (Fraunces' Ū macron detaches at display sizes). Same house
+     serif palette, aired tracking, relaxed leading — no new dependency. */
+  .hop-yugen-title {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 300;
+    font-optical-sizing: auto;
+    letter-spacing: 0.14em;
+    line-height: 1.15;
+  }
   .font-reading {
     font-family: "Newsreader", Georgia, serif;
   }

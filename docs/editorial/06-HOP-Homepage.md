@@ -41,7 +41,7 @@ The eye must move slowly. We are training the reader to slow down.
 ### b. Collection Stage
 *   **Purpose:** Introduce the five collections as an invitation to explore.
 *   **Content:** Collection name, number (01–05), a single-line tagline, and a silent video for each.
-*   **Collections:** 01 Kalyani (Wedding Silk), 02 Viara (Reception Silk), 03 Arya (Working Silk), 04 Padma, 05 Spandana.
+*   **Collections:** 01 Kalyani (Wedding Silk), 02 Viara (Reception Silk), 03 Arya (Working Silk), 04 Padma, 05 YŪGEN.
 *   **Emotional Objective:** Curiosity, gentle fascination.
 *   **Copy Principles:** Names before explanations. Hint at the purpose, but do not explain it fully. No marketing jargon. 
 
@@ -96,7 +96,7 @@ This is the production copy ready for implementation, adhering to the [04-HOP-Co
 *   **02 Viara:** The reception silk. Lightness, movement, and quiet celebration.
 *   **03 Arya:** The working silk. Authority woven into every yard.
 *   **04 Padma:** The everyday silk. Softness for the spaces in between.
-*   **05 Spandana:** The signature silk. Our heritage, held in a single drape.
+*   **05 YŪGEN:** The signature silk. Our heritage, held in a single drape.
 *   **Rationale:** Positions the collections around the woman's life moments rather than fabric types. 
 
 **Craft Section**

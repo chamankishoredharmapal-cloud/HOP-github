@@ -121,7 +121,7 @@ We suggest, invite, and welcome. We never command, rush, or push. The CTA is a g
 ## 5. Collection Naming
 
 ### Why Collections are Named After Women
-*   Collections are named after women (Kalyani, Viara, Arya, Padma, Spandana) to honour the primary audience and the lineage of wearers. It brings the brand to a human scale.
+*   Collections are named after women (Kalyani, Viara, Arya, Padma) — with YŪGEN as the contemplative exception — to honour the primary audience and the lineage of wearers. It brings the brand to a human scale.
 
 ### Naming Rules for Future Collections
 *   Names must be Indian in origin.

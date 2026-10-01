@@ -19,7 +19,7 @@ Every interaction with House of Padmavati is designed to create a specific emoti
 
 ## 2. Curiosity Leads to Wonder
 
-**Principle:** Collection names (Kalyani, Viara, Arya, Padma, Spandana) are given without immediate explanation. The reader is invited to discover who these women are and what their collections mean.
+**Principle:** Collection names (Kalyani, Viara, Arya, Padma, YŪGEN) are given without immediate explanation. The reader is invited to discover who these women are and what their collections mean.
 
 **Design implications:**
 - Collection names are shown before their stories

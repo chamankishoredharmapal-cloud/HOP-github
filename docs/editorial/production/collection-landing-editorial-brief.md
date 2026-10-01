@@ -41,7 +41,7 @@
 - **Brand constraints:** No self-praise, no urgency, no marketing noise, no forbidden words, no exclamation marks, no rhetorical questions
 - **Vocabulary focus:** Quiet, rhythm, weave, voice, character, woman, curated, family, different, same
 - **Tone register:** Reflective (intro), Sensory (collection cards), Resolution (closing)
-- **Key risk:** Taglines must not use forbidden words. "Fashion Forward" in Spandana tagline conflicts with forbidden word "fashion-forward." Must be rewritten.
+- **Key risk:** Taglines must not use forbidden words. "Fashion Forward" in YŪGEN tagline conflicts with forbidden word "fashion-forward." Must be rewritten.
 
 ## Version
 - **Brief Version:** 1.0

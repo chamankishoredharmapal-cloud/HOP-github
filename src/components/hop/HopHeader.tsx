@@ -11,7 +11,7 @@ const collections = [
   { label: "Viara", href: "/collections/viara" },
   { label: "Arya", href: "/collections/arya" },
   { label: "Padma", href: "/collections/padma" },
-  { label: "Spandana", href: "/collections/spandana" },
+  { label: "YŪGEN", href: "/collections/yugen" },
 ];
 
 const editorial = [
