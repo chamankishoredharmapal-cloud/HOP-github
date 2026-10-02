@@ -25,6 +25,7 @@ export function getStudioEnvironment(): EnvironmentInfo {
   if (
     hostname === "houseofpadmavati.com" ||
     hostname === "www.houseofpadmavati.com" ||
+    hostname === "houseofpadmavati.pages.dev" ||
     hostname === "hop-production.pages.dev"
   ) {
     return {

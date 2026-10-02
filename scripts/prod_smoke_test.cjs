@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 
-const BASE_URL = process.env.PROD_URL || 'https://hop-production.pages.dev';
+const BASE_URL = process.env.PROD_URL || 'https://houseofpadmavati.pages.dev';
 
 const routesToTest = [
   { path: '/', expectedTitle: 'House of Padmavati' },
