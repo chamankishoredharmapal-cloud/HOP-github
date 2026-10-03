@@ -57,13 +57,23 @@ function mapRow(r: StudioActivityRow): StudioActivity {
 
 export const activityService = {
   async log(params: Omit<StudioActivity, "id" | "createdAt">): Promise<StudioActivity> {
+    let userEmail = params.userEmail;
+    if (!userEmail) {
+      try {
+        const { data } = await supabase.auth.getSession();
+        userEmail = data.session?.user?.email ?? undefined;
+      } catch {
+        // session lookup failed
+      }
+    }
+
     const entry: StudioActivity = {
       id: uuidv4(),
       action: params.action,
       entityType: params.entityType,
       entityId: params.entityId,
       entityName: params.entityName,
-      userEmail: params.userEmail,
+      userEmail,
       details: params.details || {},
       createdAt: new Date().toISOString(),
     };
@@ -73,7 +83,7 @@ export const activityService = {
     saveLocalActivities(local);
 
     try {
-      await supabase.from("studio_activities").insert({
+      const { error } = await supabase.from("studio_activities").insert({
         id: entry.id,
         action: entry.action,
         entity_type: entry.entityType,
@@ -83,8 +93,11 @@ export const activityService = {
         details: entry.details,
         created_at: entry.createdAt,
       });
-    } catch {
-      // Graceful fallback to local trail if database table does not yet exist
+      if (error) {
+        console.warn("Failed to insert studio_activity:", error.message);
+      }
+    } catch (err) {
+      console.warn("Exception inserting studio_activity:", err);
     }
 
     return entry;
@@ -99,10 +112,13 @@ export const activityService = {
         .limit(limit);
 
       if (!error && data && data.length > 0) {
-        return data.map(mapRow);
+        return (data as unknown as StudioActivityRow[]).map(mapRow);
       }
-    } catch {
-      // Fallback to local
+      if (error) {
+        console.warn("Failed to fetch studio_activities from database:", error.message);
+      }
+    } catch (err) {
+      console.warn("Exception fetching studio_activities:", err);
     }
 
     const local = getLocalActivities();

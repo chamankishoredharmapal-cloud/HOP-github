@@ -1,104 +1,151 @@
-import { articles as initialArticles, type JournalArticle } from "@/data/journalArticles";
+import { supabase } from "@/integrations/supabase/client";
+import { type JournalArticle } from "@/data/journalArticles";
 import { activityService } from "./activityService";
 
 export interface StudioJournalArticle extends JournalArticle {
   id: string;
   status: "draft" | "published" | "archived";
   content?: string;
+  published_at?: string;
   created_at: string;
   updated_at: string;
 }
 
-const STORAGE_KEY = "hop_studio_journal_articles";
-
-function getStoredArticles(): StudioJournalArticle[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {
-    // Ignore error
-  }
-
-  // Seed with initial articles
-  const seeded: StudioJournalArticle[] = initialArticles.map((a, idx) => ({
-    id: `article-${idx + 1}`,
-    slug: a.slug,
-    title: a.title,
-    tag: a.tag,
-    img: a.img,
-    assetPath: a.assetPath,
-    dek: a.dek,
-    status: "published",
-    content: `${a.dek}\n\nField notes recorded from the looms and weavers of House of Padmavati.`,
-    created_at: new Date(Date.now() - (idx + 1) * 86400000 * 5).toISOString(),
-    updated_at: new Date(Date.now() - (idx + 1) * 86400000 * 5).toISOString(),
-  }));
-
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
-  } catch {
-    // Ignore error
-  }
-  return seeded;
+interface JournalArticleRow {
+  id: string;
+  slug: string;
+  title: string;
+  tag: string;
+  img: string;
+  asset_path: string | null;
+  dek: string;
+  content: string | null;
+  status: string;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
-function saveStoredArticles(articles: StudioJournalArticle[]): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
-  } catch {
-    // Ignore storage quota
-  }
+function mapRow(r: JournalArticleRow): StudioJournalArticle {
+  return {
+    id: r.id,
+    slug: r.slug,
+    title: r.title,
+    tag: r.tag,
+    img: r.img,
+    assetPath: r.asset_path ?? undefined,
+    dek: r.dek,
+    content: r.content ?? undefined,
+    status: (r.status as "draft" | "published" | "archived") || "published",
+    published_at: r.published_at ?? undefined,
+    created_at: r.created_at,
+    updated_at: r.updated_at,
+  };
 }
 
 export const journalService = {
   async getAll(): Promise<StudioJournalArticle[]> {
-    return getStoredArticles();
+    const { data, error } = await supabase
+      .from("journal_articles")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Failed to fetch journal articles from Supabase:", error);
+      throw error;
+    }
+
+    return (data || []).map(mapRow);
   },
 
   async getById(id: string): Promise<StudioJournalArticle | null> {
-    const list = getStoredArticles();
-    return list.find((a) => a.id === id || a.slug === id) ?? null;
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+    let query = supabase.from("journal_articles").select("*");
+    if (isUuid) {
+      query = query.eq("id", id);
+    } else {
+      query = query.eq("slug", id);
+    }
+
+    const { data, error } = await query.maybeSingle();
+    if (error) {
+      console.error("Failed to fetch journal article by id:", error);
+      throw error;
+    }
+    return data ? mapRow(data) : null;
   },
 
   async create(
-    article: Omit<StudioJournalArticle, "id" | "created_at" | "updated_at">,
+    article: Omit<StudioJournalArticle, "id" | "created_at" | "updated_at">
   ): Promise<StudioJournalArticle> {
-    const list = getStoredArticles();
-    const newArticle: StudioJournalArticle = {
-      ...article,
-      id: `article-${Date.now()}`,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-    list.unshift(newArticle);
-    saveStoredArticles(list);
+    const { data, error } = await supabase
+      .from("journal_articles")
+      .insert({
+        slug: article.slug,
+        title: article.title,
+        tag: article.tag,
+        img: article.img,
+        asset_path: article.assetPath ?? null,
+        dek: article.dek,
+        content: article.content ?? null,
+        status: article.status,
+        published_at: article.status === "published" ? new Date().toISOString() : null,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Failed to create journal article:", error);
+      throw error;
+    }
+
+    const created = mapRow(data);
 
     await activityService.log({
       action: "journal_created",
       entityType: "journal",
-      entityId: newArticle.id,
-      entityName: newArticle.title,
-      details: { slug: newArticle.slug, status: newArticle.status },
+      entityId: created.id,
+      entityName: created.title,
+      details: { slug: created.slug, status: created.status },
     });
 
-    return newArticle;
+    return created;
   },
 
   async update(
     id: string,
-    updates: Partial<StudioJournalArticle>,
+    updates: Partial<StudioJournalArticle>
   ): Promise<StudioJournalArticle> {
-    const list = getStoredArticles();
-    const idx = list.findIndex((a) => a.id === id);
-    if (idx === -1) throw new Error("Article not found");
-
-    const updated: StudioJournalArticle = {
-      ...list[idx],
-      ...updates,
+    const updatePayload: Record<string, unknown> = {
       updated_at: new Date().toISOString(),
     };
-    list[idx] = updated;
-    saveStoredArticles(list);
+    if (updates.slug !== undefined) updatePayload.slug = updates.slug;
+    if (updates.title !== undefined) updatePayload.title = updates.title;
+    if (updates.tag !== undefined) updatePayload.tag = updates.tag;
+    if (updates.img !== undefined) updatePayload.img = updates.img;
+    if (updates.assetPath !== undefined) updatePayload.asset_path = updates.assetPath;
+    if (updates.dek !== undefined) updatePayload.dek = updates.dek;
+    if (updates.content !== undefined) updatePayload.content = updates.content;
+    if (updates.status !== undefined) {
+      updatePayload.status = updates.status;
+      if (updates.status === "published") {
+        updatePayload.published_at = new Date().toISOString();
+      }
+    }
+
+    const { data, error } = await supabase
+      .from("journal_articles")
+      .update(updatePayload)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Failed to update journal article:", error);
+      throw error;
+    }
+
+    const updated = mapRow(data);
 
     await activityService.log({
       action: "journal_updated",
@@ -112,17 +159,24 @@ export const journalService = {
   },
 
   async delete(id: string): Promise<void> {
-    const list = getStoredArticles();
-    const target = list.find((a) => a.id === id);
-    const filtered = list.filter((a) => a.id !== id);
-    saveStoredArticles(filtered);
+    const existing = await journalService.getById(id);
 
-    if (target) {
+    const { error } = await supabase
+      .from("journal_articles")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Failed to delete journal article:", error);
+      throw error;
+    }
+
+    if (existing) {
       await activityService.log({
         action: "journal_deleted",
         entityType: "journal",
         entityId: id,
-        entityName: target.title,
+        entityName: existing.title,
       });
     }
   },

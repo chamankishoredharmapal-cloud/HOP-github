@@ -4,10 +4,11 @@ import { ArrowRight } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useMetadata } from "@/hooks/useMetadata";
-import { articles } from "@/data/journalArticles";
+import { useJournalArticles } from "@/hooks/useJournal";
 
 const Journal = () => {
-  usePrerenderReady(true);
+  const { data: articles = [], isLoading } = useJournalArticles();
+  usePrerenderReady(!isLoading);
   useMetadata({
     title: "The Journal — House of Padmavati",
     description: "Field notes and reflections from the House of Padmavati.",

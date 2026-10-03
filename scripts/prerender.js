@@ -121,6 +121,30 @@ async function fetchRoutes() {
     } catch (e) {
       console.warn(`Collection fetch failed (timeout or network): ${e.message}, using static routes only`);
     }
+
+    // Fetch dynamic journal articles with timeout
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const jRes = await fetch(`${supabaseUrl}/rest/v1/journal_articles?select=slug&status=eq.published`, { 
+        headers,
+        signal: controller.signal 
+      });
+      clearTimeout(timeoutId);
+      
+      if (jRes.ok) {
+        const jArticles = await jRes.json();
+        for (const a of jArticles) {
+          const r = `/journal/${a.slug}`;
+          if (!routes.includes(r)) {
+            routes.push(r);
+          }
+        }
+        console.log(`Found ${jArticles.length} published journal articles`);
+      }
+    } catch (e) {
+      console.warn(`Journal articles fetch failed (timeout or network): ${e.message}`);
+    }
   } else {
     console.warn("Supabase credentials not found, using static routes only");
   }
@@ -186,11 +210,20 @@ async function run() {
       await page.goto(`http://localhost:8080${route}`, { waitUntil: 'domcontentloaded' });
       
       // Wait for the explicit deterministic signal from our React hook
-      await page.waitForFunction(
-        () => window.__PRERENDER_STATUS === "ready" || (document.querySelector("#root")?.childElementCount ?? 0) > 0,
-        undefined,
-        { timeout: 15000 },
-      );
+      try {
+        await page.waitForFunction(
+          () => window.__PRERENDER_STATUS === "ready",
+          undefined,
+          { timeout: 10000 },
+        );
+      } catch (err) {
+        // Fallback: wait for #root content if page did not report ready in time
+        await page.waitForFunction(
+          () => (document.querySelector("#root")?.childElementCount ?? 0) > 0,
+          undefined,
+          { timeout: 5000 },
+        ).catch(() => {});
+      }
 
       // Extract React Query State safely
       const rqState = await page.evaluate(() => {

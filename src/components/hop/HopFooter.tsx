@@ -2,8 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Monogram from "./Monogram";
 import { supabase } from "@/integrations/supabase/client";
+import { usePublicSettings } from "@/hooks/usePublicSettings";
 
 const HopFooter = () => {
+  const { data: storeSettings } = usePublicSettings();
+  const instagramUrl = storeSettings?.contact?.instagram_url || "https://instagram.com/houseofpadmavati";
+  const pinterestUrl = storeSettings?.contact?.pinterest_url || "https://pinterest.com/houseofpadmavati";
+
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -146,8 +151,10 @@ const HopFooter = () => {
           <div>
             <h2 className="font-serif font-light text-base text-jasmine mb-4 tracking-wide">Whisper</h2>
             <ul className="space-y-2.5">
-              <li><a href="https://instagram.com/houseofpadmavati" target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Instagram</a></li>
-              <li><a href="https://pinterest.com/houseofpadmavati" target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Pinterest</a></li>
+              <li><a href={instagramUrl} target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Instagram</a></li>
+              {pinterestUrl ? (
+                <li><a href={pinterestUrl} target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Pinterest</a></li>
+              ) : null}
             </ul>
           </div>
         </div>

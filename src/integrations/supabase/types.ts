@@ -576,6 +576,84 @@ export type Database = {
         }
         Relationships: []
       }
+      journal_articles: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          tag: string
+          img: string
+          asset_path: string | null
+          dek: string
+          content: string | null
+          status: string
+          published_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          tag?: string
+          img: string
+          asset_path?: string | null
+          dek: string
+          content?: string | null
+          status?: string
+          published_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          tag?: string
+          img?: string
+          asset_path?: string | null
+          dek?: string
+          content?: string | null
+          status?: string
+          published_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      studio_activities: {
+        Row: {
+          id: string
+          action: string
+          entity_type: string
+          entity_id: string | null
+          entity_name: string
+          user_email: string | null
+          details: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          action: string
+          entity_type: string
+          entity_id?: string | null
+          entity_name: string
+          user_email?: string | null
+          details?: Json
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          action?: string
+          entity_type?: string
+          entity_id?: string | null
+          entity_name?: string
+          user_email?: string | null
+          details?: Json
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -608,6 +686,10 @@ export type Database = {
           p_order_id: string
           p_reason?: string
         }
+        Returns: Json
+      }
+      get_public_store_settings: {
+        Args: Record<PropertyKey, never>
         Returns: Json
       }
     }
