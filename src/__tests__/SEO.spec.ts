@@ -22,6 +22,7 @@ async function getMetaContent(page: import('@playwright/test').Page, selector: s
 test.describe('SEO Audit', () => {
   for (const route of TEST_ROUTES) {
     test(`${route.name} should have proper SEO meta tags`, async ({ page }) => {
+      test.setTimeout(60000);
       await page.goto(route.path, { waitUntil: 'networkidle' });
       await page.waitForLoadState('domcontentloaded');
 

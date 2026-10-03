@@ -29,11 +29,8 @@ DECLARE
   v_new_stock      INTEGER;
 BEGIN
   -- Strict authorization check:
-  -- Allowed for:
-  --   1) Direct DB / superuser (postgres)
-  --   2) Service role (edge functions, webhooks)
-  --   3) Authenticated admins (HOP Studio administrators via public.is_admin())
-  IF NOT (current_user = 'postgres' OR auth.role() = 'service_role' OR public.is_admin()) THEN
+  -- Block non-admin authenticated users and anonymous users
+  IF (auth.role() = 'authenticated' AND NOT public.is_admin()) OR auth.role() = 'anon' THEN
     RAISE EXCEPTION 'Access denied. Administrator privileges required.'
       USING ERRCODE = '42501';
   END IF;
