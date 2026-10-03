@@ -26,6 +26,7 @@ import {
   getSupabaseOptimizedUrl,
   getSupabaseSrcSet,
 } from "@/lib/supabaseImage";
+import { formatPaise } from "@/lib/formatPrice";
 
 const sortOptions = [
   { value: "newest", label: "Newest first" },
@@ -36,9 +37,7 @@ const sortOptions = [
 
 type SortValue = (typeof sortOptions)[number]["value"];
 
-function formatPrice(paise: number): string {
-  return `₹ ${(paise / 100).toLocaleString("en-IN")}`;
-}
+const formatPrice = formatPaise;
 
 const Category = () => {
   const { slug = "all" } = useParams();
@@ -158,7 +157,7 @@ const Category = () => {
   return (
     <PageLayout>
       <main className="hop-page">
-        <div className="w-full aspect-[2/1] overflow-hidden bg-jasmine-deep">
+        <div className="w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9] overflow-hidden bg-jasmine-deep">
           {collectionLoading ? (
             <div className="w-full h-full bg-jasmine-deep animate-pulse" />
           ) : (collection?.hero_video_url || COLLECTION_VIDEOS[slug]) ? (
@@ -166,7 +165,7 @@ const Category = () => {
                 src={collection?.hero_video_url || COLLECTION_VIDEOS[slug]}
                 poster={collection?.hero_image_url || ""}
                 alt={`${displayName} — collection film`}
-                className="aspect-[2/1]"
+                className="aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9]"
                 preload="metadata"
               />
           ) : collection?.hero_image_url ? (
@@ -240,7 +239,7 @@ const Category = () => {
                 id="hop-sort"
                 value={sort}
                 onChange={(e) => setSort(e.target.value as SortValue)}
-                className="text-sm text-ink bg-transparent border border-ink/20 rounded-sm pl-3 pr-9 py-2 outline-none cursor-pointer appearance-none font-light hover:border-ink/40 transition-colors"
+                className="text-sm text-ink bg-transparent border border-ink/20 rounded-sm pl-3 pr-9 py-2 min-h-[44px] outline-none cursor-pointer appearance-none font-light hover:border-ink/40 transition-colors"
               >
                 {sortOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -319,7 +318,7 @@ const Category = () => {
                       </Link>
                       <button
                         onClick={(e) => { e.preventDefault(); handleToggleWishlist(p.id, p.name, p.selling_price, heroImage); }}
-                        className="absolute top-3 right-3 w-9 h-9 rounded-full bg-jasmine/80 flex items-center justify-center hover:bg-jasmine transition-colors"
+                        className="absolute top-2.5 right-2.5 h-11 w-11 rounded-full bg-jasmine/80 flex items-center justify-center hover:bg-jasmine active:scale-95 transition-all"
                         aria-label={isWishlisted(`product-${p.id}`) ? "Remove from wishlist" : "Save to wishlist"}
                       >
                         <Heart

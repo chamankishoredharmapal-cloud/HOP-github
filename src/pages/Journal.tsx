@@ -77,7 +77,7 @@ const Journal = () => {
                   <Link
                     key={article.slug}
                     to={`/journal/${article.slug}`}
-                    className="group grid grid-cols-[64px_1fr] sm:grid-cols-[120px_1fr_auto] items-center gap-5 sm:gap-8 py-6"
+                    className="group grid grid-cols-[80px_1fr] sm:grid-cols-[120px_1fr_auto] items-center gap-5 sm:gap-8 py-6"
                   >
                     <div className="aspect-square overflow-hidden rounded-sm bg-jasmine-deep">
                       {article.assetPath ? (
@@ -97,7 +97,7 @@ const Journal = () => {
                       <h3 className="mt-1.5 font-editorial text-xl sm:text-2xl text-ink leading-snug text-balance">
                         {article.title}
                       </h3>
-                      <p className="mt-1 text-sm text-ink-soft font-light leading-relaxed hidden sm:block">
+                      <p className="mt-1 text-[0.85rem] sm:text-sm text-ink-soft font-light leading-relaxed line-clamp-2">
                         {article.dek}
                       </p>
                     </div>

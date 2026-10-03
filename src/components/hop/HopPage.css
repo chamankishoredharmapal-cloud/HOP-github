@@ -259,7 +259,8 @@
   background: hsl(var(--rasa-cream-bright));
   padding: 0.75rem 0.85rem;
   color: hsl(var(--rasa-lac));
-  font-size: 0.9rem;
+  /* 16px minimum: smaller sizes trigger iOS Safari auto-zoom on focus. */
+  font-size: 1rem;
   transition: border-color 300ms ease, box-shadow 300ms ease;
 }
 
@@ -444,7 +445,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
 .hop-page__side-nav {
   width: 14rem;
   flex-shrink: 0;
@@ -665,7 +665,8 @@
   }
 }
 
-.hop-reveal {
+@media (prefers-reduced-motion: reduce) {
+  .hop-reveal {
     animation: none;
   }
 
@@ -674,5 +675,46 @@
   .hop-cta-secondary,
   .hop-page__state-action {
     transition: none;
+  }
+}
+
+/* Touch feedback parity: hover-only affordances feel dead on touch.
+   These :active twins apply only where hover is unavailable. */
+@media (hover: none) {
+  .hop-cta-primary:active {
+    border-color: hsl(var(--rasa-mulberry));
+    background: hsl(var(--rasa-mulberry));
+  }
+
+  .hop-cta-secondary:active,
+  .hop-page__state-action:active,
+  .hop-product-card__action:active {
+    color: hsl(var(--rasa-rose));
+  }
+
+  .hop-product-card:active .hop-product-card__image img {
+    filter: saturate(1.05);
+    transform: scale(1.035);
+  }
+
+  .hop-page__side-nav-link:active,
+  .hop-account-nav-link:active {
+    color: hsl(var(--rasa-lac));
+  }
+}
+
+/* Short-landscape compaction (rotated phones): portrait section rhythm
+   would bury content, so vertical padding collapses while calm is kept. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hop-page__section {
+    padding-block: 3rem;
+  }
+
+  .hop-page__title {
+    font-size: clamp(2.5rem, 9vw, 4rem);
+  }
+
+  .hop-page__title--small {
+    font-size: clamp(2.2rem, 8vw, 3.5rem);
   }
 }

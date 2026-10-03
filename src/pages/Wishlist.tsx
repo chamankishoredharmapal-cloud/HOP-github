@@ -92,7 +92,7 @@ export default function Wishlist() {
                 <div className="absolute top-3 right-3">
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-jasmine/80 transition-colors hover:bg-jasmine"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-jasmine/80 transition-colors hover:bg-jasmine active:scale-95"
                     aria-label={`Remove ${item.name} from wishlist`}
                   >
                     <Trash2 className="h-4 w-4 text-ink-soft" />

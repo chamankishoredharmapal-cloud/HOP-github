@@ -13,23 +13,23 @@ export function StudioHeader({ title }: StudioHeaderProps) {
   const { user } = useAuth();
 
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b border-border/60 bg-background/95 backdrop-blur-sm px-6">
-      <div className="flex items-center gap-3">
-        <SidebarTrigger className="text-foreground hover:bg-muted" />
+    <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-border/60 bg-background/95 backdrop-blur-sm px-4 sm:px-6">
+      <div className="flex items-center gap-3 min-w-0">
+        <SidebarTrigger className="text-foreground hover:bg-muted min-h-[44px] min-w-[44px]" />
         <Separator orientation="vertical" className="h-5" />
-        <h2 className="font-serif text-lg font-light tracking-tight text-foreground">
+        <h2 className="font-serif text-lg font-light tracking-tight text-foreground truncate">
           {title}
         </h2>
       </div>
 
-      <div className="flex items-center gap-3">
-        {/* Environment Badge */}
+      <div className="flex items-center gap-3 shrink-0">
+        {/* Environment Badge — label hides under 400px, status dot remains */}
         <span
           className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium tracking-wider uppercase border ${env.badgeClass}`}
           title={`Active Environment: ${env.name}`}
         >
           <span className="h-1.5 w-1.5 rounded-full bg-current animate-pulse" />
-          {env.badgeLabel}
+          <span className="max-[400px]:hidden">{env.badgeLabel}</span>
         </span>
 
         {user?.email && (

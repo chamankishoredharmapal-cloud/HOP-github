@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowRight, Heart } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import PageLayout from "@/components/layout/PageLayout";
 import { ProductGallery } from "@/components/hop/ProductGallery";
+import { StickyCta } from "@/components/hop/StickyCta";
+import { formatPaise } from "@/lib/formatPrice";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { toast } from "sonner";
@@ -20,14 +22,13 @@ import { fetchProductById, fetchRelatedProducts } from "@/services/productServic
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 
-function formatPrice(paise: number): string {
-  return `₹ ${(paise / 100).toLocaleString("en-IN")}`;
-}
+const formatPrice = formatPaise;
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const { addItem } = useCart();
   const { toggleItem, isWishlisted } = useWishlist();
+  const inlineCtaRef = useRef<HTMLDivElement>(null);
 
   const { data: product, isLoading } = useQuery({
     queryKey: ["storefront", "product", productId],
@@ -239,12 +240,12 @@ const ProductDetail = () => {
               </p>
             </div>
 
-            <div className="flex items-center gap-4 pt-2">
+            <div ref={inlineCtaRef} className="flex items-center gap-4 pt-2">
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock <= 0}
                 aria-disabled={product.stock <= 0}
-                className="flex-1 bg-ink text-jasmine px-7 py-4 text-[0.65rem] tracking-[0.32em] uppercase rounded-full hover:bg-ink-soft transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 min-h-[48px] bg-ink text-jasmine px-7 py-4 text-[0.65rem] tracking-[0.32em] uppercase rounded-full hover:bg-ink-soft active:bg-ink-soft transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {product.stock <= 0 ? "Unavailable" : "Add to bag"}
               </button>
@@ -326,7 +327,22 @@ const ProductDetail = () => {
             </div>
           </section>
         )}
+        {/* Spacer so the mobile sticky bar never covers trailing content. */}
+        <div className="h-20 lg:hidden" aria-hidden="true" />
       </main>
+      <StickyCta inlineRef={inlineCtaRef} label="Add this drape to your bag">
+        <div className="min-w-0">
+          <p className="text-[0.6rem] tracking-[0.25em] uppercase text-ink-soft truncate">{product.name}</p>
+          <p className="text-base text-ink tnum">{formatPrice(product.selling_price)}</p>
+        </div>
+        <button
+          onClick={handleAddToCart}
+          disabled={product.stock <= 0}
+          className="shrink-0 min-h-[48px] bg-ink text-jasmine px-6 text-[0.65rem] tracking-[0.25em] uppercase rounded-full hover:bg-ink-soft active:bg-ink-soft transition-colors disabled:opacity-50"
+        >
+          {product.stock <= 0 ? "Unavailable" : "Add to bag"}
+        </button>
+      </StickyCta>
     </PageLayout>
   );
 };

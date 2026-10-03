@@ -37,6 +37,9 @@ export const ProductGallery = React.memo(function ProductGallery({
   const [canScrollNext, setCanScrollNext] = React.useState(false);
   const [zoomLevel, setZoomLevel] = React.useState(1);
   const [isZoomed, setIsZoomed] = React.useState(false);
+  // Zoom focal point: tapping a detail zooms *into that point* instead of the
+  // frame centre, so weave/border inspection lands where the buyer pointed.
+  const [zoomOrigin, setZoomOrigin] = React.useState("center");
 
   const aspectRatioClass = {
     "4/5": "aspect-[4/5]",
@@ -89,7 +92,8 @@ export const ProductGallery = React.memo(function ProductGallery({
     emblaApi?.scrollNext();
   }, [emblaApi]);
 
-  const handleZoomIn = () => {
+  const handleZoomIn = (origin?: string) => {
+    if (origin) setZoomOrigin(origin);
     setZoomLevel(2);
     setIsZoomed(true);
   };
@@ -97,6 +101,7 @@ export const ProductGallery = React.memo(function ProductGallery({
   const handleZoomOut = () => {
     setZoomLevel(1);
     setIsZoomed(false);
+    setZoomOrigin("center");
   };
 
   const galleryRef = React.useRef<HTMLDivElement>(null);
@@ -127,8 +132,16 @@ export const ProductGallery = React.memo(function ProductGallery({
   const handleZoomToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!enableZoom) return;
-    if (isZoomed) handleZoomOut();
-    else handleZoomIn();
+    if (isZoomed) {
+      handleZoomOut();
+      return;
+    }
+    // Focal zoom: derive the tap point as a percentage of the frame so the
+    // 2x crop centres on the tapped detail rather than the frame centre.
+    const frame = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = frame.width > 0 ? ((e.clientX - frame.left) / frame.width) * 100 : 50;
+    const y = frame.height > 0 ? ((e.clientY - frame.top) / frame.height) * 100 : 50;
+    handleZoomIn(`${x.toFixed(1)}% ${y.toFixed(1)}%`);
   };
 
   return (
@@ -140,7 +153,7 @@ export const ProductGallery = React.memo(function ProductGallery({
             const srcSet = getSupabaseSrcSet(image.url, [480, 800, 1200]);
             return (
               <div key={index} className="min-w-0 shrink-0 grow-0 basis-full">
-                <div className={`relative ${aspectRatioClass} w-full`} style={{ transform: isZoomed ? `scale(${zoomLevel})` : "scale(1)", transformOrigin: "center" }}>
+                <div className={`relative ${aspectRatioClass} w-full`} style={{ transform: isZoomed ? `scale(${zoomLevel})` : "scale(1)", transformOrigin: zoomOrigin }}>
                   <img
                     src={optimizedSrc}
                     srcSet={srcSet || undefined}
@@ -148,7 +161,7 @@ export const ProductGallery = React.memo(function ProductGallery({
                     alt={getImageAlt(image, index)}
                     className={`absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-out ${enableZoom ? (isZoomed ? "cursor-zoom-out" : "cursor-zoom-in") : ""}`}
                     loading={index === 0 ? "eager" : "lazy"}
-                    decoding={index === 0 ? "sync" : "async"}
+                    decoding="async"
                     // lowercase fetchpriority: React 18 warns on camelCase and drops it (see OptimizedImage).
                     {...(index === 0 ? { fetchpriority: "high" } : {})}
                     // Pointer shortcut: the overlay zoom button remains the keyboard-operable control.
@@ -193,6 +206,16 @@ export const ProductGallery = React.memo(function ProductGallery({
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
+      )}
+
+      {images.length > 1 && (
+        <p
+          role="status"
+          aria-live="polite"
+          className="absolute top-4 left-4 rounded-full bg-ink/60 px-3 py-1.5 text-[0.65rem] tracking-[0.18em] text-jasmine tnum backdrop-blur-sm"
+        >
+          {selectedIndex + 1} / {images.length}
+        </p>
       )}
 
       <div className="mt-4 grid grid-cols-4 gap-3">

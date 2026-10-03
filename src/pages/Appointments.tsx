@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata } from "@/hooks/useMetadata";
 // House photography only: the former Unsplash stock URL returned 404.
@@ -25,8 +26,8 @@ const Appointments = () => {
     <PageLayout>
        <main className="hop-page min-h-screen bg-paper-ivory">
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-80px)]">
-          {/* Left: Imagery */}
-          <section className="relative h-[40vh] lg:h-auto order-2 lg:order-1">
+          {/* Left: Imagery — context before action on mobile */}
+          <section className="relative h-[32svh] lg:h-auto order-1">
             <img
               src={fabricImg}
               alt="Folded silks in the atelier"
@@ -35,7 +36,7 @@ const Appointments = () => {
           </section>
 
           {/* Right: The Form */}
-          <section className="order-1 lg:order-2 flex flex-col justify-center px-6 py-section lg:p-section bg-paper-ivory">
+          <section className="order-2 flex flex-col justify-center px-6 py-section lg:p-section bg-paper-ivory">
             <div className="max-w-md w-full mx-auto space-y-12">
               <div className="space-y-6">
                  <h1 className="hop-page__title hop-page__title--small">Appointments.</h1>
@@ -61,7 +62,8 @@ const Appointments = () => {
                       type="text"
                       id="name"
                       required
-                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/30"
+                      autoComplete="name"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 min-h-[44px] text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/30"
                       placeholder="Your name"
                     />
                   </div>
@@ -74,7 +76,8 @@ const Appointments = () => {
                       type="email"
                       id="email"
                       required
-                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/30"
+                      autoComplete="email"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 min-h-[44px] text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/30"
                       placeholder="Your email address"
                     />
                   </div>
@@ -83,27 +86,33 @@ const Appointments = () => {
                     <label htmlFor="type" className="block text-xs uppercase tracking-widest text-ink-soft">
                       Visit type
                     </label>
-                    <select
-                      id="type"
-                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors appearance-none rounded-none"
-                    >
-                      <option value="bridal">Bridal Consultation</option>
-                      <option value="custom">Custom Weaving Query</option>
-                      <option value="viewing">General Viewing</option>
-                    </select>
+                    <div className="relative">
+                      <select
+                        id="type"
+                        className="w-full bg-transparent border-b border-signature-crimson/30 py-3 pr-8 min-h-[44px] text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors appearance-none rounded-none"
+                      >
+                        <option value="bridal">Bridal Consultation</option>
+                        <option value="custom">Custom Weaving Query</option>
+                        <option value="viewing">General Viewing</option>
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-ink-soft pointer-events-none absolute right-1 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                    </div>
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="location" className="block text-xs uppercase tracking-widest text-ink-soft">
                       Location
                     </label>
-                    <select
-                      id="location"
-                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors appearance-none rounded-none"
-                    >
-                      <option value="atelier">Pondicherry Atelier</option>
-                      <option value="virtual">Virtual</option>
-                    </select>
+                    <div className="relative">
+                      <select
+                        id="location"
+                        className="w-full bg-transparent border-b border-signature-crimson/30 py-3 pr-8 min-h-[44px] text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors appearance-none rounded-none"
+                      >
+                        <option value="atelier">Pondicherry Atelier</option>
+                        <option value="virtual">Virtual</option>
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-ink-soft pointer-events-none absolute right-1 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                    </div>
                   </div>
 
                   <div className="space-y-2">
@@ -113,7 +122,7 @@ const Appointments = () => {
                     <textarea
                       id="notes"
                       rows={3}
-                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-ink focus:outline-none focus:border-signature-crimson transition-colors resize-none placeholder:text-ink-soft/30"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors resize-none placeholder:text-ink-soft/30"
                       placeholder="Optional notes"
                     />
                   </div>

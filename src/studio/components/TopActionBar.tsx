@@ -34,7 +34,7 @@ export function TopActionBar({
   const navigate = useNavigate();
 
   return (
-    <div className="sticky top-0 z-30 flex items-center justify-between border-b border-border/60 bg-background/95 backdrop-blur-sm px-6 py-3 -mx-6 -mt-6 mb-6">
+    <div className="sticky top-0 z-30 flex items-center justify-between gap-2 border-b border-border/60 bg-background/95 backdrop-blur-sm px-4 sm:px-6 py-3 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 mb-6">
       <div className="flex items-center gap-4">
         <button
           onClick={() => navigate("/studio/products")}

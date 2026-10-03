@@ -124,7 +124,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] sm:pt-[20vh]"
+      className="fixed inset-0 z-[100] flex items-start justify-center pt-[15dvh] sm:pt-[20dvh]"
       role="dialog"
       aria-modal="true"
       aria-label="Search products and collections"
@@ -143,12 +143,12 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search sarees by name, colour, weave, collection..."
-            className="border-0 bg-transparent px-0 text-base text-ink placeholder:text-ink-soft/40 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="border-0 bg-transparent px-0 text-base text-ink placeholder:text-ink-soft/40 focus-visible:ring-1 focus-visible:ring-rasa-gold focus-visible:ring-offset-0 rounded-sm"
             aria-label="Search"
           />
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-jasmine-deep transition-colors"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-jasmine-deep transition-colors shrink-0"
             aria-label="Close search"
           >
             <X className="h-5 w-5 text-ink-soft" />

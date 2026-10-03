@@ -65,7 +65,7 @@ const HopFooter = () => {
             <div className="space-y-2">
               <p className="text-sm font-light text-destructive/90 max-w-sm" role="alert">{errorMessage}</p>
               <form
-                className="flex max-w-sm border-b border-jasmine/40 pb-2"
+                className="flex max-w-sm border-b border-jasmine/40 pb-2 min-h-[48px] items-center"
                 onSubmit={handleSubscribe}
               >
                 <label htmlFor="footer-email" className="sr-only">Email address</label>
@@ -73,21 +73,22 @@ const HopFooter = () => {
                   id="footer-email"
                   type="email"
                   required
+                  autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email, gently kept"
-                  className="flex-1 bg-transparent text-sm text-jasmine placeholder:text-jasmine/50 outline-none font-light"
+                  className="flex-1 bg-transparent text-base text-jasmine placeholder:text-jasmine/50 outline-none font-light"
                   aria-label="Email"
                   disabled={status === "loading"}
                 />
-                <button type="submit" disabled={status === "loading"} className="text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4 opacity-50">
+                <button type="submit" disabled={status === "loading"} className="min-h-[44px] flex items-center text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4">
                   {status === "loading" ? "Subscribing…" : "Try again"}
                 </button>
               </form>
             </div>
           ) : (
             <form
-              className="flex max-w-sm border-b border-jasmine/40 pb-2"
+              className="flex max-w-sm border-b border-jasmine/40 pb-2 min-h-[48px] items-center"
               onSubmit={handleSubscribe}
             >
               <label htmlFor="footer-email" className="sr-only">Email address</label>
@@ -95,26 +96,27 @@ const HopFooter = () => {
                 id="footer-email"
                 type="email"
                 required
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email, gently kept"
-                className="flex-1 bg-transparent text-sm text-jasmine placeholder:text-jasmine/50 outline-none font-light"
+                className="flex-1 bg-transparent text-base text-jasmine placeholder:text-jasmine/50 outline-none font-light"
                 aria-label="Email"
                 disabled={status === "loading"}
               />
-              <button type="submit" disabled={status === "loading"} className="text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4 opacity-50">
+              <button type="submit" disabled={status === "loading"} className="min-h-[44px] flex items-center text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4">
                 {status === "loading" ? "Subscribing…" : "Join"}
               </button>
             </form>
           )}
           {/* Consent checkbox */}
-          <label className="flex items-start gap-2 cursor-pointer text-xs text-jasmine/70">
+          <label className="flex items-start gap-2.5 cursor-pointer text-xs text-jasmine/70 min-h-[44px]">
             <input
               type="checkbox"
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
               required
-              className="mt-0.5 w-3.5 h-3.5 rounded border-jasmine/40 accent-ink shrink-0"
+              className="mt-0.5 w-5 h-5 rounded border-jasmine/40 accent-ink shrink-0"
             />
             <span className="leading-relaxed">
               I agree to receive the journal and accept the{" "}
@@ -151,9 +153,9 @@ const HopFooter = () => {
           <div>
             <h2 className="font-serif font-light text-base text-jasmine mb-4 tracking-wide">Whisper</h2>
             <ul className="space-y-2.5">
-              <li><a href={instagramUrl} target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Instagram</a></li>
+              <li><a href={instagramUrl} target="_blank" rel="noreferrer" className="inline-block py-1.5 text-jasmine/75 hover:text-jasmine transition-colors">Instagram</a></li>
               {pinterestUrl ? (
-                <li><a href={pinterestUrl} target="_blank" rel="noreferrer" className="text-jasmine/75 hover:text-jasmine transition-colors">Pinterest</a></li>
+                <li><a href={pinterestUrl} target="_blank" rel="noreferrer" className="inline-block py-1.5 text-jasmine/75 hover:text-jasmine transition-colors">Pinterest</a></li>
               ) : null}
             </ul>
           </div>
@@ -193,7 +195,7 @@ const FooterCol = ({ title, children }: { title: string; children: React.ReactNo
 
 const FooterLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
   <li>
-    <Link to={to} className="text-jasmine/75 hover:text-jasmine transition-colors">
+    <Link to={to} className="inline-block py-1.5 text-jasmine/75 hover:text-jasmine transition-colors">
       {children}
     </Link>
   </li>

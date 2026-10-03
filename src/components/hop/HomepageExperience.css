@@ -459,6 +459,18 @@
   text-shadow: 0 0.1em 1.4em color-mix(in srgb, var(--hop-lac) 48%, transparent);
 }
 
+.hop-collection-film__emotion {
+  display: block;
+  max-width: 22rem;
+  margin-top: 1rem;
+  color: color-mix(in srgb, var(--hop-cream) 76%, transparent);
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
 .hop-collection-film:focus-visible {
   outline: 2px solid var(--hop-gold);
   outline-offset: -0.5rem;
@@ -1070,7 +1082,8 @@
 
   .hop-threshold__title {
     max-width: 8ch;
-    font-size: clamp(4rem, 18vw, 6.5rem);
+    font-size: clamp(3.25rem, 15vw, 5rem);
+    line-height: 1;
   }
 
   .hop-threshold__supporting {
@@ -1084,10 +1097,17 @@
     gap: 1.25rem;
   }
 
+  .hop-threshold__actions .hop-arrow-link,
+  .hop-threshold__actions .hop-scroll-cue {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
   .hop-philosophy {
     display: block;
     min-height: auto;
-    padding: 7rem 1.25rem 8rem;
+    padding: 4.5rem 1.25rem 5rem;
   }
 
   .hop-philosophy::after {
@@ -1105,7 +1125,7 @@
   .hop-philosophy__title {
     max-width: 7ch;
     margin-top: 2rem;
-    font-size: clamp(4.3rem, 20vw, 7rem);
+    font-size: clamp(3.25rem, 15vw, 5.5rem);
   }
 
   .hop-philosophy__body {
@@ -1116,11 +1136,11 @@
   .hop-material,
   .hop-ownership,
   .hop-journal {
-    padding: 7rem 1.25rem 8rem;
+    padding: 4.5rem 1.25rem 5rem;
   }
 
   .hop-collections {
-    padding: 7rem 0 8rem;
+    padding: 4.5rem 0 5rem;
   }
 
   .hop-material__placeholder {
@@ -1138,7 +1158,8 @@
   .hop-ownership__title,
   .hop-journal__title {
     margin-top: 2rem;
-    font-size: clamp(3.9rem, 17vw, 6.5rem);
+    font-size: clamp(3rem, 14vw, 5rem);
+    line-height: 1;
   }
 
   .hop-collections__body,
@@ -1153,8 +1174,8 @@
   }
 
   .hop-collection-film {
-    min-height: 100svh;
-    height: 100svh;
+    min-height: 92svh;
+    height: 92svh;
   }
 
   .hop-collection-film__media img,
@@ -1176,7 +1197,7 @@
   .hop-collection-film__name {
     max-width: 9ch;
     margin-top: 1rem;
-    font-size: clamp(3.4rem, 17vw, 6rem);
+    font-size: clamp(3rem, 14vw, 5rem);
   }
 
   .hop-craft {
@@ -1188,12 +1209,13 @@
   }
 
   .hop-craft__copy {
-    padding: 6rem 1.25rem 7rem;
+    padding: 4rem 1.25rem;
   }
 
   .hop-craft__title {
     max-width: 8ch;
-    font-size: clamp(4rem, 17vw, 6.5rem);
+    font-size: clamp(3rem, 14vw, 5rem);
+    line-height: 1;
   }
 
   .hop-craft__body,
@@ -1210,7 +1232,7 @@
   }
 
   .hop-product-desire__copy {
-    padding: 5rem 1.25rem 6rem;
+    padding: 4rem 1.25rem 5rem;
   }
 
   .hop-product-desire__collection {
@@ -1265,13 +1287,75 @@
   }
 
   .hop-invitation__title {
-    font-size: clamp(4.2rem, 18vw, 6.5rem);
+    font-size: clamp(3.25rem, 15vw, 5rem);
+    line-height: 1;
   }
 
   .hop-invitation__actions {
     align-items: center;
     flex-direction: column;
     gap: 1.4rem;
+  }
+}
+
+/* Touch feedback parity + short-landscape compaction for the home journey. */
+@media (hover: none) {
+  .hop-arrow-link:active {
+    border-color: var(--hop-rose);
+    color: var(--hop-mulberry);
+  }
+
+  .hop-arrow-link--light:active {
+    border-color: var(--hop-gold);
+    color: var(--hop-gold);
+  }
+
+  .hop-text-link:active {
+    color: var(--hop-rose);
+  }
+
+  .hop-primary-button:active {
+    border-color: var(--hop-mulberry);
+    background: var(--hop-mulberry);
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hop-threshold,
+  .hop-threshold__content {
+    min-height: 140svh;
+  }
+
+  .hop-threshold__content {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+  }
+
+  .hop-threshold__title {
+    font-size: clamp(2.75rem, 9vw, 4.5rem);
+  }
+
+  .hop-collection-film {
+    min-height: 140svh;
+    height: 140svh;
+  }
+
+  .hop-philosophy,
+  .hop-material,
+  .hop-ownership,
+  .hop-journal {
+    padding-top: 3rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hop-threshold__eyebrow {
+    letter-spacing: 0.22em;
+  }
+
+  .hop-collection-film__emotion {
+    font-size: 0.88rem;
   }
 }
 
@@ -1315,9 +1399,11 @@
   font-size: clamp(2.4rem, 6.2vw, 6rem);
   letter-spacing: 0.16em;
   line-height: 1.12;
-  text-indent: 0.16em;
+  /* padding (not text-indent) keeps tracked caps optically centred without
+     clipping under zoom; wrapping is allowed instead of nowrap. */
+  padding-left: 0.16em;
+  text-align: center;
   text-shadow: 0 0.08em 1.1em color-mix(in srgb, var(--hop-lac) 40%, transparent);
-  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
@@ -1325,6 +1411,6 @@
     margin-top: 1.5rem;
     font-size: clamp(1.9rem, 12vw, 3.2rem);
     letter-spacing: 0.14em;
-    text-indent: 0.14em;
+    padding-left: 0.14em;
   }
 }

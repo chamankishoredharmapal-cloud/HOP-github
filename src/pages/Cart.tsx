@@ -1,15 +1,16 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Trash2, Minus, Plus, ShoppingBag, ArrowRight } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { StickyCta } from "@/components/hop/StickyCta";
 import { useCart } from "@/contexts/CartContext";
 import { useMetadata } from "@/hooks/useMetadata";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
+import { formatPaise, formatRupees } from "@/lib/formatPrice";
 
-function formatRupees(amountInPaise: number): string {
-  return `₹ ${(amountInPaise / 100).toLocaleString("en-IN")}`;
-}
+const formatLinePrice = formatPaise;
 
 export default function Cart() {
   useMetadata({
@@ -17,6 +18,7 @@ export default function Cart() {
     description: "Your bag.",
   });
   const { items, updateQuantity, removeItem, clearCart, totalItems, totalPrice } = useCart();
+  const inlineCtaRef = useRef<HTMLDivElement>(null);
 
   if (items.length === 0) {
     return (
@@ -89,7 +91,7 @@ export default function Cart() {
                       {item.size && (
                         <p className="text-xs text-ink-soft mt-0.5 font-light">{item.size}</p>
                       )}
-                       <p className="text-sm text-ink mt-1.5 font-light">{formatRupees(item.price * item.quantity)}</p>
+                       <p className="text-sm text-ink mt-1.5 font-light">{formatLinePrice(item.price * item.quantity)}</p>
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
@@ -136,7 +138,7 @@ export default function Cart() {
                 <div className="flex justify-between text-ink-soft">
                   <span>Subtotal ({totalItems} {totalItems === 1 ? "item" : "items"})</span>
                   <span className="text-ink font-medium">
-                    ₹ {totalPrice.toLocaleString()}
+                    {formatRupees(totalPrice)}
                   </span>
                 </div>
                 <div className="flex justify-between text-ink-soft">
@@ -150,18 +152,20 @@ export default function Cart() {
               <div className="flex justify-between text-sm">
                 <span className="text-ink font-medium">Estimated Total</span>
                 <span className="text-ink font-serif text-xl">
-                  ₹ {totalPrice.toLocaleString()}
+                  {formatRupees(totalPrice)}
                 </span>
               </div>
 
+              <div ref={inlineCtaRef}>
               <Button
                 asChild
-                className="w-full mt-8 rounded-full bg-ink text-jasmine hover:bg-ink-soft transition-colors duration-300 h-12 text-[0.65rem] tracking-[0.25em] uppercase"
+                className="w-full mt-8 rounded-full bg-ink text-jasmine hover:bg-ink-soft active:bg-ink-soft transition-colors duration-300 min-h-[48px] h-12 text-[0.65rem] tracking-[0.25em] uppercase"
               >
                 <Link to="/checkout">
                   Checkout <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
+              </div>
 
               <div className="mt-4 text-center">
                 <Link
@@ -188,7 +192,23 @@ export default function Cart() {
             <p>Refunds are processed via bank transfer within 5 – 7 business days after inspection. See the <Link to="/returns-policy" className="text-ink border-b border-ink/30 hover:border-ink transition-colors">Returns & Refund Policy</Link> for full details.</p>
           </div>
         </div>
+        {/* Spacer so the mobile sticky bar never covers trailing content. */}
+        <div className="h-20 lg:hidden" aria-hidden="true" />
       </main>
+      <StickyCta inlineRef={inlineCtaRef} label="Proceed to checkout">
+        <div className="min-w-0">
+          <p className="text-[0.6rem] tracking-[0.25em] uppercase text-ink-soft">Estimated total</p>
+          <p className="text-base text-ink tnum">{formatRupees(totalPrice)}</p>
+        </div>
+        <Button
+          asChild
+          className="shrink-0 rounded-full bg-ink text-jasmine hover:bg-ink-soft active:bg-ink-soft min-h-[48px] px-6 text-[0.65rem] tracking-[0.25em] uppercase"
+        >
+          <Link to="/checkout">
+            Checkout <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </Button>
+      </StickyCta>
     </PageLayout>
   );
 }

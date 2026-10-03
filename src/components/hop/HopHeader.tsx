@@ -114,7 +114,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
         </nav>
 
         <button
-          className={`lg:hidden p-2 transition-colors duration-300 ${inverseHeader ? "text-rasa-cream hover:text-rasa-gold" : "text-ink hover:text-rasa-gold"}`}
+          className={`lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors duration-300 ${inverseHeader ? "text-rasa-cream hover:text-rasa-gold" : "text-ink hover:text-rasa-gold"}`}
           onClick={() => setOpen(true)}
           ref={menuButtonRef}
           aria-label="Open menu"
@@ -130,7 +130,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
           aria-label="House of Padmavati home"
         >
           <Monogram variant="signature" className="h-8 md:h-10" />
-           <span className={`mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.28em] sm:tracking-[0.32em] uppercase whitespace-nowrap ${inverseHeader ? "text-rasa-gold" : "text-rasa-mulberry"}`}>
+           <span className={`mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.22em] sm:tracking-[0.32em] uppercase whitespace-nowrap overflow-hidden text-ellipsis max-w-full ${inverseHeader ? "text-rasa-gold" : "text-rasa-mulberry"}`}>
             HOUSE OF PADMAVATI
           </span>
         </Link>
@@ -192,17 +192,22 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
           ref={menuRef}
           id="mobile-navigation"
           className="lg:hidden fixed inset-0 z-50 bg-paper-ivory text-ink animate-fade-in overflow-y-auto"
+          style={{
+            height: "100dvh",
+            paddingTop: "env(safe-area-inset-top)",
+            paddingBottom: "env(safe-area-inset-bottom)",
+          }}
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
           onKeyDown={handleMenuKeyDown}
         >
-          <div className="container flex items-center justify-between h-16 border-b border-line/15">
-            <div className="flex items-center gap-3">
-              <Monogram variant="signature" className="h-9" />
-              <span className="font-serif text-[0.65rem] tracking-[0.32em] uppercase text-signature-crimson">HOUSE OF PADMAVATI</span>
+          <div className="container flex items-center justify-between min-h-16 border-b border-line/15">
+            <div className="flex items-center gap-3 min-w-0">
+              <Monogram variant="signature" className="h-9 shrink-0" />
+              <span className="font-serif text-[0.65rem] tracking-[0.28em] uppercase text-signature-crimson truncate">HOUSE OF PADMAVATI</span>
             </div>
-            <button onClick={closeMenu} aria-label="Close menu" ref={menuCloseButtonRef}>
+            <button onClick={closeMenu} aria-label="Close menu" ref={menuCloseButtonRef} className="min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0">
               <X className="w-5 h-5" strokeWidth={1.5} />
             </button>
           </div>
@@ -238,10 +243,10 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
                 </Link>
               ))}
             </div>
-            <div className="flex items-center gap-2 pt-2 border-t border-line/15">
+            <div className="flex items-stretch gap-2 pt-2 border-t border-line/15">
               <button
                 onClick={() => { closeMenu(); setSearchOpen(true); }}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
                 aria-label="Search"
               >
                 <Search className="w-4 h-4" strokeWidth={1.5} /> Search
@@ -249,7 +254,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
               <Link
                 to="/account"
                 onClick={closeMenu}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
                 aria-label="Account"
               >
                 <User className="w-4 h-4" strokeWidth={1.5} /> Account
@@ -257,7 +262,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
               <Link
                 to="/wishlist"
                 onClick={closeMenu}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
                 aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4" strokeWidth={1.5} /> Saved

@@ -23,7 +23,7 @@ const Lookbook = () => {
     <PageLayout>
        <main className="hop-page bg-sand/20 min-h-screen">
         {/* Hero Section */}
-         <section className="hop-lookbook__hero relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+         <section className="hop-lookbook__hero relative flex items-center justify-center overflow-hidden" style={{ height: "100svh", minHeight: "min(100svh, 700px)" }}>
           <div className="absolute inset-0 z-0">
             <img
               src={fabricImg}
@@ -33,7 +33,7 @@ const Lookbook = () => {
             <div className="absolute inset-0 bg-black/10" />
           </div>
           
-          <div className="relative z-10 text-center px-6 mt-header">
+          <div className="relative z-10 text-center px-6 mt-[72px] md:mt-[80px]">
             <h1 className="font-serif text-5xl md:text-7xl text-jasmine mb-6 drop-shadow-sm">Lookbook.</h1>
           </div>
         </section>

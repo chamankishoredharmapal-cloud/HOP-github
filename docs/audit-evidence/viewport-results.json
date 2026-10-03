@@ -1,0 +1,434 @@
+[
+  {
+    "viewport": "320x568",
+    "route": "/",
+    "ok": true,
+    "scrollWidth": 320,
+    "innerWidth": 320,
+    "offenders": [
+      "img.w-full.h-full.object-cover",
+      "video.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover"
+    ]
+  },
+  {
+    "viewport": "320x568",
+    "route": "/collections",
+    "ok": true,
+    "scrollWidth": 320,
+    "innerWidth": 320,
+    "offenders": []
+  },
+  {
+    "viewport": "320x568",
+    "route": "/cart",
+    "ok": true,
+    "scrollWidth": 320,
+    "innerWidth": 320,
+    "offenders": []
+  },
+  {
+    "viewport": "320x568",
+    "route": "/journal",
+    "ok": true,
+    "scrollWidth": 320,
+    "innerWidth": 320,
+    "offenders": []
+  },
+  {
+    "viewport": "320x568",
+    "route": "/customer-care",
+    "ok": true,
+    "scrollWidth": 320,
+    "innerWidth": 320,
+    "offenders": []
+  },
+  {
+    "viewport": "320x568",
+    "route": "/account/login",
+    "ok": true,
+    "scrollWidth": 320,
+    "innerWidth": 320,
+    "offenders": []
+  },
+  {
+    "viewport": "360x800",
+    "route": "/",
+    "ok": true,
+    "scrollWidth": 360,
+    "innerWidth": 360,
+    "offenders": [
+      "img.w-full.h-full.object-cover",
+      "video.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover"
+    ]
+  },
+  {
+    "viewport": "360x800",
+    "route": "/collections",
+    "ok": true,
+    "scrollWidth": 360,
+    "innerWidth": 360,
+    "offenders": []
+  },
+  {
+    "viewport": "360x800",
+    "route": "/cart",
+    "ok": true,
+    "scrollWidth": 360,
+    "innerWidth": 360,
+    "offenders": []
+  },
+  {
+    "viewport": "360x800",
+    "route": "/journal",
+    "ok": true,
+    "scrollWidth": 360,
+    "innerWidth": 360,
+    "offenders": []
+  },
+  {
+    "viewport": "360x800",
+    "route": "/customer-care",
+    "ok": true,
+    "scrollWidth": 360,
+    "innerWidth": 360,
+    "offenders": []
+  },
+  {
+    "viewport": "360x800",
+    "route": "/account/login",
+    "ok": true,
+    "scrollWidth": 360,
+    "innerWidth": 360,
+    "offenders": []
+  },
+  {
+    "viewport": "375x667",
+    "route": "/",
+    "ok": true,
+    "scrollWidth": 375,
+    "innerWidth": 375,
+    "offenders": [
+      "img.w-full.h-full.object-cover",
+      "video.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover"
+    ]
+  },
+  {
+    "viewport": "375x667",
+    "route": "/collections",
+    "ok": true,
+    "scrollWidth": 375,
+    "innerWidth": 375,
+    "offenders": []
+  },
+  {
+    "viewport": "375x667",
+    "route": "/cart",
+    "ok": true,
+    "scrollWidth": 375,
+    "innerWidth": 375,
+    "offenders": []
+  },
+  {
+    "viewport": "375x667",
+    "route": "/journal",
+    "ok": true,
+    "scrollWidth": 375,
+    "innerWidth": 375,
+    "offenders": []
+  },
+  {
+    "viewport": "375x667",
+    "route": "/customer-care",
+    "ok": true,
+    "scrollWidth": 375,
+    "innerWidth": 375,
+    "offenders": []
+  },
+  {
+    "viewport": "375x667",
+    "route": "/account/login",
+    "ok": true,
+    "scrollWidth": 375,
+    "innerWidth": 375,
+    "offenders": []
+  },
+  {
+    "viewport": "390x844",
+    "route": "/",
+    "ok": true,
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "offenders": [
+      "img.w-full.h-full.object-cover",
+      "video.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover"
+    ]
+  },
+  {
+    "viewport": "390x844",
+    "route": "/collections",
+    "ok": true,
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "offenders": []
+  },
+  {
+    "viewport": "390x844",
+    "route": "/cart",
+    "ok": true,
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "offenders": []
+  },
+  {
+    "viewport": "390x844",
+    "route": "/journal",
+    "ok": true,
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "offenders": []
+  },
+  {
+    "viewport": "390x844",
+    "route": "/customer-care",
+    "ok": true,
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "offenders": []
+  },
+  {
+    "viewport": "390x844",
+    "route": "/account/login",
+    "ok": true,
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "offenders": []
+  },
+  {
+    "viewport": "430x932",
+    "route": "/",
+    "ok": true,
+    "scrollWidth": 430,
+    "innerWidth": 430,
+    "offenders": [
+      "img.w-full.h-full.object-cover",
+      "video.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover"
+    ]
+  },
+  {
+    "viewport": "430x932",
+    "route": "/collections",
+    "ok": true,
+    "scrollWidth": 430,
+    "innerWidth": 430,
+    "offenders": []
+  },
+  {
+    "viewport": "430x932",
+    "route": "/cart",
+    "ok": true,
+    "scrollWidth": 430,
+    "innerWidth": 430,
+    "offenders": []
+  },
+  {
+    "viewport": "430x932",
+    "route": "/journal",
+    "ok": true,
+    "scrollWidth": 430,
+    "innerWidth": 430,
+    "offenders": []
+  },
+  {
+    "viewport": "430x932",
+    "route": "/customer-care",
+    "ok": true,
+    "scrollWidth": 430,
+    "innerWidth": 430,
+    "offenders": []
+  },
+  {
+    "viewport": "430x932",
+    "route": "/account/login",
+    "ok": true,
+    "scrollWidth": 430,
+    "innerWidth": 430,
+    "offenders": []
+  },
+  {
+    "viewport": "768x1024",
+    "route": "/",
+    "ok": true,
+    "scrollWidth": 768,
+    "innerWidth": 768,
+    "offenders": [
+      "img.w-full.h-full.object-cover",
+      "video.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover"
+    ]
+  },
+  {
+    "viewport": "768x1024",
+    "route": "/collections",
+    "ok": true,
+    "scrollWidth": 768,
+    "innerWidth": 768,
+    "offenders": []
+  },
+  {
+    "viewport": "768x1024",
+    "route": "/cart",
+    "ok": true,
+    "scrollWidth": 768,
+    "innerWidth": 768,
+    "offenders": []
+  },
+  {
+    "viewport": "768x1024",
+    "route": "/journal",
+    "ok": true,
+    "scrollWidth": 768,
+    "innerWidth": 768,
+    "offenders": []
+  },
+  {
+    "viewport": "768x1024",
+    "route": "/customer-care",
+    "ok": true,
+    "scrollWidth": 768,
+    "innerWidth": 768,
+    "offenders": []
+  },
+  {
+    "viewport": "768x1024",
+    "route": "/account/login",
+    "ok": true,
+    "scrollWidth": 768,
+    "innerWidth": 768,
+    "offenders": []
+  },
+  {
+    "viewport": "1024x768",
+    "route": "/",
+    "ok": true,
+    "scrollWidth": 1024,
+    "innerWidth": 1024,
+    "offenders": [
+      "img.w-full.h-full.object-cover",
+      "video.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover"
+    ]
+  },
+  {
+    "viewport": "1024x768",
+    "route": "/collections",
+    "ok": true,
+    "scrollWidth": 1024,
+    "innerWidth": 1024,
+    "offenders": []
+  },
+  {
+    "viewport": "1024x768",
+    "route": "/cart",
+    "ok": true,
+    "scrollWidth": 1024,
+    "innerWidth": 1024,
+    "offenders": []
+  },
+  {
+    "viewport": "1024x768",
+    "route": "/journal",
+    "ok": true,
+    "scrollWidth": 1024,
+    "innerWidth": 1024,
+    "offenders": []
+  },
+  {
+    "viewport": "1024x768",
+    "route": "/customer-care",
+    "ok": true,
+    "scrollWidth": 1024,
+    "innerWidth": 1024,
+    "offenders": []
+  },
+  {
+    "viewport": "1024x768",
+    "route": "/account/login",
+    "ok": true,
+    "scrollWidth": 1024,
+    "innerWidth": 1024,
+    "offenders": []
+  },
+  {
+    "viewport": "1440x900",
+    "route": "/",
+    "ok": true,
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "offenders": [
+      "img.w-full.h-full.object-cover",
+      "video.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover",
+      "img.w-full.h-full.object-cover"
+    ]
+  },
+  {
+    "viewport": "1440x900",
+    "route": "/collections",
+    "ok": true,
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "offenders": []
+  },
+  {
+    "viewport": "1440x900",
+    "route": "/cart",
+    "ok": true,
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "offenders": []
+  },
+  {
+    "viewport": "1440x900",
+    "route": "/journal",
+    "ok": true,
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "offenders": []
+  },
+  {
+    "viewport": "1440x900",
+    "route": "/customer-care",
+    "ok": true,
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "offenders": []
+  },
+  {
+    "viewport": "1440x900",
+    "route": "/account/login",
+    "ok": true,
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "offenders": []
+  }
+]

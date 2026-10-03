@@ -18,7 +18,7 @@ const PageLayout = ({ children, transparent = false, darkHero = false }: PageLay
         Skip to main content
       </a>
       <HopHeader transparent={transparent} dark={darkHero} />
-      <div id="main-content" className={darkHero ? "" : "pt-header"}>
+      <div id="main-content" className={darkHero ? "" : "pt-[72px] md:pt-[80px]"}>
         {children}
       </div>
       <HopFooter />

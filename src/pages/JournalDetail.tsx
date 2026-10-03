@@ -95,6 +95,16 @@ const JournalDetail = () => {
           <p className="mt-12 text-lg text-ink-soft font-light leading-relaxed">
             {article.dek}
           </p>
+
+          {"content" in article && typeof (article as { content?: string }).content === "string" && (article as { content?: string }).content!.trim() !== "" && (
+            <div className="mt-8 space-y-7 max-w-[65ch]">
+              {(article as { content: string }).content.split(/\n\s*\n/).map((para, i) => (
+                <p key={i} className="font-reading text-[1.05rem] leading-[1.65] text-ink/85 font-light">
+                  {para.trim()}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </PageLayout>

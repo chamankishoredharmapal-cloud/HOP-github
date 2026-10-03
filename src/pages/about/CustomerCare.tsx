@@ -94,71 +94,86 @@ const SareeCare = () => {
                <form onSubmit={handleSubmit} className="hop-form-shell space-y-6 max-w-2xl" noValidate>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
+                    <Label htmlFor="care-first-name" className="hop-form-label mb-1.5">First name</Label>
                     <Input
+                      id="care-first-name"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       onBlur={() => handleBlur("firstName")}
                        className="hop-form-control"
                       placeholder="First name"
-                      aria-label="First name"
+                      autoComplete="given-name"
                       aria-invalid={!!errors.firstName}
+                      aria-describedby={errors.firstName ? "care-first-name-error" : undefined}
                     />
-                    {errors.firstName && <p className="text-[0.7rem] text-sakura mt-1">{errors.firstName}</p>}
+                    {errors.firstName && <p id="care-first-name-error" role="alert" className="text-[0.7rem] text-destructive mt-1">{errors.firstName}</p>}
                   </div>
                   <div>
+                    <Label htmlFor="care-last-name" className="hop-form-label mb-1.5">Last name</Label>
                     <Input
+                      id="care-last-name"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       onBlur={() => handleBlur("lastName")}
                        className="hop-form-control"
                       placeholder="Last name"
-                      aria-label="Last name"
+                      autoComplete="family-name"
                       aria-invalid={!!errors.lastName}
+                      aria-describedby={errors.lastName ? "care-last-name-error" : undefined}
                     />
-                    {errors.lastName && <p className="text-[0.7rem] text-sakura mt-1">{errors.lastName}</p>}
+                    {errors.lastName && <p id="care-last-name-error" role="alert" className="text-[0.7rem] text-destructive mt-1">{errors.lastName}</p>}
                   </div>
                 </div>
                 <div>
+                  <Label htmlFor="care-email" className="hop-form-label mb-1.5">Email</Label>
                   <Input
+                    id="care-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={() => handleBlur("email")}
-                    className="rounded-none border-x-0 border-t-0 border-b border-border bg-transparent px-0"
+                    className="rounded-none border-x-0 border-t-0 border-b border-border bg-transparent px-0 min-h-[44px] text-base"
                     placeholder="Email"
-                    aria-label="Email"
+                    autoComplete="email"
                     aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? "care-email-error" : undefined}
                   />
-                  {errors.email && <p className="text-[0.7rem] text-sakura mt-1">{errors.email}</p>}
+                  {errors.email && <p id="care-email-error" role="alert" className="text-[0.7rem] text-destructive mt-1">{errors.email}</p>}
                 </div>
-                <Input
-                  value={orderNumber}
-                  onChange={(e) => setOrderNumber(e.target.value)}
-                  className="rounded-none border-x-0 border-t-0 border-b border-border bg-transparent px-0"
-                  placeholder="Order number (optional)"
-                  aria-label="Order number"
-                />
                 <div>
+                  <Label htmlFor="care-order" className="hop-form-label mb-1.5">Order number <span className="font-light">(optional)</span></Label>
+                  <Input
+                    id="care-order"
+                    value={orderNumber}
+                    onChange={(e) => setOrderNumber(e.target.value)}
+                    className="rounded-none border-x-0 border-t-0 border-b border-border bg-transparent px-0 min-h-[44px] text-base"
+                    placeholder="Order number (optional)"
+                    autoComplete="off"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="care-message" className="hop-form-label mb-1.5">Message</Label>
                   <Textarea
+                    id="care-message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onBlur={() => handleBlur("message")}
-                     className="hop-form-control min-h-[140px]"
+                     className="hop-form-control min-h-[140px] text-base"
                     placeholder="How may we help you."
-                    aria-label="Message"
                     aria-invalid={!!errors.message}
+                    aria-describedby={errors.message ? "care-message-error" : undefined}
                   />
-                  {errors.message && <p className="text-[0.7rem] text-sakura mt-1">{errors.message}</p>}
+                  {errors.message && <p id="care-message-error" role="alert" className="text-[0.7rem] text-destructive mt-1">{errors.message}</p>}
                 </div>
 
                 <div className="space-y-2">
-                  <label className="flex items-start gap-3 cursor-pointer">
+                  <label className="flex items-start gap-3 cursor-pointer min-h-[44px]">
                     <input
                       type="checkbox"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
                       required
-                      className="mt-0.5 w-4 h-4 rounded border-border accent-ink shrink-0"
+                      className="mt-0.5 w-5 h-5 rounded border-border accent-ink shrink-0"
                     />
                     <span className="text-xs text-ink-soft font-light leading-relaxed">
                       I agree to the{" "}
@@ -169,7 +184,7 @@ const SareeCare = () => {
                 </div>
 
                 {error && (
-                  <div className="flex items-center gap-2 text-sm text-sakura">
+                  <div className="flex items-center gap-2 text-sm text-destructive" role="alert">
                     <AlertCircle className="h-4 w-4 shrink-0" />
                     <span>{error}</span>
                   </div>

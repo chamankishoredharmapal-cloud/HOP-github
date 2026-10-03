@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Pause, Play } from "lucide-react";
+import {
+  getSupabaseOptimizedUrl,
+  getSupabaseSrcSet,
+  isSupabaseStorageUrl,
+} from "@/lib/supabaseImage";
 
 /**
  * Cinematic media frame — uses native <video> with poster fallback.
@@ -44,6 +49,14 @@ export const Film = ({
       v.playsInline = true;
       // Respect visitors who ask for reduced motion — leave the still frame.
       if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+      // Respect mobile data-saver mode — leave the poster until the visitor
+      // explicitly presses play.
+      try {
+        const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+        if (conn?.saveData) return;
+      } catch {
+        /* connection API unavailable — autoplay as normal */
+      }
       v.play()
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
@@ -110,11 +123,15 @@ export const Film = ({
 
   return (
     <div ref={frameRef} className={`relative overflow-hidden bg-jasmine-deep ${className} ${isCinematic ? "rounded-2xl lg:rounded-3xl" : "rounded-sm"} gallery-shadow`}>
-      {/* Poster layer — guarded: never render empty src */}
+      {/* Poster layer — guarded: never render empty src.
+          Supabase-hosted posters go through the transform pipeline with a
+          responsive srcset so 320px phones stop downloading desktop bytes. */}
       <div className="absolute inset-0">
         {poster ? (
           <img
-            src={poster}
+            src={isSupabaseStorageUrl(poster) ? getSupabaseOptimizedUrl(poster, { width: 1200 }) : poster}
+            srcSet={isSupabaseStorageUrl(poster) ? getSupabaseSrcSet(poster, [640, 1024, 1600]) || undefined : undefined}
+            sizes="100vw"
             alt={alt}
             loading={priority ? "eager" : "lazy"}
             decoding="async"

@@ -52,7 +52,9 @@ const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWit
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn("font-normal text-foreground", className)}
+      // Long product/collection names truncate on small screens instead of
+      // stacking the trail into 2-3 lines and pushing heroes down.
+      className={cn("font-normal text-foreground max-w-[45vw] truncate sm:max-w-none sm:whitespace-normal", className)}
       {...props}
     />
   ),

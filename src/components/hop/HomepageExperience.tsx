@@ -159,7 +159,6 @@ const Threshold = () => {
         alt={`${collectionName} — House of Padmavati collection film`}
          className="hop-threshold__film"
          preload="metadata"
-         showControls={false}
          priority
       />
       <div className="hop-threshold__veil" aria-hidden="true" />
@@ -243,12 +242,14 @@ const CollectionFilmChapter = ({
           className="hop-collection-film__media"
           preload="metadata"
           priority={priority}
-          showControls={false}
         />
         <span className="hop-collection-film__veil" aria-hidden="true" />
         <span className="hop-collection-film__identity">
           <Monogram variant="signature" className="hop-collection-film__mark" />
           <h3 className="hop-editorial-name hop-collection-film__name">{name}</h3>
+          {world.emotion && (
+            <span className="hop-collection-film__emotion">{world.emotion}</span>
+          )}
         </span>
       </Link>
     </article>

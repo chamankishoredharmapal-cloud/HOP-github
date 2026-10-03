@@ -19,7 +19,9 @@ export default {
         reading: ['"Newsreader"', 'Georgia', 'serif'],
       },
       spacing: {
-        header: "clamp(6rem, 8vw, 8rem)",
+        // Matches the fixed bar: 72px mobile, 80px md+. Previously
+        // clamp(6rem, 8vw, 8rem) left a ~24px dead band above every page.
+        header: "72px",
         "section-sm": "clamp(3rem, 6vw, 5rem)",
         section: "clamp(4rem, 8vw, 7.5rem)",
         "section-lg": "clamp(5rem, 10vw, 10rem)",

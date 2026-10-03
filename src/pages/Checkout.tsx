@@ -18,6 +18,8 @@ import type { Tables } from "@/integrations/supabase/types";
 type CustomerAddress = Tables<"shipping_addresses">;
 import { useMetadata } from "@/hooks/useMetadata";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
+import { StickyCta } from "@/components/hop/StickyCta";
+import { formatPaise, formatRupees } from "@/lib/formatPrice";
 
 interface FormData {
   email: string;
@@ -71,9 +73,7 @@ function formatPhone(phone: string): string {
   return phone;
 }
 
-function formatRupees(amountInPaise: number): string {
-  return `₹ ${(amountInPaise / 100).toLocaleString("en-IN")}`;
-}
+const formatLinePrice = formatPaise;
 
 export default function Checkout() {
   useMetadata({
@@ -105,6 +105,7 @@ export default function Checkout() {
   const [firstOrderReason, setFirstOrderReason] = useState<string>('');
   const [serverShippingCost, setServerShippingCost] = useState(0);
   const validatedRef = useRef(false);
+  const payButtonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (user) {
@@ -353,6 +354,8 @@ export default function Checkout() {
                    aria-invalid={!!errors.email}
                    aria-describedby={errors.email ? "email-error" : undefined}
                    type="email"
+                   autoComplete="email"
+                   inputMode="email"
                   value={form.email}
                   onChange={(e) => handleChange("email", e.target.value)}
                   placeholder="you@example.com"
@@ -389,7 +392,7 @@ export default function Checkout() {
                             value={addr.id}
                             checked={selectedAddressId === addr.id}
                             onChange={() => handleAddressSelect(addr)}
-                            className="w-4 h-4 border-border accent-ink focus:ring-ink"
+                            className="w-5 h-5 border-border accent-ink focus:ring-ink shrink-0"
                           />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-ink">{addr.recipient_name}</p>
@@ -431,6 +434,7 @@ export default function Checkout() {
                            id="firstName"
                            aria-invalid={!!errors.firstName}
                            aria-describedby={errors.firstName ? "first-name-error" : undefined}
+                           autoComplete="given-name"
                            value={form.firstName}
                            onChange={(e) => handleChange("firstName", e.target.value)}
                            className={`mt-1.5 rounded-none ${errors.firstName ? "border-destructive" : ""}`}
@@ -443,14 +447,15 @@ export default function Checkout() {
                          <Label htmlFor="lastName" className="text-sm text-ink-soft font-light">
                            Last name
                          </Label>
-                         <Input
-                            id="lastName"
-                            aria-invalid={!!errors.lastName}
-                            aria-describedby={errors.lastName ? "last-name-error" : undefined}
-                            value={form.lastName}
-                           onChange={(e) => handleChange("lastName", e.target.value)}
-                           className={`mt-1.5 rounded-none ${errors.lastName ? "border-destructive" : ""}`}
-                         />
+                          <Input
+                             id="lastName"
+                             aria-invalid={!!errors.lastName}
+                             aria-describedby={errors.lastName ? "last-name-error" : undefined}
+                             autoComplete="family-name"
+                             value={form.lastName}
+                            onChange={(e) => handleChange("lastName", e.target.value)}
+                            className={`mt-1.5 rounded-none ${errors.lastName ? "border-destructive" : ""}`}
+                          />
                          {errors.lastName && (
                             <p id="last-name-error" className="text-[0.7rem] text-destructive mt-1">{errors.lastName}</p>
                          )}
@@ -461,11 +466,12 @@ export default function Checkout() {
                        <Label htmlFor="address" className="text-sm text-ink-soft font-light">
                          Address
                        </Label>
-                       <Input
-                          id="address"
-                          aria-invalid={!!errors.address}
-                          aria-describedby={errors.address ? "address-error" : undefined}
-                          value={form.address}
+                        <Input
+                           id="address"
+                           aria-invalid={!!errors.address}
+                           aria-describedby={errors.address ? "address-error" : undefined}
+                           autoComplete="street-address"
+                           value={form.address}
                           onChange={(e) => handleChange("address", e.target.value)}
                           placeholder="Street address"
                           className={`mt-1.5 rounded-none ${errors.address ? "border-destructive" : ""}`}
@@ -480,10 +486,11 @@ export default function Checkout() {
                            <Label htmlFor="city" className="text-sm text-ink-soft font-light">
                              City
                            </Label>
-                           <Input
+                            <Input
                               id="city"
                               aria-invalid={!!errors.city}
                               aria-describedby={errors.city ? "city-error" : undefined}
+                              autoComplete="address-level2"
                               value={form.city}
                               onChange={(e) => handleChange("city", e.target.value)}
                               className={`mt-1.5 rounded-none ${errors.city ? "border-destructive" : ""}`}
@@ -496,11 +503,12 @@ export default function Checkout() {
                              <Label htmlFor="state" className="text-sm text-ink-soft font-light">
                                State
                              </Label>
-                             <Input
-                                id="state"
-                                aria-invalid={!!errors.state}
-                                aria-describedby={errors.state ? "state-error" : undefined}
-                                value={form.state}
+                              <Input
+                                 id="state"
+                                 aria-invalid={!!errors.state}
+                                 aria-describedby={errors.state ? "state-error" : undefined}
+                                 autoComplete="address-level1"
+                                 value={form.state}
                                 onChange={(e) => handleChange("state", e.target.value)}
                                 placeholder="State / Province"
                                 className={`mt-1.5 rounded-none ${errors.state ? "border-destructive" : ""}`}
@@ -516,14 +524,16 @@ export default function Checkout() {
                              <Label htmlFor="postalCode" className="text-sm text-ink-soft font-light">
                                Postal code
                              </Label>
-                             <Input
-                                id="postalCode"
-                                aria-invalid={!!errors.postalCode}
-                                aria-describedby={errors.postalCode ? "postal-code-error" : undefined}
-                                value={form.postalCode}
-                               onChange={(e) => handleChange("postalCode", e.target.value)}
-                               className={`mt-1.5 rounded-none ${errors.postalCode ? "border-destructive" : ""}`}
-                             />
+                              <Input
+                                 id="postalCode"
+                                 aria-invalid={!!errors.postalCode}
+                                 aria-describedby={errors.postalCode ? "postal-code-error" : undefined}
+                                 autoComplete="postal-code"
+                                 inputMode="numeric"
+                                 value={form.postalCode}
+                                onChange={(e) => handleChange("postalCode", e.target.value)}
+                                className={`mt-1.5 rounded-none ${errors.postalCode ? "border-destructive" : ""}`}
+                              />
                              {errors.postalCode && (
                                 <p id="postal-code-error" className="text-[0.7rem] text-destructive mt-1">{errors.postalCode}</p>
                               )}
@@ -534,15 +544,16 @@ export default function Checkout() {
                            <Label htmlFor="country" className="text-sm text-ink-soft font-light">
                              Country
                            </Label>
-                           <Input
+                            <Input
                               id="country"
                               aria-invalid={!!errors.country}
                               aria-describedby={errors.country ? "country-error" : undefined}
+                              autoComplete="country-name"
                               value={form.country}
-                             onChange={(e) => handleChange("country", e.target.value)}
-                             placeholder="India"
-                             className={`mt-1.5 rounded-none ${errors.country ? "border-destructive" : ""}`}
-                           />
+                              onChange={(e) => handleChange("country", e.target.value)}
+                              placeholder="India"
+                              className={`mt-1.5 rounded-none ${errors.country ? "border-destructive" : ""}`}
+                            />
                            {errors.country && (
                               <p id="country-error" className="text-[0.7rem] text-destructive mt-1">{errors.country}</p>
                             )}
@@ -552,15 +563,17 @@ export default function Checkout() {
                            <Label htmlFor="phone" className="text-sm text-ink-soft font-light">
                              Phone
                            </Label>
-                           <Input
-                             id="phone"
-                             type="tel"
-                             required
-                             value={form.phone}
-                             onChange={(e) => handleChange("phone", e.target.value)}
-                             placeholder="+91"
-                             className={`mt-1.5 rounded-none ${errors.phone ? "border-destructive" : ""}`}
-                           />
+                            <Input
+                              id="phone"
+                              type="tel"
+                              required
+                              autoComplete="tel"
+                              inputMode="tel"
+                              value={form.phone}
+                              onChange={(e) => handleChange("phone", e.target.value)}
+                              placeholder="+91"
+                              className={`mt-1.5 rounded-none ${errors.phone ? "border-destructive" : ""}`}
+                            />
                            {errors.phone && (
                               <p id="phone-error" className="text-[0.7rem] text-destructive mt-1">{errors.phone}</p>
                             )}
@@ -578,7 +591,7 @@ export default function Checkout() {
                     type="checkbox"
                     checked={isGift}
                     onChange={(e) => setIsGift(e.target.checked)}
-                    className="w-4 h-4 rounded border-border accent-ink"
+                    className="w-5 h-5 rounded border-border accent-ink shrink-0"
                   />
                   <span>This is a gift</span>
                 </label>
@@ -630,9 +643,9 @@ export default function Checkout() {
                       value="full"
                       checked={paymentOption === 'full'}
                       onChange={() => setPaymentOption('full')}
-                      className="w-4 h-4 border-border accent-ink focus:ring-ink"
+                      className="w-5 h-5 border-border accent-ink focus:ring-ink shrink-0"
                     />
-                    <span className="text-sm text-ink font-light">Pay ₹{totalRupees.toLocaleString()} in full online</span>
+                    <span className="text-sm text-ink font-light">Pay {formatRupees(totalRupees)} in full online</span>
                   </label>
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input
@@ -641,9 +654,9 @@ export default function Checkout() {
                       value="deposit"
                       checked={paymentOption === 'deposit'}
                       onChange={() => setPaymentOption('deposit')}
-                      className="w-4 h-4 border-border accent-ink focus:ring-ink"
+                      className="w-5 h-5 border-border accent-ink focus:ring-ink shrink-0"
                     />
-                    <span className="text-sm text-ink font-light">Pay ₹{depositAmountRupees} now, remaining ₹{remainingAmountRupees.toLocaleString()} at delivery</span>
+                    <span className="text-sm text-ink font-light">Pay {formatRupees(depositAmountRupees)} now, remaining {formatRupees(remainingAmountRupees)} at delivery</span>
                   </label>
                 </div>
 
@@ -690,7 +703,7 @@ export default function Checkout() {
                       <p className="text-xs text-ink-soft mt-0.5">Qty {item.quantity}</p>
                     </div>
                     <p className="text-sm text-ink font-light whitespace-nowrap">
-                       {formatRupees(item.price * item.quantity)}
+                       {formatLinePrice(item.price * item.quantity)}
                     </p>
                   </div>
                 ))}
@@ -699,12 +712,12 @@ export default function Checkout() {
               <div className="mt-6 pt-6 border-t border-border/60 space-y-2">
                 <div className="flex justify-between text-sm text-ink-soft font-light">
                   <span>Subtotal</span>
-                  <span className="text-ink">₹ {totalPrice.toLocaleString()}</span>
+                  <span className="text-ink">{formatRupees(totalPrice)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-ink-soft font-light">
                   <span>Shipping</span>
                   <span className="text-ink flex items-center gap-2">
-                    {shippingCost === 0 ? "Free" : `₹ ${shippingCost.toLocaleString()}`}
+                    {shippingCost === 0 ? "Free" : formatRupees(shippingCost)}
                     {firstOrderEligible && firstOrderReason === 'first_order' && (
                       <span className="text-[0.6rem] tracking-[0.2em] uppercase text-rasa-gold bg-jasmine-deep/20 px-2 py-0.5 rounded">
                         First order free
@@ -717,21 +730,21 @@ export default function Checkout() {
                   <>
                     <div className="flex justify-between text-sm text-ink-soft font-light border-t border-border/60 pt-2 mt-2">
                       <span>Pay now (deposit)</span>
-                      <span className="text-ink">₹ {depositAmountRupees.toLocaleString()}</span>
+                      <span className="text-ink">{formatRupees(depositAmountRupees)}</span>
                     </div>
                     <div className="flex justify-between text-sm text-ink-soft font-light">
                       <span>Remaining (at delivery)</span>
-                      <span className="text-ink">₹ {remainingAmountRupees.toLocaleString()}</span>
+                      <span className="text-ink">{formatRupees(remainingAmountRupees)}</span>
                     </div>
                     <div className="flex justify-between text-base border-t border-border/60 pt-2 mt-2">
                       <span className="text-ink font-medium">Total</span>
-                      <span className="font-serif text-xl text-ink">₹ {totalRupees.toLocaleString()}</span>
+                      <span className="font-serif text-xl text-ink">{formatRupees(totalRupees)}</span>
                     </div>
                   </>
                 ) : (
                   <div className="flex justify-between text-base border-t border-border/60 pt-2 mt-2">
                     <span className="text-ink font-medium">Total</span>
-                    <span className="font-serif text-xl text-ink">₹ {totalRupees.toLocaleString()}</span>
+                    <span className="font-serif text-xl text-ink">{formatRupees(totalRupees)}</span>
                   </div>
                 )}
 </div>
@@ -784,7 +797,7 @@ export default function Checkout() {
                     checked={returnPolicyAccepted}
                     onChange={(e) => setReturnPolicyAccepted(e.target.checked)}
                     required
-                    className="mt-0.5 w-4 h-4 rounded border-border accent-ink shrink-0"
+                    className="mt-0.5 w-5 h-5 rounded border-border accent-ink shrink-0"
                   />
                   <span className="text-xs text-ink-soft font-light leading-relaxed">
                     I acknowledge and accept the{" "}
@@ -792,10 +805,11 @@ export default function Checkout() {
                   </span>
                 </label>
               </div>
+              <div ref={payButtonRef}>
               <Button
                 type="submit"
                 disabled={isProcessing || isPaymentProcessing}
-                className="w-full mt-4 rounded-full bg-ink text-jasmine hover:bg-ink-soft transition-colors duration-300 h-12 text-[0.65rem] tracking-[0.25em] uppercase"
+                className="w-full mt-4 rounded-full bg-ink text-jasmine hover:bg-ink-soft active:bg-ink-soft transition-colors duration-300 min-h-[48px] h-12 text-[0.65rem] tracking-[0.25em] uppercase"
               >
                 {isPaymentProcessing ? (
                   <span className="flex items-center gap-2">
@@ -806,6 +820,7 @@ export default function Checkout() {
                   "Pay Securely"
                 )}
               </Button>
+              </div>
 
               <div className="mt-4 flex items-center justify-center gap-1.5 text-[0.65rem] text-ink-soft/90">
                 <Shield className="h-3 w-3" />
@@ -813,7 +828,29 @@ export default function Checkout() {
               </div>
             </div>
           </aside>
+          <StickyCta inlineRef={payButtonRef} label="Pay for your order">
+            <div className="min-w-0">
+              <p className="text-[0.6rem] tracking-[0.25em] uppercase text-ink-soft">Total</p>
+              <p className="text-base text-ink tnum">{formatRupees(totalRupees)}</p>
+            </div>
+            <Button
+              type="submit"
+              disabled={isProcessing || isPaymentProcessing}
+              className="shrink-0 rounded-full bg-ink text-jasmine hover:bg-ink-soft active:bg-ink-soft min-h-[48px] px-6 text-[0.65rem] tracking-[0.25em] uppercase"
+            >
+              {isPaymentProcessing ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Processing…
+                </span>
+              ) : (
+                "Pay Securely"
+              )}
+            </Button>
+          </StickyCta>
         </form>
+        {/* Spacer so the mobile sticky bar never covers trailing content. */}
+        <div className="h-20 lg:hidden" aria-hidden="true" />
       </main>
     </PageLayout>
   );
