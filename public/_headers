@@ -11,13 +11,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
 
-/assets/* 
-  Cache-Control: public, max-age=31536000, immutable
-
-/assets/optimized/* 
-  Cache-Control: public, max-age=31536000, immutable
-
-/public/optimized/* 
+/optimized/* 
   Cache-Control: public, max-age=31536000, immutable
 
 /*.webp 

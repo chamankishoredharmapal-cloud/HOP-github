@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Film } from "@/components/hop/Film";
 import { Monogram } from "@/components/hop/Monogram";
@@ -144,22 +144,27 @@ const ArrowLink = ({ to, children, light = false }: { to: string; children: Reac
 );
 
 const Threshold = () => {
+  const queryClient = useQueryClient();
   const { data: featured } = useQuery({
     queryKey: ["storefront", "featuredCollection"],
     queryFn: fetchFeaturedCollection,
   });
-  const poster = featured?.hero_image_url || heroStill;
-  const collectionName = featured?.name ?? "House of Padmavati";
+
+  const initialFeatured = queryClient.getQueryData<{ hero_video_url?: string; hero_image_url?: string; name?: string }>(["storefront", "featuredCollection"]);
+  const effectiveFeatured = initialFeatured || featured;
+  const poster = effectiveFeatured?.hero_image_url || heroStill;
+  const collectionName = effectiveFeatured?.name ?? "House of Padmavati";
+  const videoSrc = effectiveFeatured?.hero_video_url || COLLECTION_VIDEOS.kalyani;
 
   return (
     <section className="hop-threshold" aria-labelledby="threshold-title">
       <Film
-        src={featured?.hero_video_url || COLLECTION_VIDEOS.hero}
+        src={videoSrc}
         poster={poster}
         alt={`${collectionName} — House of Padmavati collection film`}
-         className="hop-threshold__film"
-         preload="metadata"
-         priority
+        className="hop-threshold__film"
+        preload="metadata"
+        priority
       />
       <div className="hop-threshold__veil" aria-hidden="true" />
       <div className="hop-threshold__content">

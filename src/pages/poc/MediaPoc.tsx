@@ -16,9 +16,9 @@
 
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { FeaturedProducts } from "@/components/hop/FeaturedProducts";
-import heroImageSrc from "@/assets/hero-image.png";
-import organicEarringSrc from "@/assets/organic-earring.png";
 import fabricSrc from "@/assets/hop-fabric.jpg";
+
+const TRANSPARENT_PIXEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
 
 const MediaPoc = () => {
   return (
@@ -43,7 +43,7 @@ const MediaPoc = () => {
         <div style={{ width: "min(92vw, 1680px)", margin: "0 auto", borderRadius: "0.5rem", overflow: "hidden" }}>
           <OptimizedImage
             assetPath="src/assets/hero-image.png"
-            fallbackSrc={heroImageSrc}
+            fallbackSrc={TRANSPARENT_PIXEL}
             alt="House of Padmavati — hero composition"
             sizes="min(92vw, 1680px)"
             priority={true}
@@ -89,7 +89,7 @@ loading="eager" | fetchpriority="high" | decoding="async"`}
             <div style={{ borderRadius: "0.375rem", overflow: "hidden", background: "#faf9f7" }}>
               <OptimizedImage
                 assetPath="src/assets/organic-earring.png"
-                fallbackSrc={organicEarringSrc}
+                fallbackSrc={TRANSPARENT_PIXEL}
                 alt="Organic Earring — handcrafted jewelry detail"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 imgClassName="w-full h-auto object-cover"
@@ -105,7 +105,7 @@ loading="eager" | fetchpriority="high" | decoding="async"`}
             <div style={{ width: "240px", borderRadius: "0.375rem", overflow: "hidden", background: "#faf9f7" }}>
               <OptimizedImage
                 assetPath="src/assets/organic-earring.png"
-                fallbackSrc={organicEarringSrc}
+                fallbackSrc={TRANSPARENT_PIXEL}
                 alt="Organic Earring — thumbnail"
                 sizes="240px"
                 imgClassName="w-full h-auto object-cover"
