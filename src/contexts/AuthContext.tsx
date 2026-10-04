@@ -6,7 +6,7 @@ type AuthContextValue = {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, fullName: string) => Promise<void>;
+  signUp: (email: string, password: string, fullName: string, phone?: string) => Promise<void>;
   signOut: () => Promise<void>;
   resetPasswordForEmail: (email: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
@@ -35,8 +35,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await customerAuthService.signIn(email, password);
   };
 
-  const signUp = async (email: string, password: string, fullName: string) => {
-    await customerAuthService.signUp(email, password, fullName);
+  const signUp = async (email: string, password: string, fullName: string, phone?: string) => {
+    await customerAuthService.signUp(email, password, fullName, phone);
   };
 
   const signOut = async () => {

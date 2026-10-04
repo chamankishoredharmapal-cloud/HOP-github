@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, Loader2, Mail, AlertCircle, Trash2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchProfile, upsertCustomerProfile, updateProfile, updateEmail } from "@/services/customerProfileService";
+import { fetchProfileByEmail, upsertCustomerProfile, updateProfile, updateEmail } from "@/services/customerProfileService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,8 +29,8 @@ export default function Profile() {
 
   const { data: profile, isLoading } = useQuery({
     queryKey: ["customer-profile", user?.email],
-    queryFn: () => fetchProfile(user!.id),
-    enabled: !!user,
+    queryFn: () => (user?.email ? fetchProfileByEmail(user.email) : null),
+    enabled: !!user?.email,
   });
 
   const [fullName, setFullName] = useState("");

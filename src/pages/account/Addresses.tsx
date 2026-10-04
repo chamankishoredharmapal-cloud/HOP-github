@@ -9,7 +9,7 @@ import {
   deleteAddress,
   setDefaultAddress,
 } from "@/services/customerAddressService";
-import { fetchProfile } from "@/services/customerProfileService";
+import { fetchProfileByEmail } from "@/services/customerProfileService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -63,8 +63,8 @@ export default function Addresses() {
   // First fetch the customer profile to get the actual customer_id
   const { data: profile, isLoading: profileLoading } = useQuery({
     queryKey: ["customer-profile", user?.email],
-    queryFn: () => fetchProfile(user!.id),
-    enabled: !!user,
+    queryFn: () => (user?.email ? fetchProfileByEmail(user.email) : null),
+    enabled: !!user?.email,
   });
 
   const customerId = profile?.id;

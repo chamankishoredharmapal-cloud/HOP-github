@@ -48,6 +48,8 @@ export type Database = {
           postal_code: string
           country: string
           landmark: string | null
+          is_default: boolean
+          address_type: string
           created_at: string
         }
         Insert: {
@@ -61,6 +63,8 @@ export type Database = {
           postal_code: string
           country?: string
           landmark?: string | null
+          is_default?: boolean
+          address_type?: string
           created_at?: string
         }
         Update: {
@@ -74,6 +78,8 @@ export type Database = {
           postal_code?: string
           country?: string
           landmark?: string | null
+          is_default?: boolean
+          address_type?: string
           created_at?: string
         }
         Relationships: [

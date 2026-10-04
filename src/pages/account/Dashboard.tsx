@@ -3,7 +3,7 @@ import { Package, Heart, MapPin, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchCustomerOrders } from "@/services/customerOrderService";
-import { fetchAddresses } from "@/services/customerAddressService";
+import { getCurrentCustomerProfile } from "@/services/customerProfileService";
 import { fetchWishlistProductIds } from "@/services/customerWishlistService";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMetadata } from "@/hooks/useMetadata";
@@ -28,16 +28,18 @@ export default function Dashboard() {
   const { user } = useAuth();
 
   const { data: orders, isLoading: ordersLoading } = useQuery({
-    queryKey: ["customer-orders", user?.id],
-    queryFn: () => fetchCustomerOrders(user!.id),
+    queryKey: ["customer-orders", user?.email || user?.id],
+    queryFn: () => fetchCustomerOrders(user?.email || user?.id),
     enabled: !!user,
   });
 
-  const { data: addresses } = useQuery({
-    queryKey: ["customer-addresses", user?.id],
-    queryFn: () => fetchAddresses(user!.id),
+  const { data: fullProfile } = useQuery({
+    queryKey: ["customer-full-profile", user?.email],
+    queryFn: getCurrentCustomerProfile,
     enabled: !!user,
   });
+
+  const addresses = fullProfile?.addresses ?? [];
 
   const { data: wishlistIds } = useQuery({
     queryKey: ["customer-wishlist-ids", user?.id],

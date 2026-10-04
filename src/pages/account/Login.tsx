@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
@@ -16,16 +17,22 @@ export default function Login() {
   });
   const { user, loading: authLoading, signIn } = useAuth();
   const location = useLocation();
-  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || "/account";
-  const verified = new URLSearchParams(location.search).get("verified") === "true";
+
+  const searchParams = new URLSearchParams(location.search);
+  const redirectParam = searchParams.get("redirect");
+  const stateFrom = (location.state as { from?: { pathname: string } })?.from?.pathname;
+  const destination = redirectParam || stateFrom || "/account";
+
+  const verified = searchParams.get("verified") === "true";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   if (authLoading) return null;
-  if (user) return <Navigate to={from} replace />;
+  if (user) return <Navigate to={destination} replace />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +41,7 @@ export default function Login() {
     try {
       await signIn(email, password);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to sign in");
+      setError(err instanceof Error ? err.message : "That email or password doesn't look right. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -42,17 +49,17 @@ export default function Login() {
 
   return (
     <PageLayout>
-       <main className="hop-auth-shell">
-         <div className="hop-auth-card">
+      <main className="hop-auth-shell">
+        <div className="hop-auth-card">
           <div className="mb-10 text-center">
             <div className="mb-4 flex justify-center">
               <div className="h-px w-16 bg-signature-crimson/40" />
             </div>
-            <h1                className="hop-page__title hop-page__title--small">
-              Sign in
+            <h1 className="hop-page__title hop-page__title--small">
+              Sign In
             </h1>
             <p className="mt-3 text-sm text-ink-soft leading-relaxed">
-              Welcome back.
+              Welcome back to House of Padmavati.
             </p>
           </div>
 
@@ -70,7 +77,7 @@ export default function Login() {
             </Alert>
           )}
 
-           <form onSubmit={handleSubmit} className="hop-form-shell space-y-6">
+          <form onSubmit={handleSubmit} className="hop-form-shell space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-xs font-medium text-ink tracking-wider uppercase">
                 Email
@@ -82,6 +89,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
+                inputMode="email"
                 placeholder="you@example.com"
                 className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
@@ -93,25 +101,35 @@ export default function Login() {
                 </Label>
                 <Link
                   to="/account/forgot-password"
-                  className="text-xs text-ink transition-colors hover:text-signature-crimson"
+                  className="text-xs text-ink-soft transition-colors hover:text-signature-crimson"
                 >
-                  Forgot?
+                  Forgot password?
                 </Link>
               </div>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="current-password"
-                placeholder="••••••••"
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  className="h-12 border-ink/10 bg-white/50 px-4 pr-12 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-ink-soft hover:text-ink transition-colors focus:outline-none"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
             <Button
               type="submit"
-               className="hop-cta-primary w-full"
+              className="hop-cta-primary w-full min-h-[48px] h-12 text-sm"
               disabled={loading}
             >
               {loading ? (
@@ -132,13 +150,16 @@ export default function Login() {
           </div>
 
           <p className="mt-6 text-center text-sm text-ink-soft">
-            No account?{" "}
-            <Link to="/account/signup" className="font-medium text-ink transition-colors hover:text-signature-crimson">
-              Create one
+            New to House of Padmavati?{" "}
+            <Link
+              to={destination !== "/account" ? `/account/signup?redirect=${encodeURIComponent(destination)}` : "/account/signup"}
+              className="font-medium text-ink transition-colors hover:text-signature-crimson underline underline-offset-4"
+            >
+              Create an account
             </Link>
           </p>
         </div>
-       </main>
-     </PageLayout>
+      </main>
+    </PageLayout>
   );
 }

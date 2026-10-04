@@ -10,7 +10,7 @@ interface PageLayoutProps {
 
 const PageLayout = ({ children, transparent = false, darkHero = false }: PageLayoutProps) => {
   return (
-    <div className="hop-page min-h-screen bg-background text-foreground">
+    <div className="hop-page min-h-screen bg-background text-foreground overflow-x-hidden w-full max-w-full">
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-ink focus:text-jasmine focus:text-sm focus:rounded focus:outline-none focus:ring-2 focus:ring-signature-crimson"

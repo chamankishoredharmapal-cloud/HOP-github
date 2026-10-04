@@ -30,12 +30,52 @@ export interface CustomerOrderDetail extends CustomerOrderSummary {
 }
 
 export async function fetchCustomerOrders(
-  customerId: string
+  customerIdOrEmail?: string
 ): Promise<CustomerOrderSummary[]> {
+  let resolvedCustomerId = customerIdOrEmail;
+
+  // If customerIdOrEmail is not a customer UUID or not provided, resolve via customer email or auth
+  if (!resolvedCustomerId || resolvedCustomerId.includes("@")) {
+    const { data: authData } = await supabase.auth.getUser();
+    const emailToLookup = customerIdOrEmail?.includes("@") ? customerIdOrEmail : authData?.user?.email;
+    if (emailToLookup) {
+      const { data: customer } = await supabase
+        .from("customers")
+        .select("id")
+        .ilike("email", emailToLookup)
+        .maybeSingle();
+      if (customer) {
+        resolvedCustomerId = customer.id;
+      }
+    }
+  } else {
+    // Check if the passed ID matches a customer. If not, check if it's an auth user whose email maps to customers
+    const { data: customer } = await supabase
+      .from("customers")
+      .select("id")
+      .eq("id", resolvedCustomerId)
+      .maybeSingle();
+    if (!customer) {
+      const { data: authData } = await supabase.auth.getUser();
+      if (authData?.user?.email) {
+        const { data: matchedCustomer } = await supabase
+          .from("customers")
+          .select("id")
+          .ilike("email", authData.user.email)
+          .maybeSingle();
+        if (matchedCustomer) {
+          resolvedCustomerId = matchedCustomer.id;
+        }
+      }
+    }
+  }
+
+  if (!resolvedCustomerId) return [];
+
   const { data, error } = await supabase
     .from("orders")
     .select("id, order_number, status, payment_status, total, created_at")
-    .eq("customer_id", customerId)
+    .eq("customer_id", resolvedCustomerId)
     .order("created_at", { ascending: false });
   if (error) throw error;
 

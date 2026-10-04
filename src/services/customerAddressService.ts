@@ -1,22 +1,21 @@
 import { supabase } from "@/integrations/supabase/client";
-import type { Tables } from "@/integrations/supabase/types";
+import type { Tables, TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
+import { normalizePhone } from "./customerProfileService";
 
 type Address = Tables<"shipping_addresses">;
 
-// Phone normalization utility
-function normalizePhone(phone: string): string {
-  if (!phone) return phone;
-  const digits = phone.replace(/\D/g, "");
-  if (digits.length === 10) {
-    return `+91${digits}`;
-  }
-  if (digits.length === 11 && digits.startsWith("0")) {
-    return `+91${digits.slice(1)}`;
-  }
-  if (digits.length === 12 && digits.startsWith("91")) {
-    return `+${digits}`;
-  }
-  return phone;
+export interface SaveAddressInput {
+  recipient_name: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  postal_code: string;
+  country?: string;
+  landmark?: string | null;
+  address_type?: string;
+  is_default?: boolean;
+  address_id?: string;
 }
 
 export async function fetchAddresses(customerId: string): Promise<Address[]> {
@@ -29,10 +28,78 @@ export async function fetchAddresses(customerId: string): Promise<Address[]> {
   return data ?? [];
 }
 
+export async function saveCustomerAddress(
+  input: SaveAddressInput,
+  customerId?: string
+): Promise<{ success: boolean; address_id: string; is_default: boolean }> {
+  try {
+    const { data, error } = await supabase.rpc("save_customer_address", {
+      p_recipient_name: input.recipient_name.trim(),
+      p_phone: normalizePhone(input.phone),
+      p_address: input.address.trim(),
+      p_city: input.city.trim(),
+      p_state: input.state.trim(),
+      p_postal_code: input.postal_code.trim(),
+      p_country: input.country?.trim() || "India",
+      p_landmark: input.landmark?.trim() || null,
+      p_address_type: input.address_type?.trim() || "HOME",
+      p_set_as_default: input.is_default ?? false,
+      p_address_id: input.address_id || null,
+    });
+    if (!error && data) {
+      return data as { success: boolean; address_id: string; is_default: boolean };
+    }
+  } catch (err) {
+    console.warn("RPC save_customer_address unavailable, falling back:", err);
+  }
+
+  // Direct table operation fallback
+  if (input.address_id && customerId) {
+    const updated = await updateAddress(
+      input.address_id,
+      {
+        recipient_name: input.recipient_name,
+        phone: input.phone,
+        address: input.address,
+        city: input.city,
+        state: input.state,
+        postal_code: input.postal_code,
+        country: input.country || "India",
+        landmark: input.landmark,
+        address_type: input.address_type || "HOME",
+        is_default: input.is_default,
+      },
+      customerId
+    );
+    if (input.is_default) {
+      await setDefaultAddress(updated.id);
+    }
+    return { success: true, address_id: updated.id, is_default: !!input.is_default };
+  } else if (customerId) {
+    const created = await createAddress({
+      customer_id: customerId,
+      recipient_name: input.recipient_name,
+      phone: input.phone,
+      address: input.address,
+      city: input.city,
+      state: input.state,
+      postal_code: input.postal_code,
+      country: input.country || "India",
+      landmark: input.landmark,
+      address_type: input.address_type || "HOME",
+      is_default: input.is_default,
+    });
+    if (input.is_default) {
+      await setDefaultAddress(created.id);
+    }
+    return { success: true, address_id: created.id, is_default: !!input.is_default };
+  }
+  throw new Error("Unable to save address: missing customer identifier");
+}
+
 export async function createAddress(
   input: TablesInsert<"shipping_addresses">
 ): Promise<Address> {
-  // Normalize phone if provided
   const normalizedInput = { ...input };
   if (input.phone !== undefined && input.phone !== null && input.phone !== "") {
     normalizedInput.phone = normalizePhone(input.phone);
@@ -52,7 +119,6 @@ export async function updateAddress(
   updates: TablesUpdate<"shipping_addresses">,
   customerId: string
 ): Promise<Address> {
-  // Normalize phone if provided
   const normalizedUpdates = { ...updates };
   if (updates.phone !== undefined && updates.phone !== null && updates.phone !== "") {
     normalizedUpdates.phone = normalizePhone(updates.phone);

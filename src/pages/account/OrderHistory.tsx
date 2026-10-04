@@ -35,8 +35,8 @@ export default function OrderHistory() {
   const { user } = useAuth();
 
   const { data: orders, isLoading } = useQuery({
-    queryKey: ["customer-orders", user?.id],
-    queryFn: () => fetchCustomerOrders(user!.id),
+    queryKey: ["customer-orders", user?.email || user?.id],
+    queryFn: () => fetchCustomerOrders(user?.email || user?.id),
     enabled: !!user,
   });
 
