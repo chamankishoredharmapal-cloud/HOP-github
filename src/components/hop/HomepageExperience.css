@@ -258,57 +258,6 @@
   color: color-mix(in srgb, var(--hop-gold) 88%, var(--hop-cream));
 }
 
-.hop-material {
-  background: var(--hop-cream);
-  color: var(--hop-lac);
-  padding: clamp(7rem, 14vw, 13rem) clamp(1.25rem, 7vw, 8rem);
-}
-
-.hop-material__placeholder {
-  position: relative;
-  width: min(100%, 112rem);
-  margin: 0 auto;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--hop-lac-secondary);
-  box-shadow: 0 2rem 5rem -3rem color-mix(in srgb, var(--hop-lac) 48%, transparent);
-}
-
-.hop-material__placeholder::before {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(0deg, color-mix(in srgb, var(--hop-lac) 34%, transparent), transparent 58%);
-  content: "";
-  pointer-events: none;
-}
-
-.hop-material__placeholder::after {
-  position: absolute;
-  inset: clamp(0.75rem, 1.5vw, 1.5rem);
-  z-index: 2;
-  border: 1px solid color-mix(in srgb, var(--hop-cream) 26%, transparent);
-  content: "";
-  pointer-events: none;
-}
-
-.hop-material__placeholder-image {
-  position: absolute !important;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover;
-  object-position: center 48%;
-  filter: saturate(0.86) contrast(1.06) brightness(0.94);
-  transform: scale(1.015);
-  transition: transform 1.4s var(--hop-ease), filter 1.4s ease;
-}
-
-.hop-material:hover .hop-material__placeholder-image {
-  filter: saturate(0.98) contrast(1.06) brightness(0.98);
-  transform: scale(1.035);
-}
-
 .hop-collections {
   background: var(--hop-cream);
   color: var(--hop-lac);
@@ -1133,7 +1082,6 @@
     margin-top: 1.7rem;
   }
 
-  .hop-material,
   .hop-ownership,
   .hop-journal {
     padding: 4.5rem 1.25rem 5rem;
@@ -1141,10 +1089,6 @@
 
   .hop-collections {
     padding: 4.5rem 0 5rem;
-  }
-
-  .hop-material__placeholder {
-    aspect-ratio: 4 / 5;
   }
 
   .hop-collections__heading,
@@ -1341,7 +1285,6 @@
   }
 
   .hop-philosophy,
-  .hop-material,
   .hop-ownership,
   .hop-journal {
     padding-top: 3rem;
@@ -1371,7 +1314,6 @@
 
   .hop-threshold__film img,
   .hop-threshold__film video,
-  .hop-material__placeholder-image,
   .hop-collection-film__media img,
   .hop-collection-film__media video,
   .hop-craft__image img,

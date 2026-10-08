@@ -178,7 +178,7 @@ const Threshold = () => {
         <p className="hop-threshold__supporting">Five ways of wearing tradition — considered deeply, chosen quietly.</p>
         <div className="hop-threshold__actions">
           <ArrowLink to="/collections" light>Enter the House</ArrowLink>
-          <a className="hop-scroll-cue" href="#philosophy">
+          <a className="hop-scroll-cue" href="#collections">
             <span>Descend into the house</span>
             <ArrowDown className="h-3.5 w-3.5" aria-hidden="true" />
           </a>
@@ -196,20 +196,6 @@ const Philosophy = () => (
       <p className="hop-reading hop-philosophy__body">We make room for the intelligence of considered making, the patience of cloth and the woman who chooses what to carry.</p>
       <p className="hop-reading hop-philosophy__body">Not a season. Not a trend. A relationship with what lasts.</p>
     </div>
-  </section>
-);
-
-const Material = () => (
-  <section id="material" className="hop-material" aria-label="Material photography placeholder">
-    <figure className="hop-material__placeholder">
-      <EditorialImage
-        src={fabricStill}
-        assetPath="src/assets/hop-fabric.jpg"
-        alt="Temporary HOP material photography placeholder showing silk weave, zari and textile detail"
-        sizes="(max-width: 768px) 100vw, 88vw"
-        className="hop-material__placeholder-image"
-      />
-    </figure>
   </section>
 );
 
@@ -525,11 +511,10 @@ export const HomepageExperience = () => {
   return (
     <main className="hop-home">
       <Threshold />
-      <Philosophy />
-      <Material />
       <CollectionRooms />
-      <Craft />
       <ProductDesire />
+      <Craft />
+      <Philosophy />
       <Ownership />
       <Journal />
       <Invitation />
