@@ -49,6 +49,11 @@ const DEFAULT_SETTINGS: StoreSettings = {
     require_2fa: false,
     session_timeout_minutes: 120,
   },
+  homepage_cinematic_video: {
+    video_url: "",
+    poster_url: "",
+    alt_text: "House of Padmavati — Homepage cinematic film",
+  },
 };
 
 export async function fetchSettings(): Promise<StoreSettings> {

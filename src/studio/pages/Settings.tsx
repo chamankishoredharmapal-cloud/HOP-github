@@ -1,12 +1,15 @@
-import { useState, useEffect, type ComponentType, type ReactNode } from "react";
-import { Save, Store, Phone, Truck, Search, Shield } from "lucide-react";
+import { useState, useEffect, useRef, type ComponentType, type ReactNode, type ChangeEvent } from "react";
+import { Save, Store, Phone, Truck, Search, Shield, Film } from "lucide-react";
 import { useSettings, useSaveSettings } from "../hooks/useSettings";
+import { useUploadMedia } from "../hooks/useMedia";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { validateVideoFile } from "../utils/videoValidation";
 import type { StoreSettings } from "../types/settings";
 
 const CURRENCIES = ["INR", "USD", "EUR", "GBP"];
@@ -62,22 +65,66 @@ export default function Settings() {
     }
   }, [settings]);
 
-  const update = <K extends keyof StoreSettings>(
-    section: K,
-    field: keyof StoreSettings[K],
-    value: string | number | boolean | string[],
-  ) => {
-    if (!form) return;
-    setForm({
-      ...form,
-      [section]: { ...form[section], [field]: value },
-    });
-  };
+  const update = useCallback(
+    <K extends keyof StoreSettings>(
+      section: K,
+      field: keyof StoreSettings[K],
+      value: string | number | boolean | string[],
+    ) => {
+      if (!form) return;
+      setForm({
+        ...form,
+        [section]: { ...form[section], [field]: value },
+      });
+    },
+    [form],
+  );
 
   const handleSave = () => {
     if (!form) return;
     saveSettings.mutate(form);
   };
+
+  // Cinematic video upload
+  const videoInputRef = useRef<HTMLInputElement>(null);
+  const uploadMedia = useUploadMedia();
+
+  const handleCinematicVideoUpload = useCallback(
+    async (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      toast.info("Validating film specifications...");
+      const validation = await validateVideoFile(file);
+      if (!validation.isValid) {
+        toast.error(validation.error || "Video rejected");
+        if (videoInputRef.current) videoInputRef.current.value = "";
+        return;
+      }
+
+      if (validation.warning) {
+        toast.warning(validation.warning);
+      }
+
+      try {
+        const result = await uploadMedia.mutateAsync({ file, targetBucket: "HOP-films" });
+        update("homepage_cinematic_video", "video_url", result.url);
+        // Use the extracted poster if available
+        if (validation.posterFile) {
+          // Upload poster as well
+          const posterResult = await uploadMedia.mutateAsync({
+            file: validation.posterFile,
+            targetBucket: "HOP-films",
+          });
+          update("homepage_cinematic_video", "poster_url", posterResult.url);
+        }
+        toast.success("Cinematic video uploaded successfully");
+      } finally {
+        if (videoInputRef.current) videoInputRef.current.value = "";
+      }
+    },
+    [uploadMedia, update],
+  );
 
   if (isLoading) {
     return (
@@ -121,6 +168,7 @@ export default function Settings() {
           <TabsTrigger value="shipping"><Truck className="h-4 w-4 mr-1.5" />Shipping</TabsTrigger>
           <TabsTrigger value="seo"><Search className="h-4 w-4 mr-1.5" />SEO</TabsTrigger>
           <TabsTrigger value="security"><Shield className="h-4 w-4 mr-1.5" />Security</TabsTrigger>
+          <TabsTrigger value="cinematic"><Film className="h-4 w-4 mr-1.5" />Cinematic Video</TabsTrigger>
         </TabsList>
 
         <TabsContent value="brand" className="mt-6 space-y-6">
@@ -382,6 +430,56 @@ export default function Settings() {
                 ))}
               </div>
             </Field>
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="cinematic" className="mt-6 space-y-6">
+          <SectionCard title="Homepage Cinematic Video" icon={Film}>
+            <p className="text-xs text-muted-foreground mb-4">
+              Full-bleed cinematic film displayed between the hero and collection discovery on the homepage.
+              Upload an MP4 (H.264) file up to 30MB, 60s max duration. A poster frame will be extracted automatically.
+            </p>
+            <Field label="Video URL">
+              <Input
+                value={form.homepage_cinematic_video.video_url}
+                onChange={(e) => update("homepage_cinematic_video", "video_url", e.target.value)}
+                placeholder="https://.../HOP-films/your-film.mp4"
+              />
+            </Field>
+            <Field label="Poster URL (optional)">
+              <Input
+                value={form.homepage_cinematic_video.poster_url}
+                onChange={(e) => update("homepage_cinematic_video", "poster_url", e.target.value)}
+                placeholder="https://.../HOP-films/your-film-poster.jpg"
+              />
+            </Field>
+            <Field label="Alt Text">
+              <Input
+                value={form.homepage_cinematic_video.alt_text}
+                onChange={(e) => update("homepage_cinematic_video", "alt_text", e.target.value)}
+                placeholder="House of Padmavati — Homepage cinematic film"
+              />
+            </Field>
+            <div className="flex items-center gap-2 pt-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  if (videoInputRef.current) videoInputRef.current.click();
+                }}
+                disabled={saveSettings.isPending}
+              >
+                <Film className="h-3.5 w-3.5 mr-1.5" />
+                Upload Video
+              </Button>
+              <input
+                ref={videoInputRef}
+                type="file"
+                accept="video/mp4,video/webm"
+                className="hidden"
+                onChange={handleCinematicVideoUpload}
+              />
+            </div>
           </SectionCard>
         </TabsContent>
       </Tabs>

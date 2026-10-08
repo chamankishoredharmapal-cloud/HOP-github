@@ -4,6 +4,7 @@ import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Film } from "@/components/hop/Film";
+import { HomepageCinematicVideo } from "@/components/hop/HomepageCinematicVideo";
 import { Monogram } from "@/components/hop/Monogram";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
@@ -13,6 +14,7 @@ import { COLLECTION_WORLDS, getWorld, getCollectionDisplayName, getCollectionRoo
 import { fetchCollections } from "@/services/collectionService";
 import { fetchFeaturedCollection } from "@/services/collectionService";
 import { fetchFeaturedProduct, type StorefrontProduct } from "@/services/productService";
+import { fetchPublicStoreSettings } from "@/services/settingsService";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import "@/components/hop/HomepageExperience.css";
 
@@ -279,10 +281,6 @@ const CollectionRooms = () => {
 
   return (
     <section id="collections" className="hop-collections" aria-labelledby="collections-title">
-      <div className="hop-collections__heading">
-        <h2 id="collections-title" className="hop-display hop-collections__title">Five ways of<br />wearing tradition.</h2>
-        <p className="hop-reading hop-collections__body">Not five brands. Five ways of being present.</p>
-      </div>
       <div className="hop-collection-films" aria-label="HOP collection worlds">
         {chapters.map(({ world, record }, index) => (
           <CollectionFilmChapter
@@ -508,9 +506,21 @@ const Invitation = () => (
 );
 
 export const HomepageExperience = () => {
+  const { data: storeSettings } = useQuery({
+    queryKey: ["storefront", "settings"],
+    queryFn: fetchPublicStoreSettings,
+  });
+
+  const cinematicVideo = storeSettings?.homepage_cinematic_video;
+
   return (
     <main className="hop-home">
       <Threshold />
+      <HomepageCinematicVideo
+        src={cinematicVideo?.video_url || undefined}
+        poster={cinematicVideo?.poster_url || undefined}
+        alt={cinematicVideo?.alt_text || "House of Padmavati — Homepage cinematic film"}
+      />
       <CollectionRooms />
       <ProductDesire />
       <Craft />

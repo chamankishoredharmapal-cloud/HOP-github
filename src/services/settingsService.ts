@@ -19,6 +19,11 @@ export interface PublicStoreSettings {
     free_shipping_threshold: number;
     currency: string;
   };
+  homepage_cinematic_video: {
+    video_url: string;
+    poster_url: string;
+    alt_text: string;
+  };
 }
 
 export const DEFAULT_PUBLIC_SETTINGS: PublicStoreSettings = {
@@ -39,6 +44,11 @@ export const DEFAULT_PUBLIC_SETTINGS: PublicStoreSettings = {
   shipping: {
     free_shipping_threshold: 5000,
     currency: "INR",
+  },
+  homepage_cinematic_video: {
+    video_url: "",
+    poster_url: "",
+    alt_text: "House of Padmavati — Homepage cinematic film",
   },
 };
 
@@ -70,6 +80,11 @@ export async function fetchPublicStoreSettings(): Promise<PublicStoreSettings> {
       shipping: {
         free_shipping_threshold: res.shipping?.free_shipping_threshold || DEFAULT_PUBLIC_SETTINGS.shipping.free_shipping_threshold,
         currency: res.shipping?.currency || DEFAULT_PUBLIC_SETTINGS.shipping.currency,
+      },
+      homepage_cinematic_video: {
+        video_url: res.homepage_cinematic_video?.video_url || DEFAULT_PUBLIC_SETTINGS.homepage_cinematic_video.video_url,
+        poster_url: res.homepage_cinematic_video?.poster_url || DEFAULT_PUBLIC_SETTINGS.homepage_cinematic_video.poster_url,
+        alt_text: res.homepage_cinematic_video?.alt_text || DEFAULT_PUBLIC_SETTINGS.homepage_cinematic_video.alt_text,
       },
     };
   } catch (err) {

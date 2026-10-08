@@ -38,6 +38,24 @@ export async function checkMediaUsage(url: string): Promise<MediaUsageCheck> {
         references.push(`Product "${prodName}" (${p.is_primary ? "Primary Image" : "Gallery Image"})`);
       }
     }
+
+    // 3. Check settings for homepage cinematic video
+    const { data: settings } = await supabase
+      .from("settings")
+      .select("value")
+      .eq("key", "store_settings")
+      .maybeSingle();
+
+    if (settings?.value) {
+      const v = settings.value as Record<string, unknown>;
+      const homepageVideo = v.homepage_cinematic_video as Record<string, string> | undefined;
+      if (homepageVideo?.video_url === url) {
+        references.push("Homepage Cinematic Video");
+      }
+      if (homepageVideo?.poster_url === url) {
+        references.push("Homepage Cinematic Video Poster");
+      }
+    }
   } catch (err) {
     console.error("Failed to check media usage:", err);
   }

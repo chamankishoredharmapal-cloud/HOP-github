@@ -1348,6 +1348,135 @@
   text-shadow: 0 0.08em 1.1em color-mix(in srgb, var(--hop-lac) 40%, transparent);
 }
 
+.hop-cinematic-video {
+  background: var(--hop-lac);
+  color: var(--hop-cream);
+}
+
+.hop-cinematic-video__frame {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  max-height: 85vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hop-cinematic-video__poster-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hop-cinematic-video__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  filter: saturate(0.82) contrast(1.05) brightness(0.72);
+  transform: scale(1.03);
+  transition: transform 1.8s var(--hop-ease), filter 1.8s ease;
+}
+
+.hop-cinematic-video__placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--hop-lac);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hop-cinematic-video__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--hop-lac) 48%, transparent) 0%, transparent 22%, transparent 78%, color-mix(in srgb, var(--hop-lac) 68%, transparent) 100%),
+    radial-gradient(circle at 50% 50%, transparent 0%, color-mix(in srgb, var(--hop-lac) 28%, transparent) 100%);
+  pointer-events: none;
+}
+
+.hop-cinematic-video__video-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  transition: opacity 700ms var(--hop-ease);
+}
+
+.hop-cinematic-video__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.hop-cinematic-video__controls {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 4;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--hop-lac) 85%, transparent);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--hop-gold) 35%, transparent);
+  color: var(--hop-cream);
+  transition: background 300ms ease, border-color 300ms ease, transform 200ms ease;
+}
+
+.hop-cinematic-video__controls:hover,
+.hop-cinematic-video__controls:focus-visible {
+  background: color-mix(in srgb, var(--hop-lac) 95%, transparent);
+  border-color: var(--hop-gold);
+  transform: scale(1.05);
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .hop-cinematic-video__frame {
+    min-height: 55vh;
+    max-height: 75vh;
+  }
+  .hop-cinematic-video__controls {
+    bottom: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hop-cinematic-video__frame {
+    min-height: 50vh;
+    max-height: 70vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hop-cinematic-video__poster {
+    transform: none;
+    transition: none;
+  }
+  .hop-cinematic-video__video-layer {
+    transition: none;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hop-cinematic-video__frame {
+    min-height: 120svh;
+  }
+}
+
 @media (max-width: 768px) {
   .hop-collection-film-chapter--yugen .hop-collection-film__name {
     margin-top: 1.5rem;

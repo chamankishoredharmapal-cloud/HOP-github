@@ -5,6 +5,7 @@ export interface StoreSettings {
   seo: SeoSettings;
   inventory: InventorySettings;
   security: SecuritySettings;
+  homepage_cinematic_video: HomepageCinematicVideoSettings;
 }
 
 export interface BrandSettings {
@@ -55,4 +56,10 @@ export interface SecuritySettings {
   allowed_roles: string[];
   require_2fa: boolean;
   session_timeout_minutes: number;
+}
+
+export interface HomepageCinematicVideoSettings {
+  video_url: string;
+  poster_url: string;
+  alt_text: string;
 }
