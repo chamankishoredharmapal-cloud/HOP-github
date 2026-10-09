@@ -208,5 +208,169 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
     await expect(footerBrand).toBeVisible();
     await expect(footerBrand).toContainText("The House of Padmavati");
   });
+
+  test("Phase 3 Stage 1 Content Infrastructure: anonymous visitor can read published site sections via get_published_site_sections RPC", async ({ request }) => {
+    const res = await request.post(`${url}/rest/v1/rpc/get_published_site_sections`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: { p_page: "home" },
+    });
+
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(body).toBeDefined();
+
+    // Must contain grounded baseline sections
+    expect(body["home.hero"]).toBeDefined();
+    expect(body["home.hero"].title).toBe("Saree. Time. You.");
+    expect(body["home.craft"]).toBeDefined();
+    expect(body["home.craft"].attribution).toBe("Gangamma");
+    expect(body["home.philosophy"]).toBeDefined();
+    expect(body["home.ownership"]).toBeDefined();
+    expect(body["home.invitation"]).toBeDefined();
+
+    // Critical security check: draft payloads and audit metadata must NOT be leaked
+    expect(body["home.hero"].draft_payload).toBeUndefined();
+    expect(body["home.hero"].version).toBeUndefined();
+    expect(body["home.hero"].published_by).toBeUndefined();
+  });
+
+  test("Phase 3 Stage 1 Content Infrastructure: published_sections view exposes only published fields to anonymous visitors", async ({ request }) => {
+    const res = await request.get(`${url}/rest/v1/published_sections?select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+
+    expect(res.status()).toBe(200);
+    const rows = await res.json();
+    expect(Array.isArray(rows)).toBe(true);
+    expect(rows.length).toBeGreaterThanOrEqual(5);
+
+    for (const row of rows) {
+      expect(row.key).toBeDefined();
+      expect(row.page_name).toBeDefined();
+      expect(row.section_type).toBeDefined();
+      expect(row.display_name).toBeDefined();
+      expect(row.published_payload).toBeDefined();
+      expect(row.published_at).toBeDefined();
+
+      // Ensure no draft or internal administrative metadata is exposed
+      expect(row.draft_payload).toBeUndefined();
+      expect(row.version).toBeUndefined();
+      expect(row.has_unpublished_changes).toBeUndefined();
+      expect(row.published_by).toBeUndefined();
+      expect(row.updated_by).toBeUndefined();
+    }
+  });
+
+  test("Phase 3 Stage 1 Content Infrastructure: direct table SELECT on site_sections is denied to anonymous callers by RLS", async ({ request }) => {
+    const res = await request.get(`${url}/rest/v1/site_sections?select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+
+    // RLS policy site_sections_admin_all restricts access exclusively to admins (returns 0 rows)
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(Array.isArray(body)).toBe(true);
+    expect(body.length).toBe(0);
+  });
+
+  test("Phase 3 Stage 1 Content Infrastructure: direct table SELECT on site_section_revisions is denied to anonymous callers by RLS", async ({ request }) => {
+    const res = await request.get(`${url}/rest/v1/site_section_revisions?select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+
+    // Revisions ledger must be completely invisible to anonymous callers
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(Array.isArray(body)).toBe(true);
+    expect(body.length).toBe(0);
+  });
+
+  test("Phase 3 Stage 1 Content Infrastructure: unauthorized callers cannot execute administrative mutation RPCs", async ({ request }) => {
+    // 1. Attempt save_site_section_draft
+    const saveRes = await request.post(`${url}/rest/v1/rpc/save_site_section_draft`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_key: "home.hero",
+        p_expected_version: 1,
+        p_draft_payload: { title: "Malicious" },
+      },
+    });
+    expect(saveRes.status()).toBe(401);
+
+    // 2. Attempt publish_site_section
+    const pubRes = await request.post(`${url}/rest/v1/rpc/publish_site_section`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_key: "home.hero",
+        p_expected_version: 1,
+      },
+    });
+    expect(pubRes.status()).toBe(401);
+
+    // 3. Attempt restore_site_section_revision
+    const restRes = await request.post(`${url}/rest/v1/rpc/restore_site_section_revision`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_key: "home.hero",
+        p_revision_number: 1,
+        p_expected_version: 1,
+      },
+    });
+    expect(restRes.status()).toBe(401);
+
+    // 4. Attempt get_section_revisions
+    const revRes = await request.post(`${url}/rest/v1/rpc/get_section_revisions`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_key: "home.hero",
+      },
+    });
+    expect(revRes.status()).toBe(401);
+  });
+
+  test("Phase 3 Stage 1 Content Infrastructure: direct table mutation on site_sections is blocked for unprivileged callers", async ({ request }) => {
+    const res = await request.post(`${url}/rest/v1/site_sections`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        key: "hack.section",
+        page_name: "hack",
+        section_type: "hero_banner",
+        display_name: "Hacked",
+        version: 1,
+        draft_payload: { title: "Hacked", alt_text: "Hacked" },
+        published_payload: { title: "Hacked", alt_text: "Hacked" },
+      },
+    });
+
+    expect([401, 403]).toContain(res.status());
+  });
 });
+
 
