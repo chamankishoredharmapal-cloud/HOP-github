@@ -16,6 +16,14 @@ import { fetchFeaturedCollection } from "@/services/collectionService";
 import { fetchFeaturedProduct, type StorefrontProduct } from "@/services/productService";
 import { fetchPublicStoreSettings } from "@/services/settingsService";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
+import { useSiteSections } from "@/hooks/useSiteSections";
+import type {
+  HeroBannerPayload,
+  CraftStoryPayload,
+  PhilosophyPayload,
+  NoteCardsPayload,
+  InvitationPayload,
+} from "@/types/siteSections";
 import "@/components/hop/HomepageExperience.css";
 
 import heroStill from "@/assets/hop-hero.jpg";
@@ -149,7 +157,7 @@ const ArrowLink = ({ to, children, light = false }: { to: string; children: Reac
   </Link>
 );
 
-const Threshold = () => {
+const Threshold = ({ section }: { section?: HeroBannerPayload }) => {
   const queryClient = useQueryClient();
   const { data: featured } = useQuery({
     queryKey: ["storefront", "featuredCollection"],
@@ -158,16 +166,22 @@ const Threshold = () => {
 
   const initialFeatured = queryClient.getQueryData<{ hero_video_url?: string; hero_image_url?: string; name?: string }>(["storefront", "featuredCollection"]);
   const effectiveFeatured = initialFeatured || featured;
-  const poster = effectiveFeatured?.hero_image_url || heroStill;
-  const collectionName = effectiveFeatured?.name ?? "House of Padmavati";
-  const videoSrc = effectiveFeatured?.hero_video_url || COLLECTION_VIDEOS.kalyani;
+
+  const poster = section?.poster_url?.trim() || effectiveFeatured?.hero_image_url || heroStill;
+  const collectionName = section?.eyebrow?.trim() || effectiveFeatured?.name || "House of Padmavati";
+  const videoSrc = section?.video_url?.trim() || effectiveFeatured?.hero_video_url || COLLECTION_VIDEOS.kalyani;
+  const title = section?.title || "Saree. Time. You.";
+  const subtitle = section?.subtitle || "Five ways of wearing tradition — considered deeply, chosen quietly.";
+  const primaryCta = section?.primary_cta || { label: "Enter the House", href: "/collections" };
+  const secondaryCta = section?.secondary_cta || { label: "Descend into the house", href: "#collections" };
+  const alt = section?.alt_text || `${collectionName} — House of Padmavati collection film`;
 
   return (
     <section className="hop-threshold" aria-labelledby="threshold-title">
       <Film
         src={videoSrc}
         poster={poster}
-        alt={`${collectionName} — House of Padmavati collection film`}
+        alt={alt}
         className="hop-threshold__film"
         preload="metadata"
         priority
@@ -179,13 +193,13 @@ const Threshold = () => {
           <span>{collectionName}</span>
         </div>
         <h1 id="threshold-title" className="hop-display hop-threshold__title">
-          Saree. Time. You.
+          {title}
         </h1>
-        <p className="hop-threshold__supporting">Five ways of wearing tradition — considered deeply, chosen quietly.</p>
+        <p className="hop-threshold__supporting">{subtitle}</p>
         <div className="hop-threshold__actions">
-          <ArrowLink to="/collections" light>Enter the House</ArrowLink>
-          <a className="hop-scroll-cue" href="#collections">
-            <span>Descend into the house</span>
+          <ArrowLink to={primaryCta.href} light>{primaryCta.label}</ArrowLink>
+          <a className="hop-scroll-cue" href={secondaryCta.href}>
+            <span>{secondaryCta.label}</span>
             <ArrowDown className="h-3.5 w-3.5" aria-hidden="true" />
           </a>
         </div>
@@ -194,16 +208,24 @@ const Threshold = () => {
   );
 };
 
-const Philosophy = () => (
-  <section id="philosophy" className="hop-philosophy" aria-labelledby="philosophy-title">
-    <div className="hop-philosophy__rule" aria-hidden="true" />
-    <div className="hop-philosophy__copy">
-      <h2 id="philosophy-title" className="hop-display hop-philosophy__title">A House,<br />Not a Shop.</h2>
-      <p className="hop-reading hop-philosophy__body">We make room for the intelligence of considered making, the patience of cloth and the woman who chooses what to carry.</p>
-      <p className="hop-reading hop-philosophy__body">Not a season. Not a trend. A relationship with what lasts.</p>
-    </div>
-  </section>
-);
+const Philosophy = ({ section }: { section?: PhilosophyPayload }) => {
+  const title = section?.title || "A House, Not a Shop.";
+  const lede = section?.lede || "We make room for the intelligence of considered making, the patience of cloth and the woman who chooses what to carry.";
+  const closing = section?.closing || "Not a season. Not a trend. A relationship with what lasts.";
+
+  return (
+    <section id="philosophy" className="hop-philosophy" aria-labelledby="philosophy-title">
+      <div className="hop-philosophy__rule" aria-hidden="true" />
+      <div className="hop-philosophy__copy">
+        <h2 id="philosophy-title" className="hop-display hop-philosophy__title">{title}</h2>
+        <p className="hop-reading hop-philosophy__body">{lede}</p>
+        {closing && (
+          <p className="hop-reading hop-philosophy__body">{closing}</p>
+        )}
+      </div>
+    </section>
+  );
+};
 
 const CollectionFilmChapter = ({
   world,
@@ -299,30 +321,43 @@ const CollectionRooms = () => {
   );
 };
 
-const Craft = () => (
-  <section id="craft" className="hop-craft" aria-labelledby="craft-title">
-    <div className="hop-craft__image">
-      <img
-        src="/content/weaver-portrait/gangamma-molakalmuru/hero.jpg"
-        alt="Gangamma at her pit loom, morning light from the window behind her"
-        loading="lazy"
-        decoding="async"
-        onError={(event) => {
-          event.currentTarget.src = heroStill;
-        }}
-        className="h-full w-full object-cover"
-      />
-      <p className="hop-craft__caption">Gangamma at her pit loom · Molakalmuru · 6:30 AM</p>
-    </div>
-    <div className="hop-craft__copy">
-      <h2 id="craft-title" className="hop-display hop-craft__title">Detail is<br />part of the design.</h2>
-      <p className="hop-reading hop-craft__body">Before a saree reaches the wardrobe, it passes through a series of considered decisions.</p>
-      <blockquote className="hop-craft__quote">“The border is the signature. Without it, the saree is a stranger.”<cite>— Gangamma</cite></blockquote>
-      <p className="hop-craft__fact">Molakalmuru, Karnataka · Temple border weaving · Fourth generation</p>
-      <ArrowLink to="/journal/gangamma-molakalmuru" light>Meet the makers</ArrowLink>
-    </div>
-  </section>
-);
+const Craft = ({ section }: { section?: CraftStoryPayload }) => {
+  const imageUrl = section?.image_url || "/content/weaver-portrait/gangamma-molakalmuru/hero.jpg";
+  const altText = section?.alt_text || "Gangamma at her pit loom, morning light from the window behind her";
+  const caption = section?.caption || "Gangamma at her pit loom · Molakalmuru · 6:30 AM";
+  const title = section?.title || "Detail is part of the design.";
+  const lede = section?.lede || "Before a saree reaches the wardrobe, it passes through a series of considered decisions.";
+  const quote = section?.quote || "The border is the signature. Without it, the saree is a stranger.";
+  const cleanQuote = quote.replace(/^[“"']+|[”"']+$/g, "");
+  const attribution = section?.attribution || "Gangamma";
+  const craftFacts = section?.craft_facts || "Molakalmuru, Karnataka · Temple border weaving · Fourth generation";
+  const cta = section?.cta || { label: "Meet the makers", href: "/journal/gangamma-molakalmuru" };
+
+  return (
+    <section id="craft" className="hop-craft" aria-labelledby="craft-title">
+      <div className="hop-craft__image">
+        <img
+          src={imageUrl}
+          alt={altText}
+          loading="lazy"
+          decoding="async"
+          onError={(event) => {
+            event.currentTarget.src = heroStill;
+          }}
+          className="h-full w-full object-cover"
+        />
+        <p className="hop-craft__caption">{caption}</p>
+      </div>
+      <div className="hop-craft__copy">
+        <h2 id="craft-title" className="hop-display hop-craft__title">{title}</h2>
+        <p className="hop-reading hop-craft__body">{lede}</p>
+        <blockquote className="hop-craft__quote">“{cleanQuote}”<cite>— {attribution}</cite></blockquote>
+        <p className="hop-craft__fact">{craftFacts}</p>
+        <ArrowLink to={cta.href} light>{cta.label}</ArrowLink>
+      </div>
+    </section>
+  );
+};
 
 const AddToBag = ({ product }: { product: StorefrontProduct }) => {
   const { addItem } = useCart();
@@ -423,26 +458,40 @@ const ProductDesire = () => {
   );
 };
 
-const Ownership = () => (
-  <section id="ownership" className="hop-ownership" aria-labelledby="ownership-title">
-    <div className="hop-ownership__heading">
-      <h2 id="ownership-title" className="hop-display hop-ownership__title">Wear it slowly.<br />Keep it long.</h2>
-      <p className="hop-reading hop-ownership__body">A first drape, a simple ritual, a lifetime of care. Ownership is part of the beauty.</p>
-    </div>
-    <div className="hop-ownership__notes">
-      {HOUSE_NOTES.map((note) => (
-        <article key={note.label} className="hop-ownership-note">
-          <div>
-            <p className="hop-ownership-note__label">{note.label}</p>
-            <h3 className="hop-editorial-name">{note.title}</h3>
-            <p className="hop-reading">{note.text}</p>
-            <ArrowLink to={note.href}>{note.link}</ArrowLink>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-);
+const Ownership = ({ section }: { section?: NoteCardsPayload }) => {
+  const heading = section?.heading || "Wear it slowly. Keep it long.";
+  const subheading = section?.subheading || "A first drape, a simple ritual, a lifetime of care. Ownership is part of the beauty.";
+  const cards = (section?.cards && section.cards.length > 0)
+    ? section.cards
+    : HOUSE_NOTES.map((n) => ({
+        label: n.label,
+        title: n.title,
+        text: n.text,
+        link_label: n.link,
+        href: n.href,
+      }));
+
+  return (
+    <section id="ownership" className="hop-ownership" aria-labelledby="ownership-title">
+      <div className="hop-ownership__heading">
+        <h2 id="ownership-title" className="hop-display hop-ownership__title">{heading}</h2>
+        <p className="hop-reading hop-ownership__body">{subheading}</p>
+      </div>
+      <div className="hop-ownership__notes">
+        {cards.map((note) => (
+          <article key={note.label} className="hop-ownership-note">
+            <div>
+              <p className="hop-ownership-note__label">{note.label}</p>
+              <h3 className="hop-editorial-name">{note.title}</h3>
+              <p className="hop-reading">{note.text}</p>
+              <ArrowLink to={note.href}>{note.link_label || (note as unknown as { link: string }).link}</ArrowLink>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};
 
 const Journal = () => {
   const [active, setActive] = useState(0);
@@ -499,21 +548,33 @@ const Journal = () => {
   );
 };
 
-const Invitation = () => (
-  <section className="hop-invitation" aria-labelledby="invitation-title">
-    <div className="hop-invitation__glow" aria-hidden="true" />
-    <div className="hop-invitation__content">
-      <Monogram variant="signature" className="hop-invitation__mark" />
-      <h2 id="invitation-title" className="hop-display hop-invitation__title">Come in quietly.<br />Choose slowly.</h2>
-      <p className="hop-reading hop-invitation__body">There is no rush here. Explore the collections, or begin a conversation with the house.</p>
-      <div className="hop-invitation__actions">
-        <ArrowLink to="/collections" light>Explore Collections</ArrowLink>
-        <ArrowLink to="/journal" light>House Letters</ArrowLink>
-        <ArrowLink to="/customer-care" light>Contact / Conversation</ArrowLink>
+const Invitation = ({ section }: { section?: InvitationPayload }) => {
+  const title = section?.title || "Come in quietly. Choose slowly.";
+  const body = section?.body || "There is no rush here. Explore the collections, or begin a conversation with the house.";
+  const links = (section?.links && section.links.length > 0)
+    ? section.links
+    : [
+        { label: "Explore Collections", href: "/collections" },
+        { label: "House Letters", href: "/journal" },
+        { label: "Contact / Conversation", href: "/customer-care" },
+      ];
+
+  return (
+    <section className="hop-invitation" aria-labelledby="invitation-title">
+      <div className="hop-invitation__glow" aria-hidden="true" />
+      <div className="hop-invitation__content">
+        <Monogram variant="signature" className="hop-invitation__mark" />
+        <h2 id="invitation-title" className="hop-display hop-invitation__title">{title}</h2>
+        <p className="hop-reading hop-invitation__body">{body}</p>
+        <div className="hop-invitation__actions">
+          {links.map((link) => (
+            <ArrowLink key={link.href + link.label} to={link.href} light>{link.label}</ArrowLink>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export const HomepageExperience = () => {
   const { data: storeSettings } = useQuery({
@@ -521,11 +582,26 @@ export const HomepageExperience = () => {
     queryFn: fetchPublicStoreSettings,
   });
 
+  const { hero, craft, philosophy, ownership, invitation, isPreview } = useSiteSections("home");
+
   const cinematicVideo = storeSettings?.homepage_cinematic_video;
 
   return (
     <main className="hop-home">
-      <Threshold />
+      {isPreview && (
+        <aside
+          role="status"
+          aria-label="Studio Draft Preview"
+          className="bg-amber-950 text-amber-200 text-xs py-2 px-4 text-center border-b border-amber-800 tracking-wider flex items-center justify-center gap-2 z-50 relative font-sans"
+        >
+          <span className="font-semibold uppercase tracking-widest text-amber-400">● Draft Preview</span>
+          <span>— Viewing unpublished drafts (Administrator only).</span>
+          <Link to="/studio/site-update" className="underline font-medium text-amber-100 hover:text-white ml-2">
+            Return to Studio
+          </Link>
+        </aside>
+      )}
+      <Threshold section={hero} />
       <HomepageCinematicVideo
         src={cinematicVideo?.video_url || undefined}
         poster={cinematicVideo?.poster_url || undefined}
@@ -533,11 +609,11 @@ export const HomepageExperience = () => {
       />
       <CollectionRooms />
       <ProductDesire />
-      <Craft />
-      <Philosophy />
-      <Ownership />
+      <Craft section={craft} />
+      <Philosophy section={philosophy} />
+      <Ownership section={ownership} />
       <Journal />
-      <Invitation />
+      <Invitation section={invitation} />
     </main>
   );
 };

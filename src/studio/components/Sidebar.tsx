@@ -8,6 +8,7 @@ import {
   Users,
   BookOpen,
   Image,
+  Globe,
   History,
   Settings,
   LogOut,
@@ -28,6 +29,7 @@ import type { StudioNavItem } from "../types";
 
 const navItems: StudioNavItem[] = [
   { label: "Dashboard", path: "/studio", icon: LayoutDashboard },
+  { label: "Site Update", path: "/studio/site-update", icon: Globe },
   { label: "Collections", path: "/studio/collections", icon: Layers },
   { label: "Products", path: "/studio/products", icon: Package },
   { label: "Media Library", path: "/studio/media", icon: Image },

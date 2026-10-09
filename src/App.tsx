@@ -61,6 +61,7 @@ const StudioJournal = lazy(() => import("./studio/pages/Journal"));
 const StudioMedia = lazy(() => import("./studio/pages/Media"));
 const StudioActivity = lazy(() => import("./studio/pages/Activity"));
 const StudioSettings = lazy(() => import("./studio/pages/Settings"));
+const StudioSiteUpdate = lazy(() => import("./studio/pages/SiteUpdate"));
 const MediaPoc = lazy(() => import("./pages/poc/MediaPoc"));
 const ColorLab = lazy(() => import("./pages/poc/ColorLab"));
 
@@ -136,6 +137,7 @@ const App = () => (
               <Route path="/studio/customers" element={<StudioRoute title="Customers"><StudioCustomers /></StudioRoute>} />
               <Route path="/studio/journal" element={<StudioRoute title="Journal"><StudioJournal /></StudioRoute>} />
               <Route path="/studio/media" element={<StudioRoute title="Media Library"><StudioMedia /></StudioRoute>} />
+              <Route path="/studio/site-update" element={<StudioRoute title="Site Update"><StudioSiteUpdate /></StudioRoute>} />
               <Route path="/studio/activity" element={<StudioRoute title="Activity & Audit Log"><StudioActivity /></StudioRoute>} />
               <Route path="/studio/settings" element={<StudioRoute title="Settings"><StudioSettings /></StudioRoute>} />
               {/* Customer account routes */}

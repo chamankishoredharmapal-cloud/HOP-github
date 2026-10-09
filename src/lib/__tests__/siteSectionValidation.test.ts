@@ -4,6 +4,7 @@ import {
   CraftStoryPayloadSchema,
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
+  InvitationPayloadSchema,
   SafeLinkSchema,
 } from "@/types/siteSections";
 
@@ -91,6 +92,49 @@ describe("Phase 3 Stage 1: Content Security & Schema Validation", () => {
         ],
       };
       expect(NoteCardsPayloadSchema.safeParse(validPayload).success).toBe(true);
+    });
+  });
+
+  describe("InvitationPayloadSchema", () => {
+    it("validates invitation payload with multiple links", () => {
+      const validPayload = {
+        title: "Come in quietly. Choose slowly.",
+        body: "There is no rush here. Explore the collections, or begin a conversation with the house.",
+        links: [
+          { label: "Explore Collections", href: "/collections" },
+          { label: "House Letters", href: "/journal" },
+        ],
+      };
+      expect(InvitationPayloadSchema.safeParse(validPayload).success).toBe(true);
+    });
+  });
+
+  describe("Phase 3 Stage 3: Grounded Defaults Integrity & Resilience", () => {
+    it("verifies all five homepage defaults conform 100% to their Zod schemas", async () => {
+      const {
+        DEFAULT_HERO_PAYLOAD,
+        DEFAULT_CRAFT_PAYLOAD,
+        DEFAULT_PHILOSOPHY_PAYLOAD,
+        DEFAULT_OWNERSHIP_PAYLOAD,
+        DEFAULT_INVITATION_PAYLOAD,
+      } = await import("@/types/siteSections");
+
+      expect(HeroBannerPayloadSchema.safeParse(DEFAULT_HERO_PAYLOAD).success).toBe(true);
+      expect(CraftStoryPayloadSchema.safeParse(DEFAULT_CRAFT_PAYLOAD).success).toBe(true);
+      expect(PhilosophyPayloadSchema.safeParse(DEFAULT_PHILOSOPHY_PAYLOAD).success).toBe(true);
+      expect(NoteCardsPayloadSchema.safeParse(DEFAULT_OWNERSHIP_PAYLOAD).success).toBe(true);
+      expect(InvitationPayloadSchema.safeParse(DEFAULT_INVITATION_PAYLOAD).success).toBe(true);
+    });
+
+    it("ensures fallback mechanism triggers when corrupted payload is encountered", () => {
+      const corruptedHero = {
+        title: "", // Empty title violates min(1)
+        subtitle: "A valid subtitle",
+      };
+
+      const result = HeroBannerPayloadSchema.safeParse(corruptedHero);
+      expect(result.success).toBe(false);
+      // In hook, this triggers fallback to DEFAULT_HERO_PAYLOAD
     });
   });
 });

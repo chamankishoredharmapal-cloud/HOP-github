@@ -484,6 +484,101 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
     });
     expect([401, 403]).toContain(restInsertRes.status());
   });
+
+  test("Phase 3 Stage 3 Homepage Content Management: get_published_site_sections('home') returns all 5 canonical sections with validated payloads", async ({ request }) => {
+    const res = await request.post(`${url}/rest/v1/rpc/get_published_site_sections`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_page: "home",
+      },
+    });
+
+    expect(res.status()).toBe(200);
+    const sections = await res.json();
+
+    // Verify all 5 homepage sections are present in public response
+    expect(sections["home.hero"]).toBeDefined();
+    expect(sections["home.craft"]).toBeDefined();
+    expect(sections["home.philosophy"]).toBeDefined();
+    expect(sections["home.ownership"]).toBeDefined();
+    expect(sections["home.invitation"]).toBeDefined();
+
+    // Check payload attributes
+    expect(sections["home.hero"].title).toBeTruthy();
+    expect(sections["home.hero"].primary_cta.label).toBeTruthy();
+    expect(sections["home.hero"].primary_cta.href).toBeTruthy();
+
+    expect(sections["home.craft"].title).toBeTruthy();
+    expect(sections["home.craft"].image_url).toBeTruthy();
+    expect(sections["home.craft"].attribution).toBeTruthy();
+
+    expect(sections["home.philosophy"].title).toBeTruthy();
+    expect(sections["home.philosophy"].lede).toBeTruthy();
+
+    expect(sections["home.ownership"].heading).toBeTruthy();
+    expect(Array.isArray(sections["home.ownership"].cards)).toBe(true);
+    expect(sections["home.ownership"].cards.length).toBeGreaterThanOrEqual(1);
+
+    expect(sections["home.invitation"].title).toBeTruthy();
+    expect(Array.isArray(sections["home.invitation"].links)).toBe(true);
+  });
+
+  test("Phase 3 Stage 3 Homepage Content Management: draft isolation — anonymous callers cannot observe draft payloads", async ({ request }) => {
+    // 1. Direct REST query to site_sections must return 0 rows to anonymous caller
+    const restRes = await request.get(`${url}/rest/v1/site_sections?select=key,draft_payload,published_payload`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+    expect(restRes.status()).toBe(200);
+    const rows = await restRes.json();
+    expect(rows).toEqual([]);
+
+    // 2. Direct REST query to site_section_revisions must return 0 rows to anonymous caller
+    const revRes = await request.get(`${url}/rest/v1/site_section_revisions?select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+    expect(revRes.status()).toBe(200);
+    const revRows = await revRes.json();
+    expect(revRows).toEqual([]);
+  });
+
+  test("Phase 3 Stage 3 Homepage Content Management: unauthenticated callers are forbidden from executing draft and publish mutations", async ({ request }) => {
+    // 1. save_site_section_draft
+    const saveRes = await request.post(`${url}/rest/v1/rpc/save_site_section_draft`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_key: "home.hero",
+        p_expected_version: 1,
+        p_draft_payload: { title: "Malicious Tampering" },
+      },
+    });
+    expect(saveRes.status()).toBe(401);
+
+    // 2. publish_site_section
+    const pubRes = await request.post(`${url}/rest/v1/rpc/publish_site_section`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_key: "home.hero",
+        p_expected_version: 1,
+        p_change_summary: "Unauthorized publish attempt",
+      },
+    });
+    expect(pubRes.status()).toBe(401);
+  });
 });
 
 
