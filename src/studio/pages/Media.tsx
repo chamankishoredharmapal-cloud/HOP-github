@@ -536,9 +536,14 @@ export default function Media() {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
-              className="text-xs h-8 bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              disabled={!!usageCheck?.inUse}
+              className={`text-xs h-8 ${
+                usageCheck?.inUse
+                  ? "opacity-50 cursor-not-allowed bg-muted text-muted-foreground"
+                  : "bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              }`}
             >
-              {usageCheck?.inUse ? "Remove Anyway" : "Confirm Delete"}
+              {usageCheck?.inUse ? "Cannot Delete (In Active Use)" : "Confirm Delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -371,6 +371,120 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
 
     expect([401, 403]).toContain(res.status());
   });
+
+  test("Phase 3 Stage 2 Media Catalog: anonymous callers can read active media assets with preserved public URLs", async ({ request }) => {
+    const res = await request.get(`${url}/rest/v1/media_assets?select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+
+    expect(res.status()).toBe(200);
+    const assets = await res.json();
+    expect(Array.isArray(assets)).toBe(true);
+    expect(assets.length).toBeGreaterThanOrEqual(9);
+
+    // Verify both images and videos are registered
+    const videos = assets.filter((a: { media_type: string }) => a.media_type === "video");
+    const images = assets.filter((a: { media_type: string }) => a.media_type === "image");
+    expect(videos.length).toBeGreaterThanOrEqual(5);
+    expect(images.length).toBeGreaterThanOrEqual(4);
+
+    // Verify preserved URL format and attributes
+    for (const asset of assets) {
+      expect(asset.public_url).toMatch(/^https:\/\/.+/);
+      expect(asset.status).toBe("active");
+      expect(asset.bucket_id).toMatch(/^(product-images|HOP-films)$/);
+    }
+  });
+
+  test("Phase 3 Stage 2 Media Catalog: check_media_asset_usage accurately identifies in-use assets", async ({ request }) => {
+    // 1. Probe a known in-use collection film
+    const res = await request.post(`${url}/rest/v1/rpc/check_media_asset_usage`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_url: "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/HOP-films/KALYANI+1.mp4",
+      },
+    });
+
+    expect(res.status()).toBe(200);
+    const usage = await res.json();
+    expect(usage.in_use).toBe(true);
+    expect(Array.isArray(usage.references)).toBe(true);
+    expect(usage.references.length).toBeGreaterThanOrEqual(1);
+
+    // 2. Probe an unreferenced URL
+    const resUnused = await request.post(`${url}/rest/v1/rpc/check_media_asset_usage`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_url: "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/HOP-films/non-existent.mp4",
+      },
+    });
+
+    expect(resUnused.status()).toBe(200);
+    const unusedUsage = await resUnused.json();
+    expect(unusedUsage.in_use).toBe(false);
+    expect(unusedUsage.references.length).toBe(0);
+  });
+
+  test("Phase 3 Stage 2 Media Catalog: unauthorized callers cannot execute media mutation RPCs or REST mutations", async ({ request }) => {
+    // 1. Attempt register_media_asset RPC
+    const regRes = await request.post(`${url}/rest/v1/rpc/register_media_asset`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_bucket_id: "product-images",
+        p_storage_path: "malicious.jpg",
+        p_public_url: "https://kbvjmcnaaogkbnerjcoc.supabase.co/malicious.jpg",
+        p_file_name: "malicious.jpg",
+        p_display_name: "Malicious",
+        p_media_type: "image",
+        p_mime_type: "image/jpeg",
+        p_file_size_bytes: 100,
+      },
+    });
+    expect(regRes.status()).toBe(401);
+
+    // 2. Attempt soft_delete_media_asset RPC
+    const delRes = await request.post(`${url}/rest/v1/rpc/soft_delete_media_asset`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_id: "82ad3018-cf9d-4b2a-b883-60e6d0650222",
+      },
+    });
+    expect(delRes.status()).toBe(401);
+
+    // 3. Attempt direct REST insert on media_assets table
+    const restInsertRes = await request.post(`${url}/rest/v1/media_assets`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        bucket_id: "product-images",
+        storage_path: "hack.jpg",
+        public_url: "https://kbvjmcnaaogkbnerjcoc.supabase.co/hack.jpg",
+        file_name: "hack.jpg",
+        display_name: "Hack",
+        media_type: "image",
+        mime_type: "image/jpeg",
+      },
+    });
+    expect([401, 403]).toContain(restInsertRes.status());
+  });
 });
+
 
 
