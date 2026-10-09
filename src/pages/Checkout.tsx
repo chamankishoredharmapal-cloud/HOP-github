@@ -27,6 +27,8 @@ import { useMetadata } from "@/hooks/useMetadata";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
 import { StickyCta } from "@/components/hop/StickyCta";
 import { formatPaise, formatRupees } from "@/lib/formatPrice";
+import { supabase } from "@/integrations/supabase/client";
+import { usePublicSettings } from "@/hooks/usePublicSettings";
 
 interface FormData {
   email: string;
@@ -125,15 +127,22 @@ export default function Checkout() {
   const [giftMessage, setGiftMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [inventoryErrors, setInventoryErrors] = useState<string[]>([]);
+  const { data: storeSettings } = usePublicSettings();
   const [firstOrderEligible, setFirstOrderEligible] = useState(false);
   const [firstOrderReason, setFirstOrderReason] = useState<string>("");
-  const [serverShippingCost, setServerShippingCost] = useState(0);
+  const [serverShippingCost, setServerShippingCost] = useState<number | null>(null);
   const [returnPolicyAccepted, setReturnPolicyAccepted] = useState(false);
 
   const validatedRef = useRef(false);
   const payButtonRef = useRef<HTMLDivElement>(null);
 
-  const shippingCost = serverShippingCost > 0 ? serverShippingCost : 0;
+  const freeThreshold = storeSettings?.shipping?.free_shipping_threshold ?? 5000;
+  const standardRate = storeSettings?.shipping?.standard_shipping_rate ?? 99;
+
+  const shippingCost = serverShippingCost !== null
+    ? serverShippingCost
+    : (totalPrice >= freeThreshold || (firstOrderEligible && firstOrderReason === "first_order") ? 0 : standardRate);
+
   const totalRupees = totalPrice + shippingCost;
   const DEPOSIT_AMOUNT = 20000; // ₹200 in paise
 
@@ -195,6 +204,21 @@ export default function Checkout() {
           phone: prev.phone || phone,
           country: "India",
         }));
+      }
+
+      if (email) {
+        try {
+          const { data: elig } = await supabase.rpc("check_first_order_eligibility", {
+            p_customer_email: email,
+            p_customer_phone: phone || null,
+          });
+          if (elig && typeof elig === "object" && "eligible" in elig) {
+            setFirstOrderEligible(Boolean(elig.eligible));
+            setFirstOrderReason(String(elig.reason || ""));
+          }
+        } catch {
+          // Graceful fallback
+        }
       }
     } catch (err) {
       console.error("Failed to load customer profile for checkout:", err);

@@ -8,7 +8,7 @@ import { HomepageCinematicVideo } from "@/components/hop/HomepageCinematicVideo"
 import { Monogram } from "@/components/hop/Monogram";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
-import { articles } from "@/data/journalArticles";
+import { useJournalArticles } from "@/hooks/useJournal";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { COLLECTION_WORLDS, getWorld, getCollectionDisplayName, getCollectionRoomSlug, type CollectionWorld } from "@/data/collectionWorlds";
 import { fetchCollections } from "@/services/collectionService";
@@ -109,7 +109,10 @@ const EditorialImage = ({
   priority?: boolean;
   sizes?: string;
 }) => {
-  if (assetPath) {
+  const [hasError, setHasError] = useState(false);
+  const displaySrc = hasError ? heroStill : src;
+
+  if (assetPath && !hasError) {
     return (
       <OptimizedImage
         assetPath={assetPath}
@@ -125,10 +128,11 @@ const EditorialImage = ({
 
   return (
     <img
-      src={src}
+      src={displaySrc}
       alt={alt}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
+      onError={() => setHasError(true)}
       {...(priority ? { fetchpriority: "high" } : {})}
       className={`h-full w-full object-cover ${className}`}
     />
@@ -442,6 +446,12 @@ const Ownership = () => (
 
 const Journal = () => {
   const [active, setActive] = useState(0);
+  const { data: articles = [] } = useJournalArticles();
+
+  if (!articles || articles.length === 0) {
+    return null;
+  }
+
   const lead = articles[0];
   const secondary = articles.slice(1, 3);
 

@@ -243,8 +243,30 @@ Running 8 tests using 1 worker
 
 ---
 
-## 10. Final Certification
+## 10. Phase 1 Containment Certification
 
 **Status:** **`SECURITY CONTAINED — VERIFIED`**  
 **Certified By:** Antigravity Security & Production Engineering  
 **Date:** 2026-10-09
+
+---
+
+## 11. Incident Closure Record & Formal Signoff (Phase 2 Addendum)
+
+**Closure Timestamp:** 2026-10-09T06:30:00+05:30  
+**Final Incident Status:** **`CLOSED — RESOLVED & PERMANENTLY CONTAINED`**
+
+### 11.1 Verification of Permanent Containment
+1. **Endpoint Unavailability Verified:** The production Edge Function route `https://kbvjmcnaaogkbnerjcoc.supabase.co/functions/v1/update-admin-user` was repeatedly probed during Phase 2 execution and returns **HTTP 404 Not Found**.
+2. **Absence of Replacement Vulnerabilities:** Zero alternative edge functions or unauthenticated RPCs granting user creation or role escalation exist in `supabase/functions/` or the live Supabase project registry.
+3. **Authoritative Admin Role Verification:** Authoritative administrative roles are strictly governed by `auth.jwt() -> 'app_metadata' ->> 'role' = 'admin'`. Only two accounts hold this claim in production:
+   - `siddhanveg@gmail.com` (UUID: `3b1c67d3-f72b-426b-a5d6-d083818e5e6e`)
+   - `admin@houseofpadmavati.com` (UUID: `26be5ef2-2a62-4211-bfe6-4ca9e5cf4860`)
+   Zero customers or anonymous callers possess `app_metadata.role = 'admin'`.
+4. **Audit and Log Inspection:** Review of `studio_activities`, function invocation history, and `auth.users` confirmed zero suspicious administrative creations, modifications, or anomalous sessions.
+5. **Customer Session Isolation:** The `settings` table RLS policy `settings_admin_all` enforces that only `is_admin()` can read or write internal administrative records. Authenticated customer sessions and anonymous requests receive zero rows upon querying `settings`.
+6. **Public Store Settings Protection:** The `get_public_store_settings()` RPC exposes strictly approved public configuration fields (`store_name`, `tagline`, `contact_email`, `contact_phone`, `currency`, `free_shipping_threshold`, `standard_shipping_rate`, `announcement_text`, `announcement_enabled`). No secrets, private credentials, or internal flags are accessible.
+7. **Integrity of Core Systems:** Product, collection, inventory, order, and customer datasets were validated as untouched and completely intact. Razorpay payments and webhooks operate on verified secure pathways.
+
+The P0 security incident is hereby formally **CLOSED**.
+

@@ -6,6 +6,8 @@ import { usePublicSettings } from "@/hooks/usePublicSettings";
 
 const HopFooter = () => {
   const { data: storeSettings } = usePublicSettings();
+  const storeName = storeSettings?.brand?.store_name || "House of Padmavati";
+  const tagline = storeSettings?.brand?.tagline || "To the woman who wove my world.";
   const instagramUrl = storeSettings?.contact?.instagram_url || "https://instagram.com/houseofpadmavati";
   const pinterestUrl = storeSettings?.contact?.pinterest_url || "https://pinterest.com/houseofpadmavati";
 
@@ -48,10 +50,10 @@ const HopFooter = () => {
           <div className="text-jasmine">
             <Monogram variant="signature" className="h-16 sm:h-20 [filter:brightness(0)_invert(1)] opacity-90" />
             <p className="mt-2 font-serif font-light text-base sm:text-lg tracking-[0.22em] uppercase text-jasmine">
-              House of Padmavati
+              {storeName}
             </p>
             <p className="mt-6 font-serif italic font-light text-2xl leading-tight max-w-xs">
-              To the woman who wove my world.
+              {tagline}
             </p>
           </div>
           <p className="text-sm font-light text-jasmine/70 leading-relaxed max-w-sm">
@@ -171,7 +173,7 @@ const HopFooter = () => {
       </div>
       <div className="border-t border-jasmine/15">
         <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs font-light text-jasmine/60">
-          <p>© {new Date().getFullYear()} House of Padmavati. Designed with intention.</p>
+          <p>© {new Date().getFullYear()} {storeName}. Designed with intention.</p>
           <div className="flex gap-6">
             <Link to="/shipping-policy" className="hover:text-jasmine transition-colors">Shipping</Link>
             <Link to="/returns-policy" className="hover:text-jasmine transition-colors">Returns</Link>

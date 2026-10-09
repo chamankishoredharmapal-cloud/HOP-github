@@ -6,6 +6,7 @@ import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 import { useJournalArticle } from "@/hooks/useJournal";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
+import heroStill from "@/assets/hop-hero.jpg";
 
 const JournalDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -87,6 +88,9 @@ const JournalDetail = () => {
               <img
                 src={article.img}
                 alt={article.title}
+                onError={(e) => {
+                  e.currentTarget.src = heroStill;
+                }}
                 className="w-full h-full object-cover"
               />
             )}

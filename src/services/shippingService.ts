@@ -7,7 +7,7 @@ export interface ShippingOption {
 }
 
 export const SHIPPING_OPTIONS: ShippingOption[] = [
-  { value: "standard", label: "Standard", detail: "3–5 business days", cost: 0, estimatedDays: "3-5" },
+  { value: "standard", label: "Standard", detail: "3–5 business days", cost: 99, estimatedDays: "3-5" },
   { value: "express", label: "Express", detail: "1–2 business days", cost: 800, estimatedDays: "1-2" },
   { value: "overnight", label: "Overnight", detail: "Next business day", cost: 2400, estimatedDays: "1" },
 ];

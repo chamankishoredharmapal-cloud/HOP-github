@@ -5,6 +5,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useMetadata } from "@/hooks/useMetadata";
 import { useJournalArticles } from "@/hooks/useJournal";
+import heroStill from "@/assets/hop-hero.jpg";
 
 const Journal = () => {
   const { data: articles = [], isLoading } = useJournalArticles();
@@ -48,6 +49,9 @@ const Journal = () => {
                   <img
                     src={featured.img}
                     alt={featured.title}
+                    onError={(e) => {
+                      e.currentTarget.src = heroStill;
+                    }}
                     className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
                   />
                 )}
@@ -89,7 +93,15 @@ const Journal = () => {
                           imgClassName="w-full h-full object-cover"
                         />
                       ) : (
-                        <img src={article.img} alt="" loading="lazy" className="w-full h-full object-cover" />
+                        <img
+                          src={article.img}
+                          alt=""
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.src = heroStill;
+                          }}
+                          className="w-full h-full object-cover"
+                        />
                       )}
                     </div>
                     <div className="min-w-0">

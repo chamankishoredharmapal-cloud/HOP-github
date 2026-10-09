@@ -11,7 +11,7 @@ export interface CheckoutValidationResult {
 }
 
 const SHIPPING_COST: Record<string, number> = {
-  standard: 0,
+  standard: 99,
   express: 800,
   overnight: 2400,
 };

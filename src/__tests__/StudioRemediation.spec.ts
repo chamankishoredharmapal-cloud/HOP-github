@@ -150,5 +150,63 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
     // PostgREST returns 401 or 403 unauthorized mutation
     expect([401, 403]).toContain(res.status());
   });
+
+  test("Phase 2 Content Pipeline: draft/unpublished journal articles are strictly inaccessible to anonymous callers", async ({ request }) => {
+    const res = await request.get(`${url}/rest/v1/journal_articles?status=neq.published&select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(Array.isArray(body)).toBe(true);
+    // RLS policy journal_articles_public_read strictly filters status = 'published'
+    expect(body.length).toBe(0);
+  });
+
+  test("Phase 2 Settings Remediation: get_public_store_settings exposes standard_shipping_rate without internal config leaks", async ({ request }) => {
+    const res = await request.post(`${url}/rest/v1/rpc/get_public_store_settings`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {},
+    });
+
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    
+    // Shipping object must contain both threshold and rate
+    expect(body.shipping).toBeDefined();
+    expect(body.shipping.standard_shipping_rate).toBe(99);
+    expect(body.shipping.free_shipping_threshold).toBe(5000);
+    expect(body.shipping.currency).toBe("INR");
+
+    // Brand and contact objects must be present
+    expect(body.brand).toBeDefined();
+    expect(body.brand.store_name).toBe("The House of Padmavati");
+    expect(body.contact).toBeDefined();
+
+    // Forbidden internal configurations must NEVER be exposed
+    expect(body.security).toBeUndefined();
+    expect(body.inventory).toBeUndefined();
+    expect(body.seo).toBeUndefined();
+  });
+
+  test("Phase 2 Storefront: homepage displays database journal and dynamic brand footer", async ({ page }) => {
+    await page.goto("/");
+
+    // Homepage journal section should be visible with lead article
+    const journalSection = page.locator("#journal");
+    await expect(journalSection).toBeVisible();
+    await expect(journalSection.locator(".hop-journal__lead")).toBeVisible();
+
+    // Footer brand identity should dynamically render store name
+    const footerBrand = page.locator("footer");
+    await expect(footerBrand).toBeVisible();
+    await expect(footerBrand).toContainText("The House of Padmavati");
+  });
 });
 

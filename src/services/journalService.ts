@@ -24,13 +24,33 @@ export async function fetchPublishedJournalArticles(): Promise<StorefrontJournal
 
     return data.map((r) => {
       const staticMatch = fallbackArticles.find((a) => a.slug === r.slug);
+      
+      // Determine image URL:
+      // Canonical priority: if r.img is a real custom URL or external image, use it directly.
+      // Only resolve to bundled static asset if r.img matches the unbundled dev seed path.
+      const isLegacyRawAssetPath = Boolean(
+        r.img && (r.img.startsWith("/src/assets/") || r.img.startsWith("src/assets/"))
+      );
+      const isCustomSavedImage = Boolean(r.img && !isLegacyRawAssetPath);
+
+      const img = isCustomSavedImage
+        ? r.img
+        : (staticMatch?.img || r.img || "");
+
+      // For OptimizedImage: only provide assetPath if the image actually points to the
+      // bundled static asset. For any custom saved image URL, assetPath must be undefined
+      // to prevent the manifest from overriding the editor's saved image.
+      const assetPath = isCustomSavedImage
+        ? undefined
+        : (r.asset_path || staticMatch?.assetPath || undefined);
+
       return {
         id: r.id,
         slug: r.slug,
         title: r.title,
         tag: r.tag,
-        img: staticMatch?.img ?? r.img,
-        assetPath: staticMatch?.assetPath ?? r.asset_path ?? undefined,
+        img,
+        assetPath,
         dek: r.dek,
         content: r.content ?? undefined,
         publishedAt: r.published_at ?? undefined,

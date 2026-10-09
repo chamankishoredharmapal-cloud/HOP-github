@@ -6,6 +6,7 @@ export interface CreateRazorpayOrderResponse {
   order_number: string;
   razorpay_order_id: string;
   razorpay_key_id: string;
+  shipping_cost?: number;
   first_order_eligible?: boolean;
   first_order_reason?: string;
 }

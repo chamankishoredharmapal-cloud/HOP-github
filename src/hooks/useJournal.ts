@@ -6,8 +6,8 @@ export function useJournalArticles() {
   return useQuery<StorefrontJournalArticle[]>({
     queryKey: ["journal_articles"],
     queryFn: fetchPublishedJournalArticles,
-    initialData: fallbackArticles,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    placeholderData: fallbackArticles,
+    staleTime: 1000 * 60, // 1 minute
   });
 }
 

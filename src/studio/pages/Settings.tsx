@@ -277,7 +277,7 @@ export default function Settings() {
                 </select>
               </Field>
             </div>
-            <Field label="Free Shipping Threshold (in paise)">
+            <Field label="Free Shipping Threshold (₹)">
               <Input
                 type="number"
                 value={form.shipping.free_shipping_threshold}
@@ -285,21 +285,21 @@ export default function Settings() {
               />
             </Field>
             <div className="grid grid-cols-3 gap-4">
-              <Field label="Standard Rate">
+              <Field label="Standard Rate (₹)">
                 <Input
                   type="number"
                   value={form.shipping.standard_rate}
                   onChange={(e) => update("shipping", "standard_rate", Number(e.target.value))}
                 />
               </Field>
-              <Field label="Express Rate">
+              <Field label="Express Rate (₹)">
                 <Input
                   type="number"
                   value={form.shipping.express_rate}
                   onChange={(e) => update("shipping", "express_rate", Number(e.target.value))}
                 />
               </Field>
-              <Field label="Overnight Rate">
+              <Field label="Overnight Rate (₹)">
                 <Input
                   type="number"
                   value={form.shipping.overnight_rate}
@@ -360,25 +360,34 @@ export default function Settings() {
                 rows={3}
               />
             </Field>
-            <Field label="Google Analytics ID">
+            <div className="p-3 rounded bg-amber-500/10 border border-amber-500/20 text-xs space-y-1">
+              <span className="font-medium text-amber-700 dark:text-amber-400">Status: Unavailable / Non-Active</span>
+              <p className="text-muted-foreground">
+                Per HOP's published Privacy Policy (Section 5: Zero Tracking Cookies), external tracking and analytics scripts are strictly not injected into the public storefront runtime. Enabling third-party analytics requires a revised Privacy Policy and formal consent management.
+              </p>
+            </div>
+            <Field label="Google Analytics ID (Non-Active)">
               <Input
                 value={form.seo.google_analytics_id}
                 onChange={(e) => update("seo", "google_analytics_id", e.target.value)}
                 placeholder="G-XXXXXXXXXX"
+                disabled
               />
             </Field>
-            <Field label="Google Tag Manager ID">
+            <Field label="Google Tag Manager ID (Non-Active)">
               <Input
                 value={form.seo.google_tag_manager_id}
                 onChange={(e) => update("seo", "google_tag_manager_id", e.target.value)}
                 placeholder="GTM-XXXXXXX"
+                disabled
               />
             </Field>
-            <Field label="Facebook Pixel ID">
+            <Field label="Facebook Pixel ID (Non-Active)">
               <Input
                 value={form.seo.facebook_pixel_id}
                 onChange={(e) => update("seo", "facebook_pixel_id", e.target.value)}
                 placeholder="XXXXXXXXXXXXXXX"
+                disabled
               />
             </Field>
           </SectionCard>
@@ -386,47 +395,43 @@ export default function Settings() {
 
         <TabsContent value="security" className="mt-6 space-y-6">
           <SectionCard title="Security & Access" icon={Shield}>
-            <Field label="Session Timeout (minutes)">
+            <div className="p-3 rounded bg-amber-500/10 border border-amber-500/20 text-xs space-y-1">
+              <span className="font-medium text-amber-700 dark:text-amber-400">Status: Unavailable / Informational Only</span>
+              <p className="text-muted-foreground">
+                These controls are stored preferences and are not enforced by the application layer. Studio administrative access is authoritatively governed by PostgreSQL Row-Level Security policies and verified Supabase app_metadata roles. Enforcing 2FA or session duration requires Supabase Auth dashboard configuration.
+              </p>
+            </div>
+            <Field label="Session Timeout (minutes) — Stored Preference">
               <Input
                 type="number"
                 value={form.security.session_timeout_minutes}
                 onChange={(e) => update("security", "session_timeout_minutes", Number(e.target.value))}
+                disabled
               />
             </Field>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-sm opacity-60">
               <input
                 type="checkbox"
                 checked={form.security.require_2fa}
                 onChange={(e) => update("security", "require_2fa", e.target.checked)}
                 className="rounded border-input"
+                disabled
               />
-              Require two-factor authentication
+              Require two-factor authentication (Configured in Supabase Auth)
             </label>
-            <Field label="Allowed Studio Roles">
+            <Field label="Allowed Studio Roles — Stored Preference">
               <div className="flex flex-wrap gap-2">
                 {["admin", "manager", "editor", "viewer"].map((role) => (
-                  <label
+                  <span
                     key={role}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer border transition-colors ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border opacity-75 ${
                       form.security.allowed_roles.includes(role)
                         ? "bg-signature-crimson/10 text-ink border-signature-crimson/30"
                         : "bg-muted/30 text-muted-foreground border-border/50"
                     }`}
                   >
-                    <input
-                      type="checkbox"
-                      checked={form.security.allowed_roles.includes(role)}
-                      onChange={(e) => {
-                        const current = form.security.allowed_roles;
-                        const next = e.target.checked
-                          ? [...current, role]
-                          : current.filter((r) => r !== role);
-                        update("security", "allowed_roles", next);
-                      }}
-                      className="hidden"
-                    />
                     {role}
-                  </label>
+                  </span>
                 ))}
               </div>
             </Field>

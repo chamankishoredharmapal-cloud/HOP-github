@@ -16,6 +16,7 @@ export interface PublicStoreSettings {
     atelier_address?: string;
   };
   shipping: {
+    standard_shipping_rate: number;
     free_shipping_threshold: number;
     currency: string;
   };
@@ -42,6 +43,7 @@ export const DEFAULT_PUBLIC_SETTINGS: PublicStoreSettings = {
     atelier_address: "Bangalore, Karnataka",
   },
   shipping: {
+    standard_shipping_rate: 99,
     free_shipping_threshold: 5000,
     currency: "INR",
   },
@@ -78,6 +80,7 @@ export async function fetchPublicStoreSettings(): Promise<PublicStoreSettings> {
         atelier_address: res.contact?.atelier_address || DEFAULT_PUBLIC_SETTINGS.contact.atelier_address,
       },
       shipping: {
+        standard_shipping_rate: res.shipping?.standard_shipping_rate || DEFAULT_PUBLIC_SETTINGS.shipping.standard_shipping_rate,
         free_shipping_threshold: res.shipping?.free_shipping_threshold || DEFAULT_PUBLIC_SETTINGS.shipping.free_shipping_threshold,
         currency: res.shipping?.currency || DEFAULT_PUBLIC_SETTINGS.shipping.currency,
       },
