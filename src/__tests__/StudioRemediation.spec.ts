@@ -103,4 +103,52 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
     expect(body).not.toHaveProperty("security");
     expect(body.security).toBeUndefined();
   });
+
+  test("Phase 1 Security Containment: update-admin-user Edge Function is deleted and returns 404", async ({ request }) => {
+    const res = await request.post(`${url}/functions/v1/update-admin-user`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        email: "test@example.com",
+        password: "Password123!",
+      },
+    });
+
+    // The function was completely removed from the Supabase project gateway
+    expect(res.status()).toBe(404);
+  });
+
+  test("Phase 1 Security Containment: unauthenticated/anon callers cannot read internal settings table via REST", async ({ request }) => {
+    const res = await request.get(`${url}/rest/v1/settings?select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+
+    // PostgREST with RLS returns 200 with empty array (zero rows leaked) to unprivileged callers
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(Array.isArray(body)).toBe(true);
+    expect(body.length).toBe(0);
+  });
+
+  test("Phase 1 Security Containment: unauthenticated/anon callers cannot mutate settings table via REST", async ({ request }) => {
+    const res = await request.post(`${url}/rest/v1/settings`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        key: "test_probe",
+        value: { probe: true },
+      },
+    });
+
+    // PostgREST returns 401 or 403 unauthorized mutation
+    expect([401, 403]).toContain(res.status());
+  });
 });
+
