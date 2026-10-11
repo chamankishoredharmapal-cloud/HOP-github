@@ -5,7 +5,21 @@ import {
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
   InvitationPayloadSchema,
+  AboutStoryPayloadSchema,
+  CustomerCarePayloadSchema,
+  PolicyDocumentPayloadSchema,
   SafeLinkSchema,
+  DEFAULT_HERO_PAYLOAD,
+  DEFAULT_CRAFT_PAYLOAD,
+  DEFAULT_PHILOSOPHY_PAYLOAD,
+  DEFAULT_OWNERSHIP_PAYLOAD,
+  DEFAULT_INVITATION_PAYLOAD,
+  DEFAULT_ABOUT_STORY_PAYLOAD,
+  DEFAULT_CUSTOMER_CARE_PAYLOAD,
+  DEFAULT_SHIPPING_POLICY_PAYLOAD,
+  DEFAULT_RETURNS_POLICY_PAYLOAD,
+  DEFAULT_PRIVACY_POLICY_PAYLOAD,
+  DEFAULT_TERMS_POLICY_PAYLOAD,
 } from "@/types/siteSections";
 
 describe("Phase 3 Stage 1: Content Security & Schema Validation", () => {
@@ -109,16 +123,8 @@ describe("Phase 3 Stage 1: Content Security & Schema Validation", () => {
     });
   });
 
-  describe("Phase 3 Stage 3: Grounded Defaults Integrity & Resilience", () => {
-    it("verifies all five homepage defaults conform 100% to their Zod schemas", async () => {
-      const {
-        DEFAULT_HERO_PAYLOAD,
-        DEFAULT_CRAFT_PAYLOAD,
-        DEFAULT_PHILOSOPHY_PAYLOAD,
-        DEFAULT_OWNERSHIP_PAYLOAD,
-        DEFAULT_INVITATION_PAYLOAD,
-      } = await import("@/types/siteSections");
-
+  describe("Phase 3 Stage 3: Homepage Grounded Defaults Integrity", () => {
+    it("verifies all five homepage defaults conform 100% to their Zod schemas", () => {
       expect(HeroBannerPayloadSchema.safeParse(DEFAULT_HERO_PAYLOAD).success).toBe(true);
       expect(CraftStoryPayloadSchema.safeParse(DEFAULT_CRAFT_PAYLOAD).success).toBe(true);
       expect(PhilosophyPayloadSchema.safeParse(DEFAULT_PHILOSOPHY_PAYLOAD).success).toBe(true);
@@ -134,7 +140,47 @@ describe("Phase 3 Stage 1: Content Security & Schema Validation", () => {
 
       const result = HeroBannerPayloadSchema.safeParse(corruptedHero);
       expect(result.success).toBe(false);
-      // In hook, this triggers fallback to DEFAULT_HERO_PAYLOAD
+    });
+  });
+
+  describe("Phase 3 Stage 4: Remaining Pages & Policies Schemas", () => {
+    it("validates AboutStoryPayloadSchema with required and optional fields", () => {
+      expect(AboutStoryPayloadSchema.safeParse(DEFAULT_ABOUT_STORY_PAYLOAD).success).toBe(true);
+
+      const invalidStory = {
+        header_title: "",
+        heading: "Test",
+        story_title: "Title",
+        story_content: "Content",
+        image_url: "",
+      };
+      expect(AboutStoryPayloadSchema.safeParse(invalidStory).success).toBe(false);
+    });
+
+    it("validates CustomerCarePayloadSchema and enforces valid email", () => {
+      expect(CustomerCarePayloadSchema.safeParse(DEFAULT_CUSTOMER_CARE_PAYLOAD).success).toBe(true);
+
+      const invalidEmail = {
+        ...DEFAULT_CUSTOMER_CARE_PAYLOAD,
+        email_address: "not-an-email",
+      };
+      expect(CustomerCarePayloadSchema.safeParse(invalidEmail).success).toBe(false);
+    });
+
+    it("validates PolicyDocumentPayloadSchema across all four official policies", () => {
+      expect(PolicyDocumentPayloadSchema.safeParse(DEFAULT_SHIPPING_POLICY_PAYLOAD).success).toBe(true);
+      expect(PolicyDocumentPayloadSchema.safeParse(DEFAULT_RETURNS_POLICY_PAYLOAD).success).toBe(true);
+      expect(PolicyDocumentPayloadSchema.safeParse(DEFAULT_PRIVACY_POLICY_PAYLOAD).success).toBe(true);
+      expect(PolicyDocumentPayloadSchema.safeParse(DEFAULT_TERMS_POLICY_PAYLOAD).success).toBe(true);
+    });
+
+    it("verifies PolicyDocumentPayloadSchema rejects policies with empty sections array", () => {
+      const emptyPolicy = {
+        title: "Test Policy",
+        last_updated: "October 2026",
+        sections: [],
+      };
+      expect(PolicyDocumentPayloadSchema.safeParse(emptyPolicy).success).toBe(false);
     });
   });
 });

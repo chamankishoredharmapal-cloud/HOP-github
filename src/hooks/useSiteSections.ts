@@ -7,16 +7,29 @@ import {
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
   InvitationPayloadSchema,
+  AboutStoryPayloadSchema,
+  CustomerCarePayloadSchema,
+  PolicyDocumentPayloadSchema,
   DEFAULT_HERO_PAYLOAD,
   DEFAULT_CRAFT_PAYLOAD,
   DEFAULT_PHILOSOPHY_PAYLOAD,
   DEFAULT_OWNERSHIP_PAYLOAD,
   DEFAULT_INVITATION_PAYLOAD,
+  DEFAULT_ABOUT_STORY_PAYLOAD,
+  DEFAULT_CUSTOMER_CARE_PAYLOAD,
+  DEFAULT_SHIPPING_POLICY_PAYLOAD,
+  DEFAULT_RETURNS_POLICY_PAYLOAD,
+  DEFAULT_PRIVACY_POLICY_PAYLOAD,
+  DEFAULT_TERMS_POLICY_PAYLOAD,
   type HeroBannerPayload,
   type CraftStoryPayload,
   type PhilosophyPayload,
   type NoteCardsPayload,
   type InvitationPayload,
+  type AboutStoryPayload,
+  type CustomerCarePayload,
+  type PolicyDocumentPayload,
+  type PolicySectionKey,
 } from "@/types/siteSections";
 
 export interface HomepageSectionsResult {
@@ -153,6 +166,176 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
     philosophy,
     ownership,
     invitation,
+    isLoading,
+    isError,
+    isPreview: isAdminPreview,
+  };
+}
+
+export interface AboutStorySectionResult {
+  story: AboutStoryPayload;
+  isLoading: boolean;
+  isError: boolean;
+  isPreview: boolean;
+}
+
+export function useAboutStorySection(): AboutStorySectionResult {
+  const isPreviewRequested =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("studio_preview") === "true";
+
+  const { data: isAdminPreview = false } = useQuery({
+    queryKey: ["site_sections", "preview_auth_check"],
+    queryFn: checkAdminPreviewSession,
+    enabled: isPreviewRequested,
+    staleTime: 1000 * 30,
+  });
+
+  const { data: rawSections = {}, isLoading, isError } = useQuery<Record<string, Record<string, unknown>>>({
+    queryKey: isAdminPreview
+      ? ["site_sections", "draft_preview", "about"]
+      : ["site_sections", "published", "about"],
+    queryFn: async () => {
+      if (isAdminPreview) {
+        const records = await siteSectionService.getAdminSections("about");
+        const map: Record<string, Record<string, unknown>> = {};
+        for (const rec of records) {
+          map[rec.key] = rec.draft_payload as Record<string, unknown>;
+        }
+        return map;
+      }
+      return siteSectionService.getPublishedPageSections("about");
+    },
+    staleTime: isAdminPreview ? 0 : 1000 * 60,
+  });
+
+  let story: AboutStoryPayload = DEFAULT_ABOUT_STORY_PAYLOAD;
+  if (rawSections["about.story"]) {
+    const parsed = AboutStoryPayloadSchema.safeParse(rawSections["about.story"]);
+    if (parsed.success) {
+      story = parsed.data;
+    } else {
+      console.warn("Invalid payload for about.story, falling back to defaults:", parsed.error.issues);
+    }
+  }
+
+  return {
+    story,
+    isLoading,
+    isError,
+    isPreview: isAdminPreview,
+  };
+}
+
+export interface CustomerCareSectionResult {
+  care: CustomerCarePayload;
+  isLoading: boolean;
+  isError: boolean;
+  isPreview: boolean;
+}
+
+export function useCustomerCareSection(): CustomerCareSectionResult {
+  const isPreviewRequested =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("studio_preview") === "true";
+
+  const { data: isAdminPreview = false } = useQuery({
+    queryKey: ["site_sections", "preview_auth_check"],
+    queryFn: checkAdminPreviewSession,
+    enabled: isPreviewRequested,
+    staleTime: 1000 * 30,
+  });
+
+  const { data: rawSections = {}, isLoading, isError } = useQuery<Record<string, Record<string, unknown>>>({
+    queryKey: isAdminPreview
+      ? ["site_sections", "draft_preview", "care"]
+      : ["site_sections", "published", "care"],
+    queryFn: async () => {
+      if (isAdminPreview) {
+        const records = await siteSectionService.getAdminSections("care");
+        const map: Record<string, Record<string, unknown>> = {};
+        for (const rec of records) {
+          map[rec.key] = rec.draft_payload as Record<string, unknown>;
+        }
+        return map;
+      }
+      return siteSectionService.getPublishedPageSections("care");
+    },
+    staleTime: isAdminPreview ? 0 : 1000 * 60,
+  });
+
+  let care: CustomerCarePayload = DEFAULT_CUSTOMER_CARE_PAYLOAD;
+  if (rawSections["care.info"]) {
+    const parsed = CustomerCarePayloadSchema.safeParse(rawSections["care.info"]);
+    if (parsed.success) {
+      care = parsed.data;
+    } else {
+      console.warn("Invalid payload for care.info, falling back to defaults:", parsed.error.issues);
+    }
+  }
+
+  return {
+    care,
+    isLoading,
+    isError,
+    isPreview: isAdminPreview,
+  };
+}
+
+export interface PolicySectionResult {
+  policy: PolicyDocumentPayload;
+  isLoading: boolean;
+  isError: boolean;
+  isPreview: boolean;
+}
+
+export function usePolicySection(policyKey: PolicySectionKey): PolicySectionResult {
+  const isPreviewRequested =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("studio_preview") === "true";
+
+  const { data: isAdminPreview = false } = useQuery({
+    queryKey: ["site_sections", "preview_auth_check"],
+    queryFn: checkAdminPreviewSession,
+    enabled: isPreviewRequested,
+    staleTime: 1000 * 30,
+  });
+
+  const { data: rawSections = {}, isLoading, isError } = useQuery<Record<string, Record<string, unknown>>>({
+    queryKey: isAdminPreview
+      ? ["site_sections", "draft_preview", "policy"]
+      : ["site_sections", "published", "policy"],
+    queryFn: async () => {
+      if (isAdminPreview) {
+        const records = await siteSectionService.getAdminSections("policy");
+        const map: Record<string, Record<string, unknown>> = {};
+        for (const rec of records) {
+          map[rec.key] = rec.draft_payload as Record<string, unknown>;
+        }
+        return map;
+      }
+      return siteSectionService.getPublishedPageSections("policy");
+    },
+    staleTime: isAdminPreview ? 0 : 1000 * 60,
+  });
+
+  let defaultPayload = DEFAULT_SHIPPING_POLICY_PAYLOAD;
+  if (policyKey === "policy.returns") defaultPayload = DEFAULT_RETURNS_POLICY_PAYLOAD;
+  else if (policyKey === "policy.privacy") defaultPayload = DEFAULT_PRIVACY_POLICY_PAYLOAD;
+  else if (policyKey === "policy.terms") defaultPayload = DEFAULT_TERMS_POLICY_PAYLOAD;
+
+  let policy: PolicyDocumentPayload = defaultPayload;
+  if (rawSections[policyKey]) {
+    const parsed = PolicyDocumentPayloadSchema.safeParse(rawSections[policyKey]);
+    if (parsed.success) {
+      policy = parsed.data;
+    } else {
+      console.warn(`Invalid payload for ${policyKey}, falling back to defaults:`, parsed.error.issues);
+    }
+  }
+
+  return {
+    policy,
     isLoading,
     isError,
     isPreview: isAdminPreview,

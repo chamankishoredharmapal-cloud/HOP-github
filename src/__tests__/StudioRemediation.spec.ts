@@ -206,7 +206,7 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
     // Footer brand identity should dynamically render store name
     const footerBrand = page.locator("footer");
     await expect(footerBrand).toBeVisible();
-    await expect(footerBrand).toContainText("The House of Padmavati");
+    await expect(footerBrand).toContainText("House of Padmavati");
   });
 
   test("Phase 3 Stage 1 Content Infrastructure: anonymous visitor can read published site sections via get_published_site_sections RPC", async ({ request }) => {
@@ -578,6 +578,89 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
       },
     });
     expect(pubRes.status()).toBe(401);
+  });
+
+  test("Phase 3 Stage 4 Remaining Pages: /about renders brand story with dynamic hook and fallback integrity", async ({ page }) => {
+    await page.goto("/about");
+    await expect(page.locator("h1")).toHaveText("The House.");
+    await expect(page.locator("h2")).toHaveText("House of Padmavati");
+    await expect(page.locator("text=House of Padmavati is named for a real woman.")).toBeVisible();
+    await expect(page.locator("text=We curate the Indian saree for the modern wardrobe.")).toBeVisible();
+
+    const title = await page.title();
+    expect(title).toContain("House of Padmavati");
+  });
+
+  test("Phase 3 Stage 4 Remaining Pages: /customer-care renders correspondence info and maintains contact form integrity", async ({ page }) => {
+    await page.goto("/customer-care");
+    await expect(page.locator("h1")).toHaveText("Customer Care.");
+    await expect(page.locator("text=Write to the House")).toBeVisible();
+    await expect(page.locator("text=We welcome your thoughts and questions.")).toBeVisible();
+
+    // Verify contact form controls are fully intact
+    await expect(page.locator("#care-first-name")).toBeVisible();
+    await expect(page.locator("#care-last-name")).toBeVisible();
+    await expect(page.locator("#care-email")).toBeVisible();
+    await expect(page.locator("#care-message")).toBeVisible();
+    await expect(page.locator('button[type="submit"]')).toBeVisible();
+  });
+
+  test("Phase 3 Stage 4 Remaining Policies: all 4 policy pages render verified copy, tables, and secure links", async ({ page }) => {
+    // 1. Shipping Policy
+    await page.goto("/shipping-policy");
+    await expect(page.locator("h1")).toHaveText("Shipping");
+    await expect(page.locator("text=1. Shipping Coverage")).toBeVisible();
+    await expect(page.locator("text=Delhivery, Blue Dart, DTDC")).toBeVisible();
+    await expect(page.locator("text=A flat ₹99 is charged for all other orders.")).toBeVisible();
+
+    // 2. Returns Policy
+    await page.goto("/returns-policy");
+    await expect(page.locator("h1")).toHaveText("Returns & Refund");
+    await expect(page.locator("text=1. Return and Replacement Eligibility")).toBeVisible();
+    await expect(page.locator("text=1 – 3 products per order")).toBeVisible();
+    await expect(page.locator("text=3 calendar days from delivery")).toBeVisible();
+
+    // 3. Privacy Policy
+    await page.goto("/privacy-policy");
+    await expect(page.locator("h1")).toHaveText("Privacy");
+    await expect(page.locator("text=1. Introduction")).toBeVisible();
+    await expect(page.locator("text=We do not use Google Analytics, Microsoft Clarity, Meta Pixel")).toBeVisible();
+
+    // 4. Terms of Service
+    await page.goto("/terms-of-service");
+    await expect(page.locator("h1")).toHaveText("Terms");
+    await expect(page.locator("text=1. Introduction")).toBeVisible();
+    await expect(page.locator("text=Sole proprietorship based in Bangalore, India")).toBeVisible();
+  });
+
+  test("Phase 3 Stage 4 Security: unauthenticated callers cannot mutate remaining pages via RPC", async ({ request }) => {
+    // Attempt save_site_section_draft on policy.shipping
+    const saveRes = await request.post(`${url}/rest/v1/rpc/save_site_section_draft`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_key: "policy.shipping",
+        p_expected_version: 1,
+        p_draft_payload: { title: "Tampered Shipping Policy" },
+      },
+    });
+    expect(saveRes.status()).toBe(401);
+
+    // Attempt save_site_section_draft on about.story
+    const saveAboutRes = await request.post(`${url}/rest/v1/rpc/save_site_section_draft`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_key: "about.story",
+        p_expected_version: 1,
+        p_draft_payload: { heading: "Defaced Story" },
+      },
+    });
+    expect(saveAboutRes.status()).toBe(401);
   });
 });
 

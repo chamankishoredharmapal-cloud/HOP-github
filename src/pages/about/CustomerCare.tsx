@@ -11,13 +11,17 @@ import { Textarea } from "../../components/ui/textarea";
 import { Label } from "../../components/ui/label";
 import { submitContactForm } from "@/services/contactService";
 import { useMetadata } from "@/hooks/useMetadata";
+import { useCustomerCareSection } from "@/hooks/useSiteSections";
 
-const SareeCare = () => {
+const CustomerCare = () => {
   usePrerenderReady(true);
+  const { care, isPreview } = useCustomerCareSection();
+
   useMetadata({
-    title: "Customer Care · House of Padmavati",
-    description: "Customer care and correspondence.",
+    title: `${care.header_title.replace(/\.$/, "")} · House of Padmavati`,
+    description: care.header_subtitle || "Customer care and correspondence.",
   });
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,8 +42,6 @@ const SareeCare = () => {
   }
   if (touched.message && !message.trim()) errors.message = "Message is required";
 
-  usePrerenderReady(true);
-
   const handleBlur = (field: string) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
@@ -47,7 +49,15 @@ const SareeCare = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched({ firstName: true, lastName: true, email: true, message: true, consent: true });
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !email.includes("@") || !message.trim() || !consent) return;
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !email.includes("@") ||
+      !message.trim() ||
+      !consent
+    )
+      return;
 
     setLoading(true);
     setError("");
@@ -70,62 +80,85 @@ const SareeCare = () => {
   return (
     <PageLayout>
       <div className="flex">
-        <div className="hidden lg:block"><AboutSidebar /></div>
+        <div className="hidden lg:block">
+          <AboutSidebar />
+        </div>
 
         <main className="w-full lg:w-[70vw] lg:ml-auto px-6">
+          {isPreview && (
+            <div className="mb-4 bg-rasa-mulberry/10 border border-rasa-mulberry/30 px-3 py-1.5 text-xs text-rasa-mulberry font-mono rounded">
+              Previewing Unapproved Studio Draft
+            </div>
+          )}
+
           <PageHeader
-            title="Customer Care."
-            subtitle="We are here to assist you."
+            title={care.header_title}
+            subtitle={care.header_subtitle}
           />
 
-          <ContentSection title="Write to the House">
+          <ContentSection title={care.intro_heading}>
             <p className="text-ink-soft font-light mb-8 max-w-md">
-              We welcome your thoughts and questions. Please leave a message below, and we will respond with care.
+              {care.intro_text}
             </p>
             {success ? (
-               <div className="hop-page__panel max-w-2xl p-8 text-center">
+              <div className="hop-page__panel max-w-2xl p-8 text-center">
                 <CheckCircle className="h-12 w-12 text-ink mx-auto mb-4" />
                 <p className="font-serif text-xl text-ink mb-2">Thank you for writing to us.</p>
                 <p className="text-sm text-ink-soft font-light">
-                  We have received your message and will reply within two business days.
+                  {care.response_time_note ||
+                    "We have received your message and will reply within two business days."}
                 </p>
               </div>
             ) : (
-               <form onSubmit={handleSubmit} className="hop-form-shell space-y-6 max-w-2xl" noValidate>
+              <form onSubmit={handleSubmit} className="hop-form-shell space-y-6 max-w-2xl" noValidate>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="care-first-name" className="hop-form-label mb-1.5">First name</Label>
+                    <Label htmlFor="care-first-name" className="hop-form-label mb-1.5">
+                      First name
+                    </Label>
                     <Input
                       id="care-first-name"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       onBlur={() => handleBlur("firstName")}
-                       className="hop-form-control"
+                      className="hop-form-control"
                       placeholder="First name"
                       autoComplete="given-name"
                       aria-invalid={!!errors.firstName}
                       aria-describedby={errors.firstName ? "care-first-name-error" : undefined}
                     />
-                    {errors.firstName && <p id="care-first-name-error" role="alert" className="text-[0.7rem] text-destructive mt-1">{errors.firstName}</p>}
+                    {errors.firstName && (
+                      <p id="care-first-name-error" role="alert" className="text-[0.7rem] text-destructive mt-1">
+                        {errors.firstName}
+                      </p>
+                    )}
                   </div>
                   <div>
-                    <Label htmlFor="care-last-name" className="hop-form-label mb-1.5">Last name</Label>
+                    <Label htmlFor="care-last-name" className="hop-form-label mb-1.5">
+                      Last name
+                    </Label>
                     <Input
                       id="care-last-name"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       onBlur={() => handleBlur("lastName")}
-                       className="hop-form-control"
+                      className="hop-form-control"
                       placeholder="Last name"
                       autoComplete="family-name"
                       aria-invalid={!!errors.lastName}
                       aria-describedby={errors.lastName ? "care-last-name-error" : undefined}
                     />
-                    {errors.lastName && <p id="care-last-name-error" role="alert" className="text-[0.7rem] text-destructive mt-1">{errors.lastName}</p>}
+                    {errors.lastName && (
+                      <p id="care-last-name-error" role="alert" className="text-[0.7rem] text-destructive mt-1">
+                        {errors.lastName}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="care-email" className="hop-form-label mb-1.5">Email</Label>
+                  <Label htmlFor="care-email" className="hop-form-label mb-1.5">
+                    Email
+                  </Label>
                   <Input
                     id="care-email"
                     type="email"
@@ -138,10 +171,16 @@ const SareeCare = () => {
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? "care-email-error" : undefined}
                   />
-                  {errors.email && <p id="care-email-error" role="alert" className="text-[0.7rem] text-destructive mt-1">{errors.email}</p>}
+                  {errors.email && (
+                    <p id="care-email-error" role="alert" className="text-[0.7rem] text-destructive mt-1">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
                 <div>
-                  <Label htmlFor="care-order" className="hop-form-label mb-1.5">Order number <span className="font-light">(optional)</span></Label>
+                  <Label htmlFor="care-order" className="hop-form-label mb-1.5">
+                    Order number <span className="font-light">(optional)</span>
+                  </Label>
                   <Input
                     id="care-order"
                     value={orderNumber}
@@ -152,18 +191,24 @@ const SareeCare = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="care-message" className="hop-form-label mb-1.5">Message</Label>
+                  <Label htmlFor="care-message" className="hop-form-label mb-1.5">
+                    Message
+                  </Label>
                   <Textarea
                     id="care-message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onBlur={() => handleBlur("message")}
-                     className="hop-form-control min-h-[140px] text-base"
+                    className="hop-form-control min-h-[140px] text-base"
                     placeholder="How may we help you."
                     aria-invalid={!!errors.message}
                     aria-describedby={errors.message ? "care-message-error" : undefined}
                   />
-                  {errors.message && <p id="care-message-error" role="alert" className="text-[0.7rem] text-destructive mt-1">{errors.message}</p>}
+                  {errors.message && (
+                    <p id="care-message-error" role="alert" className="text-[0.7rem] text-destructive mt-1">
+                      {errors.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -177,7 +222,12 @@ const SareeCare = () => {
                     />
                     <span className="text-xs text-ink-soft font-light leading-relaxed">
                       I agree to the{" "}
-                      <a href="/privacy-policy" className="text-rasa-mulberry hover:text-ink underline underline-offset-4 decoration-1">Privacy Policy</a>
+                      <a
+                        href="/privacy-policy"
+                        className="text-rasa-mulberry hover:text-ink underline underline-offset-4 decoration-1"
+                      >
+                        Privacy Policy
+                      </a>
                       {" and consent to my message being stored for customer support purposes."}
                     </span>
                   </label>
@@ -190,11 +240,7 @@ const SareeCare = () => {
                   </div>
                 )}
 
-                <Button
-                  type="submit"
-                  disabled={loading}
-                   className="hop-cta-primary"
-                >
+                <Button type="submit" disabled={loading} className="hop-cta-primary">
                   {loading ? (
                     <span className="flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -216,4 +262,4 @@ const SareeCare = () => {
   );
 };
 
-export default SareeCare;
+export default CustomerCare;
