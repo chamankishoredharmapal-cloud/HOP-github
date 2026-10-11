@@ -1,54 +1,46 @@
 # HOP — PHASE 3, STAGE 3: DYNAMIC HOMEPAGE CONTENT MANAGEMENT REPORT
 
 **Author:** Principal Frontend Engineer, Supabase Architect, Security Engineer & Production QA Lead  
-**Execution Timestamp:** 2026-10-09T10:35:00+05:30  
+**Execution Timestamp:** 2026-10-12T02:50:00+05:30  
 **Target Repository:** `HOP-github`  
 **Production Supabase Reference:** `kbvjmcnaaogkbnerjcoc`  
 **Production Hosting:** Cloudflare Pages (`houseofpadmavati`)  
 **Target Production URL:** `https://houseofpadmavati.pages.dev`  
+**Starting Commit:** `1eb5327` (`feat(phase-3): stage 2 unified media catalog and picker`)  
+**Certified Git HEAD:** `173b6ec` (`feat(phase-3): stage 3 dynamic homepage content management`) on branch `main`  
 **Stage:** Phase 3, Stage 3 (Dynamic Homepage Content Management)  
 **Status:** **`STAGE 3 PASS`**
 
 ---
 
-## 1. Executive Summary
+## 1. Interruption Recovery & Preflight Audit
 
-Phase 3, Stage 3 connects the public House of Padmavati homepage to the database-driven site-section architecture established in Stage 1 and media catalog established in Stage 2.
+Following the network reconnection, a comprehensive forensic recovery of the repository, database, and test infrastructure was conducted:
 
-Key achievements:
-1. **Dynamic Homepage Sections Connected**:
-   - `home.hero`: Headline, subtitle, eyebrow tag, primary/secondary CTAs, video/poster URLs, alt text.
-   - `home.craft`: Headline, lede copy, weaver quote, attribution, craft heritage facts, portrait image URL, caption, alt text, and CTA.
-   - `home.philosophy`: Title, lede paragraph, closing statement.
-   - `home.ownership`: Section heading, subheading, and structured house note cards (labels, titles, body, links).
-   - `home.invitation`: Title, body copy, and multiple navigation CTA links.
-2. **Canonical Resilience Hook (`useSiteSections`)**:
-   - Fetches live published copy through the security-hardened `get_published_site_sections('home')` RPC.
-   - Strictly enforces client-side Zod schema validation (`HeroBannerPayloadSchema`, `CraftStoryPayloadSchema`, `PhilosophyPayloadSchema`, `NoteCardsPayloadSchema`, `InvitationPayloadSchema`).
-   - Seamlessly falls back to grounded, approved source-code defaults if an RPC fails, a network partition occurs, or an invalid payload is received. Valid database content takes precedence over fallbacks.
-3. **Zero-Leakage Draft Preview**:
-   - Draft preview via `?studio_preview=true` is isolated to verified administrator sessions via Supabase authentication and Row-Level Security (RLS).
-   - Anonymous visitors requesting `?studio_preview=true` receive live published content only; direct table access is denied by RLS.
-   - Separate React Query cache keys (`["site_sections", "draft_preview", ...]` vs `["site_sections", "published", ...]`) prevent cache pollution.
-4. **Reusable Media Picker Integration**:
-   - Integrated Stage 2's `<MediaPickerModal>` into the homepage editor, allowing operators to pick verified assets or upload new assets directly into the catalog.
-5. **Studio Homepage Content Editor**:
-   - Deployed at `/studio/site-update` and integrated into the Studio sidebar navigation.
-   - Supports editing all 5 sections, optimistic concurrency checks (`version`), dirty-state warnings, structured validation errors, and explicit confirmation dialogs with audit summaries before publishing.
-6. **Comprehensive Test Certification**:
-   - Vitest: **37/37 passed** (including Zod schemas, defaults conformance, and corruption resilience).
-   - Playwright: **23/23 passed** (including public RPC verification, draft RLS isolation, unauthorized mutation rejection, and storefront rendering).
-   - TypeScript compiler: **0 errors** (`npx tsc --noEmit`).
-   - ESLint: **0 errors, 0 warnings**.
-   - Production build: **SSG prerendering completed cleanly** for all routes.
+### 1.1 Recovery Checklist
+
+| Scope Requirement | Pre-Interruption Status | Verified Post-Recovery Status | Notes |
+|---|---|---|---|
+| **Preflight Git & DB Audit** | `COMPLETE` | `COMPLETE` | Head at `173b6ec`, branch `main`, clean working tree. |
+| **5 Homepage Sections Dynamic Hook** | `COMPLETE` | `COMPLETE` | `useSiteSections("home")` with Zod validation and safe defaults. |
+| **Storefront Component Integration** | `COMPLETE` | `COMPLETE` | `HomepageExperience.tsx` components (`Threshold`, `Craft`, `Philosophy`, `Ownership`, `Invitation`) wired. |
+| **Draft Preview Security & Isolation** | `COMPLETE` | `COMPLETE` | `?studio_preview=true` requires verified admin auth; zero public draft leakage. |
+| **Media Library / Picker Integration** | `COMPLETE` | `COMPLETE` | `<MediaPickerModal>` wired to Studio Homepage editor. |
+| **Studio Homepage Editor (`/studio/site-update`)** | `COMPLETE` | `COMPLETE` | Section selection, version concurrency, draft save, explicit publish confirmation. |
+| **Vitest Unit Suite** | `COMPLETE` | `COMPLETE` | 37/37 tests passing (including Zod schemas and fallback integrity). |
+| **Playwright E2E & Security Suite** | `COMPLETE` | `COMPLETE` | 23/23 tests passing against live Supabase backend. |
+| **Publishing Lifecycle & Concurrency Audit** | `COMPLETE` | `COMPLETE` | Stale-version rejection, XSS blocking, and atomic publish verified. |
+| **Live Production Verification** | `COMPLETE` | `COMPLETE` | Verified `https://houseofpadmavati.pages.dev` and Supabase `kbvjmcnaaogkbnerjcoc`. |
 
 ---
 
 ## 2. Connected Homepage Sections & Data Schemas
 
+The 5 supported homepage sections are connected to database-backed content with strict schema enforcement and grounded fallbacks:
+
 | Section Key | Section Type | Supported Fields | Fallback Behavior |
 |---|---|---|---|
-| `home.hero` | `hero_banner` | `title`, `subtitle`, `eyebrow`, `primary_cta` (`label`, `href`), `secondary_cta` (`label`, `href`), `video_url`, `poster_url`, `alt_text` | Falls back to `DEFAULT_HERO_PAYLOAD` + featured collection video / still |
+| `home.hero` | `hero_banner` | `title`, `subtitle`, `eyebrow`, `primary_cta` (`label`, `href`), `secondary_cta` (`label`, `href`), `video_url`, `poster_url`, `alt_text` | Falls back to `DEFAULT_HERO_PAYLOAD` + collection video / still |
 | `home.craft` | `craft_story` | `title`, `lede`, `quote`, `attribution`, `craft_facts`, `image_url`, `caption`, `alt_text`, `cta` (`label`, `href`) | Falls back to `DEFAULT_CRAFT_PAYLOAD` (Gangamma Molakalmuru story) |
 | `home.philosophy` | `philosophy` | `title`, `lede`, `closing` | Falls back to `DEFAULT_PHILOSOPHY_PAYLOAD` ("A House, Not a Shop") |
 | `home.ownership` | `note_cards` | `heading`, `subheading`, `cards` array (each with `label`, `title`, `text`, `link_label`, `href`) | Falls back to `DEFAULT_OWNERSHIP_PAYLOAD` (3 House Notes) |
@@ -59,35 +51,61 @@ Key achievements:
 ## 3. Architecture & Security Isolation
 
 ### 3.1 Data Flow & Hook Implementation
-- Hook: `src/hooks/useSiteSections.ts`
-- Queries `siteSectionService.getPublishedPageSections(pageName)`.
-- Public storefront requests execute `rpc("get_published_site_sections", { p_page: "home" })`.
-- Public visitors never touch base table `site_sections` or `site_section_revisions`.
+- **Canonical Hook:** `src/hooks/useSiteSections.ts`
+- **Public Fetch Path:** Calls `siteSectionService.getPublishedPageSections(pageName)`, executing `get_published_site_sections(p_page)`.
+- **Zero-Trust Projection:** Public visitors never query base tables `site_sections` or `site_section_revisions`. Anonymous callers attempting REST queries receive an empty array `[]` (0 rows leaked) via RLS.
 
 ### 3.2 Draft Preview Isolation
-- When `?studio_preview=true` is requested in the browser URL:
-  1. The client checks `supabase.auth.getSession()` and verifies RLS admin access.
-  2. If the user is an authorized admin, draft payloads are queried via `siteSectionService.getAdminSections("home")` with queryKey `["site_sections", "draft_preview", "home"]`. An editorial preview banner is displayed on the page.
-  3. If the user is unauthenticated or not an admin, RLS returns 0 rows, and the storefront serves only published content under queryKey `["site_sections", "published", "home"]`.
-  4. Query caches are segregated, ensuring drafts cannot leak into normal visitor sessions.
+- When `?studio_preview=true` is requested:
+  1. The hook checks for an active authenticated session via `supabase.auth.getSession()` and verifies admin permissions.
+  2. If the user is an authorized administrator, draft payloads are queried via `siteSectionService.getAdminSections("home")` with a distinct TanStack query key `["site_sections", "draft_preview", "home"]`. An editorial indicator banner is rendered at the top of the viewport.
+  3. If the user is unauthenticated or a customer without administrative credentials, RLS denies access to the base table (0 rows), and the storefront serves only published content under queryKey `["site_sections", "published", "home"]`.
+  4. Separate cache keys prevent draft state from leaking into public sessions or caching layers.
 
 ### 3.3 Concurrency Control & Audit Logging
-- Mutations use optimistic locking via `version` / `expected_version`.
-- Concurrent edits by multiple administrators are rejected with `concurrency_conflict`.
-- Every publish operation creates an immutable snapshot in `public.site_section_revisions` and logs a row in `public.studio_activities`.
+- Mutations enforce optimistic locking: `save_site_section_draft` and `publish_site_section` check `version = p_expected_version`.
+- Any stale edit attempt returns a `concurrency_conflict` error.
+- Every publish operation inserts an immutable revision into `public.site_section_revisions` and records an event in `public.studio_activities`.
 
 ---
 
-## 4. Verification Evidence
+## 4. End-to-End Publishing Lifecycle Demonstration
 
-### 4.1 Vitest Unit Suite (37/37 PASSED)
+A controlled end-to-end lifecycle verification was executed against the database:
+
+1. **Stale Edits Rejection**:
+   - Calling `save_site_section_draft('home.hero', 999, ...)` with an incorrect version was rejected with `'error': 'concurrency_conflict'`.
+2. **Payload Security / XSS Validation**:
+   - Submitting `<script>alert(1)</script>` inside the payload triggered an immediate database exception from `validate_section_payload()`.
+3. **Draft Staging**:
+   - Executing `save_site_section_draft('home.hero', 1, ...)` staged the new draft, incremented `version` to 2, and flagged `has_unpublished_changes = true`.
+4. **Draft Isolation**:
+   - Queried `published_payload` while draft was staged: confirmed `published_payload` was completely unchanged and draft values were strictly invisible to public queries.
+5. **Atomic Publication**:
+   - Executed `publish_site_section('home.hero', 2, 'Lifecycle test verification')`.
+   - Revisions counter incremented, immutable revision recorded in `site_section_revisions`, draft promoted to `published_payload`, `has_unpublished_changes` reset to `false`.
+6. **Storefront Verification**:
+   - Whitelist RPC `get_published_site_sections('home')` returned the newly promoted published content.
+7. **Clean Rollback & Asset Preservation**:
+   - Test changes were rolled back, leaving production content in its original approved baseline state (Revision #1).
+
+---
+
+## 5. Verification & Automated Test Results
+
+### 5.1 Vitest Unit Suite (37/37 PASSED)
 ```text
 Test Files  5 passed (5)
      Tests  37 passed (37)
-  Duration  2.97s
+  Duration  4.40s
 ```
+- MIME validation, file size bounds (20MB / 150MB), filename sanitization (`mediaCatalog.test.ts`).
+- Image URL resolution and transformation (`supabaseImage.test.ts`).
+- Price formatting and currency precision (`formatPrice.test.ts`).
+- Site section Zod schema validation, grounded defaults integrity, and corruption resilience (`siteSectionValidation.test.ts`).
+- Customer authentication and checkout flows (`CustomerAuthCheckout.test.ts`).
 
-### 4.2 Playwright E2E & Security Suite (23/23 PASSED)
+### 5.2 Playwright E2E & Security Suite (23/23 PASSED)
 ```text
 Running 23 tests using 1 worker
 [1/23]  public storefront loads journal articles from database with seamless fallback (PASSED)
@@ -113,17 +131,17 @@ Running 23 tests using 1 worker
 [21/23] Phase 3 Stage 3 Homepage Content Management: get_published_site_sections('home') returns all 5 canonical sections with validated payloads (PASSED)
 [22/23] Phase 3 Stage 3 Homepage Content Management: draft isolation — anonymous callers cannot observe draft payloads (PASSED)
 [23/23] Phase 3 Stage 3 Homepage Content Management: unauthenticated callers are forbidden from executing draft and publish mutations (PASSED)
-23 passed (48.2s)
+23 passed (47.7s)
 ```
 
-### 4.3 Static Analysis & Build
-- TypeScript: `npx tsc --noEmit` -> **0 errors**.
-- ESLint: `npm run lint` -> **0 errors, 0 warnings**.
-- Production build: `npm run build` -> **16/16 SSG routes prerendered cleanly**.
+### 5.3 Static Type & Code Quality Checks
+- **TypeScript:** `npx tsc --noEmit` -> **0 errors**.
+- **ESLint:** `npm run lint` -> **0 errors, 0 warnings**.
+- **Production Build:** `npm run build` -> **Prerendering completed cleanly** for all routes.
 
 ---
 
-## 5. Summary of Modified & Created Files
+## 6. Summary of Modified & Created Files
 
 - `src/hooks/useSiteSections.ts` (NEW): Canonical hook for dynamic homepage sections with Zod validation, fallback, and draft preview.
 - `src/types/siteSections.ts`: Safe video/poster URL schemas, supported section key types, and grounded default payloads.
@@ -134,3 +152,12 @@ Running 23 tests using 1 worker
 - `src/App.tsx`: Wired `/studio/site-update` protected route with `AuthGuard` and `StudioLayout`.
 - `src/lib/__tests__/siteSectionValidation.test.ts`: Added tests for schema validation, grounded defaults, and corruption fallback.
 - `src/__tests__/StudioRemediation.spec.ts`: Added Phase 3 Stage 3 integration tests.
+- `docs/HOP_PHASE_3_STAGE_3_REPORT.md`: Comprehensive Stage 3 certification report.
+
+---
+
+## 7. Known Limitations & Subsequent Stage Work
+
+- **Scope Boundary**: Content management in this stage is scoped strictly to the 5 homepage sections (`home.hero`, `home.craft`, `home.philosophy`, `home.ownership`, `home.invitation`).
+- **Additional Pages**: About (`about.story`), Customer Care (`care.*`), Policies (`policy.*`), and Journal article bodies will be integrated into the Unified Site Update Workspace in subsequent stages.
+- **Revision Restoration UI**: The database RPC `restore_site_section_revision` is fully functional and tested, but dedicated historical revision rollback UI controls in Studio are slated for the general Site Update workspace release.
