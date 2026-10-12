@@ -67,10 +67,45 @@ export function useDeleteMedia() {
     mutationFn: (item: MediaItem) => deleteMedia(item),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["studio", "media"] });
-      toast.success("Media deleted safely");
+      toast.success("Media moved to trash");
     },
     onError: (err) => {
       toast.error(err instanceof Error ? err.message : "Delete failed");
     },
   });
 }
+
+export function useRestoreMedia() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (item: MediaItem) => restoreMedia(item),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["studio", "media"] });
+      toast.success("Media asset restored to active library");
+    },
+    onError: (err) => {
+      toast.error(err instanceof Error ? err.message : "Restore failed");
+    },
+  });
+}
+
+export function usePurgeMedia() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (item: MediaItem) => {
+      const res = await purgeMedia(item);
+      if (!res.success) {
+        throw new Error(res.message || res.error || "Purge failed");
+      }
+      return res;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["studio", "media"] });
+      toast.success("Media asset permanently deleted");
+    },
+    onError: (err) => {
+      toast.error(err instanceof Error ? err.message : "Permanent deletion failed");
+    },
+  });
+}
+

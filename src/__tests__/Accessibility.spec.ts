@@ -15,8 +15,7 @@ const TEST_ROUTES = [
 test.describe('Accessibility Audit', () => {
   for (const route of TEST_ROUTES) {
     test(`should have no accessibility violations on ${route.name}`, async ({ page }) => {
-      await page.goto(route.path, { waitUntil: 'networkidle' });
-      await page.waitForLoadState('domcontentloaded');
+      await page.goto(route.path, { waitUntil: 'domcontentloaded' });
 
       const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
@@ -26,7 +25,7 @@ test.describe('Accessibility Audit', () => {
 
   test.describe('Keyboard Navigation', () => {
     test('Home page should be keyboard navigable', async ({ page }) => {
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       // Tab through focusable elements
@@ -40,7 +39,7 @@ test.describe('Accessibility Audit', () => {
     });
 
     test('Navigation should have visible focus styles', async ({ page }) => {
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       // Check that focusable elements have visible focus styles
@@ -58,7 +57,7 @@ test.describe('Accessibility Audit', () => {
 
   test.describe('Semantic HTML', () => {
     test('Pages should have proper heading hierarchy', async ({ page }) => {
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       const headings = await page.locator('h1, h2, h3, h4, h5, h6').all();
@@ -71,9 +70,9 @@ test.describe('Accessibility Audit', () => {
     });
 
     test('Forms should have proper labels', async ({ page }) => {
-      await page.goto('/contact', { waitUntil: 'networkidle' }).catch(() => {
+      await page.goto('/contact', { waitUntil: 'domcontentloaded' }).catch(() => {
         // Contact page might not exist, try checkout
-        return page.goto('/checkout', { waitUntil: 'networkidle' });
+        return page.goto('/checkout', { waitUntil: 'domcontentloaded' });
       });
       await page.waitForLoadState('domcontentloaded');
 
@@ -92,7 +91,7 @@ test.describe('Accessibility Audit', () => {
     });
 
     test('Images should have alt text', async ({ page }) => {
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       const images = await page.locator('img').all();
@@ -110,7 +109,7 @@ test.describe('Accessibility Audit', () => {
 
   test.describe('ARIA', () => {
     test('Interactive elements should have accessible names', async ({ page }) => {
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       const buttons = await page.locator('button').all();
@@ -126,7 +125,7 @@ test.describe('Accessibility Audit', () => {
     });
 
     test('ARIA roles should be used correctly', async ({ page }) => {
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       // Check for invalid role combinations
@@ -154,7 +153,7 @@ test.describe('Accessibility Audit', () => {
   test.describe('Color Contrast', () => {
     test('Text should meet minimum contrast requirements', async ({ page }) => {
       // This is a basic check - axe-core will catch contrast violations
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       const accessibilityScanResults = await new AxeBuilder({ page })
@@ -173,7 +172,7 @@ test.describe('Accessibility Audit', () => {
     test('Should respect prefers-reduced-motion', async ({ page }) => {
       // Test with reduced motion preference
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       // Animations should be disabled or reduced
@@ -191,7 +190,7 @@ test.describe('Accessibility Audit', () => {
 
   test.describe('Landmarks and Structure', () => {
     test('Page should have proper landmark regions', async ({ page }) => {
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       // Check for main landmark
@@ -204,7 +203,7 @@ test.describe('Accessibility Audit', () => {
     });
 
     test('Skip link should be present for keyboard users', async ({ page }) => {
-      await page.goto('/', { waitUntil: 'networkidle' });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('domcontentloaded');
 
       // Check for skip link (usually first focusable element)

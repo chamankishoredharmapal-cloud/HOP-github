@@ -10,7 +10,7 @@ import heroStill from "@/assets/hop-hero.jpg";
 
 const JournalDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { article, isLoading } = useJournalArticle(slug);
+  const { article, isLoading, isPreview } = useJournalArticle(slug);
   usePrerenderReady(!isLoading);
 
   useMetadata({
@@ -30,7 +30,7 @@ const JournalDetail = () => {
           headline: article.title,
           description: article.dek,
           image: article.img,
-          author: { "@type": "Organization", name: "House of Padmavati" },
+          author: { "@type": "Organization", name: article.author || "House of Padmavati" },
           publisher: { "@type": "Organization", name: "House of Padmavati" },
         },
         {
@@ -63,13 +63,27 @@ const JournalDetail = () => {
   return (
     <PageLayout>
        <main className="hop-page__room hop-page__section pt-12 sm:pt-16 pb-24">
+        {isPreview && (
+          <div className="max-w-3xl mx-auto mb-8 rounded border border-amber-500/40 bg-amber-500/10 px-4 py-2.5 text-xs text-amber-900 dark:text-amber-200 flex items-center justify-between">
+            <span>
+              <strong>Studio Draft Preview:</strong> Viewing an unapproved reflection as an authenticated administrator.
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 font-semibold">
+              Draft Preview
+            </span>
+          </div>
+        )}
+
         <Link to="/journal" className="inline-flex items-center gap-1.5 text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft hover:text-ink transition-colors mb-10">
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
           Back to Journal
         </Link>
 
         <div className="max-w-3xl mx-auto">
-          <p className="text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">{article.tag}</p>
+          <div className="flex items-center justify-between text-[0.65rem] tracking-[0.42em] uppercase text-ink-soft">
+            <span>{article.tag}</span>
+            {article.author && <span>By {article.author}</span>}
+          </div>
            <h1 className="mt-4 hop-page__title hop-page__title--small">
             {article.title}
           </h1>
@@ -79,7 +93,7 @@ const JournalDetail = () => {
               <OptimizedImage
                 assetPath={article.assetPath}
                 fallbackSrc={article.img}
-                alt={article.title}
+                alt={article.image_alt || article.title}
                 sizes="(max-width: 768px) 100vw, 768px"
                 priority={true}
                 imgClassName="w-full h-full object-cover"
@@ -87,7 +101,7 @@ const JournalDetail = () => {
             ) : (
               <img
                 src={article.img}
-                alt={article.title}
+                alt={article.image_alt || article.title}
                 onError={(e) => {
                   e.currentTarget.src = heroStill;
                 }}

@@ -40,7 +40,7 @@ const Journal = () => {
                   <OptimizedImage
                     assetPath={featured.assetPath}
                     fallbackSrc={featured.img}
-                    alt={featured.title}
+                    alt={featured.image_alt || featured.title}
                     sizes="(max-width: 768px) 100vw, 1200px"
                     priority={true}
                     imgClassName="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
@@ -48,7 +48,7 @@ const Journal = () => {
                 ) : (
                   <img
                     src={featured.img}
-                    alt={featured.title}
+                    alt={featured.image_alt || featured.title}
                     onError={(e) => {
                       e.currentTarget.src = heroStill;
                     }}
@@ -88,14 +88,14 @@ const Journal = () => {
                         <OptimizedImage
                           assetPath={article.assetPath}
                           fallbackSrc={article.img}
-                          alt=""
+                          alt={article.image_alt || article.title}
                           sizes="120px"
                           imgClassName="w-full h-full object-cover"
                         />
                       ) : (
                         <img
                           src={article.img}
-                          alt=""
+                          alt={article.image_alt || article.title}
                           loading="lazy"
                           onError={(e) => {
                             e.currentTarget.src = heroStill;

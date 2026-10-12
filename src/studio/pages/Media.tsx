@@ -12,12 +12,17 @@ import {
   ExternalLink,
   AlertTriangle,
   Play,
+  RotateCcw,
+  Archive,
+  ShieldAlert,
 } from "lucide-react";
 import {
   useMediaList,
   useUploadMedia,
   useUpdateMedia,
   useDeleteMedia,
+  useRestoreMedia,
+  usePurgeMedia,
   useCheckMediaUsage,
 } from "../hooks/useMedia";
 import type { MediaItem, MediaListParams, MediaType } from "../types/media";
@@ -57,9 +62,11 @@ function formatDate(iso: string): string {
 }
 
 export default function Media() {
+  const [statusFilter, setStatusFilter] = useState<"active" | "trash">("active");
   const [params, setParams] = useState<MediaListParams>({
     search: "",
     type: "all",
+    status: "active",
     page: 1,
     perPage: 32,
   });
@@ -73,9 +80,10 @@ export default function Media() {
   const [editingItem, setEditingItem] = useState<MediaItem | null>(null);
   const [editAlt, setEditAlt] = useState("");
 
-  // Safe Delete Modal state
+  // Safe Delete / Purge Modal state
   const [deleteTarget, setDeleteTarget] = useState<MediaItem | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [isPurgeAction, setIsPurgeAction] = useState(false);
 
   // Copy state
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
@@ -87,6 +95,8 @@ export default function Media() {
   const uploadMedia = useUploadMedia();
   const updateMedia = useUpdateMedia();
   const deleteMedia = useDeleteMedia();
+  const restoreMedia = useRestoreMedia();
+  const purgeMedia = usePurgeMedia();
 
   // Usage check for delete target
   const { data: usageCheck, isLoading: checkingUsage } = useCheckMediaUsage(
@@ -103,6 +113,11 @@ export default function Media() {
   const handleTabChange = (type: "all" | "image" | "video") => {
     setActiveTab(type);
     setParams((prev) => ({ ...prev, type, page: 1 }));
+  };
+
+  const handleStatusFilterChange = (status: "active" | "trash") => {
+    setStatusFilter(status);
+    setParams((prev) => ({ ...prev, status, page: 1 }));
   };
 
   const handleImageUpload = useCallback(
@@ -147,15 +162,37 @@ export default function Media() {
     setTimeout(() => setCopiedUrl(null), 2000);
   };
 
-  const handleInitiateDelete = (item: MediaItem) => {
+  const handleInitiateSoftDelete = (item: MediaItem) => {
+    setIsPurgeAction(false);
     setDeleteTarget(item);
     setDeleteDialogOpen(true);
   };
 
-  const handleConfirmDelete = async () => {
+  const handleInitiatePurge = (item: MediaItem) => {
+    setIsPurgeAction(true);
+    setDeleteTarget(item);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleRestore = async (item: MediaItem) => {
+    try {
+      await restoreMedia.mutateAsync(item);
+      if (previewItem?.id === item.id) {
+        setPreviewOpen(false);
+      }
+    } catch {
+      // Handled in onError
+    }
+  };
+
+  const handleConfirmAction = async () => {
     if (!deleteTarget) return;
     try {
-      await deleteMedia.mutateAsync(deleteTarget);
+      if (isPurgeAction) {
+        await purgeMedia.mutateAsync(deleteTarget);
+      } else {
+        await deleteMedia.mutateAsync(deleteTarget);
+      }
       setDeleteDialogOpen(false);
       setDeleteTarget(null);
       if (previewItem?.id === deleteTarget.id) {
@@ -178,10 +215,10 @@ export default function Media() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border/40">
         <div>
           <h2 className="font-serif text-xl font-light text-foreground tracking-tight">
-            Media Library
+            Unified Media Catalog
           </h2>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Central repository for collection films, product imagery, and atmospheric stills across HOP.
+            Central repository for collection films, product photography, editorial stills, and defensive asset protection.
           </p>
         </div>
 
@@ -227,47 +264,75 @@ export default function Media() {
 
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        {/* Type tabs */}
-        <div className="flex items-center gap-1 p-1 rounded-md bg-muted/40 border border-border/40 self-start">
-          <button
-            onClick={() => handleTabChange("all")}
-            className={`px-3 py-1 text-xs rounded transition-colors font-medium ${
-              activeTab === "all"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            All Media
-          </button>
-          <button
-            onClick={() => handleTabChange("video")}
-            className={`px-3 py-1 text-xs rounded transition-colors font-medium flex items-center gap-1.5 ${
-              activeTab === "video"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Film className="h-3 w-3" />
-            Collection Films
-          </button>
-          <button
-            onClick={() => handleTabChange("image")}
-            className={`px-3 py-1 text-xs rounded transition-colors font-medium flex items-center gap-1.5 ${
-              activeTab === "image"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <ImageIcon className="h-3 w-3" />
-            Photography & Stills
-          </button>
+        {/* Type tabs & Status selector */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Active / Trash Status */}
+          <div className="flex items-center gap-1 p-1 rounded-md bg-muted/40 border border-border/40">
+            <button
+              onClick={() => handleStatusFilterChange("active")}
+              className={`px-3 py-1 text-xs rounded transition-colors font-medium ${
+                statusFilter === "active"
+                  ? "bg-background text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Active Library
+            </button>
+            <button
+              onClick={() => handleStatusFilterChange("trash")}
+              className={`px-3 py-1 text-xs rounded transition-colors font-medium flex items-center gap-1.5 ${
+                statusFilter === "trash"
+                  ? "bg-background text-destructive shadow-xs font-semibold"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Trash2 className="h-3 w-3" />
+              Trash
+            </button>
+          </div>
+
+          {/* Media Type */}
+          <div className="flex items-center gap-1 p-1 rounded-md bg-muted/40 border border-border/40">
+            <button
+              onClick={() => handleTabChange("all")}
+              className={`px-3 py-1 text-xs rounded transition-colors font-medium ${
+                activeTab === "all"
+                  ? "bg-background text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              All Types
+            </button>
+            <button
+              onClick={() => handleTabChange("video")}
+              className={`px-3 py-1 text-xs rounded transition-colors font-medium flex items-center gap-1.5 ${
+                activeTab === "video"
+                  ? "bg-background text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Film className="h-3 w-3" />
+              Films
+            </button>
+            <button
+              onClick={() => handleTabChange("image")}
+              className={`px-3 py-1 text-xs rounded transition-colors font-medium flex items-center gap-1.5 ${
+                activeTab === "image"
+                  ? "bg-background text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <ImageIcon className="h-3 w-3" />
+              Images
+            </button>
+          </div>
         </div>
 
         {/* Search */}
         <div className="relative max-w-xs w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
           <Input
-            placeholder="Search by name, collection, product..."
+            placeholder="Search by name, tag, context..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             className="pl-8 text-xs h-8 bg-background"
@@ -291,9 +356,15 @@ export default function Media() {
       ) : !data || data.items.length === 0 ? (
         <Card className="border-border/50 bg-card">
           <CardContent className="p-12 text-center space-y-2">
-            <p className="font-serif text-base text-foreground">No media assets found.</p>
+            <p className="font-serif text-base text-foreground">
+              {statusFilter === "trash" ? "Trash is currently empty." : "No media assets found."}
+            </p>
             <p className="text-xs text-muted-foreground">
-              {searchInput ? "Try adjusting your search query." : "Upload films or photography to populate the library."}
+              {statusFilter === "trash"
+                ? "Deleted assets appear here before permanent purging."
+                : searchInput
+                ? "Try adjusting your search query."
+                : "Upload films or photography to populate the catalog."}
             </p>
           </CardContent>
         </Card>
@@ -301,6 +372,7 @@ export default function Media() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
           {data.items.map((item) => {
             const isVideo = item.type === "video";
+            const isTrash = statusFilter === "trash";
 
             return (
               <div
@@ -370,16 +442,42 @@ export default function Media() {
                       <Copy className="h-3 w-3" />
                     )}
                   </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleInitiateDelete(item);
-                    }}
-                    className="p-1 rounded bg-background/90 text-sakura hover:text-destructive hover:bg-background shadow-xs text-xs"
-                    title="Safe Delete"
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </button>
+
+                  {isTrash ? (
+                    <>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRestore(item);
+                        }}
+                        className="p-1 rounded bg-background/90 text-emerald-600 hover:text-emerald-700 hover:bg-background shadow-xs text-xs"
+                        title="Restore to Active Library"
+                      >
+                        <RotateCcw className="h-3 w-3" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleInitiatePurge(item);
+                        }}
+                        className="p-1 rounded bg-background/90 text-destructive hover:bg-background shadow-xs text-xs"
+                        title="Permanently Purge"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleInitiateSoftDelete(item);
+                      }}
+                      className="p-1 rounded bg-background/90 text-sakura hover:text-destructive hover:bg-background shadow-xs text-xs"
+                      title="Move to Trash"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -459,15 +557,38 @@ export default function Media() {
 
           <DialogFooter className="flex items-center justify-between sm:justify-between pt-2 border-t border-border/40">
             {previewItem && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleInitiateDelete(previewItem)}
-                className="text-xs text-sakura hover:text-destructive hover:bg-destructive/10 gap-1.5"
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-                Delete Asset
-              </Button>
+              statusFilter === "trash" ? (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleRestore(previewItem)}
+                    className="text-xs text-emerald-600 hover:text-emerald-700 gap-1.5"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5" />
+                    Restore Asset
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleInitiatePurge(previewItem)}
+                    className="text-xs text-sakura hover:text-destructive hover:bg-destructive/10 gap-1.5"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    Permanently Purge
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleInitiateSoftDelete(previewItem)}
+                  className="text-xs text-sakura hover:text-destructive hover:bg-destructive/10 gap-1.5"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  Move to Trash
+                </Button>
+              )
             )}
             <Button
               variant="outline"
@@ -481,25 +602,25 @@ export default function Media() {
         </DialogContent>
       </Dialog>
 
-      {/* Safe Delete Alert Dialog */}
+      {/* Safe Delete / Purge Alert Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent className="bg-card border-border/60 max-w-md">
           <AlertDialogHeader>
             <div className="flex items-center gap-2 text-destructive">
               <AlertTriangle className="h-5 w-5" />
               <AlertDialogTitle className="font-serif text-lg font-light text-foreground">
-                Safe Delete Verification
+                {isPurgeAction ? "Permanent Asset Purge" : "Move Asset to Trash"}
               </AlertDialogTitle>
             </div>
 
             <AlertDialogDescription asChild>
               <div className="space-y-3 pt-2 text-xs text-foreground/90">
                 {checkingUsage ? (
-                  <p className="text-muted-foreground">Checking live references across HOP...</p>
+                  <p className="text-muted-foreground">Checking live references across store content...</p>
                 ) : usageCheck?.inUse ? (
                   <div className="rounded-md border border-amber-500/30 bg-amber-500/10 p-3 space-y-2 text-amber-900 dark:text-amber-200">
                     <p className="font-medium">
-                      This media is currently in active use on the website:
+                      This asset is in active use across HOP store content:
                     </p>
                     <ul className="list-disc pl-5 space-y-1 text-[11px]">
                       {usageCheck.references.map((ref, idx) => (
@@ -509,12 +630,14 @@ export default function Media() {
                       ))}
                     </ul>
                     <p className="text-[11px] pt-1 border-t border-amber-500/20 text-destructive font-medium">
-                      Deleting it will cause broken visuals or missing films on the live website.
+                      Deletion is blocked to prevent broken imagery or missing films on the live store.
                     </p>
                   </div>
                 ) : (
                   <p className="text-muted-foreground">
-                    This media item is not actively linked as a primary image or collection film. Are you sure you wish to delete it permanently?
+                    {isPurgeAction
+                      ? "This asset is verified unused. Permanently purging it will delete its catalog entry and underlying storage file irreversibly."
+                      : "This asset will be moved to the Trash. You can restore it anytime or purge it permanently."}
                   </p>
                 )}
                 <p className="text-[11px] text-muted-foreground font-mono truncate">
@@ -535,7 +658,7 @@ export default function Media() {
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              onClick={handleConfirmDelete}
+              onClick={handleConfirmAction}
               disabled={!!usageCheck?.inUse}
               className={`text-xs h-8 ${
                 usageCheck?.inUse
@@ -543,7 +666,11 @@ export default function Media() {
                   : "bg-destructive text-destructive-foreground hover:bg-destructive/90"
               }`}
             >
-              {usageCheck?.inUse ? "Cannot Delete (In Active Use)" : "Confirm Delete"}
+              {usageCheck?.inUse
+                ? "Cannot Delete (In Active Use)"
+                : isPurgeAction
+                ? "Confirm Permanent Purge"
+                : "Move to Trash"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

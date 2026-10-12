@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 export interface StudioActivity {
   id: string;
   action: string;
-  entityType: "collection" | "film" | "product" | "media" | "journal" | "settings";
+  entityType: "collection" | "film" | "product" | "media" | "journal" | "settings" | "site_section" | "disaster_recovery";
   entityId?: string;
   entityName: string;
   userEmail?: string;
@@ -55,6 +55,12 @@ function mapRow(r: StudioActivityRow): StudioActivity {
   };
 }
 
+export interface ActivityFilterParams {
+  limit?: number;
+  offset?: number;
+  entityType?: string;
+}
+
 export const activityService = {
   async log(params: Omit<StudioActivity, "id" | "createdAt">): Promise<StudioActivity> {
     let userEmail = params.userEmail;
@@ -103,13 +109,24 @@ export const activityService = {
     return entry;
   },
 
-  async getRecent(limit: number = 20): Promise<StudioActivity[]> {
+  async getRecent(params?: number | ActivityFilterParams): Promise<StudioActivity[]> {
+    const limit = typeof params === "number" ? params : (params?.limit ?? 50);
+    const offset = typeof params === "object" ? (params.offset ?? 0) : 0;
+    const entityType = typeof params === "object" ? params.entityType : undefined;
+
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from("studio_activities")
         .select("*")
-        .order("created_at", { ascending: false })
-        .limit(limit);
+        .order("created_at", { ascending: false });
+
+      if (entityType && entityType !== "all") {
+        query = query.eq("entity_type", entityType);
+      }
+
+      query = query.range(offset, offset + limit - 1);
+
+      const { data, error } = await query;
 
       if (!error && data && data.length > 0) {
         return (data as unknown as StudioActivityRow[]).map(mapRow);
@@ -122,6 +139,9 @@ export const activityService = {
     }
 
     const local = getLocalActivities();
-    return local.slice(0, limit);
+    const filtered = entityType && entityType !== "all"
+      ? local.filter((a) => a.entityType === entityType)
+      : local;
+    return filtered.slice(offset, offset + limit);
   },
 };

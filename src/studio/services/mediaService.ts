@@ -297,7 +297,38 @@ export async function deleteMedia(item: MediaItem): Promise<void> {
   await activityService.log({
     action: "media_deleted",
     entityType: "media",
+    entityId: item.id,
     entityName: item.name,
     details: { url: item.url, bucket: item.bucket },
   });
 }
+
+export async function purgeMedia(item: MediaItem): Promise<{ success: boolean; error?: string; references?: string[] }> {
+  const { data, error } = await supabase.rpc("purge_media_asset", {
+    p_id: item.id,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  const res = data as {
+    success: boolean;
+    error?: string;
+    references?: string[];
+    message?: string;
+    bucket_id?: string;
+    storage_path?: string;
+  };
+
+  if (res.success && res.bucket_id && res.storage_path) {
+    try {
+      await supabase.storage.from(res.bucket_id).remove([res.storage_path]);
+    } catch (storageErr) {
+      console.warn("Storage removal warning after catalog purge:", storageErr);
+    }
+  }
+
+  return res;
+}
+

@@ -21,6 +21,9 @@ export interface JournalArticle {
   img: string;
   assetPath?: string;
   dek: string;
+  author?: string;
+  image_alt?: string;
+  sort_order?: number;
 }
 
 export const articles: JournalArticle[] = [

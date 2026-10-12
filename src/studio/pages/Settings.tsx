@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, type ComponentType, type ReactNode, type ChangeEvent } from "react";
-import { Save, Store, Phone, Truck, Search, Shield, Film } from "lucide-react";
+import { Save, Store, Phone, Truck, Search, Shield, Film, Activity, CheckCircle2, AlertTriangle, XCircle, RefreshCw, FileText } from "lucide-react";
 import { useSettings, useSaveSettings } from "../hooks/useSettings";
 import { useUploadMedia } from "../hooks/useMedia";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { validateVideoFile } from "../utils/videoValidation";
 import type { StoreSettings } from "../types/settings";
+import { diagnosticsService, type SystemIntegrityReport } from "../services/diagnosticsService";
 
 const CURRENCIES = ["INR", "USD", "EUR", "GBP"];
 const ORIGIN_COUNTRIES = ["IN", "US", "UK", "CN", "BD"];
@@ -58,6 +59,21 @@ export default function Settings() {
   const saveSettings = useSaveSettings();
   const [form, setForm] = useState<StoreSettings | null>(null);
   const [activeTab, setActiveTab] = useState("brand");
+  const [diagnosticsReport, setDiagnosticsReport] = useState<SystemIntegrityReport | null>(null);
+  const [runningDiagnostics, setRunningDiagnostics] = useState(false);
+
+  const runAudit = useCallback(async () => {
+    setRunningDiagnostics(true);
+    try {
+      const report = await diagnosticsService.runIntegrityAudit();
+      setDiagnosticsReport(report);
+      toast.success("System integrity audit complete");
+    } catch {
+      toast.error("Diagnostics check failed");
+    } finally {
+      setRunningDiagnostics(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (settings) {
@@ -169,6 +185,7 @@ export default function Settings() {
           <TabsTrigger value="seo"><Search className="h-4 w-4 mr-1.5" />SEO</TabsTrigger>
           <TabsTrigger value="security"><Shield className="h-4 w-4 mr-1.5" />Security</TabsTrigger>
           <TabsTrigger value="cinematic"><Film className="h-4 w-4 mr-1.5" />Cinematic Video</TabsTrigger>
+          <TabsTrigger value="resilience"><Activity className="h-4 w-4 mr-1.5" />Resilience &amp; Health</TabsTrigger>
         </TabsList>
 
         <TabsContent value="brand" className="mt-6 space-y-6">
@@ -484,6 +501,80 @@ export default function Settings() {
                 className="hidden"
                 onChange={handleCinematicVideoUpload}
               />
+            </div>
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="resilience" className="mt-6 space-y-6">
+          <SectionCard title="System Integrity & Storage Diagnostics" icon={Activity}>
+            <p className="text-xs text-muted-foreground">
+              Audit consistency between database records, published site sections, Journal reflections, and Supabase storage buckets.
+            </p>
+            <div className="flex items-center gap-3">
+              <Button
+                size="sm"
+                onClick={runAudit}
+                disabled={runningDiagnostics}
+                className="gap-1.5 text-xs bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
+              >
+                <RefreshCw className={`h-3.5 w-3.5 ${runningDiagnostics ? "animate-spin" : ""}`} />
+                {runningDiagnostics ? "Auditing System..." : "Run Integrity Diagnostic"}
+              </Button>
+              {diagnosticsReport && (
+                <span
+                  className={`text-xs font-medium px-2 py-0.5 rounded border ${
+                    diagnosticsReport.overallStatus === "healthy"
+                      ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20"
+                      : diagnosticsReport.overallStatus === "warning"
+                      ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20"
+                      : "bg-destructive/10 text-destructive border-destructive/20"
+                  }`}
+                >
+                  Status: {diagnosticsReport.overallStatus.toUpperCase()} ({diagnosticsReport.passed}/{diagnosticsReport.totalChecks} Checks Passed)
+                </span>
+              )}
+            </div>
+
+            {diagnosticsReport && (
+              <div className="space-y-2 pt-2 border-t border-border/40">
+                {diagnosticsReport.checks.map((chk) => (
+                  <div
+                    key={chk.id}
+                    className="flex items-start justify-between gap-3 p-3 rounded-lg border border-border/40 bg-card text-xs"
+                  >
+                    <div className="flex items-start gap-2.5 min-w-0">
+                      {chk.status === "pass" && <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />}
+                      {chk.status === "warn" && <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />}
+                      {chk.status === "fail" && <XCircle className="h-4 w-4 text-destructive shrink-0 mt-0.5" />}
+                      <div className="space-y-0.5 min-w-0">
+                        <p className="font-medium text-foreground">{chk.name}</p>
+                        <p className="text-muted-foreground text-[11px]">{chk.message}</p>
+                      </div>
+                    </div>
+                    <span className="font-mono text-[10px] uppercase text-muted-foreground shrink-0 px-1.5 py-0.5 rounded bg-muted">
+                      {chk.category}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </SectionCard>
+
+          <SectionCard title="Disaster Recovery & Runbook" icon={Shield}>
+            <div className="space-y-3 text-xs text-muted-foreground leading-relaxed">
+              <p>
+                House of Padmavati maintains continuous Point-in-Time Recovery (PITR) and forward-only schema migrations.
+                In the event of accidental deletion, catastrophic database corruption, or storage desynchronization, follow the certified emergency procedures documented in:
+              </p>
+              <div className="flex items-center gap-2 p-3 rounded-md border border-border/50 bg-muted/20 font-mono text-foreground text-[11px]">
+                <FileText className="h-4 w-4 text-ink shrink-0" />
+                <span>docs/HOP_PHASE_3_STAGE_5_DISASTER_RECOVERY_RUNBOOK.md</span>
+              </div>
+              <ul className="list-disc pl-5 space-y-1 text-[11px]">
+                <li><strong>Supabase Backups:</strong> Point-in-Time Recovery (PITR) available via Supabase Dashboard.</li>
+                <li><strong>Media Safety:</strong> In-use assets cannot be purged without zero-reference verification.</li>
+                <li><strong>Revisions:</strong> All site section and Journal updates maintain immutable snapshots in database revision tables.</li>
+              </ul>
             </div>
           </SectionCard>
         </TabsContent>

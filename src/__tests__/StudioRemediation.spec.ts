@@ -662,7 +662,145 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
     });
     expect(saveAboutRes.status()).toBe(401);
   });
+
+  test("Phase 3 Stage 5 Editorial: journal articles include author byline and publication integrity", async ({ page, request }) => {
+    // 1. Verify REST API exposes published articles with author and sort order
+    const res = await request.get(`${url}/rest/v1/journal_articles?status=eq.published&select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+    expect(res.status()).toBe(200);
+    const articles = await res.json();
+    expect(Array.isArray(articles)).toBe(true);
+    expect(articles.length).toBeGreaterThanOrEqual(3);
+
+    for (const art of articles) {
+      expect(art.title).toBeDefined();
+      expect(art.slug).toBeDefined();
+      expect(art.status).toBe("published");
+      expect(art.author).toBeDefined();
+      expect(typeof art.sort_order).toBe("number");
+    }
+
+    // 2. Verify Storefront Journal listing page renders
+    await page.goto("/journal");
+    await expect(page.locator("h1")).toContainText("Field notes");
+    await expect(page.locator("text=How morning light reads a weave.")).toBeVisible();
+
+    // 3. Verify Journal Detail page renders with author attribution
+    await page.goto("/journal/how-morning-light-reads-a-weave");
+    await expect(page.locator("h1")).toContainText("How morning light reads a weave.");
+    await expect(page.getByText("Light", { exact: true })).toBeVisible();
+    await expect(page.getByText("By House of Padmavati")).toBeVisible();
+  });
+
+  test("Phase 3 Stage 5 Draft Isolation: unauthenticated callers are strictly blocked from draft/archived articles", async ({ request }) => {
+    // 1. Anonymous REST query for draft articles returns 0 rows via RLS
+    const draftRes = await request.get(`${url}/rest/v1/journal_articles?status=eq.draft&select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+    expect(draftRes.status()).toBe(200);
+    const draftRows = await draftRes.json();
+    expect(draftRows.length).toBe(0);
+
+    // 2. Anonymous REST query for archived articles returns 0 rows via RLS
+    const archivedRes = await request.get(`${url}/rest/v1/journal_articles?status=eq.archived&select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+    expect(archivedRes.status()).toBe(200);
+    const archivedRows = await archivedRes.json();
+    expect(archivedRows.length).toBe(0);
+  });
+
+  test("Phase 3 Stage 5 Security: unauthorized callers cannot execute editorial revision or archive RPCs", async ({ request }) => {
+    // 1. Attempt save_journal_article_revision without admin auth
+    const saveRevRes = await request.post(`${url}/rest/v1/rpc/save_journal_article_revision`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_article_id: "00000000-0000-0000-0000-000000000000",
+        p_change_summary: "Unauthorized revision",
+      },
+    });
+    expect(saveRevRes.status()).toBe(401);
+
+    // 2. Attempt restore_journal_article_revision without admin auth
+    const restoreRevRes = await request.post(`${url}/rest/v1/rpc/restore_journal_article_revision`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_article_id: "00000000-0000-0000-0000-000000000000",
+        p_revision_number: 1,
+      },
+    });
+    expect(restoreRevRes.status()).toBe(401);
+
+    // 3. Attempt archive_journal_article without admin auth
+    const archiveRes = await request.post(`${url}/rest/v1/rpc/archive_journal_article`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_id: "00000000-0000-0000-0000-000000000000",
+      },
+    });
+    expect(archiveRes.status()).toBe(401);
+
+    // 4. Attempt direct SELECT on journal_article_revisions base table
+    const revTableRes = await request.get(`${url}/rest/v1/journal_article_revisions?select=*`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    });
+    expect(revTableRes.status()).toBe(200);
+    const revRows = await revTableRes.json();
+    expect(revRows.length).toBe(0); // 0 rows leaked to anonymous callers
+  });
+
+  test("Phase 3 Stage 5 Media Resilience: purge_media_asset is strictly protected and usage check detects journal assets", async ({ request }) => {
+    // 1. Attempt purge_media_asset without admin auth
+    const purgeRes = await request.post(`${url}/rest/v1/rpc/purge_media_asset`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_id: "00000000-0000-0000-0000-000000000000",
+      },
+    });
+    expect(purgeRes.status()).toBe(401);
+
+    // 2. Check usage on a journal image URL
+    const usageRes = await request.post(`${url}/rest/v1/rpc/check_media_asset_usage`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      data: {
+        p_url: "/src/assets/hop-fabric.jpg",
+      },
+    });
+    expect(usageRes.status()).toBe(200);
+    const usage = await usageRes.json();
+    expect(usage.in_use).toBe(true);
+    expect(usage.references.some((r: string) => r.includes("Journal Article"))).toBe(true);
+  });
 });
+
 
 
 
