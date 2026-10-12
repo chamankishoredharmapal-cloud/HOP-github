@@ -583,7 +583,7 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
   test("Phase 3 Stage 4 Remaining Pages: /about renders brand story with dynamic hook and fallback integrity", async ({ page }) => {
     await page.goto("/about");
     await expect(page.locator("h1")).toHaveText("The House.");
-    await expect(page.locator("h2")).toHaveText("House of Padmavati");
+    await expect(page.locator("main h2")).toHaveText("House of Padmavati");
     await expect(page.locator("text=House of Padmavati is named for a real woman.")).toBeVisible();
     await expect(page.locator("text=We curate the Indian saree for the modern wardrobe.")).toBeVisible();
 
@@ -602,7 +602,7 @@ test.describe("HOP Studio Remediation — End-to-End Pipeline & Security Verific
     await expect(page.locator("#care-last-name")).toBeVisible();
     await expect(page.locator("#care-email")).toBeVisible();
     await expect(page.locator("#care-message")).toBeVisible();
-    await expect(page.locator('button[type="submit"]')).toBeVisible();
+    await expect(page.locator('main form button[type="submit"]')).toBeVisible();
   });
 
   test("Phase 3 Stage 4 Remaining Policies: all 4 policy pages render verified copy, tables, and secure links", async ({ page }) => {

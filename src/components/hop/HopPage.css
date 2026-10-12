@@ -470,9 +470,11 @@
 }
 
 .hop-page__side-nav-link:hover,
-.hop-page__side-nav-link[aria-current="page"] {
+.hop-page__side-nav-link[aria-current="page"],
+.hop-page__side-nav-link.is-active {
   padding-left: 0.35rem;
-  color: hsl(var(--rasa-rose));
+  color: hsl(var(--rasa-mulberry));
+  font-weight: 500;
 }
 
 .hop-page__content {
