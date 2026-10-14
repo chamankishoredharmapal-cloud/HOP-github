@@ -21,11 +21,10 @@ describe("Phase 3 Stage 5: Editorial Management & Operational Resilience", () =>
     });
 
     it("enforces default author byline when not provided", () => {
-      const author = "" || "House of Padmavati";
-      expect(author).toBe("House of Padmavati");
-
-      const customAuthor = "Siddharth Rao" || "House of Padmavati";
-      expect(customAuthor).toBe("Siddharth Rao");
+      const resolveAuthor = (val?: string) => val || "House of Padmavati";
+      expect(resolveAuthor("")).toBe("House of Padmavati");
+      expect(resolveAuthor(undefined)).toBe("House of Padmavati");
+      expect(resolveAuthor("Siddharth Rao")).toBe("Siddharth Rao");
     });
 
     it("verifies sorting order comparator handles both custom order and publication dates", () => {
