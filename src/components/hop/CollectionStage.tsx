@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Film } from "@/components/hop/Film";
 import { fetchCollections } from "@/services/collectionService";
-import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import { COLLECTION_VIDEOS, COLLECTION_VIDEO_VARIANTS } from "@/data/collectionVideos";
 import { getCollectionDescriptor } from "@/data/collectionDescriptors";
 import { getWorld, getCollectionDisplayName, getCollectionRoomSlug } from "@/data/collectionWorlds";
 import { Selvedge } from "./Selvedge";
@@ -99,17 +99,14 @@ export const CollectionStage = () => {
                     )}
                     <div className="relative">
                       <Film
-                        src={c.hero_video_url ?? COLLECTION_VIDEOS[c.slug] ?? undefined}
-                        poster={c.hero_image_url ?? ""}
+                        src={c.hero_video_url ?? COLLECTION_VIDEO_VARIANTS[c.slug]?.src ?? COLLECTION_VIDEOS[c.slug] ?? undefined}
+                        mobileSrc={!c.hero_video_url ? COLLECTION_VIDEO_VARIANTS[c.slug]?.mobileSrc : undefined}
+                        poster={c.hero_image_url || COLLECTION_VIDEO_VARIANTS[c.slug]?.poster || ""}
                         alt={`${displayName} — collection film`}
                         className={
-                          world?.slug === "padma"
-                            ? "aspect-square lg:aspect-[4/3]"
-                            : world?.slug === "viara"
-                              ? "aspect-[16/10] lg:aspect-[16/10]"
-                              : world?.slug === "yugen"
-                                ? "aspect-[3/4] lg:aspect-[4/5]"
-                                : "aspect-[4/5] lg:aspect-[5/4]"
+                          world?.slug === "kalyani" || c.slug === "kalyani" || COLLECTION_VIDEO_VARIANTS[c.slug]?.orientation === "portrait"
+                            ? "aspect-[9/16] max-w-sm sm:max-w-md mx-auto"
+                            : "aspect-[16/9] w-full"
                         }
                       />
                       {world && (

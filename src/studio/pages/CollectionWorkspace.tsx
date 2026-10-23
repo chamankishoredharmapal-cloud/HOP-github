@@ -386,7 +386,7 @@ export default function CollectionWorkspace() {
               size="sm"
               onClick={() => handleSave("published")}
               disabled={saving}
-              className="gap-1.5 text-xs h-8 bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
+              className="gap-1.5 text-xs h-8 bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors"
             >
               <CheckCircle2 className="h-3.5 w-3.5" />
               Publish Collection

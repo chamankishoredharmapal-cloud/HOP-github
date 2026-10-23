@@ -28,7 +28,7 @@ export default function StudioCollections() {
         </div>
         <Button
           onClick={() => navigate("/studio/collections/new")}
-          className="gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors text-xs"
+          className="gap-1.5 bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors text-xs"
           size="sm"
         >
           <Plus className="h-3.5 w-3.5" />

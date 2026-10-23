@@ -108,7 +108,7 @@ export default function Dashboard() {
           <Button
             size="sm"
             onClick={() => window.open("/", "_blank")}
-            className="text-xs h-8 gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
+            className="text-xs h-8 gap-1.5 bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors"
           >
             <span>Visit House</span>
             <ExternalLink className="h-3 w-3" />

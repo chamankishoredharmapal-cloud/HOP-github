@@ -81,7 +81,7 @@ export default function ForgotPassword() {
                     required
                     autoComplete="email"
                     placeholder="you@example.com"
-                    className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
+                    className="h-12 border-ink/10 bg-card/60 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/60 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
                   />
                 </div>
                 <Button

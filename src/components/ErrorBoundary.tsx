@@ -52,7 +52,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex items-center justify-center gap-4">
               <button
                 onClick={this.handleRetry}
-                className="inline-flex items-center gap-2 bg-ink text-jasmine px-6 py-3 text-[0.7rem] tracking-[0.32em] uppercase rounded-full hover:bg-signature-crimson transition-colors"
+                className="inline-flex items-center gap-2 bg-brand-violet text-brand-ivory px-6 py-3 text-[0.7rem] tracking-[0.32em] uppercase rounded-full hover:bg-signature-crimson-deep transition-colors"
               >
                 Try again
               </button>
@@ -66,10 +66,10 @@ export class ErrorBoundary extends Component<Props, State> {
             </div>
             {process.env.NODE_ENV === "development" && this.state.error && (
               <details className="mt-8 text-left">
-                <summary className="text-xs text-ink-soft/50 cursor-pointer tracking-wide">
+                <summary className="text-xs text-ink-soft cursor-pointer tracking-wide">
                   Error details
                 </summary>
-                <pre className="mt-2 text-xs text-sakura bg-jasmine-deep p-4 rounded overflow-auto max-h-48">
+                <pre className="mt-2 text-xs text-brand-plum bg-jasmine-deep p-4 rounded overflow-auto max-h-48">
                   {this.state.error.message}
                   {"\n\n"}
                   {this.state.error.stack}

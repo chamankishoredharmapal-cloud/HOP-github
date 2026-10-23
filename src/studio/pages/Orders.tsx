@@ -150,7 +150,7 @@ export default function Orders() {
                   onClick={() => setPaymentFilter(opt.value)}
                   className={
                     paymentFilter === opt.value
-                      ? "bg-ink text-jasmine hover:bg-signature-crimson"
+                      ? "bg-brand-violet text-brand-ivory hover:bg-signature-crimson"
                       : "border-border/50 text-muted-foreground"
                   }
                 >
@@ -167,7 +167,7 @@ export default function Orders() {
                 onClick={() => setStatusFilter(tab.value)}
                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                   statusFilter === tab.value
-                    ? "bg-ink text-jasmine"
+                    ? "bg-brand-violet text-brand-ivory"
                     : "bg-jasmine-deep/50 text-muted-foreground hover:bg-jasmine-deep"
                 }`}
               >

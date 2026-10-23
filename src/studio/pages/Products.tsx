@@ -37,7 +37,7 @@ export default function Products() {
         </h2>
         <Button
           onClick={() => navigate("/studio/products/new")}
-          className="gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
+          className="gap-1.5 bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors"
           size="sm"
         >
           <Plus className="h-4 w-4" />

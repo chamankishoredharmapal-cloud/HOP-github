@@ -272,7 +272,7 @@ export default function Addresses() {
                     onClick={() => {
                       if (confirm("Remove this address?")) deleteMutation.mutate(addr.id);
                     }}
-                    className="p-1.5 rounded-md text-ink-soft hover:text-red-600 hover:bg-red-50"
+                    className="p-1.5 rounded-md text-ink-soft hover:text-destructive hover:bg-destructive/5"
                     aria-label="Delete address"
                   >
                     <Trash2 className="w-4 h-4" />

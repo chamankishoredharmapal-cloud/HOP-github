@@ -1,5 +1,5 @@
 /** Selvedge seam — proprietary HOP divider (Objective 04)
- * One per viewport max, derived from weave structure (crimson/sand twill).
+ * One per viewport max, derived from weave structure (violet/ivory twill).
  * Not decorative Indian motif — material edge, editorial rule.
  * Motion: subtle draw from left (700ms) — stillness is house style, movement the rare guest.
  */

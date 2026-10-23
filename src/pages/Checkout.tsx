@@ -498,7 +498,7 @@ export default function Checkout() {
             <p className="text-sm text-ink-soft mb-8 font-light leading-relaxed">
               Explore our collections to choose a saree for your quiet moments.
             </p>
-            <Button asChild className="rounded-full bg-ink text-jasmine hover:bg-ink-soft px-8 py-3 text-xs tracking-[0.2em] uppercase">
+            <Button asChild className="rounded-full bg-brand-violet text-brand-ivory hover:bg-brand-violet-deep px-8 py-3 text-xs tracking-[0.2em] uppercase">
               <Link to="/collections">Explore collections</Link>
             </Button>
           </div>
@@ -660,7 +660,7 @@ export default function Checkout() {
                           checked={authAgreed}
                           onChange={(e) => setAuthAgreed(e.target.checked)}
                           required
-                          className="mt-0.5 w-4 h-4 rounded border-border accent-ink shrink-0"
+                          className="mt-0.5 w-4 h-4 rounded border-border accent-brand-violet shrink-0"
                         />
                         <span className="text-[0.72rem] text-ink-soft leading-relaxed font-light">
                           I agree to HOP's{" "}
@@ -673,7 +673,7 @@ export default function Checkout() {
                     <Button
                       type="submit"
                       disabled={authSubmitting}
-                      className="w-full h-12 rounded-full bg-ink text-jasmine hover:bg-ink-soft text-xs tracking-[0.2em] uppercase transition-colors"
+                      className="w-full h-12 rounded-full bg-brand-violet text-brand-ivory hover:bg-brand-violet-deep text-xs tracking-[0.2em] uppercase transition-colors"
                     >
                       {authSubmitting ? (
                         <span className="flex items-center gap-2">
@@ -758,7 +758,7 @@ export default function Checkout() {
                     <Button
                       type="submit"
                       disabled={authSubmitting}
-                      className="w-full h-12 rounded-full bg-ink text-jasmine hover:bg-ink-soft text-xs tracking-[0.2em] uppercase transition-colors"
+                      className="w-full h-12 rounded-full bg-brand-violet text-brand-ivory hover:bg-brand-violet-deep text-xs tracking-[0.2em] uppercase transition-colors"
                     >
                       {authSubmitting ? (
                         <span className="flex items-center gap-2">
@@ -797,6 +797,13 @@ export default function Checkout() {
                         <img
                           src={getSupabaseOptimizedUrl(item.image, { width: 120, height: 160, resize: "cover" })}
                           alt={item.name}
+                          onError={(event) => {
+                            const target = event.currentTarget;
+                            if (!target.dataset.fallback) {
+                              target.dataset.fallback = "true";
+                              target.src = item.image;
+                            }
+                          }}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -866,7 +873,7 @@ export default function Checkout() {
                     value={form.email}
                     onChange={(e) => handleChange("email", e.target.value)}
                     required
-                    className="mt-1.5 h-11 text-base bg-white"
+                    className="mt-1.5 h-11 text-base bg-card"
                   />
                   {errors.email && (
                     <p id="email-error" className="text-[0.7rem] text-destructive mt-1">{errors.email}</p>
@@ -903,8 +910,8 @@ export default function Checkout() {
                           onClick={() => handleAddressSelect(addr)}
                           className={`p-4 rounded-md border-2 transition-all cursor-pointer relative ${
                             isSelected
-                              ? "border-ink bg-ink/[0.02] shadow-sm"
-                              : "border-border/60 hover:border-ink/40 bg-white"
+                              ? "border-brand-violet bg-brand-violet/[0.03] shadow-sm"
+                              : "border-border/60 hover:border-ink/40 bg-card"
                           }`}
                         >
                           <div className="flex items-start justify-between gap-3">
@@ -917,7 +924,7 @@ export default function Checkout() {
                                   </span>
                                 )}
                                 {addr.is_default && (
-                                  <span className="text-[0.6rem] tracking-[0.15em] uppercase bg-jasmine-deep/20 text-rasa-gold font-medium px-1.5 py-0.5 rounded">
+                                  <span className="text-[0.6rem] tracking-[0.15em] uppercase bg-jasmine-deep/20 text-brand-gold-deep font-medium px-1.5 py-0.5 rounded">
                                     Default
                                   </span>
                                 )}
@@ -934,7 +941,7 @@ export default function Checkout() {
                               )}
                             </div>
                             <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
-                              isSelected ? "border-ink bg-ink text-jasmine" : "border-border"
+                              isSelected ? "border-ink bg-brand-violet text-brand-ivory" : "border-border"
                             }`}>
                               {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                             </div>
@@ -956,7 +963,7 @@ export default function Checkout() {
 
                 {/* New Address Form - Progressive Collection */}
                 {(addressMode === "new" || savedAddresses.length === 0) && (
-                  <div className="space-y-4 max-w-xl bg-white p-5 sm:p-6 border border-border/60 rounded-md">
+                  <div className="space-y-4 max-w-xl bg-card p-5 sm:p-6 border border-border/60 rounded-md">
                     <div className="flex items-center justify-between pb-2 border-b border-border/40">
                       <span className="text-xs tracking-[0.15em] uppercase font-medium text-ink">
                         {savedAddresses.length > 0 ? "New Address Details" : "Where should we deliver?"}
@@ -1135,7 +1142,7 @@ export default function Checkout() {
                               value={type}
                               checked={(form.addressType || "HOME") === type}
                               onChange={() => handleChange("addressType", type)}
-                              className="w-3.5 h-3.5 accent-ink"
+                              className="w-3.5 h-3.5 accent-brand-violet"
                             />
                             {type}
                           </label>
@@ -1148,7 +1155,7 @@ export default function Checkout() {
                         type="checkbox"
                         checked={saveNewAddress}
                         onChange={(e) => setSaveNewAddress(e.target.checked)}
-                        className="w-4 h-4 rounded border-border accent-ink"
+                        className="w-4 h-4 rounded border-border accent-brand-violet"
                       />
                       <span className="text-xs text-ink-soft font-light">
                         Save this address to your account for future purchases
@@ -1169,7 +1176,7 @@ export default function Checkout() {
                       type="checkbox"
                       checked={isGift}
                       onChange={(e) => setIsGift(e.target.checked)}
-                      className="w-4 h-4 rounded border-border accent-ink"
+                      className="w-4 h-4 rounded border-border accent-brand-violet"
                     />
                     Send as a gift
                   </label>
@@ -1209,7 +1216,7 @@ export default function Checkout() {
                 <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-5">
                   Payment Option
                 </h2>
-                <div className="max-w-xl p-5 border border-border/60 rounded-md space-y-4 bg-white">
+                <div className="max-w-xl p-5 border border-border/60 rounded-md space-y-4 bg-card">
                   <p className="text-xs text-ink-soft leading-relaxed font-light">
                     Processed securely via Razorpay. We support UPI, major Credit/Debit Cards, and Net Banking.
                   </p>
@@ -1222,7 +1229,7 @@ export default function Checkout() {
                         value="full"
                         checked={paymentOption === "full"}
                         onChange={() => setPaymentOption("full")}
-                        className="mt-0.5 w-4 h-4 border-border accent-ink shrink-0"
+                        className="mt-0.5 w-4 h-4 border-border accent-brand-violet shrink-0"
                       />
                       <div className="space-y-0.5">
                         <span className="text-sm font-medium text-ink">Pay {formatRupees(totalRupees)} in full online</span>
@@ -1237,7 +1244,7 @@ export default function Checkout() {
                         value="deposit"
                         checked={paymentOption === "deposit"}
                         onChange={() => setPaymentOption("deposit")}
-                        className="mt-0.5 w-4 h-4 border-border accent-ink shrink-0"
+                        className="mt-0.5 w-4 h-4 border-border accent-brand-violet shrink-0"
                       />
                       <div className="space-y-0.5">
                         <span className="text-sm font-medium text-ink">
@@ -1258,7 +1265,7 @@ export default function Checkout() {
 
             {/* Sticky Order Review Aside */}
             <aside className="order-first lg:order-last lg:col-span-2 lg:sticky lg:top-32 lg:self-start">
-              <div className="border border-border/60 p-6 md:p-8 bg-white rounded-md">
+              <div className="border border-border/60 p-6 md:p-8 bg-card rounded-md">
                 <h2 className="text-sm tracking-[0.2em] uppercase text-ink font-medium mb-6">
                   Review Bag ({items.length} {items.length === 1 ? "drape" : "drapes"})
                 </h2>
@@ -1272,6 +1279,13 @@ export default function Checkout() {
                           alt={item.name}
                           loading="lazy"
                           decoding="async"
+                          onError={(event) => {
+                            const target = event.currentTarget;
+                            if (!target.dataset.fallback) {
+                              target.dataset.fallback = "true";
+                              target.src = item.image;
+                            }
+                          }}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -1297,7 +1311,7 @@ export default function Checkout() {
                     <span className="text-ink flex items-center gap-2">
                       {shippingCost === 0 ? "Free" : formatRupees(shippingCost)}
                       {firstOrderEligible && firstOrderReason === "first_order" && (
-                        <span className="text-[0.6rem] tracking-[0.2em] uppercase text-rasa-gold bg-jasmine-deep/20 px-2 py-0.5 rounded">
+                        <span className="text-[0.6rem] tracking-[0.2em] uppercase text-brand-gold-deep bg-jasmine-deep/20 px-2 py-0.5 rounded">
                           First order free
                         </span>
                       )}
@@ -1328,14 +1342,14 @@ export default function Checkout() {
                 </div>
 
                 {inventoryErrors.length > 0 && (
-                  <div className="mt-6 p-3 rounded-md bg-amber-50 border border-amber-200" role="alert">
+                  <div className="mt-6 p-3 rounded-md bg-destructive/5 border border-destructive/20" role="alert">
                     <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-600" />
-                      <span className="text-xs font-medium text-amber-800">Inventory update needed</span>
+                      <AlertTriangle className="w-4 h-4 text-destructive" />
+                      <span className="text-xs font-medium text-destructive">Inventory update needed</span>
                     </div>
                     <ul className="space-y-1">
                       {inventoryErrors.map((e, i) => (
-                        <li key={i} className="text-xs text-amber-700">{e}</li>
+                        <li key={i} className="text-xs text-destructive/90">{e}</li>
                       ))}
                     </ul>
                   </div>
@@ -1375,7 +1389,7 @@ export default function Checkout() {
                       checked={returnPolicyAccepted}
                       onChange={(e) => setReturnPolicyAccepted(e.target.checked)}
                       required
-                      className="mt-0.5 w-5 h-5 rounded border-border accent-ink shrink-0"
+                      className="mt-0.5 w-5 h-5 rounded border-border accent-brand-violet shrink-0"
                     />
                     <span className="text-xs text-ink-soft font-light leading-relaxed">
                       I accept the{" "}
@@ -1390,7 +1404,7 @@ export default function Checkout() {
                   <Button
                     type="submit"
                     disabled={isProcessing || isPaymentProcessing}
-                    className="w-full mt-5 rounded-full bg-ink text-jasmine hover:bg-ink-soft active:bg-ink-soft transition-colors min-h-[48px] h-12 text-xs tracking-[0.2em] uppercase font-medium"
+                    className="w-full mt-5 rounded-full bg-brand-violet text-brand-ivory hover:bg-brand-violet-deep active:bg-brand-violet-deep transition-colors min-h-[48px] h-12 text-xs tracking-[0.2em] uppercase font-medium"
                   >
                     {isPaymentProcessing ? (
                       <span className="flex items-center gap-2">
@@ -1423,7 +1437,7 @@ export default function Checkout() {
               <Button
                 type="submit"
                 disabled={isProcessing || isPaymentProcessing}
-                className="shrink-0 rounded-full bg-ink text-jasmine hover:bg-ink-soft active:bg-ink-soft min-h-[48px] px-6 text-xs tracking-[0.2em] uppercase"
+                className="shrink-0 rounded-full bg-brand-violet text-brand-ivory hover:bg-brand-violet-deep active:bg-brand-violet-deep min-h-[48px] px-6 text-xs tracking-[0.2em] uppercase"
               >
                 {isPaymentProcessing ? (
                   <span className="flex items-center gap-2">

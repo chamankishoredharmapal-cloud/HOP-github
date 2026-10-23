@@ -63,7 +63,7 @@ const Appointments = () => {
                       id="name"
                       required
                       autoComplete="name"
-                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 min-h-[44px] text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/30"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 min-h-[44px] text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/55"
                       placeholder="Your name"
                     />
                   </div>
@@ -77,7 +77,7 @@ const Appointments = () => {
                       id="email"
                       required
                       autoComplete="email"
-                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 min-h-[44px] text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/30"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 min-h-[44px] text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors placeholder:text-ink-soft/55"
                       placeholder="Your email address"
                     />
                   </div>
@@ -122,7 +122,7 @@ const Appointments = () => {
                     <textarea
                       id="notes"
                       rows={3}
-                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors resize-none placeholder:text-ink-soft/30"
+                      className="w-full bg-transparent border-b border-signature-crimson/30 py-3 text-base text-ink focus:outline-none focus:border-signature-crimson transition-colors resize-none placeholder:text-ink-soft/55"
                       placeholder="Optional notes"
                     />
                   </div>
@@ -130,7 +130,7 @@ const Appointments = () => {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                     className="w-full border border-rasa-mulberry text-rasa-mulberry py-4 text-sm tracking-widest uppercase hover:bg-rasa-mulberry hover:text-jasmine transition-colors disabled:opacity-50"
+                     className="w-full border border-brand-violet text-brand-violet py-4 text-sm tracking-widest uppercase hover:bg-brand-violet hover:text-brand-ivory transition-colors disabled:opacity-50"
                   >
                     {status === "submitting" ? "Sending..." : "Request appointment"}
                   </button>

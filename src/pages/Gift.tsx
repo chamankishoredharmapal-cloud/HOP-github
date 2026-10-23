@@ -89,7 +89,7 @@ export default function Gift() {
                       Add a saree to your bag and proceed to checkout — your gift message will
                       be hand-written on our keepsake card.
                     </p>
-                    <Button asChild className="mt-4 rounded-full bg-ink text-jasmine hover:bg-signature-crimson">
+                    <Button asChild className="mt-4 rounded-full bg-brand-violet text-brand-ivory hover:bg-signature-crimson-deep">
                       <Link to="/collections">
                         View collections <ArrowRight className="h-4 w-4 ml-1" />
                       </Link>
@@ -142,7 +142,7 @@ export default function Gift() {
               <div className="w-full h-full flex items-center justify-center p-8">
                 <div className="text-center">
                   <Heart className="w-16 h-16 text-ink/30 mx-auto mb-6" />
-                  <p className="font-serif italic text-2xl text-ink-soft/60 leading-snug max-w-xs mx-auto">
+                  <p className="font-serif italic text-2xl text-ink-soft leading-snug max-w-xs mx-auto">
 
                   </p>
                 </div>

@@ -66,7 +66,7 @@ export default function WishlistPage() {
                 removeItem(productId);
                 removeMutation.mutate(productId);
               }}
-              className="absolute top-2 right-2 p-1.5 rounded-full bg-jasmine/80 backdrop-blur-sm text-ink-soft hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute top-2 right-2 p-1.5 rounded-full bg-jasmine/80 backdrop-blur-sm text-ink-soft hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
               aria-label="Remove from wishlist"
             >
               <Trash2 className="w-4 h-4" />

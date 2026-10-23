@@ -45,7 +45,7 @@ export function usePayment() {
             email: customerEmail,
             contact: customerPhone,
           },
-          theme: { color: "#3D5A5A" },
+          theme: { color: "#7E5C58" },
           handler: async (response: RazorpayPaymentResponse) => {
             setState({ status: "verifying" });
 

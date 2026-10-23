@@ -333,7 +333,7 @@ export default function StudioJournal() {
 
         <Button
           onClick={handleOpenNew}
-          className="gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors text-xs h-8"
+          className="gap-1.5 bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors text-xs h-8"
           size="sm"
         >
           <Plus className="h-3.5 w-3.5" />
@@ -776,7 +776,7 @@ export default function StudioJournal() {
               size="sm"
               disabled={saving}
               onClick={handleSave}
-              className="gap-1.5 text-xs bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
+              className="gap-1.5 text-xs bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors"
             >
               <Save className="h-3.5 w-3.5" />
               {saving ? "Saving..." : "Save Reflection"}
@@ -872,7 +872,7 @@ export default function StudioJournal() {
                       <Button
                         size="sm"
                         onClick={() => handleRestoreRevision(selectedRevision)}
-                        className="h-7 text-xs gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson"
+                        className="h-7 text-xs gap-1.5 bg-brand-violet text-brand-ivory hover:bg-signature-crimson"
                       >
                         <RotateCcw className="h-3 w-3" />
                         Restore This Version

@@ -200,7 +200,7 @@ const ProductDetail = () => {
               <ProductGallery images={gallery} aspectRatio="4/5" />
             ) : (
               <div className="aspect-[4/5] rounded-sm bg-jasmine-deep flex items-center justify-center">
-                <p className="text-sm text-ink-soft/50 font-light">No images available</p>
+                <p className="text-sm text-ink-soft font-light">No images available</p>
               </div>
             )}
           </div>
@@ -245,7 +245,7 @@ const ProductDetail = () => {
                 onClick={handleAddToCart}
                 disabled={product.stock <= 0}
                 aria-disabled={product.stock <= 0}
-                className="flex-1 min-h-[48px] bg-ink text-jasmine px-7 py-4 text-[0.65rem] tracking-[0.32em] uppercase rounded-full hover:bg-ink-soft active:bg-ink-soft transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 min-h-[48px] bg-brand-violet text-brand-ivory px-7 py-4 text-[0.65rem] tracking-[0.32em] uppercase rounded-full hover:bg-brand-violet-deep active:bg-brand-violet-deep transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {product.stock <= 0 ? "Unavailable" : "Add to bag"}
               </button>
@@ -338,7 +338,7 @@ const ProductDetail = () => {
         <button
           onClick={handleAddToCart}
           disabled={product.stock <= 0}
-          className="shrink-0 min-h-[48px] bg-ink text-jasmine px-6 text-[0.65rem] tracking-[0.25em] uppercase rounded-full hover:bg-ink-soft active:bg-ink-soft transition-colors disabled:opacity-50"
+          className="shrink-0 min-h-[48px] bg-brand-violet text-brand-ivory px-6 text-[0.65rem] tracking-[0.25em] uppercase rounded-full hover:bg-brand-violet-deep active:bg-brand-violet-deep transition-colors disabled:opacity-50"
         >
           {product.stock <= 0 ? "Unavailable" : "Add to bag"}
         </button>

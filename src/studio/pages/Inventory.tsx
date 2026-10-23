@@ -179,7 +179,7 @@ export default function Inventory() {
                 onClick={() => setStatusFilter(f.value)}
                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                   statusFilter === f.value
-                    ? "bg-ink text-jasmine"
+                    ? "bg-brand-violet text-brand-ivory"
                     : "bg-jasmine-deep/50 text-muted-foreground hover:bg-jasmine-deep"
                 }`}
               >
@@ -394,7 +394,7 @@ export default function Inventory() {
                 variant={adjustMode === "add" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setAdjustMode("add")}
-                className={adjustMode === "add" ? "bg-ink text-jasmine" : "border-border/50"}
+                className={adjustMode === "add" ? "bg-brand-violet text-brand-ivory" : "border-border/50"}
               >
                 <Plus className="h-3.5 w-3.5 mr-1" /> Add
               </Button>
@@ -476,7 +476,7 @@ export default function Inventory() {
               size="sm"
               disabled={adjust.isPending}
               onClick={handleAdjust}
-              className={adjustMode === "add" ? "bg-ink text-jasmine" : "bg-sakura text-ink"}
+              className={adjustMode === "add" ? "bg-brand-violet text-brand-ivory" : "bg-sakura text-ink"}
             >
               {adjust.isPending ? "Adjusting..." : adjustMode === "add" ? "Add Stock" : "Remove Stock"}
             </Button>

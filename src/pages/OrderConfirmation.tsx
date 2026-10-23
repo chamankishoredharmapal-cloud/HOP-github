@@ -21,7 +21,7 @@ function PaymentStatusBadge({ status }: { status: string }) {
   }
   if (status === "pending" || status === "pending_payment") {
     return (
-      <span className="inline-flex items-center gap-1.5 text-xs text-amber-600 font-medium">
+      <span className="inline-flex items-center gap-1.5 text-xs text-brand-gold-deep font-medium">
         <Clock className="h-3.5 w-3.5" /> Payment pending
       </span>
     );
@@ -61,7 +61,7 @@ export default function OrderConfirmation() {
               {detail?.paymentStatus === "paid" || !detail ? (
                 <Check className="h-8 w-8 text-ink" />
               ) : (
-                <Clock className="h-8 w-8 text-amber-600" />
+                <Clock className="h-8 w-8 text-brand-gold-deep" />
               )}
             </div>
              <h1 className="hop-page__title hop-page__title--small">

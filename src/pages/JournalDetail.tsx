@@ -64,11 +64,11 @@ const JournalDetail = () => {
     <PageLayout>
        <main className="hop-page__room hop-page__section pt-12 sm:pt-16 pb-24">
         {isPreview && (
-          <div className="max-w-3xl mx-auto mb-8 rounded border border-amber-500/40 bg-amber-500/10 px-4 py-2.5 text-xs text-amber-900 dark:text-amber-200 flex items-center justify-between">
+          <div className="max-w-3xl mx-auto mb-8 rounded border border-brand-violet/30 bg-brand-mauve-soft px-4 py-2.5 text-xs text-brand-plum flex items-center justify-between">
             <span>
               <strong>Studio Draft Preview:</strong> Viewing an unapproved reflection as an authenticated administrator.
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 font-semibold">
+            <span className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-brand-violet/10 font-semibold">
               Draft Preview
             </span>
           </div>

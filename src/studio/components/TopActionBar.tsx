@@ -67,7 +67,7 @@ export function TopActionBar({
           <Save className="h-3.5 w-3.5" />
           {saving ? "Saving..." : "Save Draft"}
         </Button>
-        <Button size="sm" onClick={onPublish} disabled={saving || !canPublish} className="gap-1.5 bg-ink text-jasmine hover:bg-signature-crimson transition-colors">
+        <Button size="sm" onClick={onPublish} disabled={saving || !canPublish} className="gap-1.5 bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors">
           <Send className="h-3.5 w-3.5" />
           Publish
         </Button>

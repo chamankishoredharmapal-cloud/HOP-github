@@ -5,7 +5,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { Monogram } from "@/components/hop/Monogram";
 import { Film } from "@/components/hop/Film";
 import { fetchCollections } from "@/services/collectionService";
-import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import { COLLECTION_VIDEOS, COLLECTION_VIDEO_VARIANTS } from "@/data/collectionVideos";
 import { getWorld, getCollectionDisplayName, getCollectionRoomSlug } from "@/data/collectionWorlds";
 import { useMetadata } from "@/hooks/useMetadata";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
@@ -92,10 +92,11 @@ const Collections = () => {
                   }`}
                   aria-label={`Enter the ${displayName} collection`}
                 >
-                  <div className={`lg:col-span-7 overflow-hidden rounded-sm bg-jasmine-deep ${world?.slug === "padma" ? "aspect-square lg:aspect-[4/3]" : world?.slug === "viara" ? "aspect-[16/10]" : world?.slug === "yugen" ? "aspect-[3/4] lg:aspect-[4/5]" : "aspect-[16/10]"}`}>
+                  <div className={`lg:col-span-7 overflow-hidden rounded-sm bg-jasmine-deep ${world?.slug === "kalyani" || c.slug === "kalyani" || COLLECTION_VIDEO_VARIANTS[c.slug]?.orientation === "portrait" ? "aspect-[9/16] w-full max-w-sm sm:max-w-md mx-auto" : "aspect-[16/9] w-full"}`}>
                     <Film
                       src={c.hero_video_url ?? COLLECTION_VIDEOS[c.slug] ?? undefined}
-                      poster={c.hero_image_url ?? ""}
+                      mobileSrc={!c.hero_video_url ? COLLECTION_VIDEO_VARIANTS[c.slug]?.mobileSrc : undefined}
+                      poster={c.hero_image_url ?? COLLECTION_VIDEO_VARIANTS[c.slug]?.poster ?? ""}
                       alt={displayName}
                       className="w-full h-full [&>div>img]:transition-transform [&>div>img]:duration-1000 [&>div>img]:ease-out group-hover:[&>div>img]:scale-[1.02]"
                     />

@@ -231,7 +231,7 @@ const Category = () => {
           )}
 
           <div className="flex items-center justify-end gap-3 mt-14 mb-10">
-            <label htmlFor="hop-sort" className="text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft/70">
+            <label htmlFor="hop-sort" className="text-[0.65rem] tracking-[0.32em] uppercase text-ink-soft">
               Sort
             </label>
             <div className="relative">

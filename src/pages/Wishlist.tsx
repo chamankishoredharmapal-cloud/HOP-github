@@ -113,7 +113,7 @@ export default function Wishlist() {
               </div>
               <button
                 onClick={() => handleMoveToCart(item)}
-                className="mt-4 w-full rounded-full bg-ink py-3.5 text-[0.65rem] tracking-[0.32em] uppercase text-jasmine hover:bg-ink-soft transition-colors duration-300 flex items-center justify-center gap-2 min-h-[44px]"
+                className="mt-4 w-full rounded-full bg-brand-violet py-3.5 text-[0.65rem] tracking-[0.32em] uppercase text-brand-ivory hover:bg-brand-violet-deep transition-colors duration-300 flex items-center justify-center gap-2 min-h-[44px]"
               >
                 <ShoppingBag className="h-3.5 w-3.5" aria-hidden="true" />
                 Move to Bag

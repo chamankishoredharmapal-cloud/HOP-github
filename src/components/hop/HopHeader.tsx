@@ -21,7 +21,7 @@ const editorial = [
 ];
 
 const getLinkClassName = (inverse = false) => {
-  return `hover:text-rasa-gold transition-colors duration-500 whitespace-nowrap font-medium ${inverse ? "text-rasa-cream" : "text-ink"}`;
+  return `transition-colors duration-500 whitespace-nowrap font-medium ${inverse ? "text-rasa-cream hover:text-rasa-gold" : "text-ink hover:text-signature-crimson"}`;
 };
 
 const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolean; dark?: boolean }) => {
@@ -92,7 +92,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
   }, [open]);
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-transform duration-300 ease-in-out ${hidden && !open ? "-translate-y-full" : "translate-y-0"} ${inverseHeader ? "bg-transparent text-rasa-cream" : "bg-paper-ivory/95 text-ink backdrop-blur-sm shadow-[0_1px_0_rgba(31,31,31,0.08)]"}`}>
+    <header className={`hop-header ${inverseHeader ? "hop-header--inverse" : ""} fixed top-0 inset-x-0 z-50 transition-transform duration-300 ease-in-out ${hidden && !open ? "-translate-y-full" : "translate-y-0"} ${inverseHeader ? "bg-transparent text-rasa-cream" : "bg-paper-ivory/95 text-ink backdrop-blur-sm shadow-[0_1px_0_hsl(var(--brand-plum)/0.08)]"}`}>
       {/* Top banner removed due to brand guideline violation (No aggressive sales tactics/mass-market tropes) */}
       <div className="container flex items-center justify-between h-[72px] md:h-[80px] gap-4 md:gap-6">
         <nav
@@ -114,7 +114,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
         </nav>
 
         <button
-          className={`lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors duration-300 ${inverseHeader ? "text-rasa-cream hover:text-rasa-gold" : "text-ink hover:text-rasa-gold"}`}
+          className={`lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors duration-300 ${inverseHeader ? "text-rasa-cream hover:text-rasa-gold" : "text-ink hover:text-signature-crimson"}`}
           onClick={() => setOpen(true)}
           ref={menuButtonRef}
           aria-label="Open menu"
@@ -130,7 +130,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
           aria-label="House of Padmavati home"
         >
           <Monogram variant="signature" className="h-8 md:h-10" />
-           <span className={`mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.22em] sm:tracking-[0.32em] uppercase whitespace-nowrap overflow-hidden text-ellipsis max-w-full ${inverseHeader ? "text-rasa-gold" : "text-rasa-mulberry"}`}>
+           <span className={`hop-wordmark ${inverseHeader ? "hop-wordmark--inverse" : ""} mt-1 font-serif text-[0.6rem] sm:text-[0.65rem] md:text-[0.72rem] tracking-[0.22em] sm:tracking-[0.32em] uppercase whitespace-nowrap overflow-hidden text-ellipsis max-w-full`}>
             HOUSE OF PADMAVATI
           </span>
         </Link>
@@ -139,21 +139,21 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
           <button
             onClick={() => setSearchOpen(true)}
             aria-label="Search"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-rasa-gold transition-colors duration-300"
+            className={`min-h-[44px] min-w-[44px] flex items-center justify-center ${inverseHeader ? "hover:text-rasa-gold" : "hover:text-signature-crimson"} transition-colors duration-300`}
           >
             <Search className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </button>
           <Link
             to="/account"
             aria-label="Account"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-rasa-gold transition-colors duration-300"
+            className={`min-h-[44px] min-w-[44px] flex items-center justify-center ${inverseHeader ? "hover:text-rasa-gold" : "hover:text-signature-crimson"} transition-colors duration-300`}
           >
             <User className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
           </Link>
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-rasa-gold transition-colors duration-300 relative"
+            className={`min-h-[44px] min-w-[44px] flex items-center justify-center ${inverseHeader ? "hover:text-rasa-gold" : "hover:text-signature-crimson"} transition-colors duration-300 relative`}
           >
             <Heart className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
             {wishlistCount > 0 && (
@@ -165,7 +165,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
           <Link
             to="/cart"
             aria-label="Bag"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-rasa-gold transition-colors duration-300 gap-2"
+            className={`min-h-[44px] min-w-[44px] flex items-center justify-center ${inverseHeader ? "hover:text-rasa-gold" : "hover:text-signature-crimson"} transition-colors duration-300 gap-2`}
           >
             <ShoppingBag className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={1.5} />
             <span className="text-[0.75rem] font-light tnum">({totalItems})</span>
@@ -205,7 +205,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
           <div className="container flex items-center justify-between min-h-16 border-b border-line/15">
             <div className="flex items-center gap-3 min-w-0">
               <Monogram variant="signature" className="h-9 shrink-0" />
-              <span className="font-serif text-[0.65rem] tracking-[0.28em] uppercase text-signature-crimson truncate">HOUSE OF PADMAVATI</span>
+              <span className="hop-wordmark font-serif text-[0.65rem] tracking-[0.28em] uppercase truncate">HOUSE OF PADMAVATI</span>
             </div>
             <button onClick={closeMenu} aria-label="Close menu" ref={menuCloseButtonRef} className="min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0">
               <X className="w-5 h-5" strokeWidth={1.5} />
@@ -217,13 +217,13 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
             aria-label="Mobile navigation"
           >
             <div className="space-y-4">
-              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-ink/50">The House</p>
+              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-ink-soft">The House</p>
               {editorial.map((c) => (
                 <Link
                   key={c.href}
                   to={c.href}
                   onClick={closeMenu}
-                  className="block text-xl md:text-2xl font-sans font-light hover:text-rasa-gold transition-colors duration-300 tracking-wide"
+                  className="block text-xl md:text-2xl font-sans font-light hover:text-signature-crimson transition-colors duration-300 tracking-wide"
                   aria-current={pathname === c.href || (c.href === "/about" && pathname.startsWith("/about")) ? "page" : undefined}
                 >
                   {c.label}
@@ -231,13 +231,13 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
               ))}
             </div>
             <div className="space-y-4">
-              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-ink/50">Collections</p>
+              <p className="text-[0.6rem] tracking-[0.32em] uppercase text-ink-soft">Collections</p>
               {collections.map((c) => (
                 <Link
                   key={c.href}
                   to={c.href}
                   onClick={closeMenu}
-                  className="block text-xl md:text-2xl font-serif font-light hover:text-rasa-gold transition-colors duration-300"
+                  className="block text-xl md:text-2xl font-serif font-light hover:text-signature-crimson transition-colors duration-300"
                 >
                   {c.label}
                 </Link>
@@ -246,7 +246,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
             <div className="flex items-stretch gap-2 pt-2 border-t border-line/15">
               <button
                 onClick={() => { closeMenu(); setSearchOpen(true); }}
-                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
                 aria-label="Search"
               >
                 <Search className="w-4 h-4" strokeWidth={1.5} /> Search
@@ -254,7 +254,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
               <Link
                 to="/account"
                 onClick={closeMenu}
-                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
                 aria-label="Account"
               >
                 <User className="w-4 h-4" strokeWidth={1.5} /> Account
@@ -262,7 +262,7 @@ const HopHeader = ({ transparent = false, dark = false }: { transparent?: boolea
               <Link
                 to="/wishlist"
                 onClick={closeMenu}
-                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-rasa-gold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 min-h-[44px] text-xs tracking-[0.2em] uppercase hover:text-signature-crimson transition-colors"
                 aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4" strokeWidth={1.5} /> Saved

@@ -143,7 +143,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search sarees by name, colour, weave, collection..."
-            className="border-0 bg-transparent px-0 text-base text-ink placeholder:text-ink-soft/40 focus-visible:ring-1 focus-visible:ring-rasa-gold focus-visible:ring-offset-0 rounded-sm"
+            className="border-0 bg-transparent px-0 text-base text-ink placeholder:text-ink-soft/60 focus-visible:ring-1 focus-visible:ring-signature-crimson focus-visible:ring-offset-0 rounded-sm"
             aria-label="Search"
           />
           <button
@@ -183,8 +183,8 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                   aria-selected={index === activeIndex}
                    className={`hop-search-dialog__result flex items-center gap-4 p-3 transition-colors ${
                     index === activeIndex
-                      ? "bg-ink/10 text-ink"
-                      : "hover:bg-jasmine-deep text-ink"
+                      ? "bg-brand-mauve-soft text-ink"
+                      : "hover:bg-brand-mauve-soft text-ink"
                   }`}
                 >
                    <div className="hop-search-dialog__result-image">

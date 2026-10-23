@@ -72,7 +72,7 @@ export function StickyCta({
       role="region"
       aria-label={label}
       aria-hidden={!show}
-      className={`lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-line/20 bg-paper-ivory/95 backdrop-blur-sm transition-transform duration-300 ease-out ${
+      className={`lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-brand-gold/30 bg-paper-ivory/95 backdrop-blur-sm transition-transform duration-300 ease-out ${
         show ? "translate-y-0" : "translate-y-full pointer-events-none"
       }`}
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}

@@ -159,7 +159,7 @@ export default function Cart() {
               <div ref={inlineCtaRef}>
               <Button
                 asChild
-                className="w-full mt-8 rounded-full bg-ink text-jasmine hover:bg-ink-soft active:bg-ink-soft transition-colors duration-300 min-h-[48px] h-12 text-[0.65rem] tracking-[0.25em] uppercase"
+                className="w-full mt-8 rounded-full bg-brand-violet text-brand-ivory hover:bg-brand-violet-deep active:bg-brand-violet-deep transition-colors duration-300 min-h-[48px] h-12 text-[0.65rem] tracking-[0.25em] uppercase"
               >
                 <Link to="/checkout">
                   Checkout <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -202,7 +202,7 @@ export default function Cart() {
         </div>
         <Button
           asChild
-          className="shrink-0 rounded-full bg-ink text-jasmine hover:bg-ink-soft active:bg-ink-soft min-h-[48px] px-6 text-[0.65rem] tracking-[0.25em] uppercase"
+          className="shrink-0 rounded-full bg-brand-violet text-brand-ivory hover:bg-brand-violet-deep active:bg-brand-violet-deep min-h-[48px] px-6 text-[0.65rem] tracking-[0.25em] uppercase"
         >
           <Link to="/checkout">
             Checkout <ArrowRight className="h-4 w-4" aria-hidden="true" />

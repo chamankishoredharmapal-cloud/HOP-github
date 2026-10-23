@@ -54,12 +54,12 @@ function htmlWrapper(title: string, bodyHtml: string): string {
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-  body { font-family: 'Georgia', serif; color: #2D2D2D; background: #F7F4EE; margin: 0; padding: 0; }
+  body { font-family: 'Georgia', serif; color: #2B2624; background: #F8F5F2; margin: 0; padding: 0; }
   .container { max-width: 600px; margin: 0 auto; padding: 40px 24px; }
-  .header { text-align: center; border-bottom: 1px solid #E0D8CC; padding-bottom: 24px; margin-bottom: 24px; }
-  .header h1 { font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; color: #3D5A5A; }
-  .content { font-size: 15px; line-height: 1.7; color: #4A4A4A; }
-  .footer { text-align: center; font-size: 11px; color: #8A8A8A; border-top: 1px solid #E0D8CC; padding-top: 20px; margin-top: 32px; }
+  .header { text-align: center; border-bottom: 1px solid #DDD5D0; padding-bottom: 24px; margin-bottom: 24px; }
+  .header h1 { font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; color: #7E5C58; }
+  .content { font-size: 15px; line-height: 1.7; color: #4A413E; }
+  .footer { text-align: center; font-size: 11px; color: #6E6663; border-top: 1px solid #DDD5D0; padding-top: 20px; margin-top: 32px; }
 </style>
 </head>
 <body>
@@ -90,8 +90,8 @@ export function buildOrderConfirmationEmail(data: OrderConfirmationData): EmailP
     <p>Dear ${data.customerName},</p>
     <p>Your piece has been claimed. Order <strong>${data.orderNumber}</strong> has been confirmed and is now resting in our atelier before its journey to you.</p>
     <table style="width:100%;border-collapse:collapse;margin:20px 0">${itemsHtml}
-      <tr><td style="border-top:1px solid #E0D8CC;padding:8px 0;font-weight:bold">Total</td>
-      <td style="border-top:1px solid #E0D8CC;padding:8px 0;text-align:right;font-weight:bold">₹${(data.total / 100).toLocaleString("en-IN")}</td></tr>
+      <tr><td style="border-top:1px solid #DDD5D0;padding:8px 0;font-weight:bold">Total</td>
+      <td style="border-top:1px solid #DDD5D0;padding:8px 0;text-align:right;font-weight:bold">₹${(data.total / 100).toLocaleString("en-IN")}</td></tr>
     </table>
     <p>Shipping to: ${data.shippingAddress}</p>
     <p>We will write to you again once the box leaves Pondicherry.</p>
@@ -103,7 +103,7 @@ export function buildPaymentSuccessEmail(data: PaymentResultData): EmailPayload 
   const body = htmlWrapper("Secured", `
     <p>Dear ${data.customerName},</p>
     <p>We have successfully secured your payment of <strong>₹${(data.amount / 100).toLocaleString("en-IN")}</strong> for order <strong>${data.orderNumber}</strong>.</p>
-    ${data.paymentId ? `<p style="font-size:12px;color:#8A8A8A">Transaction reference: ${data.paymentId}</p>` : ""}
+    ${data.paymentId ? `<p style="font-size:12px;color:#6E6663">Transaction reference: ${data.paymentId}</p>` : ""}
   `);
   return { to: "", subject: `Payment secured — ${data.orderNumber}`, body, type: "payment_success" };
 }
@@ -119,7 +119,7 @@ export function buildPaymentFailedEmail(data: PaymentResultData): EmailPayload {
 
 export function buildShipmentEmail(data: ShipmentData): EmailPayload {
   const trackingHtml = data.trackingUrl
-    ? `<p>You may follow its journey here: <a href="${data.trackingUrl}" style="color:#3D5A5A;">${data.carrier || "Tracking"}</a></p>`
+    ? `<p>You may follow its journey here: <a href="${data.trackingUrl}" style="color:#7E5C58;">${data.carrier || "Tracking"}</a></p>`
     : "";
   const body = htmlWrapper("In transit", `
     <p>Dear ${data.customerName},</p>
@@ -146,7 +146,7 @@ export function buildNurtureEmail(data: NurtureData): EmailPayload {
     <p>We have published a new entry in our journal.</p>
     <p style="font-size:16px;font-style:italic;margin-top:24px;">${data.title}</p>
     <p>${data.summary}</p>
-    <p style="margin-top:24px;"><a href="${data.link}" style="color:#3D5A5A;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;text-decoration:none;border-bottom:1px solid #3D5A5A;padding-bottom:2px;">Read the full story</a></p>
+    <p style="margin-top:24px;"><a href="${data.link}" style="color:#7E5C58;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;text-decoration:none;border-bottom:1px solid #7E5C58;padding-bottom:2px;">Read the full story</a></p>
   `);
   return { to: "", subject: "Notes from the house", body, type: "nurture" };
 }
@@ -155,7 +155,7 @@ export function buildPasswordResetEmail(data: { customerName: string; resetLink:
   const body = htmlWrapper("Access", `
     <p>Dear ${data.customerName},</p>
     <p>A request was made to gently reset the key to your account.</p>
-    <p style="margin-top:24px;"><a href="${data.resetLink}" style="color:#3D5A5A;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;text-decoration:none;border-bottom:1px solid #3D5A5A;padding-bottom:2px;">Reset your password</a></p>
+    <p style="margin-top:24px;"><a href="${data.resetLink}" style="color:#7E5C58;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;text-decoration:none;border-bottom:1px solid #7E5C58;padding-bottom:2px;">Reset your password</a></p>
   `);
   return { to: "", subject: "A key to your account", body, type: "password_reset" };
 }

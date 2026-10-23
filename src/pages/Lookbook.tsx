@@ -30,7 +30,7 @@ const Lookbook = () => {
                alt="Macro detail of fine silver zari on a Kalyani border"
                className="hop-lookbook__hero"
             />
-            <div className="absolute inset-0 bg-black/10" />
+            <div className="absolute inset-0 bg-brand-plum/20" />
           </div>
           
           <div className="relative z-10 text-center px-6 mt-[72px] md:mt-[80px]">
@@ -131,7 +131,7 @@ const Lookbook = () => {
         {/* Closure */}
         <section className="py-section-lg px-6 text-center">
           <div className="max-w-lg mx-auto space-y-12">
-            <div className="aspect-square overflow-hidden bg-white/50 p-8 rounded-sm">
+            <div className="aspect-square overflow-hidden bg-card/50 p-8 rounded-sm">
               <img 
                 src={giftImg} 
                 alt="Folded saree in a box"
@@ -142,7 +142,7 @@ const Lookbook = () => {
             <div>
               <Link 
                 to="/collections" 
-                 className="inline-block border border-rasa-mulberry text-rasa-mulberry px-8 py-3 text-sm tracking-widest uppercase hover:bg-rasa-mulberry hover:text-jasmine transition-colors"
+                 className="inline-block border border-brand-violet text-brand-violet px-8 py-3 text-sm tracking-widest uppercase hover:bg-brand-violet hover:text-brand-ivory transition-colors"
               >
                 View collections
               </Link>

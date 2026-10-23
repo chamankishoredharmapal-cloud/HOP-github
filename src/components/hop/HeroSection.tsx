@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Film } from "@/components/hop/Film";
 import { fetchFeaturedCollection } from "@/services/collectionService";
-import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import { COLLECTION_VIDEOS, COLLECTION_VIDEO_VARIANTS } from "@/data/collectionVideos";
 import houseStill from "@/assets/hop-hero.jpg";
 
 export const HeroSection = () => {
@@ -14,7 +14,7 @@ export const HeroSection = () => {
   // The hero must stand alone: when no collection is featured,
   // the house still shows its own still — never an empty frame.
   const collectionName = featured?.name ?? "House of Padmavati";
-  const poster = featured?.hero_image_url || houseStill;
+  const poster = featured?.hero_image_url || COLLECTION_VIDEO_VARIANTS.hero?.poster || houseStill;
 
   return (
     <section className="relative pb-16 sm:pb-20 lg:pb-24">
@@ -37,6 +37,7 @@ export const HeroSection = () => {
         >
           <Film
             src={COLLECTION_VIDEOS.hero}
+            mobileSrc={COLLECTION_VIDEO_VARIANTS.hero?.mobileSrc}
             poster={poster}
             alt={featured ? `${featured.name} — collection film` : "House of Padmavati — woven drape in natural light"}
             className="aspect-[16/9]"

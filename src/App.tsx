@@ -99,7 +99,7 @@ const App = () => (
           <BrowserRouter>
             <ScrollToTop />
             <ErrorBoundary>
-            <Suspense fallback={<div className="flex items-center justify-center min-h-screen text-sm text-ink-soft font-light">Loading…</div>}>
+            <Suspense fallback={<main className="flex items-center justify-center min-h-screen text-sm text-ink-soft font-light"><h1 className="sr-only">Loading</h1>Loading…</main>}>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/collections" element={<Collections />} />

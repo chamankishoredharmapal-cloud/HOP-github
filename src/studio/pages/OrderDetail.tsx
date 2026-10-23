@@ -433,7 +433,7 @@ export default function OrderDetail() {
                         { onSuccess: () => setEditShipping(false) }
                       );
                     }}
-                    className="bg-ink text-jasmine hover:bg-signature-crimson w-full"
+                    className="bg-brand-violet text-brand-ivory hover:bg-signature-crimson w-full"
                   >
                     Save Shipping Info
                   </Button>
@@ -467,7 +467,7 @@ export default function OrderDetail() {
                     className={`w-full gap-2 ${
                       action === "cancelled"
                         ? "bg-destructive/10 text-destructive hover:bg-destructive/20 border border-destructive/30"
-                        : "bg-ink text-jasmine hover:bg-signature-crimson"
+                        : "bg-brand-violet text-brand-ivory hover:bg-signature-crimson"
                     }`}
                     size="sm"
                     disabled={updateStatus.isPending}
@@ -549,7 +549,7 @@ export default function OrderDetail() {
               className={`${
                 confirmAction === "cancelled"
                   ? "bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                  : "bg-ink text-jasmine hover:bg-signature-crimson"
+                  : "bg-brand-violet text-brand-ivory hover:bg-signature-crimson"
               }`}
             >
               {confirmAction === "cancelled" ? "Cancel Order" : "Confirm"}

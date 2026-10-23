@@ -126,7 +126,7 @@ export default function Signup() {
                 required
                 autoComplete="name"
                 placeholder="Padmini Devi"
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
+                className="h-12 border-ink/10 bg-card/60 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/60 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
             </div>
             <div className="space-y-2">
@@ -142,7 +142,7 @@ export default function Signup() {
                 autoComplete="email"
                 inputMode="email"
                 placeholder="you@example.com"
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
+                className="h-12 border-ink/10 bg-card/60 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/60 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
             </div>
             <div className="space-y-2">
@@ -158,7 +158,7 @@ export default function Signup() {
                 autoComplete="tel"
                 inputMode="tel"
                 placeholder="98765 43210"
-                className="h-12 border-ink/10 bg-white/50 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
+                className="h-12 border-ink/10 bg-card/60 px-4 text-base transition-all duration-300 placeholder:text-ink-soft/60 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
               />
               <p className="text-[0.7rem] text-ink-soft font-light">Used exclusively for delivery updates and courier dispatch.</p>
             </div>
@@ -176,7 +176,7 @@ export default function Signup() {
                   autoComplete="new-password"
                   placeholder="At least 8 characters"
                   minLength={8}
-                  className="h-12 border-ink/10 bg-white/50 px-4 pr-12 text-base transition-all duration-300 placeholder:text-ink-soft/40 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
+                  className="h-12 border-ink/10 bg-card/60 px-4 pr-12 text-base transition-all duration-300 placeholder:text-ink-soft/60 focus-visible:border-signature-crimson/40 focus-visible:ring-1 focus-visible:ring-signature-crimson/20"
                 />
                 <button
                   type="button"

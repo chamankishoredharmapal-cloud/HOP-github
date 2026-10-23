@@ -2,117 +2,227 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------
+   HOUSE OF PADMAVATI �?" canonical visual tokens
+   Palette: Warm Off-White #F8F5F2 A� Dusty Mauve #B18B87
+            Muted Blush #E0C3C0
+   Charcoal ink and warm neutrals are functional, not brand accents.
+   Legacy "rasa" token names are kept as aliases so the existing
+   component system continues to work while every value resolves here.
+   ------------------------------------------------------------------ */
 @layer base {
   :root {
-    --rasa-lac: 341 51% 11%;
-    --rasa-lac-secondary: 346 51% 19%;
-    --rasa-cream: 29 56% 91%;
-    --rasa-cream-bright: 36 60% 97%;
-    --rasa-rose: 0 58% 59%;
-    --rasa-mulberry: 343 50% 29%;
-    --rasa-gold: 38 57% 60%;
-    --rasa-eucalyptus: 169 37% 29%;
-    --rasa-border: 353 24% 38%;
-    --rasa-ink: 341 51% 11%;
+    /* Brand */
+    --brand-ivory: 30 30% 96%;            /* #F8F5F2 warm off-white */
+    --brand-ivory-bright: 30 42.8571% 97.2549%; /* #FBF8F5 raised surface, never #FFF */
+    --brand-ivory-muted: 21.8182 29.7297% 92.7451%; /* #F2EBE7 quiet panel */
+    --brand-mauve: 5.7143 21.2121% 61.1765%; /* #B18B87 dusty mauve */
+    --brand-mauve-light: 6.6667 24.3243% 70.9804%; /* #C7A7A3 tonal tint */
+    --brand-mauve-soft: 5.625 34.0426% 81.5686%; /* #E0C3C0 muted blush */
+    --brand-violet: 6.3158 17.757% 41.9608%; /* #7E5C58 accessible action tone */
+    --brand-violet-deep: 6.6667 20.2247% 34.902%; /* #6B4B47 hover/active */
+    --brand-plum: 17 9% 15%;              /* #2B2624 charcoal ink */
+    --brand-plum-raised: 18 9% 21%;       /* #3A3330 dark raised surface */
+    --brand-plum-deep: 20 11% 11%;        /* #1E1A18 deep ground */
+    --brand-gold: 5.625 34.0426% 81.5686%; /* #E0C3C0 blush accent on dark */
+    --brand-gold-light: 6.6667 36% 90.1961%; /* #EFDFDD light accent */
+    --brand-gold-deep: 6.3158 17.757% 41.9608%; /* #7E5C58 accessible accent on light */
+    --brand-muted: 16 7% 32%;             /* #574F4C secondary text */
+    --brand-line: 23 16% 84%;             /* #DDD5D0 borders */
+    --brand-line-strong: 19 12% 68%;      /* #B7AAA4 emphasised borders */
+    --brand-error: 4.2478 53.0516% 41.7647%; /* #A33A32 on light surfaces */
+    --brand-error-light: 7 59% 73%;       /* #E39B92 on dark surfaces */
+    --overlay: 17 16% 9%;                 /* #1A1513 warm scrim */
 
-    --paper-ivory: var(--rasa-cream);
-    --paper-bright: var(--rasa-cream-bright);
-    --paper-alt: 28 31% 83%;
-    --ink: var(--rasa-ink);
-    --ink-soft: 13 29% 38%;
-    --line: 28 24% 72%;
-    --signature-crimson: var(--rasa-rose);
-    --signature-crimson-deep: var(--rasa-mulberry);
-    --material-sand: 28 34% 78%;
-    --material-sakura: 10 29% 70%;
-    --material-peacock: var(--rasa-eucalyptus);
-    --champagne: var(--rasa-gold);
+    /* Legacy aliases — preserved for component compatibility */
+    --rasa-lac: var(--brand-plum);
+    --rasa-lac-secondary: var(--brand-plum-raised);
+    --rasa-cream: var(--brand-ivory);
+    --rasa-cream-bright: var(--brand-ivory-bright);
+    --rasa-rose: var(--brand-violet);
+    --rasa-mulberry: var(--brand-violet-deep);
+    --rasa-gold: var(--brand-gold);
+    --rasa-eucalyptus: var(--brand-violet-deep);
+    --rasa-border: var(--brand-line-strong);
+    --rasa-ink: var(--brand-plum);
 
-    --jasmine: var(--rasa-cream);
-    --jasmine-deep: var(--rasa-cream-bright);
-    --sand: var(--material-sand);
-    --sakura: var(--material-sakura);
-    --peacock: var(--material-peacock);
-    --warm-white: var(--rasa-cream);
-    --warm-white-bright: var(--rasa-cream-bright);
+    --paper-ivory: var(--brand-ivory);
+    --paper-bright: var(--brand-ivory-bright);
+    --paper-alt: var(--brand-mauve-soft);
+    --ink: var(--brand-plum);
+    --ink-soft: var(--brand-muted);
+    --line: var(--brand-line);
+    --line-strong: var(--brand-line-strong);
+    --signature-crimson: var(--brand-violet);
+    --signature-crimson-deep: var(--brand-violet-deep);
+    --material-sand: var(--brand-mauve-soft);
+    --material-sakura: var(--brand-mauve-light);
+    --material-peacock: var(--brand-violet);
+    --champagne: var(--brand-gold);
 
-    --background: var(--rasa-cream);
-    --foreground: var(--rasa-lac);
-    --nav-background: var(--rasa-lac);
-    --nav-foreground: var(--rasa-cream);
-    --nav-hover: var(--rasa-gold);
-    --primary: var(--rasa-lac);
-    --primary-foreground: var(--rasa-cream);
-    --primary-hover: var(--rasa-mulberry);
-    --secondary: var(--rasa-cream-bright);
-    --secondary-foreground: var(--rasa-lac);
-    --muted: var(--rasa-cream-bright);
-    --muted-foreground: var(--ink-soft);
-    --accent: var(--rasa-gold);
-    --accent-foreground: var(--rasa-lac);
-    --border: var(--line);
-    --input: var(--line);
-    --ring: var(--rasa-rose);
-    --card: var(--rasa-cream-bright);
-    --card-foreground: var(--rasa-lac);
-    --popover: var(--rasa-cream);
-    --popover-foreground: var(--rasa-lac);
-    --destructive: var(--rasa-mulberry);
-    --destructive-foreground: var(--rasa-cream);
+    --jasmine: var(--brand-ivory);
+    --jasmine-deep: var(--brand-ivory-bright);
+    --sand: var(--brand-mauve-soft);
+    --sakura: var(--brand-mauve-light);
+    --peacock: var(--brand-violet);
+    --warm-white: var(--brand-ivory);
+    --warm-white-bright: var(--brand-ivory-bright);
+
+    /* Semantic surfaces */
+    --surface: var(--brand-ivory);
+    --surface-subtle: var(--brand-ivory-muted);
+    --surface-raised: var(--brand-ivory-bright);
+    --surface-mauve: var(--brand-mauve);
+    --surface-mauve-soft: var(--brand-mauve-soft);
+    --surface-dark: var(--brand-plum);
+    --surface-dark-raised: var(--brand-plum-raised);
+    --surface-overlay: var(--overlay);
+
+    /* Semantic text and actions */
+    --text-primary: var(--brand-plum);
+    --text-muted: var(--brand-muted);
+    --text-inverse: var(--brand-ivory);
+    --text-gold: var(--brand-gold);
+    --text-gold-accessible: var(--brand-gold-deep);
+    --action-primary: var(--brand-violet);
+    --action-primary-hover: var(--brand-violet-deep);
+    --action-secondary: var(--brand-plum);
+    --action-secondary-hover: var(--brand-violet-deep);
+    --focus-ring: var(--brand-violet);
+    --focus-ring-dark: var(--brand-gold);
+
+    /* shadcn/ui semantic mapping */
+    --background: var(--brand-ivory);
+    --foreground: var(--brand-plum);
+    --nav-background: var(--brand-ivory);
+    --nav-foreground: var(--brand-plum);
+    --nav-hover: var(--brand-violet);
+    --primary: var(--brand-violet);
+    --primary-foreground: var(--brand-ivory);
+    --primary-hover: var(--brand-violet-deep);
+    --secondary: var(--brand-mauve-soft);
+    --secondary-foreground: var(--brand-plum);
+    --muted: var(--brand-ivory-muted);
+    --muted-foreground: var(--brand-muted);
+    --accent: var(--brand-mauve-soft);
+    --accent-foreground: var(--brand-plum);
+    --border: var(--brand-line);
+    --input: var(--brand-line-strong);
+    --ring: var(--brand-violet);
+    --card: var(--brand-ivory-bright);
+    --card-foreground: var(--brand-plum);
+    --popover: var(--brand-ivory-bright);
+    --popover-foreground: var(--brand-plum);
+    --destructive: var(--brand-error);
+    --destructive-foreground: var(--brand-ivory);
+
+    /* Depth, light and material */
+    --shadow-soft: 0 1px 2px hsl(var(--brand-plum) / 0.04),
+      0 16px 40px -32px hsl(var(--brand-plum) / 0.26);
+    --shadow-lift: 0 2px 4px hsl(var(--brand-plum) / 0.05),
+      0 28px 64px -36px hsl(var(--brand-plum) / 0.32);
+    --shadow-overlay: 0 24px 80px -32px hsl(var(--overlay) / 0.45);
+    --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
+
     --radius: 0.125rem;
     --transition-smooth: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: all 700ms cubic-bezier(0.4, 0, 0.2, 1);
-    --sidebar-background: var(--rasa-cream);
-    --sidebar-foreground: var(--rasa-lac);
-    --sidebar-primary: var(--rasa-lac);
-    --sidebar-primary-foreground: var(--rasa-cream);
-    --sidebar-accent: var(--rasa-cream-bright);
-    --sidebar-accent-foreground: var(--rasa-lac);
-    --sidebar-border: var(--line);
-    --sidebar-ring: var(--rasa-rose);
+
+    --sidebar-background: var(--brand-ivory);
+    --sidebar-foreground: var(--brand-plum);
+    --sidebar-primary: var(--brand-violet);
+    --sidebar-primary-foreground: var(--brand-ivory);
+    --sidebar-accent: var(--brand-mauve-soft);
+    --sidebar-accent-foreground: var(--brand-plum);
+    --sidebar-border: var(--brand-line);
+    --sidebar-ring: var(--brand-violet);
+
+    color-scheme: light;
   }
 
   .dark {
-    --background: var(--rasa-lac);
-    --foreground: var(--rasa-cream);
-    --card: var(--rasa-lac-secondary);
-    --card-foreground: var(--rasa-cream);
-    --primary: var(--rasa-cream);
-    --primary-foreground: var(--rasa-lac);
-    --border: color-mix(in srgb, var(--rasa-cream) 20%, transparent);
-    --input: color-mix(in srgb, var(--rasa-cream) 20%, transparent);
+    --background: var(--brand-plum);
+    --foreground: var(--brand-ivory);
+    --card: var(--brand-plum-raised);
+    --card-foreground: var(--brand-ivory);
+    --popover: var(--brand-plum-raised);
+    --popover-foreground: var(--brand-ivory);
+    --primary: var(--brand-gold);
+    --primary-foreground: var(--brand-plum);
+    --primary-hover: var(--brand-gold-light);
+    --secondary: var(--brand-plum-raised);
+    --secondary-foreground: var(--brand-ivory);
+    --muted: var(--brand-plum-raised);
+    --muted-foreground: 20 14% 78%;
+    --accent: var(--brand-violet-deep);
+    --accent-foreground: var(--brand-ivory);
+    --border: 18 9% 28%;
+    --input: 17 8% 36%;
+    --ring: var(--brand-gold);
+    --surface: var(--brand-plum);
+    --surface-subtle: var(--brand-plum-raised);
+    --surface-raised: var(--brand-plum-raised);
+    --text-primary: var(--brand-ivory);
+    --text-muted: 20 14% 78%;
+    --destructive: var(--brand-error-light);
+    --destructive-foreground: var(--brand-plum-deep);
+    color-scheme: dark;
   }
-}
 
-@layer base {
   * { @apply border-border; }
-  html { scroll-behavior: smooth; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "kern", "liga", "calt";
+    text-rendering: optimizeLegibility;
   }
+
   h1, h2, h3, h4, h5 {
     @apply font-serif font-light tracking-tight;
+  }
+
+  ::selection {
+    background: hsl(var(--brand-violet) / 0.18);
+    color: hsl(var(--brand-plum));
+  }
+
+  .dark ::selection {
+    background: hsl(var(--brand-mauve) / 0.45);
+    color: hsl(var(--brand-ivory));
   }
 }
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
+
   .gallery-shadow {
-    box-shadow: 0 24px 60px -32px hsl(var(--rasa-ink) / 0.25);
+    box-shadow: var(--shadow-soft);
   }
+
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-lift { box-shadow: var(--shadow-lift); }
+  .shadow-overlay { box-shadow: var(--shadow-overlay); }
+
   .eyebrow {
     @apply text-[0.65rem] sm:text-xs tracking-[0.42em] uppercase text-ink-soft font-light;
   }
+
   .link-quiet {
     @apply text-ink border-b border-ink/30 pb-1 hover:border-ink transition-colors;
   }
+
   .font-editorial {
-    font-family: "Fraunces", Georgia, serif;
+    font-family: "Fraunces", "Cormorant Garamond", Georgia, serif;
     font-weight: 400;
     font-optical-sizing: auto;
   }
+
   /* YŪGEN voice: Cormorant Light renders U+016A as a single centered
      glyph (Fraunces' Ū macron detaches at display sizes). Same house
      serif palette, aired tracking, relaxed leading — no new dependency. */
@@ -123,12 +233,81 @@
     letter-spacing: 0.14em;
     line-height: 1.15;
   }
+
   .font-reading {
     font-family: "Newsreader", Georgia, serif;
   }
+
   .tnum {
     font-feature-settings: "tnum" 1, "kern" 1;
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Restrained material grain — applied only to editorial grounds. */
+  .texture-grain {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .texture-grain::before {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: var(--texture-grain);
+    background-size: 160px 160px;
+    content: "";
+    opacity: 0.035;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+  }
+
+  .texture-grain > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Fine woven ground for mauve editorial panels. */
+  .texture-weave {
+    background-image:
+      repeating-linear-gradient(0deg, hsl(var(--brand-plum) / 0.035) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(90deg, hsl(var(--brand-plum) / 0.025) 0 1px, transparent 1px 5px);
+  }
+
+  .hairline-gold {
+    background: linear-gradient(90deg, transparent, hsl(var(--brand-mauve) / 0.55), transparent);
+  }
+
+  /* Brand wordmark — restrained warm-charcoal metal. Stops are tuned so every
+     band keeps >=4.5:1 against its ground (ivory for the default tone,
+     charcoal film scrims for the inverse tone). */
+  .hop-wordmark {
+    background-image: linear-gradient(180deg, #3c3330 0%, #2b2624 45%, #382e2b 68%, #2b2624 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hop-wordmark--inverse {
+    background-image: linear-gradient(180deg, #f8f5f2 0%, #e0c3c0 45%, #efdfdd 70%, #e0c3c0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .surface-dark {
+    background-color: hsl(var(--surface-dark));
+    color: hsl(var(--text-inverse));
+  }
+
+  .surface-mauve {
+    background-color: hsl(var(--surface-mauve));
+    color: hsl(var(--text-primary));
+  }
+
+  .surface-raised {
+    background-color: hsl(var(--surface-raised));
+    border: 1px solid hsl(var(--brand-line) / 0.65);
+    box-shadow: var(--shadow-soft);
   }
 }
 
@@ -138,13 +317,31 @@
 }
 
 :focus-visible {
-  outline: 2px solid hsl(var(--rasa-gold));
+  outline: 2px solid hsl(var(--focus-ring));
   outline-offset: 3px;
   border-radius: 2px;
 }
 
+/* Gold focus ring where it sits on deep plum / cinematic grounds. */
+.hop-home :focus-visible,
+.hop-header--inverse :focus-visible,
+.hop-page__section--dark :focus-visible,
+footer :focus-visible,
+.bg-ink :focus-visible,
+.bg-plum :focus-visible,
+.hop-ownership :focus-visible,
+.hop-invitation :focus-visible,
+.hop-craft :focus-visible {
+  outline-color: hsl(var(--focus-ring-dark));
+}
+
 :focus:not(:focus-visible) {
   outline: none;
+}
+
+/* The ownership chapter sits on dusty mauve; charcoal keeps focus >= 3:1. */
+.hop-ownership :focus-visible {
+  outline-color: hsl(var(--brand-plum-deep));
 }
 
 @keyframes fade-in {
@@ -154,4 +351,13 @@
 
 .animate-fade-in {
   animation: fade-in 300ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

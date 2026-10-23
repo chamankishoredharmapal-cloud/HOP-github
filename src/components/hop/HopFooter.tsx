@@ -43,13 +43,13 @@ const HopFooter = () => {
   };
 
   return (
-    <footer className="bg-ink text-jasmine mt-section">
+    <footer className="bg-brand-plum text-brand-ivory mt-section border-t border-brand-mauve/30 texture-grain">
       <div className="container py-16 sm:py-20 grid gap-14 lg:grid-cols-[1.2fr_2fr]">
         {/* Brand column */}
         <div className="space-y-6">
           <div className="text-jasmine">
             <Monogram variant="signature" className="h-16 sm:h-20 [filter:brightness(0)_invert(1)] opacity-90" />
-            <p className="mt-2 font-serif font-light text-base sm:text-lg tracking-[0.22em] uppercase text-jasmine">
+            <p className="hop-wordmark--inverse mt-2 font-serif font-light text-base sm:text-lg tracking-[0.22em] uppercase">
               {storeName}
             </p>
             <p className="mt-6 font-serif italic font-light text-2xl leading-tight max-w-xs">
@@ -65,7 +65,7 @@ const HopFooter = () => {
             </p>
           ) : status === "error" ? (
             <div className="space-y-2">
-              <p className="text-sm font-light text-destructive/90 max-w-sm" role="alert">{errorMessage}</p>
+              <p className="text-sm font-light text-brand-error-light/90 max-w-sm" role="alert">{errorMessage}</p>
               <form
                 className="flex max-w-sm border-b border-jasmine/40 pb-2 min-h-[48px] items-center"
                 onSubmit={handleSubscribe}
@@ -81,10 +81,9 @@ const HopFooter = () => {
                   placeholder="Your email, gently kept"
                   className="flex-1 bg-transparent text-base text-jasmine placeholder:text-jasmine/50 outline-none font-light"
                   aria-label="Email"
-                  disabled={status === "loading"}
                 />
-                <button type="submit" disabled={status === "loading"} className="min-h-[44px] flex items-center text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4">
-                  {status === "loading" ? "Subscribing…" : "Try again"}
+                <button type="submit" className="min-h-[44px] flex items-center text-[0.65rem] tracking-[0.3em] uppercase hover:text-jasmine transition-colors pl-4">
+                  Try again
                 </button>
               </form>
             </div>
@@ -118,7 +117,7 @@ const HopFooter = () => {
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
               required
-              className="mt-0.5 w-5 h-5 rounded border-jasmine/40 accent-ink shrink-0"
+              className="mt-0.5 w-5 h-5 rounded border-jasmine/40 accent-brand-gold shrink-0 [color-scheme:dark]"
             />
             <span className="leading-relaxed">
               I agree to receive the journal and accept the{" "}

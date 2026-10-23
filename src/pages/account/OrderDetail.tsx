@@ -82,9 +82,9 @@ export default function OrderDetail() {
         <span
           className={`text-xs px-3 py-1 rounded-full capitalize ${
             order.status === "delivered"
-              ? "text-green-600 bg-green-50"
+              ? "text-brand-plum bg-brand-gold/20"
               : order.status === "cancelled"
-              ? "text-red-600 bg-red-50"
+              ? "text-destructive bg-destructive/5"
               : "text-ink bg-ink/10"
           }`}
         >

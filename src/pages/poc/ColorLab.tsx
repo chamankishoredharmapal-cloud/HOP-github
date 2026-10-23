@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import heroImg from "@/assets/hop-hero.jpg";
 import pattuImg from "@/assets/hop-collection-pattu.jpg";
 import linenImg from "@/assets/hop-collection-linen.jpg";
@@ -16,6 +16,7 @@ type Palette = {
   inkSoft: string;
   accent: string;
   accentHover: string;
+  accentInk: string;
   material: string;
   material2: string;
   border: string;
@@ -25,63 +26,67 @@ type Palette = {
 const PALETTES: Palette[] = [
   {
     id: "A",
-    name: "A — Jasmine Honest (evolved baseline)",
-    desc: "Keep ivory calm, make sand/sakura visible, crimson disciplined. Fixes lying tokens without breaking restraint.",
-    bg: "#F6F1EB",
-    bgDeep: "#EDE7D9",
-    ink: "#1A1A18",
-    inkSoft: "#6B6560",
-    accent: "#8B1E2D",
-    accentHover: "#6E1522",
-    material: "#C7A96D",
-    material2: "#CFA9A2",
-    border: "#E0D8C8",
-    tagline: "Warm ivory · ink · alta crimson (once per viewport) · champagne + sakura as ritual accents",
+    name: "A - Off-White Register (committed default)",
+    desc: "Warm off-white ground, charcoal ink, dusty-mauve action. Blush and warm neutrals stay in supporting roles.",
+    bg: "#F8F5F2",
+    bgDeep: "#FBF8F5",
+    ink: "#2B2624",
+    inkSoft: "#574F4C",
+    accent: "#7E5C58",
+    accentHover: "#6B4B47",
+    accentInk: "#F8F5F2",
+    material: "#B18B87",
+    material2: "#E0C3C0",
+    border: "#DDD5D0",
+    tagline: "Warm Off-White · Charcoal · Dusty Mauve · Blush used sparingly",
   },
   {
     id: "B",
-    name: "B — Dark Textile House (ink register)",
-    desc: "Hero/chapters in ink, zari needs darkness. Highest premium signal, highest relight cost.",
-    bg: "#171410",
-    bgDeep: "#23201B",
-    ink: "#F6F1EB",
-    inkSoft: "#B8B0A0",
-    accent: "#8B1E2D",
-    accentHover: "#A82A3A",
-    material: "#C7A96D",
-    material2: "#CFA9A2",
-    border: "#2C2A26",
-    tagline: "Ink ground · zari gold lives here · crimson glows · photography must be relit",
+    name: "B - Charcoal Register (cinematic)",
+    desc: "Charcoal ground for hero, collection films and the invitation. Off-white type, blush accents, mauve support.",
+    bg: "#2B2624",
+    bgDeep: "#3A3330",
+    ink: "#F8F5F2",
+    inkSoft: "#CFC5C0",
+    accent: "#E0C3C0",
+    accentHover: "#EFDFDD",
+    accentInk: "#2B2624",
+    material: "#B18B87",
+    material2: "#C7A7A3",
+    border: "#4E4541",
+    tagline: "Charcoal · Warm Off-White · Muted Blush · Dusty Mauve",
   },
   {
     id: "C",
-    name: "C — Festive Restraint (color with conviction)",
-    desc: "Real peacock + marigold + kumkum, ruthlessly proportioned. Culturally located, hardest to keep quiet.",
-    bg: "#F6F1E7",
-    bgDeep: "#EDE6D5",
-    ink: "#1F1A14",
-    inkSoft: "#6B6258",
-    accent: "#A4262C",
-    accentHover: "#7E1C22",
-    material: "#D99A2B",
-    material2: "#2F5D5A",
-    border: "#DDD5C2",
-    tagline: "Peacock teal + marigold controlled · kumkum accent · proportion law required",
+    name: "C - Dusty Mauve Register (ownership)",
+    desc: "Dusty Mauve as a full editorial ground with charcoal type and one deeper-mauve rule. Used once per journey.",
+    bg: "#B18B87",
+    bgDeep: "#C7A7A3",
+    ink: "#1E1A18",
+    inkSoft: "#1E1A18",
+    accent: "#7E5C58",
+    accentHover: "#6B4B47",
+    accentInk: "#F8F5F2",
+    material: "#574F4C",
+    material2: "#F8F5F2",
+    border: "#C7A7A3",
+    tagline: "Dusty Mauve · Charcoal · Deep Mauve · off-white rule",
   },
   {
     id: "D",
-    name: "D — Loom Record (archival stone)",
-    desc: "Gallery/archive register. Stone + oxide + loom-wood. Ages well, risks cold without human layer.",
-    bg: "#ECE7DB",
-    bgDeep: "#DED8C8",
-    ink: "#1C1B18",
-    inkSoft: "#6E675C",
-    accent: "#9A3B26",
-    accentHover: "#7A2F1E",
-    material: "#6B5138",
-    material2: "#CFA9A2",
-    border: "#D2C9B6",
-    tagline: "Stone · oxide earth red · loom-wood · editorial, museum-like",
+    name: "D - Blush Register (journal)",
+    desc: "Muted Blush for journal and quiet editorial panels; raised off-white cards carry the reading.",
+    bg: "#E0C3C0",
+    bgDeep: "#F2EBE7",
+    ink: "#2B2624",
+    inkSoft: "#574F4C",
+    accent: "#7E5C58",
+    accentHover: "#6B4B47",
+    accentInk: "#F8F5F2",
+    material: "#B18B87",
+    material2: "#C7A7A3",
+    border: "#DDD5D0",
+    tagline: "Muted Blush · Charcoal · Deep Mauve · warm neutral line",
   },
 ];
 
@@ -108,9 +113,9 @@ function PaletteCard({ p }: { p: Palette }) {
             { c: p.bg, label: "Ground" },
             { c: p.bgDeep, label: "Ground+" },
             { c: p.ink, label: "Ink" },
-            { c: p.accent, label: "Alta" },
+            { c: p.accent, label: "Accent" },
             { c: p.material, label: "Material" },
-            { c: p.material2, label: "Sakura/Teal" },
+            { c: p.material2, label: "Support" },
           ].map((s) => (
             <div key={s.label} className="flex flex-col items-center gap-1.5">
               <div className="w-10 h-10 rounded-full border shadow-sm" style={{ background: s.c, borderColor: p.border }} title={`${s.label} ${s.c}`} />
@@ -139,10 +144,10 @@ function PaletteCard({ p }: { p: Palette }) {
             The zari catches the morning light.
           </h3>
           <p className="text-sm font-light leading-relaxed" style={{ color: p.inkSoft }}>
-            Not the harsh noon light, but the soft gold of early day, when everything is still possible. This is when a weave reveals itself.
+            Not the harsh noon light, but the soft light of early day, when everything is still possible. This is when a weave reveals itself.
           </p>
           <div className="flex gap-3 pt-2">
-            <span className="px-4 py-2 rounded-full text-[0.65rem] tracking-[0.2em] uppercase text-white" style={{ background: p.accent }}>
+            <span className="px-4 py-2 rounded-full text-[0.65rem] tracking-[0.2em] uppercase" style={{ background: p.accent, color: p.accentInk }}>
               Add to bag
             </span>
             <span className="px-4 py-2 rounded-full text-[0.65rem] tracking-[0.2em] uppercase border" style={{ borderColor: p.ink + "33", color: p.ink }}>
@@ -156,23 +161,23 @@ function PaletteCard({ p }: { p: Palette }) {
               Product · Kalyani
             </p>
             <p className="font-serif text-lg" style={{ color: p.ink }}>
-              Molakalmuru Temple Silk — ₹ 48,000
+              Molakalmuru Temple Silk - ₹ 48,000
             </p>
             <p className="text-xs" style={{ color: p.inkSoft }}>
-               Mulberry · 12 momme · temple border · Molakalmuru
+              Mulberry · 12 momme · temple border · Molakalmuru
             </p>
           </div>
           <div className="h-px" style={{ background: p.border }} />
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full" style={{ background: p.accent }} />
             <span className="text-xs" style={{ color: p.inkSoft }}>
-              Alta accent — saving, hover, editorial rule
+              Action accent - saving, hover, editorial rule
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full" style={{ background: p.material }} />
             <span className="text-xs" style={{ color: p.inkSoft }}>
-              Material accent — price confidence, loom details
+              Material accent - price confidence, loom details
             </span>
           </div>
         </div>
@@ -190,22 +195,22 @@ export default function ColorLab() {
   const [active, setActive] = useState<string>("all");
   const list = active === "all" ? PALETTES : PALETTES.filter((p) => p.id === active);
   return (
-    <div className="min-h-screen bg-[#F6F1EB] text-[#1A1A18]">
+    <div className="min-h-screen bg-[#F8F5F2] text-[#2B2624]">
       <div className="max-w-[1200px] mx-auto px-6 py-10">
-        <p className="text-[0.65rem] tracking-[0.42em] uppercase text-[#6B6560]">HOP · Color Lab · staging only</p>
-        <h1 className="mt-3 font-serif text-4xl leading-tight">Color territories vs silk, zari, skin.</h1>
-        <p className="mt-4 text-sm font-light leading-relaxed max-w-2xl text-[#6B6560]">
-          Same imagery, same type, same copy — only palette changes. Compare how each ground treats silk sheen, zari warmth, skin, and ink typography. No palette is committed; this is evidence.
+        <p className="text-[0.65rem] tracking-[0.42em] uppercase text-[#574F4C]">HOP · Color Lab · staging only</p>
+        <h1 className="mt-3 font-serif text-4xl leading-tight">The same palette, four registers.</h1>
+        <p className="mt-4 text-sm font-light leading-relaxed max-w-2xl text-[#574F4C]">
+          Same imagery, same type, same copy - only palette changes. Compare how each ground treats silk sheen, zari warmth, skin, and ink typography. No palette is committed; this is evidence.
         </p>
         <div className="mt-6 flex gap-2 flex-wrap">
-          <button onClick={() => setActive("all")} className={`px-3 py-1.5 rounded-full text-xs border ${active === "all" ? "bg-[#1A1A18] text-white border-[#1A1A18]" : "bg-white border-[#E0D8C8]"}`}>
+          <button onClick={() => setActive("all")} className={`px-3 py-1.5 rounded-full text-xs border ${active === "all" ? "bg-[#7E5C58] text-[#F8F5F2] border-[#7E5C58]" : "bg-[#FBF8F5] border-[#DDD5D0]"}`}>
             All
           </button>
           {PALETTES.map((p) => (
             <button
               key={p.id}
               onClick={() => setActive(p.id)}
-              className={`px-3 py-1.5 rounded-full text-xs border ${active === p.id ? "bg-[#1A1A18] text-white border-[#1A1A18]" : "bg-white border-[#E0D8C8]"}`}
+              className={`px-3 py-1.5 rounded-full text-xs border ${active === p.id ? "bg-[#7E5C58] text-[#F8F5F2] border-[#7E5C58]" : "bg-[#FBF8F5] border-[#DDD5D0]"}`}
             >
               {p.id}
             </button>
@@ -216,9 +221,9 @@ export default function ColorLab() {
             <PaletteCard key={p.id} p={p} />
           ))}
         </div>
-        <div className="mt-12 border-t border-[#E0D8C8] pt-8 space-y-3 text-sm font-light leading-relaxed text-[#6B6560] max-w-3xl">
+        <div className="mt-12 border-t border-[#DDD5D0] pt-8 space-y-3 text-sm font-light leading-relaxed text-[#574F4C] max-w-3xl">
           <p>
-            <strong className="font-medium text-[#1A1A18]">How to read this:</strong> A — repairs honesty without new hue risk. B — proves zari needs dark, but demands relight and re-verified AA. C — culturally located but hardest to keep quiet. D — archival, best for journal/about. The hierarchy to lock (GROUND / INK / SECONDARY / SIGNATURE / MATERIAL / FUNCTIONAL) is independent of which accent direction is chosen.
+            <strong className="font-medium text-[#2B2624]">How to read this:</strong> A - the committed off-white default. B - charcoal for cinematic and dark sections. C - dusty mauve for the ownership chapter. D - muted blush for journal and quiet panels. The hierarchy (GROUND / INK / SECONDARY / ACTION / MATERIAL / FUNCTIONAL) stays fixed; each register only changes the proportion of the same palette.
           </p>
           <p>
             Tests to run: skin+zari on each ground (above), ink text AA on light grounds, light text AA on ink ground, CTA hover/pressed, card border separation, mobile density.

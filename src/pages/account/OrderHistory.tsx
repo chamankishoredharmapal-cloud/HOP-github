@@ -17,12 +17,12 @@ const statusLabel: Record<string, string> = {
 };
 
 const statusColor: Record<string, string> = {
-  pending_payment: "text-amber-600 bg-amber-50",
-  confirmed: "text-ink bg-ink/10",
-  processing: "text-blue-600 bg-blue-50",
-  shipped: "text-purple-600 bg-purple-50",
-  delivered: "text-green-600 bg-green-50",
-  cancelled: "text-red-600 bg-red-50",
+  pending_payment: "text-brand-gold-deep bg-brand-gold/10",
+  confirmed: "text-brand-violet-deep bg-brand-mauve-soft",
+  processing: "text-brand-violet bg-brand-mauve-soft",
+  shipped: "text-brand-plum bg-brand-mauve-soft",
+  delivered: "text-brand-plum bg-brand-gold/20",
+  cancelled: "text-destructive bg-destructive/5",
   returned: "text-ink-soft bg-ink/5",
 };
 

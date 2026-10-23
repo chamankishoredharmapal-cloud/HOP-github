@@ -188,7 +188,7 @@ export default function StudioActivityPage() {
             onClick={() => setActiveFilter(tab.key)}
             className={`px-3 py-1.5 rounded-md border text-xs whitespace-nowrap transition-colors ${
               activeFilter === tab.key
-                ? "bg-ink text-jasmine border-ink font-medium shadow-xs"
+                ? "bg-brand-violet text-brand-ivory border-ink font-medium shadow-xs"
                 : "border-border/50 text-muted-foreground hover:text-foreground hover:border-border"
             }`}
           >

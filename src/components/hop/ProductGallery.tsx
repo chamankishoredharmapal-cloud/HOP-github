@@ -227,7 +227,7 @@ export const ProductGallery = React.memo(function ProductGallery({
               onClick={() => emblaApi?.scrollTo(index)}
               className={`relative aspect-square overflow-hidden rounded-sm bg-jasmine-deep border transition-all duration-300 min-h-[44px] ${
                 index === selectedIndex
-                  ? "border-ink shadow-sm"
+                  ? "border-signature-crimson shadow-sm"
                   : "border-transparent opacity-70 hover:opacity-100"
               }`}
               aria-label={`Show product image ${index + 1}`}

@@ -138,7 +138,7 @@ export default function Media() {
       const file = e.target.files?.[0];
       if (!file) return;
 
-      toast.info("Validating film specifications...");
+      toast.info("Validating film specifications & aspect ratio...");
       const validation = await validateVideoFile(file);
       if (!validation.isValid) {
         toast.error(validation.error || "Video rejected");
@@ -146,8 +146,16 @@ export default function Media() {
         return;
       }
 
+      if (validation.warning) {
+        toast.warning(validation.warning, { duration: 6000 });
+      }
+
       try {
         await uploadMedia.mutateAsync({ file, targetBucket: "HOP-films" });
+        toast.success(
+          `Original video preserved (${validation.aspectRatioLabel}). To generate 720p/540p streaming variants, run 'npm run video:optimize'.`,
+          { duration: 8000 }
+        );
       } finally {
         if (videoInputRef.current) videoInputRef.current.value = "";
       }
@@ -254,7 +262,7 @@ export default function Media() {
             size="sm"
             disabled={uploadMedia.isPending}
             onClick={() => videoInputRef.current?.click()}
-            className="gap-1.5 text-xs h-8 bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
+            className="gap-1.5 text-xs h-8 bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors"
           >
             <Film className="h-3.5 w-3.5" />
             Upload Film
@@ -531,6 +539,25 @@ export default function Media() {
                   <span className="text-muted-foreground block text-[10px] uppercase tracking-wider">Uploaded</span>
                   <span className="text-foreground">{formatDate(previewItem.created_at)}</span>
                 </div>
+
+                {previewItem.type === "video" && (
+                  <>
+                    <div>
+                      <span className="text-muted-foreground block text-[10px] uppercase tracking-wider">Aspect Ratio & Specs</span>
+                      <span className={`font-medium ${previewItem.is_standard_aspect === false ? "text-amber-600 dark:text-amber-400" : "text-foreground"}`}>
+                        {previewItem.aspect_ratio || (previewItem.width && previewItem.height ? `${previewItem.width}x${previewItem.height}` : "16:9 Standard")}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground block text-[10px] uppercase tracking-wider">Pipeline Status</span>
+                      <span className={`font-medium text-xs ${previewItem.processing_status === "completed" ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400"}`}>
+                        {previewItem.processing_status === "completed"
+                          ? "✓ Completed (720p / 540p active)"
+                          : "Pending ('npm run video:optimize')"}
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
 
               <div className="space-y-1">
