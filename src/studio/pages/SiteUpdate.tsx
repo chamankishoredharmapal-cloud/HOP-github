@@ -16,12 +16,15 @@ import {
   Mail,
   Home,
   Shield,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -40,6 +43,7 @@ import {
   usePublishSection,
 } from "../hooks/useStudioSiteSections";
 import { MediaPickerModal } from "../components/MediaPickerModal";
+import { HomepageVideoSectionEditor } from "../components/HomepageVideoSectionEditor";
 import type { MediaItem, MediaType } from "../types/media";
 import {
   HOMEPAGE_SECTION_KEYS,
@@ -53,6 +57,7 @@ import {
   type SitePageKey,
   type SiteSectionRecord,
   HeroBannerPayloadSchema,
+  HomepageVideoPayloadSchema,
   CraftStoryPayloadSchema,
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
@@ -61,6 +66,10 @@ import {
   CustomerCarePayloadSchema,
   PolicyDocumentPayloadSchema,
   DEFAULT_HERO_PAYLOAD,
+  DEFAULT_HERO_SLIDES,
+  type HeroSlide,
+  DEFAULT_HOMEPAGE_VIDEO_PAYLOAD,
+  type HomepageVideoPayload,
   DEFAULT_CRAFT_PAYLOAD,
   DEFAULT_PHILOSOPHY_PAYLOAD,
   DEFAULT_OWNERSHIP_PAYLOAD,
@@ -75,12 +84,23 @@ import {
 import { toast } from "sonner";
 
 export default function SiteUpdate() {
+  const initialSection = useMemo(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const sec = params.get("section");
+      if (sec && (HOMEPAGE_SECTION_KEYS as readonly string[]).includes(sec)) {
+        return sec;
+      }
+    }
+    return "home.hero";
+  }, []);
+
   const [activePage, setActivePage] = useState<SitePageKey>("home");
   const { data: sections = [], isLoading, refetch } = useStudioSiteSections(activePage);
   const saveDraftMutation = useSaveSectionDraft();
   const publishMutation = usePublishSection();
 
-  const [activeKey, setActiveKey] = useState<string>("home.hero");
+  const [activeKey, setActiveKey] = useState<string>(initialSection);
   const [formData, setFormData] = useState<Record<string, unknown>>({});
   const [isDirty, setIsDirty] = useState(false);
   const [isPublishDialogOpen, setIsPublishDialogOpen] = useState(false);
@@ -118,7 +138,11 @@ export default function SiteUpdate() {
     let type = "hero_banner";
     let displayName = "Homepage Hero";
 
-    if (activeKey === "home.craft") {
+    if (activeKey === "home.video") {
+      defaultPayload = DEFAULT_HOMEPAGE_VIDEO_PAYLOAD as unknown as Record<string, unknown>;
+      type = "custom_section";
+      displayName = "Homepage Video (Living Saree)";
+    } else if (activeKey === "home.craft") {
       defaultPayload = DEFAULT_CRAFT_PAYLOAD as unknown as Record<string, unknown>;
       type = "craft_story";
       displayName = "Homepage Craft (Gangamma)";
@@ -181,7 +205,11 @@ export default function SiteUpdate() {
   // Sync form data whenever the active section changes
   useEffect(() => {
     if (currentSection) {
-      setFormData(JSON.parse(JSON.stringify(currentSection.draft_payload || {})));
+      const data = JSON.parse(JSON.stringify(currentSection.draft_payload || {}));
+      if (currentSection.key === "home.hero" && (!data.slides || !Array.isArray(data.slides) || data.slides.length === 0)) {
+        data.slides = JSON.parse(JSON.stringify(DEFAULT_HERO_SLIDES));
+      }
+      setFormData(data);
       setIsDirty(false);
       setValidationErrors([]);
     }
@@ -230,6 +258,8 @@ export default function SiteUpdate() {
     let result;
     if (activeKey === "home.hero") {
       result = HeroBannerPayloadSchema.safeParse(formData);
+    } else if (activeKey === "home.video") {
+      result = HomepageVideoPayloadSchema.safeParse(formData);
     } else if (activeKey === "home.craft") {
       result = CraftStoryPayloadSchema.safeParse(formData);
     } else if (activeKey === "home.philosophy") {
@@ -313,7 +343,8 @@ export default function SiteUpdate() {
 
   const handleMediaSelect = (asset: MediaItem) => {
     if (!mediaPickerField) return;
-    handleFieldChange(mediaPickerField, asset.public_url);
+    const url = asset.url || (asset as unknown as { public_url?: string }).public_url || "";
+    handleFieldChange(mediaPickerField, url);
 
     if (mediaPickerField.includes("image_url") && asset.alt_text) {
       const currentAlt = (formData as Record<string, unknown>).image_alt as string;
@@ -321,8 +352,15 @@ export default function SiteUpdate() {
         handleFieldChange("image_alt", asset.alt_text);
       }
     }
+
+    // If selecting a video for a slide, auto-populate the poster if available
+    if (mediaPickerField.endsWith(".video_url") && asset.poster_url) {
+      const posterField = mediaPickerField.replace(/\.video_url$/, ".poster_url");
+      handleFieldChange(posterField, asset.poster_url);
+    }
+
     setMediaPickerOpen(false);
-    toast.success("Media selected from library", { description: asset.title });
+    toast.success("Media selected from library", { description: asset.name });
   };
 
   const getPreviewUrl = () => {
@@ -537,137 +575,498 @@ export default function SiteUpdate() {
               <TabsContent value="editor" className="space-y-6">
                 {/* 1. Hero Editor */}
                 {activeKey === "home.hero" && (
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="hero-eyebrow">Eyebrow / Collection Tag</Label>
-                        <Input
-                          id="hero-eyebrow"
-                          value={(formData.eyebrow as string) || ""}
-                          onChange={(e) => handleFieldChange("eyebrow", e.target.value)}
-                          placeholder="House of Padmavati"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="hero-title">Headline (Title) *</Label>
-                        <Input
-                          id="hero-title"
-                          value={(formData.title as string) || ""}
-                          onChange={(e) => handleFieldChange("title", e.target.value)}
-                          placeholder="Saree. Time. You."
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="hero-subtitle">Subtitle *</Label>
-                      <Input
-                        id="hero-subtitle"
-                        value={(formData.subtitle as string) || ""}
-                        onChange={(e) => handleFieldChange("subtitle", e.target.value)}
-                        placeholder="Five ways of wearing tradition — considered deeply, chosen quietly."
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="p-3 border rounded-md space-y-2">
-                        <Label className="text-xs font-semibold">Primary CTA</Label>
-                        <div className="space-y-1">
-                          <Label htmlFor="hero-cta1-label" className="text-xs">Label</Label>
-                          <Input
-                            id="hero-cta1-label"
-                            value={((formData.primary_cta as Record<string, string>)?.label) || ""}
-                            onChange={(e) => handleFieldChange("primary_cta.label", e.target.value)}
-                            placeholder="Enter the House"
-                          />
+                  <div className="space-y-6">
+                    {/* Hero Video Slides Management Card */}
+                    <div className="space-y-4 p-4 border rounded-lg bg-card">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <Film className="h-4 w-4 text-primary" />
+                            <h3 className="text-base font-serif font-semibold text-foreground">
+                              Hero Video Slider
+                            </h3>
+                            <Badge variant="outline" className="text-xs">
+                              {((formData.slides as HeroSlide[]) || []).length} Slides Configured
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Configure the cinematic multi-video hero slider. Each slide has a maximum display window of 5 seconds (targeting 3–5 seconds) and automatically advances.
+                          </p>
                         </div>
-                        <div className="space-y-1">
-                          <Label htmlFor="hero-cta1-href" className="text-xs">Href Destination</Label>
-                          <Input
-                            id="hero-cta1-href"
-                            value={((formData.primary_cta as Record<string, string>)?.href) || ""}
-                            onChange={(e) => handleFieldChange("primary_cta.href", e.target.value)}
-                            placeholder="/collections"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="p-3 border rounded-md space-y-2">
-                        <Label className="text-xs font-semibold">Secondary CTA</Label>
-                        <div className="space-y-1">
-                          <Label htmlFor="hero-cta2-label" className="text-xs">Label</Label>
-                          <Input
-                            id="hero-cta2-label"
-                            value={((formData.secondary_cta as Record<string, string>)?.label) || ""}
-                            onChange={(e) => handleFieldChange("secondary_cta.label", e.target.value)}
-                            placeholder="Descend into the house"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <Label htmlFor="hero-cta2-href" className="text-xs">Href Destination</Label>
-                          <Input
-                            id="hero-cta2-href"
-                            value={((formData.secondary_cta as Record<string, string>)?.href) || ""}
-                            onChange={(e) => handleFieldChange("secondary_cta.href", e.target.value)}
-                            placeholder="#collections"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="hero-alt">Accessibility Alt Text *</Label>
-                      <Input
-                        id="hero-alt"
-                        value={(formData.alt_text as string) || ""}
-                        onChange={(e) => handleFieldChange("alt_text", e.target.value)}
-                        placeholder="House of Padmavati collection film"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <Label htmlFor="hero-video">Film / Video URL (Optional)</Label>
+                        <div className="flex items-center gap-2">
+                          {((formData.slides as HeroSlide[]) || []).length === 0 && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleFieldChange("slides", JSON.parse(JSON.stringify(DEFAULT_HERO_SLIDES)))}
+                              className="text-xs h-8"
+                            >
+                              <RotateCcw className="h-3.5 w-3.5 mr-1" />
+                              Load Default Slides
+                            </Button>
+                          )}
                           <Button
                             type="button"
-                            variant="ghost"
+                            variant="secondary"
                             size="sm"
-                            onClick={() => openMediaPicker("video_url", ["video"])}
-                            className="h-6 text-xs px-2"
+                            onClick={() => {
+                              const current = ((formData.slides as HeroSlide[]) || []);
+                              const newSlide: HeroSlide = {
+                                id: `slide-${Date.now()}`,
+                                video_url: "/optimized/videos/HERO-720p.mp4",
+                                mobile_video_url: "/optimized/videos/HERO-540p.mp4",
+                                poster_url: "/optimized/videos/HERO-poster.webp",
+                                duration: 5,
+                                is_active: true,
+                                title: "",
+                                subtitle: "",
+                                eyebrow: "",
+                                alt_text: "",
+                              };
+                              handleFieldChange("slides", [...current, newSlide]);
+                            }}
+                            className="text-xs h-8 flex items-center gap-1"
                           >
-                            <Film className="h-3 w-3 mr-1" /> Choose Video
+                            <Plus className="h-3.5 w-3.5" />
+                            <span>Add Hero Slide</span>
                           </Button>
                         </div>
-                        <Input
-                          id="hero-video"
-                          value={(formData.video_url as string) || ""}
-                          onChange={(e) => handleFieldChange("video_url", e.target.value)}
-                          placeholder="https://... or leave blank for featured collection video"
-                        />
                       </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <Label htmlFor="hero-poster">Poster Image URL (Optional)</Label>
+
+                      {/* List of configured slides */}
+                      {((formData.slides as HeroSlide[]) || []).length === 0 ? (
+                        <div className="p-8 text-center border-2 border-dashed rounded-lg">
+                          <Film className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                          <p className="text-sm font-medium text-foreground">No slides configured</p>
+                          <p className="text-xs text-muted-foreground mb-4">
+                            Add custom video slides or load the four curated HOP collection films.
+                          </p>
                           <Button
                             type="button"
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
-                            onClick={() => openMediaPicker("poster_url", ["image"])}
-                            className="h-6 text-xs px-2"
+                            onClick={() => handleFieldChange("slides", JSON.parse(JSON.stringify(DEFAULT_HERO_SLIDES)))}
                           >
-                            <ImageIcon className="h-3 w-3 mr-1" /> Choose Poster
+                            Load 4 Default Collection Slides
                           </Button>
                         </div>
+                      ) : (
+                        <div className="space-y-4">
+                          {((formData.slides as HeroSlide[]) || []).map((slide, sIdx) => {
+                            const slidesList = (formData.slides as HeroSlide[]) || [];
+                            return (
+                              <div
+                                key={slide.id || `slide-${sIdx}`}
+                                className={`border rounded-lg p-4 space-y-4 transition-all ${
+                                  slide.is_active !== false
+                                    ? "bg-background/80 border-border"
+                                    : "bg-muted/30 border-muted opacity-75"
+                                }`}
+                              >
+                                {/* Slide Top Controls */}
+                                <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-muted">
+                                      Slide #{sIdx + 1}
+                                    </span>
+                                    <span className="text-sm font-medium text-foreground">
+                                      {slide.eyebrow || slide.title || `Slide ${sIdx + 1}`}
+                                    </span>
+                                    <Badge
+                                      variant={slide.is_active !== false ? "default" : "secondary"}
+                                      className="text-[10px] px-1.5 py-0"
+                                    >
+                                      {slide.is_active !== false ? "Active" : "Disabled"}
+                                    </Badge>
+                                  </div>
+
+                                  <div className="flex items-center gap-2">
+                                    {/* Enable / Disable Switch */}
+                                    <div className="flex items-center gap-1.5 mr-2">
+                                      <Label htmlFor={`slide-active-${sIdx}`} className="text-xs cursor-pointer">
+                                        {slide.is_active !== false ? "Active" : "Disabled"}
+                                      </Label>
+                                      <Switch
+                                        id={`slide-active-${sIdx}`}
+                                        checked={slide.is_active !== false}
+                                        onCheckedChange={(checked) => {
+                                          const copy = [...slidesList];
+                                          copy[sIdx] = { ...copy[sIdx], is_active: checked };
+                                          handleFieldChange("slides", copy);
+                                        }}
+                                      />
+                                    </div>
+
+                                    {/* Reorder Up */}
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="sm"
+                                      disabled={sIdx === 0}
+                                      onClick={() => {
+                                        if (sIdx === 0) return;
+                                        const copy = [...slidesList];
+                                        const temp = copy[sIdx];
+                                        copy[sIdx] = copy[sIdx - 1];
+                                        copy[sIdx - 1] = temp;
+                                        handleFieldChange("slides", copy);
+                                      }}
+                                      className="h-7 w-7 p-0"
+                                      title="Move slide up"
+                                    >
+                                      <ArrowUp className="h-3.5 w-3.5" />
+                                    </Button>
+
+                                    {/* Reorder Down */}
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="sm"
+                                      disabled={sIdx === slidesList.length - 1}
+                                      onClick={() => {
+                                        if (sIdx === slidesList.length - 1) return;
+                                        const copy = [...slidesList];
+                                        const temp = copy[sIdx];
+                                        copy[sIdx] = copy[sIdx + 1];
+                                        copy[sIdx + 1] = temp;
+                                        handleFieldChange("slides", copy);
+                                      }}
+                                      className="h-7 w-7 p-0"
+                                      title="Move slide down"
+                                    >
+                                      <ArrowDown className="h-3.5 w-3.5" />
+                                    </Button>
+
+                                    {/* Remove Slide */}
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => {
+                                        const copy = [...slidesList];
+                                        copy.splice(sIdx, 1);
+                                        handleFieldChange("slides", copy);
+                                      }}
+                                      className="h-7 w-7 p-0 text-destructive hover:text-destructive"
+                                      title="Remove slide"
+                                    >
+                                      <Trash2 className="h-3.5 w-3.5" />
+                                    </Button>
+                                  </div>
+                                </div>
+
+                                {/* Slide Media URLs */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                  <div className="space-y-1.5">
+                                    <div className="flex items-center justify-between">
+                                      <Label htmlFor={`slide-${sIdx}-video`} className="text-xs font-semibold">
+                                        Video URL *
+                                      </Label>
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => openMediaPicker(`slides.${sIdx}.video_url`, ["video"])}
+                                        className="h-6 text-xs px-2"
+                                      >
+                                        <Film className="h-3 w-3 mr-1" /> Choose Video
+                                      </Button>
+                                    </div>
+                                    <Input
+                                      id={`slide-${sIdx}-video`}
+                                      value={slide.video_url || ""}
+                                      onChange={(e) => {
+                                        const copy = [...slidesList];
+                                        copy[sIdx] = { ...copy[sIdx], video_url: e.target.value };
+                                        handleFieldChange("slides", copy);
+                                      }}
+                                      placeholder="/optimized/videos/KALYANI-720p.mp4 or https://..."
+                                      className="text-xs font-mono"
+                                    />
+                                  </div>
+
+                                  <div className="space-y-1.5">
+                                    <div className="flex items-center justify-between">
+                                      <Label htmlFor={`slide-${sIdx}-poster`} className="text-xs font-semibold">
+                                        Poster Image URL (Optional)
+                                      </Label>
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => openMediaPicker(`slides.${sIdx}.poster_url`, ["image"])}
+                                        className="h-6 text-xs px-2"
+                                      >
+                                        <ImageIcon className="h-3 w-3 mr-1" /> Choose Poster
+                                      </Button>
+                                    </div>
+                                    <Input
+                                      id={`slide-${sIdx}-poster`}
+                                      value={slide.poster_url || ""}
+                                      onChange={(e) => {
+                                        const copy = [...slidesList];
+                                        copy[sIdx] = { ...copy[sIdx], poster_url: e.target.value };
+                                        handleFieldChange("slides", copy);
+                                      }}
+                                      placeholder="/optimized/videos/KALYANI-poster.webp or https://..."
+                                      className="text-xs font-mono"
+                                    />
+                                  </div>
+                                </div>
+
+                                {/* Slide Duration & Alt Text */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                  <div className="space-y-1.5">
+                                    <Label htmlFor={`slide-${sIdx}-duration`} className="text-xs font-semibold flex items-center justify-between">
+                                      <span>Display Window (Seconds) *</span>
+                                      <span className="text-muted-foreground font-normal">Capped at 5s (Target 3–5s)</span>
+                                    </Label>
+                                    <Input
+                                      id={`slide-${sIdx}-duration`}
+                                      type="number"
+                                      min={1}
+                                      max={5}
+                                      step={0.5}
+                                      value={slide.duration ?? 5}
+                                      onChange={(e) => {
+                                        const raw = parseFloat(e.target.value);
+                                        const clamped = Math.min(5, Math.max(1, isNaN(raw) ? 5 : raw));
+                                        const copy = [...slidesList];
+                                        copy[sIdx] = { ...copy[sIdx], duration: clamped };
+                                        handleFieldChange("slides", copy);
+                                      }}
+                                      className="text-xs"
+                                    />
+                                    <p className="text-[10px] text-muted-foreground">
+                                      Slide automatically advances after this duration even if the video is longer.
+                                    </p>
+                                  </div>
+
+                                  <div className="space-y-1.5">
+                                    <Label htmlFor={`slide-${sIdx}-alt`} className="text-xs font-semibold">
+                                      Accessibility Alt Text (Optional)
+                                    </Label>
+                                    <Input
+                                      id={`slide-${sIdx}-alt`}
+                                      value={slide.alt_text || ""}
+                                      onChange={(e) => {
+                                        const copy = [...slidesList];
+                                        copy[sIdx] = { ...copy[sIdx], alt_text: e.target.value };
+                                        handleFieldChange("slides", copy);
+                                      }}
+                                      placeholder="Collection film drape description"
+                                      className="text-xs"
+                                    />
+                                  </div>
+                                </div>
+
+                                {/* Optional Slide Copy Overrides */}
+                                <div className="p-3 border rounded bg-muted/20 space-y-2">
+                                  <p className="text-xs font-semibold text-muted-foreground">
+                                    Slide-Specific Copy Overrides (Optional — leave blank to use global headline)
+                                  </p>
+                                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <div>
+                                      <Label htmlFor={`slide-${sIdx}-eyebrow`} className="text-[11px]">Slide Eyebrow</Label>
+                                      <Input
+                                        id={`slide-${sIdx}-eyebrow`}
+                                        value={slide.eyebrow || ""}
+                                        onChange={(e) => {
+                                          const copy = [...slidesList];
+                                          copy[sIdx] = { ...copy[sIdx], eyebrow: e.target.value };
+                                          handleFieldChange("slides", copy);
+                                        }}
+                                        placeholder="Leave blank for default"
+                                        className="h-8 text-xs"
+                                      />
+                                    </div>
+                                    <div>
+                                      <Label htmlFor={`slide-${sIdx}-title`} className="text-[11px]">Slide Headline</Label>
+                                      <Input
+                                        id={`slide-${sIdx}-title`}
+                                        value={slide.title || ""}
+                                        onChange={(e) => {
+                                          const copy = [...slidesList];
+                                          copy[sIdx] = { ...copy[sIdx], title: e.target.value };
+                                          handleFieldChange("slides", copy);
+                                        }}
+                                        placeholder="Leave blank for default"
+                                        className="h-8 text-xs"
+                                      />
+                                    </div>
+                                    <div>
+                                      <Label htmlFor={`slide-${sIdx}-subtitle`} className="text-[11px]">Slide Subtitle</Label>
+                                      <Input
+                                        id={`slide-${sIdx}-subtitle`}
+                                        value={slide.subtitle || ""}
+                                        onChange={(e) => {
+                                          const copy = [...slidesList];
+                                          copy[sIdx] = { ...copy[sIdx], subtitle: e.target.value };
+                                          handleFieldChange("slides", copy);
+                                        }}
+                                        placeholder="Leave blank for default"
+                                        className="h-8 text-xs"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Default Editorial Copy & CTAs */}
+                    <div className="space-y-4 p-4 border rounded-lg bg-card">
+                      <h3 className="text-sm font-semibold tracking-wide text-foreground uppercase">
+                        Default Editorial Copy & CTAs
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="hero-eyebrow">Eyebrow / Collection Tag</Label>
+                          <Input
+                            id="hero-eyebrow"
+                            value={(formData.eyebrow as string) || ""}
+                            onChange={(e) => handleFieldChange("eyebrow", e.target.value)}
+                            placeholder="House of Padmavati"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="hero-title">Headline (Title) *</Label>
+                          <Input
+                            id="hero-title"
+                            value={(formData.title as string) || ""}
+                            onChange={(e) => handleFieldChange("title", e.target.value)}
+                            placeholder="Saree. Time. You."
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="hero-subtitle">Subtitle *</Label>
                         <Input
-                          id="hero-poster"
-                          value={(formData.poster_url as string) || ""}
-                          onChange={(e) => handleFieldChange("poster_url", e.target.value)}
-                          placeholder="https://... or leave blank for featured collection image"
+                          id="hero-subtitle"
+                          value={(formData.subtitle as string) || ""}
+                          onChange={(e) => handleFieldChange("subtitle", e.target.value)}
+                          placeholder="Five ways of wearing tradition — considered deeply, chosen quietly."
                         />
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-3 border rounded-md space-y-2 bg-background/50">
+                          <Label className="text-xs font-semibold">Primary CTA</Label>
+                          <div className="space-y-1">
+                            <Label htmlFor="hero-cta1-label" className="text-xs">Label</Label>
+                            <Input
+                              id="hero-cta1-label"
+                              value={((formData.primary_cta as Record<string, string>)?.label) || ""}
+                              onChange={(e) => handleFieldChange("primary_cta.label", e.target.value)}
+                              placeholder="Enter the House"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label htmlFor="hero-cta1-href" className="text-xs">Href Destination</Label>
+                            <Input
+                              id="hero-cta1-href"
+                              value={((formData.primary_cta as Record<string, string>)?.href) || ""}
+                              onChange={(e) => handleFieldChange("primary_cta.href", e.target.value)}
+                              placeholder="/collections"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="p-3 border rounded-md space-y-2 bg-background/50">
+                          <Label className="text-xs font-semibold">Secondary CTA</Label>
+                          <div className="space-y-1">
+                            <Label htmlFor="hero-cta2-label" className="text-xs">Label</Label>
+                            <Input
+                              id="hero-cta2-label"
+                              value={((formData.secondary_cta as Record<string, string>)?.label) || ""}
+                              onChange={(e) => handleFieldChange("secondary_cta.label", e.target.value)}
+                              placeholder="Descend into the house"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label htmlFor="hero-cta2-href" className="text-xs">Href Destination</Label>
+                            <Input
+                              id="hero-cta2-href"
+                              value={((formData.secondary_cta as Record<string, string>)?.href) || ""}
+                              onChange={(e) => handleFieldChange("secondary_cta.href", e.target.value)}
+                              placeholder="#collections"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="hero-alt">Accessibility Alt Text *</Label>
+                        <Input
+                          id="hero-alt"
+                          value={(formData.alt_text as string) || ""}
+                          onChange={(e) => handleFieldChange("alt_text", e.target.value)}
+                          placeholder="House of Padmavati collection film"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <Label htmlFor="hero-video">Fallback Film / Video URL (Optional)</Label>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => openMediaPicker("video_url", ["video"])}
+                              className="h-6 text-xs px-2"
+                            >
+                              <Film className="h-3 w-3 mr-1" /> Choose Video
+                            </Button>
+                          </div>
+                          <Input
+                            id="hero-video"
+                            value={(formData.video_url as string) || ""}
+                            onChange={(e) => handleFieldChange("video_url", e.target.value)}
+                            placeholder="https://... or variant key"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <Label htmlFor="hero-poster">Fallback Poster Image URL (Optional)</Label>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => openMediaPicker("poster_url", ["image"])}
+                              className="h-6 text-xs px-2"
+                            >
+                              <ImageIcon className="h-3 w-3 mr-1" /> Choose Poster
+                            </Button>
+                          </div>
+                          <Input
+                            id="hero-poster"
+                            value={(formData.poster_url as string) || ""}
+                            onChange={(e) => handleFieldChange("poster_url", e.target.value)}
+                            placeholder="https://..."
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
+                )}
+
+                {/* 1.5 Homepage Video Placeholder Editor */}
+                {activeKey === "home.video" && (
+                  <HomepageVideoSectionEditor
+                    formData={formData as unknown as HomepageVideoPayload}
+                    publishedPayload={currentSection?.published_payload as unknown as HomepageVideoPayload}
+                    hasUnpublishedChanges={Boolean(currentSection?.has_unpublished_changes)}
+                    publishedAt={currentSection?.published_at}
+                    version={currentSection?.version ?? 1}
+                    onChange={handleFieldChange}
+                    onOpenMediaPicker={(field, types) => openMediaPicker(field, types)}
+                  />
                 )}
 
                 {/* 2. Craft Editor */}

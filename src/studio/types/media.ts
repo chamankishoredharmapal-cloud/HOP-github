@@ -26,6 +26,10 @@ export interface MediaItem {
   collection_name?: string | null;
   usage_context?: string | null;
   bucket?: "product-images" | "HOP-films" | "site-assets" | string;
+  aspect_ratio?: string | null;
+  orientation?: "landscape" | "portrait" | "square" | null;
+  is_standard_aspect?: boolean | null;
+  processing_status?: "pending" | "processing" | "completed" | "failed" | null;
 }
 
 export interface MediaListParams {

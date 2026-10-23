@@ -1,7 +1,11 @@
 /**
  * HOP Studio Video Validation and Frame Capture Utility
- * Enforces HOP media performance budget and extracts poster frames.
+ * Enforces HOP media performance budget, aspect ratio standardization (16:9 / 9:16),
+ * and extracts WebP/JPEG poster frames.
  */
+
+export type VideoOrientation = "landscape" | "portrait" | "square";
+export type VideoStandardAspectRatio = "16:9" | "9:16" | "non-standard";
 
 export interface VideoValidationResult {
   isValid: boolean;
@@ -11,9 +15,14 @@ export interface VideoValidationResult {
   width: number;
   height: number;
   aspectRatio: string;
+  orientation: VideoOrientation;
+  standardAspectRatio: VideoStandardAspectRatio;
+  isStandard: boolean;
+  aspectRatioLabel: string;
   fileSizeFormatted: string;
   fileSizeBytes: number;
   posterFile?: File;
+  processingStatus: "pending" | "processing" | "completed" | "failed";
 }
 
 const MAX_FILE_SIZE_BYTES = 30 * 1024 * 1024; // 30 MB
@@ -25,6 +34,54 @@ export function formatBytes(bytes: number): string {
   const sizes = ["Bytes", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+}
+
+export function classifyVideoAspectRatio(width: number, height: number): {
+  orientation: VideoOrientation;
+  standardAspectRatio: VideoStandardAspectRatio;
+  isStandard: boolean;
+  aspectRatioLabel: string;
+} {
+  if (width <= 0 || height <= 0) {
+    return {
+      orientation: "landscape",
+      standardAspectRatio: "non-standard",
+      isStandard: false,
+      aspectRatioLabel: "Unknown",
+    };
+  }
+
+  const ratio = width / height;
+  const is16x9 = Math.abs(ratio - 16 / 9) < 0.03;
+  const is9x16 = Math.abs(ratio - 9 / 16) < 0.03;
+
+  const orientation: VideoOrientation =
+    width > height ? "landscape" : height > width ? "portrait" : "square";
+
+  if (is16x9) {
+    return {
+      orientation: "landscape",
+      standardAspectRatio: "16:9",
+      isStandard: true,
+      aspectRatioLabel: "16:9 Landscape (HOP Standard)",
+    };
+  }
+
+  if (is9x16) {
+    return {
+      orientation: "portrait",
+      standardAspectRatio: "9:16",
+      isStandard: true,
+      aspectRatioLabel: "9:16 Portrait (HOP Standard)",
+    };
+  }
+
+  return {
+    orientation,
+    standardAspectRatio: "non-standard",
+    isStandard: false,
+    aspectRatioLabel: `Non-standard (${width}x${height})`,
+  };
 }
 
 export async function validateVideoFile(file: File): Promise<VideoValidationResult> {
@@ -41,8 +98,13 @@ export async function validateVideoFile(file: File): Promise<VideoValidationResu
       width: 0,
       height: 0,
       aspectRatio: "Unknown",
+      orientation: "landscape",
+      standardAspectRatio: "non-standard",
+      isStandard: false,
+      aspectRatioLabel: "Invalid Format",
       fileSizeFormatted,
       fileSizeBytes,
+      processingStatus: "failed",
     };
   }
 
@@ -55,8 +117,13 @@ export async function validateVideoFile(file: File): Promise<VideoValidationResu
       width: 0,
       height: 0,
       aspectRatio: "Unknown",
+      orientation: "landscape",
+      standardAspectRatio: "non-standard",
+      isStandard: false,
+      aspectRatioLabel: "Exceeds Size Limit",
       fileSizeFormatted,
       fileSizeBytes,
+      processingStatus: "failed",
     };
   }
 
@@ -87,6 +154,12 @@ export async function validateVideoFile(file: File): Promise<VideoValidationResu
       const divisor = gcd(width, height) || 1;
       const aspectRatio = `${width / divisor}:${height / divisor}`;
 
+      const classification = classifyVideoAspectRatio(width, height);
+      if (!classification.isStandard) {
+        const aspectNotice = `Non-standard aspect ratio detected (${width}x${height}). HOP standard is 16:9 Landscape or 9:16 Portrait. Preserving original footage without stretching/cropping. Review in layout before publishing.`;
+        warning = warning ? `${warning} | ${aspectNotice}` : aspectNotice;
+      }
+
       // Duration validation
       if (duration > MAX_DURATION_SECONDS) {
         cleanUp();
@@ -97,8 +170,13 @@ export async function validateVideoFile(file: File): Promise<VideoValidationResu
           width,
           height,
           aspectRatio,
+          orientation: classification.orientation,
+          standardAspectRatio: classification.standardAspectRatio,
+          isStandard: classification.isStandard,
+          aspectRatioLabel: classification.aspectRatioLabel,
           fileSizeFormatted,
           fileSizeBytes,
+          processingStatus: "failed",
         });
         return;
       }
@@ -130,9 +208,14 @@ export async function validateVideoFile(file: File): Promise<VideoValidationResu
                   width,
                   height,
                   aspectRatio,
+                  orientation: classification.orientation,
+                  standardAspectRatio: classification.standardAspectRatio,
+                  isStandard: classification.isStandard,
+                  aspectRatioLabel: classification.aspectRatioLabel,
                   fileSizeFormatted,
                   fileSizeBytes,
                   posterFile,
+                  processingStatus: "pending",
                 });
               },
               "image/jpeg",
@@ -152,9 +235,14 @@ export async function validateVideoFile(file: File): Promise<VideoValidationResu
           width,
           height,
           aspectRatio,
+          orientation: classification.orientation,
+          standardAspectRatio: classification.standardAspectRatio,
+          isStandard: classification.isStandard,
+          aspectRatioLabel: classification.aspectRatioLabel,
           fileSizeFormatted,
           fileSizeBytes,
           posterFile,
+          processingStatus: "pending",
         });
       };
     };
@@ -168,8 +256,13 @@ export async function validateVideoFile(file: File): Promise<VideoValidationResu
         width: 0,
         height: 0,
         aspectRatio: "Unknown",
+        orientation: "landscape",
+        standardAspectRatio: "non-standard",
+        isStandard: false,
+        aspectRatioLabel: "Error",
         fileSizeFormatted,
         fileSizeBytes,
+        processingStatus: "failed",
       });
     };
   });

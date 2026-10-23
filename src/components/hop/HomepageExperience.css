@@ -1,13 +1,22 @@
 :root {
-  --hop-lac: #2b0e17;
-  --hop-lac-secondary: #4a1824;
-  --hop-cream: #f5e8dc;
-  --hop-rose: #d45b5b;
-  --hop-mulberry: #6e253a;
-  --hop-gold: #d3a85f;
-  --hop-eucalyptus: #2f665c;
-  --hop-border: #7a4a50;
-  --hop-ink: #2b0e17;
+  --hop-lac: hsl(var(--brand-plum));
+  --hop-lac-secondary: hsl(var(--brand-plum-raised));
+  --hop-cream: hsl(var(--brand-ivory));
+  --hop-cream-soft: hsl(var(--brand-ivory-muted));
+  --hop-rose: hsl(var(--brand-mauve-light));
+  --hop-mulberry: hsl(var(--brand-violet-deep));
+  --hop-violet: hsl(var(--brand-violet));
+  --hop-mauve: hsl(var(--brand-mauve));
+  --hop-mauve-soft: hsl(var(--brand-mauve-soft));
+  --hop-gold: hsl(var(--brand-gold));
+  --hop-gold-light: hsl(var(--brand-gold-light));
+  --hop-gold-deep: hsl(var(--brand-gold-deep));
+  --hop-eucalyptus: hsl(var(--brand-violet-deep));
+  --hop-border: hsl(var(--brand-line));
+  --hop-ink: hsl(var(--brand-plum));
+  --hop-text-muted: hsl(var(--brand-muted));
+  --hop-shadow: var(--shadow-soft);
+  --hop-shadow-lift: var(--shadow-lift);
   --hop-header-height: 5rem;
   --hop-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -59,8 +68,8 @@
 .hop-arrow-link:hover,
 .hop-arrow-link:focus-visible {
   gap: 1.15rem;
-  border-color: var(--hop-rose);
-  color: var(--hop-mulberry);
+  border-color: var(--hop-violet);
+  color: var(--hop-violet);
 }
 
 .hop-arrow-link--light {
@@ -70,17 +79,23 @@
 
 .hop-arrow-link--light:hover,
 .hop-arrow-link--light:focus-visible {
-  border-color: var(--hop-gold);
-  color: var(--hop-gold);
+  border-color: var(--hop-gold-light);
+  color: var(--hop-gold-light);
 }
 
 .hop-threshold {
   position: relative;
   isolation: isolate;
+  width: 100%;
   min-height: min(56rem, 100svh);
+  height: min(56rem, 100svh);
   overflow: hidden;
   background: var(--hop-lac);
   color: var(--hop-cream);
+  display: block;
+  margin: 0;
+  padding: 0;
+  touch-action: pan-y pinch-zoom;
 }
 
 .hop-threshold__film,
@@ -105,10 +120,189 @@
 .hop-threshold__film img,
 .hop-threshold__film video {
   object-fit: cover;
-  object-position: 58% center;
-  filter: saturate(0.82) contrast(1.04) brightness(0.78);
-  transform: scale(1.03);
+  object-position: center center;
+  transform: none;
   animation: hop-threshold-breathe 18s ease-in-out infinite alternate;
+}
+
+.hop-threshold__slider {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hop-threshold__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: opacity 850ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hop-threshold__slide-poster-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hop-threshold__slide-poster {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center center;
+  transform: none;
+  transition: transform 1.8s var(--hop-ease);
+}
+
+.hop-threshold__slide-video-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  transition: opacity 600ms ease;
+}
+
+.hop-threshold__slide-video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center center;
+  border: 0;
+}
+
+/* ----------------------------------------------------------------
+   HERO VIDEO SLIDER — Minimal Visual Dot Indicators
+   Subtle, restrained dots positioned discreetly near bottom-center.
+   Visual-only: pointer-events none, no text, no extra controls.
+   ---------------------------------------------------------------- */
+
+.hop-threshold__indicators {
+  position: absolute;
+  bottom: clamp(1.5rem, 3.5vw, 2.75rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 5px 10px;
+  border-radius: 9999px;
+  background: rgb(0 0 0 / 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.35);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hop-threshold__indicator-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.40);
+  transition:
+    width 450ms cubic-bezier(0.25, 1, 0.5, 1),
+    border-radius 450ms cubic-bezier(0.25, 1, 0.5, 1),
+    background-color 450ms ease,
+    box-shadow 450ms ease;
+  pointer-events: none;
+}
+
+.hop-threshold__indicator-dot--active {
+  width: 18px;
+  border-radius: 9999px;
+  background: var(--hop-cream, #F8F5F2);
+  box-shadow: 0 0 8px rgb(255 255 255 / 0.45);
+}
+
+/* Discreet edge arrows: translucent glass, revealed on desktop hover. */
+.hop-threshold__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 11;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 9999px;
+  background: rgb(0 0 0 / 0.24);
+  color: rgb(255 255 255 / 0.84);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0.78;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    opacity 350ms ease,
+    background-color 300ms ease,
+    border-color 300ms ease,
+    color 300ms ease;
+}
+
+.hop-threshold__arrow svg {
+  display: block;
+}
+
+.hop-threshold__arrow--prev {
+  left: clamp(0.75rem, 2.5vw, 2rem);
+}
+
+.hop-threshold__arrow--next {
+  right: clamp(0.75rem, 2.5vw, 2rem);
+}
+
+.hop-threshold__arrow:hover {
+  background: rgb(0 0 0 / 0.4);
+  border-color: rgb(255 255 255 / 0.32);
+  color: rgb(255 255 255);
+}
+
+.hop-threshold__arrow:active {
+  background: rgb(0 0 0 / 0.48);
+}
+
+.hop-threshold__arrow:focus-visible {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hop-threshold__arrow {
+    opacity: 0;
+  }
+
+  .hop-threshold:hover .hop-threshold__arrow,
+  .hop-threshold:focus-within .hop-threshold__arrow {
+    opacity: 0.85;
+  }
+
+  .hop-threshold__arrow:hover,
+  .hop-threshold__arrow:focus-visible {
+    opacity: 1;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hop-threshold__arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+    opacity: 0.82;
+  }
 }
 
 .hop-threshold__veil {
@@ -116,8 +310,8 @@
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--hop-lac) 88%, transparent) 0%, color-mix(in srgb, var(--hop-lac) 52%, transparent) 42%, transparent 75%),
-    linear-gradient(0deg, color-mix(in srgb, var(--hop-lac) 85%, transparent) 0%, transparent 48%, color-mix(in srgb, var(--hop-lac) 32%, transparent) 100%);
+    linear-gradient(90deg, rgb(0 0 0 / 0.60) 0%, rgb(0 0 0 / 0.36) 42%, transparent 75%),
+    linear-gradient(0deg, rgb(0 0 0 / 0.55) 0%, transparent 48%, rgb(0 0 0 / 0.24) 100%);
   pointer-events: none;
 }
 
@@ -148,7 +342,6 @@
   width: 2.4rem !important;
   height: 2.4rem !important;
   flex: 0 0 2.4rem;
-  filter: brightness(0) invert(1);
   opacity: 0.9;
 }
 
@@ -156,7 +349,7 @@
   max-width: 9ch;
   color: var(--hop-cream);
   font-size: clamp(4.2rem, 10.5vw, 10.5rem);
-  text-shadow: 0 0.1em 1.2em color-mix(in srgb, var(--hop-lac) 45%, transparent);
+  text-shadow: 0 0.1em 1.2em rgb(0 0 0 / 0.45);
 }
 
 .hop-threshold__supporting {
@@ -261,7 +454,7 @@
 .hop-collections {
   background: var(--hop-cream);
   color: var(--hop-lac);
-  padding: clamp(7rem, 14vw, 13rem) 0 clamp(8rem, 16vw, 15rem);
+  padding: 0 0 clamp(8rem, 16vw, 15rem);
 }
 
 .hop-collections__heading {
@@ -328,9 +521,8 @@
 .hop-collection-film__media video {
   object-fit: cover;
   object-position: center center;
-  filter: saturate(0.82) contrast(1.05) brightness(0.72);
   transform: scale(1.03);
-  transition: transform 1.8s var(--hop-ease), filter 1.8s ease;
+  transition: transform 1.8s var(--hop-ease);
 }
 
 .hop-collection-film-chapter--kalyani .hop-collection-film__media img,
@@ -364,7 +556,6 @@
 .hop-collection-film:hover .hop-collection-film__media video,
 .hop-collection-film:focus-visible .hop-collection-film__media img,
 .hop-collection-film:focus-visible .hop-collection-film__media video {
-  filter: saturate(0.92) contrast(1.05) brightness(0.78);
   transform: scale(1.06);
 }
 
@@ -373,8 +564,8 @@
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--hop-lac) 52%, transparent) 0%, transparent 26%, transparent 68%, color-mix(in srgb, var(--hop-lac) 74%, transparent) 100%),
-    radial-gradient(circle at 50% 50%, transparent 0%, color-mix(in srgb, var(--hop-lac) 34%, transparent) 100%);
+    linear-gradient(180deg, rgb(0 0 0 / 0.36) 0%, transparent 26%, transparent 66%, rgb(0 0 0 / 0.52) 100%),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgb(0 0 0 / 0.24) 100%);
   pointer-events: none;
 }
 
@@ -395,8 +586,8 @@
   width: 3.5rem !important;
   height: 3.5rem !important;
   flex: 0 0 3.5rem;
-  filter: brightness(0) invert(1);
   opacity: 0.9;
+  filter: brightness(0) invert(1) drop-shadow(0 0.12rem 0.45rem rgb(0 0 0 / 0.45));
 }
 
 .hop-collection-film__name {
@@ -405,7 +596,7 @@
   color: var(--hop-cream);
   font-size: clamp(3.4rem, 8vw, 8.5rem);
   line-height: 0.94;
-  text-shadow: 0 0.1em 1.4em color-mix(in srgb, var(--hop-lac) 48%, transparent);
+  text-shadow: 0 0.1em 1.4em rgb(0 0 0 / 0.48);
 }
 
 .hop-collection-film__emotion {
@@ -506,7 +697,7 @@
 .hop-craft__quote cite {
   display: block;
   margin-top: 1rem;
-  color: var(--hop-gold);
+  color: var(--hop-gold-light);
   font-family: "Inter", sans-serif;
   font-size: 0.62rem;
   font-style: normal;
@@ -516,7 +707,7 @@
 
 .hop-craft__fact {
   margin-top: 2.4rem;
-  color: var(--hop-gold);
+  color: var(--hop-gold-light);
   font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0.2em;
@@ -639,8 +830,8 @@
 
 .hop-primary-button {
   min-height: 3rem;
-  border: 1px solid var(--hop-lac);
-  background: var(--hop-lac);
+  border: 1px solid var(--hop-violet);
+  background: var(--hop-violet);
   padding: 0.9rem 1.2rem;
   color: var(--hop-cream);
   font-size: 0.62rem;
@@ -678,7 +869,7 @@
 
 .hop-product-desire__loading-image,
 .hop-product-desire__loading-copy {
-  background: linear-gradient(100deg, color-mix(in srgb, var(--hop-lac) 10%, var(--hop-cream)) 20%, color-mix(in srgb, var(--hop-cream) 85%, white) 40%, color-mix(in srgb, var(--hop-lac) 10%, var(--hop-cream)) 60%);
+  background: linear-gradient(100deg, color-mix(in srgb, var(--hop-lac) 10%, var(--hop-cream)) 20%, color-mix(in srgb, var(--hop-cream) 85%, var(--hop-mauve-soft)) 40%, color-mix(in srgb, var(--hop-lac) 10%, var(--hop-cream)) 60%);
   background-size: 200% 100%;
   animation: hop-loading 2.2s ease-in-out infinite;
 }
@@ -711,9 +902,36 @@
 }
 
 .hop-ownership {
-  background: var(--hop-lac);
-  color: var(--hop-cream);
+  position: relative;
+  isolation: isolate;
+  background-color: var(--hop-mauve);
+  background-image:
+    repeating-linear-gradient(0deg, hsl(var(--brand-plum) / 0.035) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, hsl(var(--brand-plum) / 0.025) 0 1px, transparent 1px 5px);
+  color: var(--hop-lac);
   padding: clamp(7rem, 14vw, 13rem) clamp(1.25rem, 7vw, 8rem);
+}
+
+.hop-ownership::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--texture-grain);
+  background-size: 160px 160px;
+  content: "";
+  opacity: 0.05;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+.hop-ownership > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hop-ownership .eyebrow,
+.hop-ownership .hop-eyebrow {
+  color: hsl(var(--brand-plum-deep));
 }
 
 .hop-ownership__heading {
@@ -726,13 +944,16 @@
 }
 
 .hop-ownership__title {
-  color: var(--hop-cream);
+  color: var(--hop-lac);
   font-size: clamp(4rem, 8.5vw, 8.5rem);
+  text-shadow: 0 0.08em 0.9em hsl(var(--brand-plum) / 0.18);
 }
 
 .hop-ownership__body {
   max-width: 19rem;
-  color: color-mix(in srgb, var(--hop-cream) 70%, transparent);
+  color: hsl(var(--brand-plum-deep));
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.7;
 }
 
 .hop-ownership__notes {
@@ -740,19 +961,35 @@
   max-width: 88rem;
   margin: 0 auto;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(2rem, 5vw, 6rem);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
 }
 
 .hop-ownership-note {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  border-top: 1px solid color-mix(in srgb, var(--hop-cream) 22%, transparent);
-  padding-top: 1.5rem;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  border: 1px solid hsl(var(--brand-plum) / 0.08);
+  border-top: 1px solid hsl(var(--brand-gold) / 0.65);
+  background: var(--hop-cream-soft);
+  padding: clamp(1.6rem, 2.6vw, 2.5rem);
+  color: var(--hop-ink);
+  box-shadow: var(--hop-shadow);
+  transition: transform 500ms var(--hop-ease), box-shadow 500ms var(--hop-ease);
+}
+
+.hop-ownership-note:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--hop-shadow-lift);
+}
+
+.hop-ownership-note > div {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 }
 
 .hop-ownership-note__label {
-  color: var(--hop-gold);
+  color: var(--hop-gold-deep);
   font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.22em;
@@ -761,23 +998,51 @@
 
 .hop-ownership-note h3 {
   margin-top: 1.1rem;
-  color: var(--hop-cream);
+  color: var(--hop-ink);
   font-size: clamp(1.8rem, 2.5vw, 2.8rem);
 }
 
 .hop-ownership-note .hop-reading {
   margin-top: 1rem;
-  color: color-mix(in srgb, var(--hop-cream) 68%, transparent);
+  color: var(--hop-text-muted);
 }
 
 .hop-ownership-note .hop-arrow-link {
-  margin-top: 1.7rem;
+  margin-top: auto;
+  padding-top: 1.7rem;
+  border-color: hsl(var(--brand-violet) / 0.32);
+  color: var(--hop-violet);
+}
+
+.hop-ownership-note .hop-arrow-link:hover,
+.hop-ownership-note .hop-arrow-link:focus-visible {
+  border-color: var(--hop-violet);
+  color: var(--hop-violet);
 }
 
 .hop-journal {
-  background: var(--hop-cream);
+  position: relative;
+  isolation: isolate;
+  background-color: var(--hop-mauve-soft);
   color: var(--hop-lac);
   padding: clamp(7rem, 14vw, 13rem) clamp(1.25rem, 7vw, 8rem);
+}
+
+.hop-journal::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--texture-grain);
+  background-size: 160px 160px;
+  content: "";
+  opacity: 0.028;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.hop-journal > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hop-journal__header {
@@ -796,7 +1061,7 @@
 
 .hop-journal__body {
   max-width: 18rem;
-  color: color-mix(in srgb, var(--hop-lac) 68%, transparent);
+  color: var(--hop-text-muted);
 }
 
 .hop-journal__layout {
@@ -849,7 +1114,7 @@
 .hop-journal__lead .hop-reading {
   max-width: 28rem;
   margin-top: 1.1rem;
-  color: color-mix(in srgb, var(--hop-lac) 68%, transparent);
+  color: var(--hop-text-muted);
 }
 
 .hop-text-link {
@@ -868,7 +1133,7 @@
 .hop-text-link:hover,
 .hop-text-link:focus-visible {
   gap: 0.7rem;
-  color: var(--hop-rose);
+  color: var(--hop-violet);
 }
 
 .hop-journal__notes {
@@ -906,7 +1171,7 @@
 
 .hop-journal-note .hop-reading {
   margin-top: 0.6rem;
-  color: color-mix(in srgb, var(--hop-lac) 66%, transparent);
+  color: var(--hop-text-muted);
   font-size: 0.95rem;
   line-height: 1.4;
 }
@@ -923,7 +1188,12 @@
   min-height: 80vh;
   place-items: center;
   overflow: hidden;
-  background: var(--hop-lac-secondary);
+  isolation: isolate;
+  background-color: var(--hop-lac-secondary);
+  background-image:
+    radial-gradient(ellipse at 50% 42%, hsl(var(--brand-violet) / 0.28), transparent 62%),
+    var(--texture-grain);
+  background-size: auto, 160px 160px;
   color: var(--hop-cream);
   padding: clamp(7rem, 15vw, 14rem) 1.25rem;
   text-align: center;
@@ -1088,7 +1358,7 @@
   }
 
   .hop-collections {
-    padding: 4.5rem 0 5rem;
+    padding: 0 0 5rem;
   }
 
   .hop-collections__heading,
@@ -1245,17 +1515,17 @@
 /* Touch feedback parity + short-landscape compaction for the home journey. */
 @media (hover: none) {
   .hop-arrow-link:active {
-    border-color: var(--hop-rose);
-    color: var(--hop-mulberry);
+    border-color: var(--hop-violet);
+    color: var(--hop-violet);
   }
 
   .hop-arrow-link--light:active {
-    border-color: var(--hop-gold);
-    color: var(--hop-gold);
+    border-color: var(--hop-gold-light);
+    color: var(--hop-gold-light);
   }
 
   .hop-text-link:active {
-    color: var(--hop-rose);
+    color: var(--hop-violet);
   }
 
   .hop-primary-button:active {
@@ -1345,135 +1615,124 @@
      clipping under zoom; wrapping is allowed instead of nowrap. */
   padding-left: 0.16em;
   text-align: center;
-  text-shadow: 0 0.08em 1.1em color-mix(in srgb, var(--hop-lac) 40%, transparent);
+  text-shadow: 0 0.08em 1.1em rgb(0 0 0 / 0.40);
 }
 
+/* ----------------------------------------------------------------
+   LIVING SAREE — Full-Bleed Video / Visual Placeholder
+   True 16:9 landscape horizontal frame (like standard YouTube landscape video).
+   aspect-ratio: 16 / 9, full available width, responsive height.
+   Zero text/headings/captions/overlays/labels/lines/borders/controls.
+   Touches hero slider above and Kalyani collection film below without gaps.
+   ---------------------------------------------------------------- */
+
+.hop-living-saree,
 .hop-cinematic-video {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
   background: var(--hop-lac);
   color: var(--hop-cream);
+  line-height: 0;
 }
 
+.hop-living-saree__frame,
 .hop-cinematic-video__frame {
   position: relative;
+  display: block;
   width: 100%;
-  min-height: 60vh;
-  max-height: 85vh;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
   overflow: hidden;
   isolation: isolate;
+  background: var(--hop-lac);
 }
 
+.hop-living-saree__poster-layer,
 .hop-cinematic-video__poster-layer {
   position: absolute;
   inset: 0;
   z-index: 1;
-}
-
-.hop-cinematic-video__poster {
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.hop-living-saree__media,
+.hop-cinematic-video__poster {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
   object-fit: cover;
   object-position: center center;
-  filter: saturate(0.82) contrast(1.05) brightness(0.72);
-  transform: scale(1.03);
-  transition: transform 1.8s var(--hop-ease), filter 1.8s ease;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none;
+  transition: transform 1.8s var(--hop-ease);
 }
 
-.hop-cinematic-video__placeholder {
-  width: 100%;
-  height: 100%;
-  background: var(--hop-lac);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hop-cinematic-video__gradient {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--hop-lac) 48%, transparent) 0%, transparent 22%, transparent 78%, color-mix(in srgb, var(--hop-lac) 68%, transparent) 100%),
-    radial-gradient(circle at 50% 50%, transparent 0%, color-mix(in srgb, var(--hop-lac) 28%, transparent) 100%);
-  pointer-events: none;
-}
-
+.hop-living-saree__video-layer,
 .hop-cinematic-video__video-layer {
   position: absolute;
   inset: 0;
   z-index: 3;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
   transition: opacity 700ms var(--hop-ease);
 }
 
+.hop-living-saree__video,
 .hop-cinematic-video__video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
-}
-
-.hop-cinematic-video__controls {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 4;
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  min-height: 48px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--hop-lac) 85%, transparent);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--hop-gold) 35%, transparent);
-  color: var(--hop-cream);
-  transition: background 300ms ease, border-color 300ms ease, transform 200ms ease;
-}
-
-.hop-cinematic-video__controls:hover,
-.hop-cinematic-video__controls:focus-visible {
-  background: color-mix(in srgb, var(--hop-lac) 95%, transparent);
-  border-color: var(--hop-gold);
-  transform: scale(1.05);
-  outline: none;
-}
-
-@media (max-width: 768px) {
-  .hop-cinematic-video__frame {
-    min-height: 55vh;
-    max-height: 75vh;
-  }
-  .hop-cinematic-video__controls {
-    bottom: 1rem;
-    right: 1rem;
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-  }
-}
-
-@media (max-width: 400px) {
-  .hop-cinematic-video__frame {
-    min-height: 50vh;
-    max-height: 70vh;
-  }
+  border: 0;
+  border-radius: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hop-threshold__slide {
+    transition: none;
+  }
+  .hop-threshold__slide-poster {
+    transform: none;
+    transition: none;
+  }
+  .hop-threshold__dash-fill {
+    animation: none;
+  }
+  .hop-living-saree__media,
   .hop-cinematic-video__poster {
     transform: none;
     transition: none;
   }
+  .hop-living-saree__video-layer,
   .hop-cinematic-video__video-layer {
     transition: none;
-  }
-}
-
-@media (max-height: 500px) and (orientation: landscape) {
-  .hop-cinematic-video__frame {
-    min-height: 120svh;
   }
 }
 

@@ -110,7 +110,27 @@ export const siteSectionService = {
       p_draft_payload: draftPayload,
     });
     if (error) throw error;
-    return data as SaveDraftResponse;
+
+    const res = data as SaveDraftResponse;
+    if (res && res.error === "section_not_found") {
+      // Graceful bootstrap for new section keys (e.g. home.video) before migration seed
+      const { error: insertError } = await supabase.from("site_sections").insert({
+        key,
+        page_name: key.split(".")[0],
+        section_type: "custom_section",
+        display_name: key === "home.video" ? "Homepage Video Placeholder" : key,
+        version: 1,
+        draft_payload: draftPayload,
+        published_payload: draftPayload,
+        status: "draft",
+        has_unpublished_changes: true,
+      });
+      if (!insertError) {
+        return { success: true, new_version: 1 };
+      }
+    }
+
+    return res;
   },
 
   /**
@@ -127,7 +147,29 @@ export const siteSectionService = {
       p_change_summary: changeSummary ?? null,
     });
     if (error) throw error;
-    return data as PublishSectionResponse;
+
+    const res = data as PublishSectionResponse;
+    if (res && res.error === "section_not_found") {
+      const { data: existingDraft } = await supabase.from("site_sections").select("draft_payload").eq("key", key).maybeSingle();
+      const payload = existingDraft?.draft_payload || {};
+      const { error: insertError } = await supabase.from("site_sections").insert({
+        key,
+        page_name: key.split(".")[0],
+        section_type: "custom_section",
+        display_name: key === "home.video" ? "Homepage Video Placeholder" : key,
+        version: 1,
+        draft_payload: payload,
+        published_payload: payload,
+        status: "published",
+        has_unpublished_changes: false,
+        published_at: new Date().toISOString(),
+      });
+      if (!insertError) {
+        return { success: true, revision_number: 1, published_at: new Date().toISOString() };
+      }
+    }
+
+    return res;
   },
 
   /**

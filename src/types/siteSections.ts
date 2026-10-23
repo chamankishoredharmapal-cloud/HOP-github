@@ -52,6 +52,27 @@ export const SafeLinkSchema = z.object({
     ),
 });
 
+export const HeroSlideSchema = z.object({
+  id: z.string(),
+  video_url: z.string().min(1, "Video URL is required"),
+  mobile_video_url: z.string().optional().or(z.literal("")),
+  poster_url: z.string().optional().or(z.literal("")),
+  duration: z.coerce
+    .number()
+    .min(1, "Duration must be at least 1 second")
+    .max(5, "Display duration is capped at 5 seconds")
+    .default(5),
+  is_active: z.boolean().default(true),
+  title: z.string().max(120).optional().or(z.literal("")),
+  subtitle: z.string().max(250).optional().or(z.literal("")),
+  eyebrow: z.string().max(80).optional().or(z.literal("")),
+  primary_cta: SafeLinkSchema.optional(),
+  secondary_cta: SafeLinkSchema.optional(),
+  alt_text: z.string().max(250).optional().or(z.literal("")),
+});
+
+export type HeroSlide = z.infer<typeof HeroSlideSchema>;
+
 export const HeroBannerPayloadSchema = z.object({
   title: z.string().min(1, "Headline required").max(120),
   subtitle: z.string().max(250),
@@ -62,8 +83,8 @@ export const HeroBannerPayloadSchema = z.object({
     .string()
     .max(500)
     .refine(
-      (val) => !val || val.startsWith("/") || val.startsWith("https://"),
-      "Video URL must be a relative path (/...) or HTTPS URL (https://)"
+      (val) => !val || val.startsWith("/") || val.startsWith("https://") || /^[a-z0-9_-]+$/i.test(val),
+      "Video URL must be a relative path (/...), HTTPS URL (https://), or variant key"
     )
     .optional()
     .or(z.literal("")),
@@ -77,6 +98,7 @@ export const HeroBannerPayloadSchema = z.object({
     .optional()
     .or(z.literal("")),
   alt_text: z.string().min(1, "Accessibility alt text required").max(250),
+  slides: z.array(HeroSlideSchema).optional().default([]),
 });
 
 export const CraftStoryPayloadSchema = z.object({
@@ -117,7 +139,44 @@ export const InvitationPayloadSchema = z.object({
   links: z.array(SafeLinkSchema).min(1).max(5),
 });
 
+export const HomepageVideoPayloadSchema = z.object({
+  is_enabled: z.boolean().default(true),
+  video_url: z
+    .string()
+    .max(500)
+    .refine(
+      (val) => !val || val.startsWith("/") || val.startsWith("https://") || /^[a-z0-9_-]+$/i.test(val),
+      "Video URL must be a relative path (/...), HTTPS URL (https://), or variant key"
+    )
+    .optional()
+    .or(z.literal("")),
+  mobile_video_url: z
+    .string()
+    .max(500)
+    .refine(
+      (val) => !val || val.startsWith("/") || val.startsWith("https://") || /^[a-z0-9_-]+$/i.test(val),
+      "Mobile video URL must be a relative path (/...), HTTPS URL (https://), or variant key"
+    )
+    .optional()
+    .or(z.literal("")),
+  poster_url: z
+    .string()
+    .max(500)
+    .refine(
+      (val) => !val || val.startsWith("/") || val.startsWith("https://"),
+      "Poster URL must be a relative path (/...) or HTTPS URL (https://)"
+    )
+    .optional()
+    .or(z.literal("")),
+  alt_text: z.string().max(250).default("Living Saree visual study"),
+  autoplay: z.boolean().default(true),
+  loop: z.boolean().default(true),
+  muted: z.boolean().default(true),
+  aspect_ratio: z.enum(["16:9", "9:16"]).default("16:9"),
+});
+
 export type HeroBannerPayload = z.infer<typeof HeroBannerPayloadSchema>;
+export type HomepageVideoPayload = z.infer<typeof HomepageVideoPayloadSchema>;
 export type CraftStoryPayload = z.infer<typeof CraftStoryPayloadSchema>;
 export type PhilosophyPayload = z.infer<typeof PhilosophyPayloadSchema>;
 export type NoteCardsPayload = z.infer<typeof NoteCardsPayloadSchema>;
@@ -125,6 +184,7 @@ export type InvitationPayload = z.infer<typeof InvitationPayloadSchema>;
 
 export const HOMEPAGE_SECTION_KEYS = [
   "home.hero",
+  "home.video",
   "home.craft",
   "home.philosophy",
   "home.ownership",
@@ -133,6 +193,70 @@ export const HOMEPAGE_SECTION_KEYS = [
 
 export type HomepageSectionKey = (typeof HOMEPAGE_SECTION_KEYS)[number];
 
+export const DEFAULT_HOMEPAGE_VIDEO_PAYLOAD: HomepageVideoPayload = {
+  is_enabled: true,
+  video_url: "",
+  mobile_video_url: "",
+  poster_url: "",
+  alt_text: "Living Saree visual study",
+  autoplay: true,
+  loop: true,
+  muted: true,
+  aspect_ratio: "16:9",
+};
+
+// Curated default hero slides for the cinematic multi-video hero slider
+export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
+  {
+    id: "slide-kalyani",
+    video_url: "/optimized/videos/KALYANI-720p.mp4",
+    mobile_video_url: "/optimized/videos/KALYANI-540p.mp4",
+    poster_url: "/optimized/videos/KALYANI-poster.webp",
+    duration: 5,
+    is_active: true,
+    eyebrow: "The threshold · Kalyani",
+    title: "Saree. Time. You.",
+    subtitle: "The one that changes the temperature of the room.",
+    alt_text: "Kalyani collection film — House of Padmavati",
+  },
+  {
+    id: "slide-viara",
+    video_url: "/optimized/videos/VIARA-720p.mp4",
+    mobile_video_url: "/optimized/videos/VIARA-540p.mp4",
+    poster_url: "/optimized/videos/VIARA-poster.webp",
+    duration: 4,
+    is_active: true,
+    eyebrow: "After-light · Viara",
+    title: "Presence without volume.",
+    subtitle: "Quiet luxury in motion, woven for the timeless wardrobe.",
+    alt_text: "Viara collection film — House of Padmavati",
+  },
+  {
+    id: "slide-arya",
+    video_url: "/optimized/videos/ARYA-720p.mp4",
+    mobile_video_url: "/optimized/videos/ARYA-540p.mp4",
+    poster_url: "/optimized/videos/ARYA-poster.webp",
+    duration: 5,
+    is_active: true,
+    eyebrow: "Daily rhythm · Arya",
+    title: "Dressed for her own structure.",
+    subtitle: "A drape that holds the decisions behind it.",
+    alt_text: "Arya collection film — House of Padmavati",
+  },
+  {
+    id: "slide-padma",
+    video_url: "/optimized/videos/PADMA-720p.mp4",
+    mobile_video_url: "/optimized/videos/PADMA-540p.mp4",
+    poster_url: "/optimized/videos/PADMA-poster.webp",
+    duration: 4,
+    is_active: true,
+    eyebrow: "The weave as architecture · Padma",
+    title: "Order, made visible.",
+    subtitle: "Precision threadwork, generational mastery.",
+    alt_text: "Padma collection film — House of Padmavati",
+  },
+];
+
 // Grounded fallback payloads matching approved source copy
 export const DEFAULT_HERO_PAYLOAD: HeroBannerPayload = {
   title: "Saree. Time. You.",
@@ -140,7 +264,10 @@ export const DEFAULT_HERO_PAYLOAD: HeroBannerPayload = {
   eyebrow: "House of Padmavati",
   primary_cta: { label: "Enter the House", href: "/collections" },
   secondary_cta: { label: "Descend into the house", href: "#collections" },
+  video_url: "kalyani",
+  poster_url: "/optimized/videos/KALYANI-poster.webp",
   alt_text: "House of Padmavati collection film",
+  slides: DEFAULT_HERO_SLIDES,
 };
 
 export const DEFAULT_CRAFT_PAYLOAD: CraftStoryPayload = {

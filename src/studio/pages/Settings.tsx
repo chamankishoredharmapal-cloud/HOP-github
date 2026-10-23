@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, type ComponentType, type ReactNode, type ChangeEvent } from "react";
-import { Save, Store, Phone, Truck, Search, Shield, Film, Activity, CheckCircle2, AlertTriangle, XCircle, RefreshCw, FileText } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Save, Store, Phone, Truck, Search, Shield, Film, Activity, CheckCircle2, AlertTriangle, XCircle, RefreshCw, FileText, ExternalLink } from "lucide-react";
 import { useSettings, useSaveSettings } from "../hooks/useSettings";
 import { useUploadMedia } from "../hooks/useMedia";
 import { Button } from "@/components/ui/button";
@@ -55,6 +56,7 @@ function Field({
 }
 
 export default function Settings() {
+  const navigate = useNavigate();
   const { data: settings, isLoading, error } = useSettings();
   const saveSettings = useSaveSettings();
   const [form, setForm] = useState<StoreSettings | null>(null);
@@ -457,6 +459,27 @@ export default function Settings() {
 
         <TabsContent value="cinematic" className="mt-6 space-y-6">
           <SectionCard title="Homepage Cinematic Video" icon={Film}>
+            <div className="p-4 rounded-lg bg-primary/5 border border-primary/20 space-y-2 mb-4">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-xs text-primary flex items-center gap-1.5">
+                  <Film className="h-4 w-4" />
+                  Dedicated Video Management Section in Site Update
+                </span>
+                <Button
+                  size="sm"
+                  variant="default"
+                  onClick={() => navigate("/studio/site-update?section=home.video")}
+                  className="text-xs h-7 flex items-center gap-1"
+                >
+                  <span>Open Video Workspace</span>
+                  <ExternalLink className="h-3 w-3" />
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Homepage video is now managed with full Draft &amp; Publish protection, video preview, mobile 9:16 portrait video support, and automatic poster frame extraction in the Site Update workspace.
+              </p>
+            </div>
+
             <p className="text-xs text-muted-foreground mb-4">
               Full-bleed cinematic film displayed between the hero and collection discovery on the homepage.
               Upload an MP4 (H.264) file up to 30MB, 60s max duration. A poster frame will be extracted automatically.
@@ -515,7 +538,7 @@ export default function Settings() {
                 size="sm"
                 onClick={runAudit}
                 disabled={runningDiagnostics}
-                className="gap-1.5 text-xs bg-ink text-jasmine hover:bg-signature-crimson transition-colors"
+                className="gap-1.5 text-xs bg-brand-violet text-brand-ivory hover:bg-signature-crimson transition-colors"
               >
                 <RefreshCw className={`h-3.5 w-3.5 ${runningDiagnostics ? "animate-spin" : ""}`} />
                 {runningDiagnostics ? "Auditing System..." : "Run Integrity Diagnostic"}

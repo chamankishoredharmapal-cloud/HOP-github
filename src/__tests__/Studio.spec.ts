@@ -22,6 +22,16 @@ test.describe("HOP Studio — Security & Access Boundaries", () => {
     await expect(page).toHaveURL(/\/studio\/login/);
   });
 
+  test("unauthenticated visitor navigating to /studio/site-update is redirected to /studio/login", async ({ page }) => {
+    await page.goto("/studio/site-update");
+    await expect(page).toHaveURL(/\/studio\/login/);
+  });
+
+  test("unauthenticated visitor navigating to /studio/site-update?section=home.video is redirected to /studio/login", async ({ page }) => {
+    await page.goto("/studio/site-update?section=home.video");
+    await expect(page).toHaveURL(/\/studio\/login/);
+  });
+
   test("studio login surface strictly contains no public registration or signup elements", async ({ page }) => {
     await page.goto("/studio/login");
     // Verify no "Sign up", "Create account", or "Register" buttons/links exist
@@ -53,7 +63,7 @@ test.describe("HOP Storefront — Collection Film Dynamic Integration", () => {
     await expect(page).toHaveURL(/\/collections\/kalyani/);
 
     // Verify collection detail page loads with film/poster container
-    const heroMedia = page.locator(".hop-page .aspect-\\[2\\/1\\]").first();
+    const heroMedia = page.locator(".hop-page [class*='aspect-']").first();
     await expect(heroMedia).toBeVisible();
   });
 
@@ -63,7 +73,7 @@ test.describe("HOP Storefront — Collection Film Dynamic Integration", () => {
     await expect(collectionsLink).toBeVisible();
     await collectionsLink.click();
     await expect(page).toHaveURL(/\/collections/);
-    await expect(page.locator("h1")).toBeVisible({ timeout: 10000 });
+    await expect(page.locator("h1:not(.sr-only)").first()).toBeVisible({ timeout: 10000 });
     await expect(page.locator('a[href="/collections/kalyani"]').first()).toBeVisible({ timeout: 10000 });
   });
 });

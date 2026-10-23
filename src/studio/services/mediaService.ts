@@ -1,6 +1,8 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { MediaItem, MediaListParams, MediaListResponse, MediaUsageCheck } from "../types/media";
 import { activityService } from "./activityService";
+import { validateVideoFile, classifyVideoAspectRatio } from "../utils/videoValidation";
+import { COLLECTION_VIDEO_VARIANTS } from "@/data/collectionVideos";
 
 export async function checkMediaUsage(url: string): Promise<MediaUsageCheck> {
   try {
@@ -122,29 +124,55 @@ export async function fetchMediaList(
     const { data: assets, count, error } = await query;
 
     if (!error && assets) {
-      const items: MediaItem[] = (assets as MediaAssetRow[]).map((r) => ({
-        id: r.id,
-        name: r.display_name || r.file_name,
-        url: r.public_url,
-        type: r.media_type === "video" ? "video" : "image",
-        mime_type: r.mime_type,
-        file_size: r.file_size_bytes,
-        width: r.width,
-        height: r.height,
-        duration: r.duration_sec,
-        folder: r.category || (r.media_type === "video" ? "films" : "general"),
-        alt_text: r.alt_text,
-        poster_url: r.poster_url,
-        category: r.category,
-        tags: r.tags,
-        status: r.status,
-        created_at: r.created_at,
-        updated_at: r.updated_at,
-        product_id: null,
-        product_name: null,
-        usage_context: r.category === "film" ? "Collection / Cinematic Film" : (r.category === "product" ? "Product Photography" : "General Media"),
-        bucket: r.bucket_id as "product-images" | "HOP-films",
-      }));
+      const items: MediaItem[] = (assets as MediaAssetRow[]).map((r) => {
+        let aspect_ratio: string | null = null;
+        let orientation: "landscape" | "portrait" | "square" | null = null;
+        let is_standard_aspect: boolean | null = null;
+        let processing_status: "pending" | "processing" | "completed" | "failed" | null = null;
+
+        if (r.media_type === "video") {
+          if (r.width && r.height) {
+            const cls = classifyVideoAspectRatio(r.width, r.height);
+            aspect_ratio = cls.aspectRatioLabel;
+            orientation = cls.orientation;
+            is_standard_aspect = cls.isStandard;
+          }
+          const lower = `${r.public_url} ${r.file_name} ${r.display_name}`.toLowerCase();
+          const isKnownOptimized = Object.keys(COLLECTION_VIDEO_VARIANTS).some((key) => lower.includes(key));
+          const tagStatus = r.tags?.find((t) => t.startsWith("status:"))?.split(":")[1];
+          processing_status = isKnownOptimized
+            ? "completed"
+            : (tagStatus as "pending" | "processing" | "completed" | "failed") || "pending";
+        }
+
+        return {
+          id: r.id,
+          name: r.display_name || r.file_name,
+          url: r.public_url,
+          type: r.media_type === "video" ? "video" : "image",
+          mime_type: r.mime_type,
+          file_size: r.file_size_bytes,
+          width: r.width,
+          height: r.height,
+          duration: r.duration_sec,
+          folder: r.category || (r.media_type === "video" ? "films" : "general"),
+          alt_text: r.alt_text,
+          poster_url: r.poster_url,
+          category: r.category,
+          tags: r.tags,
+          status: r.status,
+          created_at: r.created_at,
+          updated_at: r.updated_at,
+          product_id: null,
+          product_name: null,
+          usage_context: r.category === "film" ? "Collection / Cinematic Film" : (r.category === "product" ? "Product Photography" : "General Media"),
+          bucket: r.bucket_id as "product-images" | "HOP-films",
+          aspect_ratio,
+          orientation,
+          is_standard_aspect,
+          processing_status,
+        };
+      });
 
       const total = count ?? items.length;
       return {
@@ -180,7 +208,50 @@ export async function uploadMedia(
   const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
   const filePath = `${Date.now()}-${cleanName}`;
 
-  // 1. Upload to Supabase Storage
+  // Pre-process video: extract validated dimensions, duration, aspect ratio and automatic poster frame
+  let videoWidth: number | null = null;
+  let videoHeight: number | null = null;
+  let videoDuration: number | null = null;
+  let posterUrl: string | null = null;
+  let aspectLabel: string | null = null;
+  let videoOrientation: "landscape" | "portrait" | "square" | null = null;
+  let isStandardAspect: boolean | null = null;
+  let processingStatus: "pending" | "processing" | "completed" | "failed" = "pending";
+
+  if (isVideo) {
+    try {
+      const val = await validateVideoFile(file);
+      if (val.isValid) {
+        videoWidth = val.width;
+        videoHeight = val.height;
+        videoDuration = val.duration;
+        aspectLabel = val.aspectRatioLabel;
+        videoOrientation = val.orientation;
+        isStandardAspect = val.isStandard;
+        processingStatus = val.processingStatus;
+
+        if (val.posterFile) {
+          const posterPath = `${Date.now()}-${cleanName.replace(/\.[^/.]+$/, "")}-poster.jpg`;
+          const { error: posterUploadErr } = await supabase.storage
+            .from(bucket)
+            .upload(posterPath, val.posterFile, {
+              cacheControl: "31536000",
+              upsert: false,
+            });
+          if (!posterUploadErr) {
+            const { data: pData } = supabase.storage
+              .from(bucket)
+              .getPublicUrl(posterPath);
+            posterUrl = pData?.publicUrl ?? null;
+          }
+        }
+      }
+    } catch (valErr) {
+      console.warn("Automated video preprocessing warning:", valErr);
+    }
+  }
+
+  // 1. Upload to Supabase Storage with 1-year immutable caching
   const { error: uploadError } = await supabase.storage
     .from(bucket)
     .upload(filePath, file, {
@@ -196,7 +267,16 @@ export async function uploadMedia(
 
   const publicUrl = urlData?.publicUrl ?? "";
 
-  // 2. Register in public.media_assets via Security Definer RPC
+  const videoTags: string[] = isVideo
+    ? [
+        `aspect:${aspectLabel || "unknown"}`,
+        `orientation:${videoOrientation || "unknown"}`,
+        `standard:${isStandardAspect ? "true" : "false"}`,
+        `status:${processingStatus}`,
+      ]
+    : [];
+
+  // 2. Register in public.media_assets via Security Definer RPC with poster and specs
   const { data: registeredData, error: registerError } = await supabase.rpc("register_media_asset", {
     p_bucket_id: bucket,
     p_storage_path: filePath,
@@ -207,9 +287,9 @@ export async function uploadMedia(
     p_mime_type: file.type || (isVideo ? "video/mp4" : "image/jpeg"),
     p_file_size_bytes: file.size,
     p_alt_text: altText ?? null,
-    p_poster_url: null,
+    p_poster_url: posterUrl,
     p_category: isVideo ? "film" : category,
-    p_tags: [],
+    p_tags: videoTags,
   });
 
   if (registerError) {
@@ -226,8 +306,10 @@ export async function uploadMedia(
     type: isVideo ? "video" : "image",
     mime_type: file.type || (isVideo ? "video/mp4" : "image/jpeg"),
     file_size: file.size,
-    width: null,
-    height: null,
+    width: videoWidth,
+    height: videoHeight,
+    duration: videoDuration,
+    poster_url: posterUrl,
     folder: isVideo ? "films" : category,
     alt_text: altText ?? null,
     category: (assetRow?.category as MediaItem["category"]) || (isVideo ? "film" : category),
@@ -237,6 +319,10 @@ export async function uploadMedia(
     product_id: null,
     product_name: null,
     bucket,
+    aspect_ratio: aspectLabel,
+    orientation: videoOrientation,
+    is_standard_aspect: isStandardAspect,
+    processing_status: processingStatus,
   };
 }
 

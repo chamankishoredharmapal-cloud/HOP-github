@@ -3,6 +3,7 @@ import { siteSectionService } from "@/services/siteSectionService";
 import { supabase } from "@/integrations/supabase/client";
 import {
   HeroBannerPayloadSchema,
+  HomepageVideoPayloadSchema,
   CraftStoryPayloadSchema,
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
@@ -11,6 +12,8 @@ import {
   CustomerCarePayloadSchema,
   PolicyDocumentPayloadSchema,
   DEFAULT_HERO_PAYLOAD,
+  DEFAULT_HERO_SLIDES,
+  DEFAULT_HOMEPAGE_VIDEO_PAYLOAD,
   DEFAULT_CRAFT_PAYLOAD,
   DEFAULT_PHILOSOPHY_PAYLOAD,
   DEFAULT_OWNERSHIP_PAYLOAD,
@@ -22,6 +25,7 @@ import {
   DEFAULT_PRIVACY_POLICY_PAYLOAD,
   DEFAULT_TERMS_POLICY_PAYLOAD,
   type HeroBannerPayload,
+  type HomepageVideoPayload,
   type CraftStoryPayload,
   type PhilosophyPayload,
   type NoteCardsPayload,
@@ -34,6 +38,7 @@ import {
 
 export interface HomepageSectionsResult {
   hero: HeroBannerPayload;
+  video: HomepageVideoPayload;
   craft: CraftStoryPayload;
   philosophy: PhilosophyPayload;
   ownership: NoteCardsPayload;
@@ -111,12 +116,27 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
     const parsed = HeroBannerPayloadSchema.safeParse(rawSections["home.hero"]);
     if (parsed.success) {
       hero = parsed.data;
+      if (!hero.slides || hero.slides.length === 0) {
+        hero.slides = DEFAULT_HERO_SLIDES;
+      }
     } else {
       console.warn("Invalid payload for home.hero, falling back to defaults:", parsed.error.issues);
     }
   }
 
-  // 2. Craft (home.craft)
+  // 2. Video Placeholder (home.video / home.cinematic_video)
+  let video: HomepageVideoPayload = DEFAULT_HOMEPAGE_VIDEO_PAYLOAD;
+  const rawVideo = rawSections["home.video"] || rawSections["home.cinematic_video"];
+  if (rawVideo) {
+    const parsed = HomepageVideoPayloadSchema.safeParse(rawVideo);
+    if (parsed.success) {
+      video = parsed.data;
+    } else {
+      console.warn("Invalid payload for home.video, falling back to defaults:", parsed.error.issues);
+    }
+  }
+
+  // 3. Craft (home.craft)
   let craft: CraftStoryPayload = DEFAULT_CRAFT_PAYLOAD;
   if (rawSections["home.craft"]) {
     const parsed = CraftStoryPayloadSchema.safeParse(rawSections["home.craft"]);
@@ -162,6 +182,7 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
 
   return {
     hero,
+    video,
     craft,
     philosophy,
     ownership,

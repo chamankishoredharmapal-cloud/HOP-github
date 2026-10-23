@@ -4,12 +4,13 @@ import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Film } from "@/components/hop/Film";
-import { HomepageCinematicVideo } from "@/components/hop/HomepageCinematicVideo";
+import { CinematicHeroSlider } from "@/components/hop/CinematicHeroSlider";
+import { LivingSareeSection } from "@/components/hop/LivingSareeSection";
 import { Monogram } from "@/components/hop/Monogram";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
 import { useJournalArticles } from "@/hooks/useJournal";
-import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
+import { COLLECTION_VIDEOS, COLLECTION_VIDEO_VARIANTS, resolveOptimizedVideo } from "@/data/collectionVideos";
 import { COLLECTION_WORLDS, getWorld, getCollectionDisplayName, getCollectionRoomSlug, type CollectionWorld } from "@/data/collectionWorlds";
 import { fetchCollections } from "@/services/collectionService";
 import { fetchFeaturedCollection } from "@/services/collectionService";
@@ -158,54 +159,7 @@ const ArrowLink = ({ to, children, light = false }: { to: string; children: Reac
 );
 
 const Threshold = ({ section }: { section?: HeroBannerPayload }) => {
-  const queryClient = useQueryClient();
-  const { data: featured } = useQuery({
-    queryKey: ["storefront", "featuredCollection"],
-    queryFn: fetchFeaturedCollection,
-  });
-
-  const initialFeatured = queryClient.getQueryData<{ hero_video_url?: string; hero_image_url?: string; name?: string }>(["storefront", "featuredCollection"]);
-  const effectiveFeatured = initialFeatured || featured;
-
-  const poster = section?.poster_url?.trim() || effectiveFeatured?.hero_image_url || heroStill;
-  const collectionName = section?.eyebrow?.trim() || effectiveFeatured?.name || "House of Padmavati";
-  const videoSrc = section?.video_url?.trim() || effectiveFeatured?.hero_video_url || COLLECTION_VIDEOS.kalyani;
-  const title = section?.title || "Saree. Time. You.";
-  const subtitle = section?.subtitle || "Five ways of wearing tradition — considered deeply, chosen quietly.";
-  const primaryCta = section?.primary_cta || { label: "Enter the House", href: "/collections" };
-  const secondaryCta = section?.secondary_cta || { label: "Descend into the house", href: "#collections" };
-  const alt = section?.alt_text || `${collectionName} — House of Padmavati collection film`;
-
-  return (
-    <section className="hop-threshold" aria-labelledby="threshold-title">
-      <Film
-        src={videoSrc}
-        poster={poster}
-        alt={alt}
-        className="hop-threshold__film"
-        preload="metadata"
-        priority
-      />
-      <div className="hop-threshold__veil" aria-hidden="true" />
-      <div className="hop-threshold__content">
-        <div className="hop-threshold__eyebrow">
-          <Monogram variant="signature" className="hop-threshold__mark" />
-          <span>{collectionName}</span>
-        </div>
-        <h1 id="threshold-title" className="hop-display hop-threshold__title">
-          {title}
-        </h1>
-        <p className="hop-threshold__supporting">{subtitle}</p>
-        <div className="hop-threshold__actions">
-          <ArrowLink to={primaryCta.href} light>{primaryCta.label}</ArrowLink>
-          <a className="hop-scroll-cue" href={secondaryCta.href}>
-            <span>{secondaryCta.label}</span>
-            <ArrowDown className="h-3.5 w-3.5" aria-hidden="true" />
-          </a>
-        </div>
-      </div>
-    </section>
-  );
+  return <CinematicHeroSlider section={section} />;
 };
 
 const Philosophy = ({ section }: { section?: PhilosophyPayload }) => {
@@ -236,9 +190,12 @@ const CollectionFilmChapter = ({
   record: Awaited<ReturnType<typeof fetchCollections>>[number] | undefined;
   priority?: boolean;
 }) => {
+  const rawFilm = record?.hero_video_url || world.slug;
+  const resolved = resolveOptimizedVideo(rawFilm);
   const copy = WORLD_COPY[world.slug];
-  const poster = record?.hero_image_url || copy?.image || "";
-  const film = record?.hero_video_url || COLLECTION_VIDEOS[world.slug];
+  const poster = record?.hero_image_url || resolved.poster || copy?.image || "";
+  const film = resolved.src;
+  const mobileFilm = resolved.mobileSrc;
   // Canonical identity: the visible title, chapter class, and link follow
   // the world (YŪGEN), never the legacy database record (Spandana).
   const name = getCollectionDisplayName(record?.slug, record?.name) || world.name;
@@ -256,6 +213,7 @@ const CollectionFilmChapter = ({
       >
         <Film
           src={film}
+          mobileSrc={mobileFilm}
           poster={poster}
           alt={record?.hero_image_url ? `${name} — collection film` : copy?.alt || `${name} — collection film`}
           className="hop-collection-film__media"
@@ -265,7 +223,7 @@ const CollectionFilmChapter = ({
         <span className="hop-collection-film__veil" aria-hidden="true" />
         <span className="hop-collection-film__identity">
           <Monogram variant="signature" className="hop-collection-film__mark" />
-          <h3 className="hop-editorial-name hop-collection-film__name">{name}</h3>
+          <h2 className="hop-editorial-name hop-collection-film__name">{name}</h2>
           {world.emotion && (
             <span className="hop-collection-film__emotion">{world.emotion}</span>
           )}
@@ -291,8 +249,8 @@ const CollectionRooms = () => {
             name: record.name,
             emotion: record.tagline || "",
             temperature: "",
-            accent: "#8B1E2D",
-            accentName: "Alta Crimson",
+            accent: "#7E5C58",
+            accentName: "Deep Dusty Mauve",
             photo: "",
             material: "",
             vocabulary: "",
@@ -582,30 +540,47 @@ export const HomepageExperience = () => {
     queryFn: fetchPublicStoreSettings,
   });
 
-  const { hero, craft, philosophy, ownership, invitation, isPreview } = useSiteSections("home");
+  const { hero, video, craft, philosophy, ownership, invitation, isPreview } = useSiteSections("home");
 
-  const cinematicVideo = storeSettings?.homepage_cinematic_video;
+  // Resolve video: Priority is given to site_sections "home.video", falling back to storeSettings if unconfigured
+  const isVideoConfiguredInSections = Boolean(video && (video.video_url || video.is_enabled === false));
+  const activeVideo = isVideoConfiguredInSections ? video : null;
+
+  const isEnabled = activeVideo ? activeVideo.is_enabled !== false : true;
+  const videoSrc = activeVideo ? activeVideo.video_url : storeSettings?.homepage_cinematic_video?.video_url;
+  const mobileVideoSrc = activeVideo?.mobile_video_url || undefined;
+  const posterSrc = activeVideo ? activeVideo.poster_url : storeSettings?.homepage_cinematic_video?.poster_url;
+  const altText = activeVideo?.alt_text || storeSettings?.homepage_cinematic_video?.alt_text || "Living Saree visual study";
+  const autoplay = activeVideo ? activeVideo.autoplay !== false : true;
+  const loop = activeVideo ? activeVideo.loop !== false : true;
+  const muted = activeVideo ? activeVideo.muted !== false : true;
 
   return (
     <main className="hop-home">
+      <h1 className="sr-only">House of Padmavati — handwoven Indian sarees</h1>
       {isPreview && (
         <aside
           role="status"
           aria-label="Studio Draft Preview"
-          className="bg-amber-950 text-amber-200 text-xs py-2 px-4 text-center border-b border-amber-800 tracking-wider flex items-center justify-center gap-2 z-50 relative font-sans"
+          className="bg-brand-plum text-brand-ivory text-xs py-2 px-4 text-center border-b border-brand-gold/30 tracking-wider flex items-center justify-center gap-2 z-50 relative font-sans"
         >
-          <span className="font-semibold uppercase tracking-widest text-amber-400">● Draft Preview</span>
+          <span className="font-semibold uppercase tracking-widest text-brand-gold">● Draft Preview</span>
           <span>— Viewing unpublished drafts (Administrator only).</span>
-          <Link to="/studio/site-update" className="underline font-medium text-amber-100 hover:text-white ml-2">
+          <Link to="/studio/site-update" className="underline font-medium text-brand-ivory hover:text-brand-gold ml-2">
             Return to Studio
           </Link>
         </aside>
       )}
       <Threshold section={hero} />
-      <HomepageCinematicVideo
-        src={cinematicVideo?.video_url || undefined}
-        poster={cinematicVideo?.poster_url || undefined}
-        alt={cinematicVideo?.alt_text || "House of Padmavati — Homepage cinematic film"}
+      <LivingSareeSection
+        src={isEnabled ? (videoSrc || undefined) : undefined}
+        mobileSrc={isEnabled ? (mobileVideoSrc || undefined) : undefined}
+        poster={posterSrc || undefined}
+        alt={altText}
+        isEnabled={isEnabled}
+        autoplay={autoplay}
+        loop={loop}
+        muted={muted}
       />
       <CollectionRooms />
       <ProductDesire />

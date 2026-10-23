@@ -129,6 +129,7 @@ export interface CollectionFrontmatter {
   status: ContentStatus;
   tagline: string;
   hero: string;
+  alt?: string;
   filmPoster?: string;
   mood?: string;
   occasion?: string;
@@ -277,6 +278,7 @@ export interface GlossaryFrontmatter {
   type: "glossary";
   term: string;
   slug: string;
+  status?: ContentStatus;
   pronunciation?: string;
   category: GlossaryCategory;
   definition: string;

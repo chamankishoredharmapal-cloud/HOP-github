@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   HeroBannerPayloadSchema,
+  HomepageVideoPayloadSchema,
   CraftStoryPayloadSchema,
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
@@ -10,6 +11,7 @@ import {
   PolicyDocumentPayloadSchema,
   SafeLinkSchema,
   DEFAULT_HERO_PAYLOAD,
+  DEFAULT_HOMEPAGE_VIDEO_PAYLOAD,
   DEFAULT_CRAFT_PAYLOAD,
   DEFAULT_PHILOSOPHY_PAYLOAD,
   DEFAULT_OWNERSHIP_PAYLOAD,
@@ -59,6 +61,57 @@ describe("Phase 3 Stage 1: Content Security & Schema Validation", () => {
         primary_cta: { label: "Enter", href: "/collections" },
       };
       expect(HeroBannerPayloadSchema.safeParse(missingAlt).success).toBe(false);
+    });
+  });
+
+  describe("HomepageVideoPayloadSchema (Living Saree Video Management)", () => {
+    it("validates compliant homepage video payload with default values", () => {
+      expect(HomepageVideoPayloadSchema.safeParse(DEFAULT_HOMEPAGE_VIDEO_PAYLOAD).success).toBe(true);
+    });
+
+    it("validates video payload with desktop, mobile, poster, and playback settings", () => {
+      const payload = {
+        is_enabled: true,
+        video_url: "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/HOP-films/KALYANI+1.mp4",
+        mobile_video_url: "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/HOP-films/KALYANI-mobile.mp4",
+        poster_url: "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/HOP-films/poster.jpg",
+        alt_text: "Living Saree visual study",
+        autoplay: true,
+        loop: true,
+        muted: true,
+        aspect_ratio: "16:9",
+      };
+      const parsed = HomepageVideoPayloadSchema.safeParse(payload);
+      expect(parsed.success).toBe(true);
+      if (parsed.success) {
+        expect(parsed.data.is_enabled).toBe(true);
+        expect(parsed.data.video_url).toContain("KALYANI+1.mp4");
+        expect(parsed.data.mobile_video_url).toContain("KALYANI-mobile.mp4");
+        expect(parsed.data.aspect_ratio).toBe("16:9");
+      }
+    });
+
+    it("accepts relative paths and standard variant keys", () => {
+      expect(HomepageVideoPayloadSchema.safeParse({ video_url: "/optimized/videos/KALYANI-720p.mp4" }).success).toBe(true);
+      expect(HomepageVideoPayloadSchema.safeParse({ video_url: "kalyani" }).success).toBe(true);
+    });
+
+    it("validates disabled video state", () => {
+      const disabled = {
+        is_enabled: false,
+        video_url: "",
+        alt_text: "Disabled video placeholder",
+      };
+      const parsed = HomepageVideoPayloadSchema.safeParse(disabled);
+      expect(parsed.success).toBe(true);
+      if (parsed.success) {
+        expect(parsed.data.is_enabled).toBe(false);
+      }
+    });
+
+    it("rejects unsafe URL protocols", () => {
+      expect(HomepageVideoPayloadSchema.safeParse({ video_url: "javascript:alert(1)" }).success).toBe(false);
+      expect(HomepageVideoPayloadSchema.safeParse({ video_url: "http://insecure.com/video.mp4" }).success).toBe(false);
     });
   });
 
