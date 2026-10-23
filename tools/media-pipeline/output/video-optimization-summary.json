@@ -1,0 +1,242 @@
+[
+  {
+    "slug": "hero",
+    "canonical": "HERO",
+    "originalFile": "HERO.mp4",
+    "originalDimensions": "1280x720",
+    "originalSizeBytes": 3218879,
+    "originalSizeMB": "3.07",
+    "orientation": "landscape",
+    "aspectRatioType": "16:9 Landscape",
+    "isStandardAspect": true,
+    "variants": [
+      {
+        "variant": "720p",
+        "width": 1280,
+        "height": 720,
+        "sizeBytes": 2062604,
+        "sizeMB": "1.97",
+        "savingsPercent": 35.9,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": 0.993413
+      },
+      {
+        "variant": "540p",
+        "width": 960,
+        "height": 540,
+        "sizeBytes": 975206,
+        "sizeMB": "0.93",
+        "savingsPercent": 69.7,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": null
+      }
+    ],
+    "poster": {
+      "filename": "HERO-poster.webp",
+      "sizeBytes": 30824,
+      "sizeKB": "30.1"
+    }
+  },
+  {
+    "slug": "kalyani",
+    "canonical": "KALYANI",
+    "originalFile": "KALYANI_1.mp4",
+    "originalDimensions": "720x1280",
+    "originalSizeBytes": 4855126,
+    "originalSizeMB": "4.63",
+    "orientation": "portrait",
+    "aspectRatioType": "9:16 Portrait",
+    "isStandardAspect": true,
+    "variants": [
+      {
+        "variant": "720p",
+        "width": 720,
+        "height": 1280,
+        "sizeBytes": 2958825,
+        "sizeMB": "2.82",
+        "savingsPercent": 39.1,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": 0.987125
+      },
+      {
+        "variant": "540p",
+        "width": 540,
+        "height": 960,
+        "sizeBytes": 1360053,
+        "sizeMB": "1.30",
+        "savingsPercent": 72,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": null
+      }
+    ],
+    "poster": {
+      "filename": "KALYANI-poster.webp",
+      "sizeBytes": 85668,
+      "sizeKB": "83.7"
+    }
+  },
+  {
+    "slug": "viara",
+    "canonical": "VIARA",
+    "originalFile": "VIARA3.mp4",
+    "originalDimensions": "1280x720",
+    "originalSizeBytes": 2795674,
+    "originalSizeMB": "2.67",
+    "orientation": "landscape",
+    "aspectRatioType": "16:9 Landscape",
+    "isStandardAspect": true,
+    "variants": [
+      {
+        "variant": "720p",
+        "width": 1280,
+        "height": 720,
+        "sizeBytes": 2353548,
+        "sizeMB": "2.24",
+        "savingsPercent": 15.8,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": 0.991909
+      },
+      {
+        "variant": "540p",
+        "width": 960,
+        "height": 540,
+        "sizeBytes": 1241430,
+        "sizeMB": "1.18",
+        "savingsPercent": 55.6,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": null
+      }
+    ],
+    "poster": {
+      "filename": "VIARA-poster.webp",
+      "sizeBytes": 69534,
+      "sizeKB": "67.9"
+    }
+  },
+  {
+    "slug": "arya",
+    "canonical": "ARYA",
+    "originalFile": "ARYA.mp4",
+    "originalDimensions": "1280x720",
+    "originalSizeBytes": 2586875,
+    "originalSizeMB": "2.47",
+    "orientation": "landscape",
+    "aspectRatioType": "16:9 Landscape",
+    "isStandardAspect": true,
+    "variants": [
+      {
+        "variant": "720p",
+        "width": 1280,
+        "height": 720,
+        "sizeBytes": 2355599,
+        "sizeMB": "2.25",
+        "savingsPercent": 8.9,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": 0.991521
+      },
+      {
+        "variant": "540p",
+        "width": 960,
+        "height": 540,
+        "sizeBytes": 1261195,
+        "sizeMB": "1.20",
+        "savingsPercent": 51.2,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": null
+      }
+    ],
+    "poster": {
+      "filename": "ARYA-poster.webp",
+      "sizeBytes": 52754,
+      "sizeKB": "51.5"
+    }
+  },
+  {
+    "slug": "padma",
+    "canonical": "PADMA",
+    "originalFile": "PADMA.mp4",
+    "originalDimensions": "1280x720",
+    "originalSizeBytes": 3116461,
+    "originalSizeMB": "2.97",
+    "orientation": "landscape",
+    "aspectRatioType": "16:9 Landscape",
+    "isStandardAspect": true,
+    "variants": [
+      {
+        "variant": "720p",
+        "width": 1280,
+        "height": 720,
+        "sizeBytes": 1952055,
+        "sizeMB": "1.86",
+        "savingsPercent": 37.4,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": 0.993364
+      },
+      {
+        "variant": "540p",
+        "width": 960,
+        "height": 540,
+        "sizeBytes": 882351,
+        "sizeMB": "0.84",
+        "savingsPercent": 71.7,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": null
+      }
+    ],
+    "poster": {
+      "filename": "PADMA-poster.webp",
+      "sizeBytes": 65532,
+      "sizeKB": "64.0"
+    }
+  },
+  {
+    "slug": "spandana",
+    "canonical": "SPANDANA",
+    "originalFile": "SPANDANA.mp4",
+    "originalDimensions": "1280x720",
+    "originalSizeBytes": 3203672,
+    "originalSizeMB": "3.06",
+    "orientation": "landscape",
+    "aspectRatioType": "16:9 Landscape",
+    "isStandardAspect": true,
+    "variants": [
+      {
+        "variant": "720p",
+        "width": 1280,
+        "height": 720,
+        "sizeBytes": 2001389,
+        "sizeMB": "1.91",
+        "savingsPercent": 37.5,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": 0.994033
+      },
+      {
+        "variant": "540p",
+        "width": 960,
+        "height": 540,
+        "sizeBytes": 900174,
+        "sizeMB": "0.86",
+        "savingsPercent": 71.9,
+        "fastStart": true,
+        "decodeValid": true,
+        "ssim": null
+      }
+    ],
+    "poster": {
+      "filename": "SPANDANA-poster.webp",
+      "sizeBytes": 52752,
+      "sizeKB": "51.5"
+    }
+  }
+]

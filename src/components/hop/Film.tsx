@@ -6,22 +6,9 @@ import {
   isSupabaseStorageUrl,
 } from "@/lib/supabaseImage";
 
-/**
- * Cinematic media frame — uses native <video> with poster fallback.
- * Drop MP4s into Supabase Storage and pass their public URL via `src`.
- * Poster is always rendered underneath; video fades in when ready.
- */
-export const Film = ({
-  src,
-  poster,
-  alt,
-  className = "",
-  isCinematic = false,
-  preload = "metadata",
-  priority = false,
-  showControls = true,
-}: {
+export interface FilmProps {
   src?: string;
+  mobileSrc?: string;
   poster: string;
   alt: string;
   className?: string;
@@ -29,13 +16,33 @@ export const Film = ({
   preload?: "auto" | "metadata" | "none";
   priority?: boolean;
   showControls?: boolean;
-}) => {
+}
+
+/**
+ * Cinematic media frame — uses native <video> with poster fallback.
+ * Supports multi-resolution responsive sources (720p desktop + 540p mobile),
+ * fast-start metadata streaming, and viewport-aware play/pause lifecycle.
+ */
+export const Film = ({
+  src,
+  mobileSrc,
+  poster,
+  alt,
+  className = "",
+  isCinematic = false,
+  preload = "metadata",
+  priority = false,
+  showControls = true,
+}: FilmProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const [videoReady, setVideoReady] = useState(false);
-  const [inView, setInView] = useState(false);
-  // Reduced-motion preference is read at mount so the browser never autoplays
-  // for visitors who ask for stillness (the autoPlay attribute alone would win).
+
+  // Priority videos (hero) mount immediately. Lazy videos mount once near viewport.
+  const [isMounted, setIsMounted] = useState(priority);
+  const [inView, setInView] = useState(priority);
+
+  // Reduced-motion preference check
   const [reducedMotion] = useState(
     () =>
       typeof window !== "undefined" &&
@@ -47,10 +54,7 @@ export const Film = ({
     (v: HTMLVideoElement) => {
       v.muted = true;
       v.playsInline = true;
-      // Respect visitors who ask for reduced motion — leave the still frame.
       if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-      // Respect mobile data-saver mode — leave the poster until the visitor
-      // explicitly presses play.
       try {
         const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
         if (conn?.saveData) return;
@@ -74,30 +78,47 @@ export const Film = ({
     }
   }, [doPlay]);
 
-  // Only load / play the film when its frame enters the viewport.
-  // Prevents 5+ simultaneous autoplays on collection feeds.
+  // Viewport lifecycle:
+  // - Approaching viewport (rootMargin: 300px): mount <video> tag
+  // - Inside viewport: play
+  // - Scrolled out of viewport: pause to save CPU and network
   useEffect(() => {
     const frame = frameRef.current;
     if (!frame || !src) return;
+
     if (typeof IntersectionObserver === "undefined") {
+      setIsMounted(true);
       setInView(true);
       return;
     }
+
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
+            setIsMounted(true);
             setInView(true);
-            io.disconnect();
+            const v = videoRef.current;
+            if (v && v.paused) {
+              doPlay(v);
+            }
+          } else {
+            setInView(false);
+            const v = videoRef.current;
+            if (v && !v.paused) {
+              v.pause();
+            }
           }
         }
       },
-      { rootMargin: "200px 0px", threshold: 0.1 },
+      { rootMargin: "300px 0px", threshold: 0.05 },
     );
+
     io.observe(frame);
     return () => io.disconnect();
-  }, [src]);
+  }, [src, doPlay]);
 
+  // When video mounts and is ready, trigger playback if in view
   useEffect(() => {
     const v = videoRef.current;
     if (!v || !src || !inView) return;
@@ -110,22 +131,27 @@ export const Film = ({
   const handleLoadedData = useCallback(
     (e: React.SyntheticEvent<HTMLVideoElement>) => {
       setVideoReady(true);
-      doPlay(e.currentTarget);
+      if (inView) {
+        doPlay(e.currentTarget);
+      }
     },
-    [doPlay],
+    [inView, doPlay],
   );
 
   const handleVideoError = useCallback(() => {
-    // Poster remains — a still frame is an acceptable, quiet fallback.
+    // Graceful fallback: poster remains without disruption
     setVideoReady(false);
     setIsPlaying(false);
   }, []);
 
   return (
-    <div ref={frameRef} className={`relative overflow-hidden bg-jasmine-deep ${className} ${isCinematic ? "rounded-2xl lg:rounded-3xl" : "rounded-sm"} gallery-shadow`}>
-      {/* Poster layer — guarded: never render empty src.
-          Supabase-hosted posters go through the transform pipeline with a
-          responsive srcset so 320px phones stop downloading desktop bytes. */}
+    <div
+      ref={frameRef}
+      className={`relative overflow-hidden bg-jasmine-deep ${className} ${
+        isCinematic ? "rounded-2xl lg:rounded-3xl" : "rounded-sm"
+      } gallery-shadow`}
+    >
+      {/* Poster layer — always rendered underneath for instant visual stability */}
       <div className="absolute inset-0">
         {poster ? (
           <img
@@ -143,11 +169,10 @@ export const Film = ({
             <span className="text-[0.6rem] tracking-[0.2em] uppercase text-ink-soft/40">House of Padmavati</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/15 via-transparent to-transparent pointer-events-none" />
       </div>
 
-      {/* Video layer — mounts in view, fades in when ready */}
-      {src && inView && (
+      {/* Video layer — mounted on-demand, fades in smoothly when first frame ready */}
+      {src && isMounted && (
         <div
           className="absolute inset-0 transition-opacity duration-700"
           style={{ opacity: videoReady ? 1 : 0 }}
@@ -155,31 +180,36 @@ export const Film = ({
           <video
             ref={videoRef}
             className="w-full h-full object-cover"
-            src={src}
             poster={poster}
             autoPlay={!reducedMotion}
             muted
             loop
             playsInline
-            preload={priority ? "auto" : preload}
+            preload={priority ? "auto" : (inView ? "metadata" : "none")}
             aria-label={alt}
             onLoadedData={handleLoadedData}
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             onEnded={() => setIsPlaying(false)}
             onError={handleVideoError}
-          />
-            {showControls && (
-              <button
-                type="button"
-                onClick={togglePlayback}
-                className="absolute bottom-4 right-4 min-h-[44px] min-w-[44px] rounded-full bg-ink/70 p-3 text-paper-ivory backdrop-blur-sm transition-colors hover:bg-ink/90"
-                aria-label={isPlaying ? "Pause film" : "Play film"}
-                aria-pressed={!isPlaying}
-              >
-                {isPlaying ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
-              </button>
+          >
+            {mobileSrc && (
+              <source media="(max-width: 767px)" src={mobileSrc} type="video/mp4" />
             )}
+            <source src={src} type="video/mp4" />
+          </video>
+
+          {showControls && (
+            <button
+              type="button"
+              onClick={togglePlayback}
+              className="absolute bottom-4 right-4 min-h-[44px] min-w-[44px] rounded-full bg-ink/70 p-3 text-paper-ivory backdrop-blur-sm transition-colors hover:bg-ink/90"
+              aria-label={isPlaying ? "Pause film" : "Play film"}
+              aria-pressed={!isPlaying}
+            >
+              {isPlaying ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
+            </button>
+          )}
         </div>
       )}
     </div>
