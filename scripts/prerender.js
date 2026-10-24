@@ -20,7 +20,9 @@ async function loadEnv() {
       }
     }
   } catch (e) {
-    console.warn("Could not load .env file", e);
+    if (e.code !== 'ENOENT') {
+      console.warn("Could not load .env file", e.message || e);
+    }
   }
 }
 
@@ -63,7 +65,7 @@ async function fetchRoutes() {
         routes.push(`/journal/${slug}`);
       }
     }
-  } catch(e) {
+  } catch (e) {
     console.warn("Could not parse journal articles", e);
   }
 
@@ -157,7 +159,31 @@ async function run() {
   const appShell = await fs.readFile(path.join(distDir, 'index.html'), 'utf-8');
   console.log(`Discovered ${routes.length} routes to prerender.`);
 
-  const browser = await chromium.launch();
+  let browser;
+  try {
+    browser = await chromium.launch();
+  } catch (launchError) {
+    const isMissingBrowserExecutable =
+      typeof launchError?.message === 'string' &&
+      (launchError.message.includes("Executable doesn't exist") ||
+       launchError.message.includes("Please run the following command to download new browsers") ||
+       launchError.message.includes("playwright install"));
+
+    if (isMissingBrowserExecutable) {
+      console.warn(
+        "\n================================================================================" +
+        "\n[PRERENDER WARNING] Playwright Chromium executable is not installed in this environment." +
+        "\nPrerendering skipped — static routes will be served via SPA fallback routing (/* /index.html 200)." +
+        "\nNOTE: Route-specific prerendered HTML and server-hydrated state were not generated in this build." +
+        `\nReason: ${launchError.message.split('\n')[0]}` +
+        "\n================================================================================\n"
+      );
+      return;
+    }
+    // Genuine browser launch errors (crash, bad flags, permissions) must fail the build
+    throw launchError;
+  }
+
   const context = await browser.newContext();
 
   // Route interception to serve files directly from dist without an HTTP server
@@ -259,10 +285,11 @@ async function run() {
   await browser.close();
 
   if (failedRoutes.length > 0) {
-    console.warn(`Prerendering completed with ${failedRoutes.length} failures (build continues):`);
+    console.error(`\nPrerendering failed on ${failedRoutes.length} route(s):`);
     for (const f of failedRoutes) {
-      console.warn(`  - ${f.route}: ${f.error}`);
+      console.error(`  - ${f.route}: ${f.error}`);
     }
+    process.exit(1);
   } else {
     console.log("Prerendering completed successfully.");
   }
