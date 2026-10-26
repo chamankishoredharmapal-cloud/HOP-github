@@ -252,8 +252,8 @@ serve(async (req) => {
                 const { error: emailError } = await supabase.functions.invoke("send-email", {
                   body: {
                     to: customerData.email,
-                    subject: `Your piece has been claimed — ${confirmResult.order_number}`,
-                    body: "",
+                    subject: `Your piece has been claimed — ${(confirmResult as Record<string, unknown>).order_number || orderData.order_number}`,
+                    body: emailBody,
                     type: "order_confirmation"
                   }
                 });

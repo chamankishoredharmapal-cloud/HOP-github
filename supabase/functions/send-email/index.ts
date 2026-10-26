@@ -70,20 +70,19 @@ serve(async (req) => {
       const { data: adminCheck } = await supabaseAuth.rpc("is_admin", { user_id: user.id });
       isAdmin = adminCheck === true;
     } else {
-      // Try validating with service role key (for service-role JWTs)
-      const supabaseService = createClient(
-        Deno.env.get("SUPABASE_URL")!,
-        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-        { global: { headers: { Authorization: authHeader } } }
-      );
-      const { data: { user: serviceUser }, error: serviceError } = await supabaseService.auth.getUser();
-      
-      if (!serviceError && serviceUser) {
-        // Check if it's a service role JWT
+      // Validate service role token (service_role tokens do not represent auth.users)
+      const token = authHeader.replace(/^Bearer\s+/i, '').trim();
+      const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+      if (serviceKey && token === serviceKey) {
+        isServiceRole = true;
+      } else {
         try {
-          const payload = JSON.parse(atob(authHeader.split('.')[1]));
-          if (payload.role === 'service_role') {
-            isServiceRole = true;
+          const parts = token.split('.');
+          if (parts.length === 3) {
+            const payload = JSON.parse(atob(parts[1]));
+            if (payload.role === 'service_role') {
+              isServiceRole = true;
+            }
           }
         } catch {
           // Ignore parsing errors
