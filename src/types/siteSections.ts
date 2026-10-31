@@ -52,24 +52,64 @@ export const SafeLinkSchema = z.object({
     ),
 });
 
-export const HeroSlideSchema = z.object({
-  id: z.string(),
-  video_url: z.string().min(1, "Video URL is required"),
-  mobile_video_url: z.string().optional().or(z.literal("")),
-  poster_url: z.string().optional().or(z.literal("")),
-  duration: z.coerce
-    .number()
-    .min(1, "Duration must be at least 1 second")
-    .max(5, "Display duration is capped at 5 seconds")
-    .default(5),
-  is_active: z.boolean().default(true),
-  title: z.string().max(120).optional().or(z.literal("")),
-  subtitle: z.string().max(250).optional().or(z.literal("")),
-  eyebrow: z.string().max(80).optional().or(z.literal("")),
-  primary_cta: SafeLinkSchema.optional(),
-  secondary_cta: SafeLinkSchema.optional(),
-  alt_text: z.string().max(250).optional().or(z.literal("")),
-});
+export type SlideMediaType = "image" | "video" | "video_and_poster";
+
+export const HeroSlideSchema = z
+  .object({
+    id: z.string(),
+    media_type: z.enum(["image", "video", "video_and_poster"]).optional(),
+    video_url: z.string().optional().or(z.literal("")),
+    mobile_video_url: z.string().optional().or(z.literal("")),
+    poster_url: z.string().optional().or(z.literal("")),
+    duration: z.coerce
+      .number()
+      .min(1, "Duration must be at least 1 second")
+      .max(5, "Display duration is capped at 5 seconds")
+      .default(5),
+    is_active: z.boolean().default(true),
+    title: z.string().max(120).optional().or(z.literal("")),
+    subtitle: z.string().max(250).optional().or(z.literal("")),
+    eyebrow: z.string().max(80).optional().or(z.literal("")),
+    primary_cta: SafeLinkSchema.optional(),
+    secondary_cta: SafeLinkSchema.optional(),
+    alt_text: z.string().max(250).optional().or(z.literal("")),
+  })
+  .superRefine((slide, ctx) => {
+    const isImageFile = (url?: string) =>
+      Boolean(url && /\.(png|jpe?g|webp|avif|gif)(\?.*)?$/i.test(url.trim()));
+
+    const isImageOnly =
+      slide.media_type === "image" ||
+      (Boolean(slide.poster_url && slide.poster_url.trim()) && (!slide.video_url || slide.video_url.trim() === "")) ||
+      Boolean(slide.video_url && isImageFile(slide.video_url));
+
+    const effectivePoster = slide.poster_url || (isImageFile(slide.video_url) ? slide.video_url : "");
+
+    if (isImageOnly) {
+      if (!effectivePoster || effectivePoster.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Poster Image URL is required for Poster Image Only slides",
+          path: ["poster_url"],
+        });
+      }
+    } else {
+      if (!slide.video_url || slide.video_url.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Video URL is required",
+          path: ["video_url"],
+        });
+      }
+      if (slide.media_type === "video_and_poster" && (!slide.poster_url || slide.poster_url.trim() === "")) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Poster Image URL is required when Video + Poster is selected",
+          path: ["poster_url"],
+        });
+      }
+    }
+  });
 
 export type HeroSlide = z.infer<typeof HeroSlideSchema>;
 
@@ -184,7 +224,6 @@ export type InvitationPayload = z.infer<typeof InvitationPayloadSchema>;
 
 export const HOMEPAGE_SECTION_KEYS = [
   "home.hero",
-  "home.video",
   "home.craft",
   "home.philosophy",
   "home.ownership",

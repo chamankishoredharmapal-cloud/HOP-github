@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useMediaDisplayMode } from "@/contexts/MediaDisplayContext";
 import {
   ExternalLink,
   Save,
@@ -18,6 +19,9 @@ import {
   Shield,
   ArrowUp,
   ArrowDown,
+  Layers,
+  LayoutGrid,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,7 +47,6 @@ import {
   usePublishSection,
 } from "../hooks/useStudioSiteSections";
 import { MediaPickerModal } from "../components/MediaPickerModal";
-import { HomepageVideoSectionEditor } from "../components/HomepageVideoSectionEditor";
 import type { MediaItem, MediaType } from "../types/media";
 import {
   HOMEPAGE_SECTION_KEYS,
@@ -83,7 +86,10 @@ import {
 } from "@/types/siteSections";
 import { toast } from "sonner";
 
+const EMPTY_SECTIONS: SiteSectionRecord[] = [];
+
 export default function SiteUpdate() {
+  const { mode, isStructureOnly, setMode } = useMediaDisplayMode();
   const initialSection = useMemo(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
@@ -96,7 +102,8 @@ export default function SiteUpdate() {
   }, []);
 
   const [activePage, setActivePage] = useState<SitePageKey>("home");
-  const { data: sections = [], isLoading, refetch } = useStudioSiteSections(activePage);
+  const { data: sectionsData, isLoading, refetch } = useStudioSiteSections(activePage);
+  const sections = sectionsData || EMPTY_SECTIONS;
   const saveDraftMutation = useSaveSectionDraft();
   const publishMutation = usePublishSection();
 
@@ -111,6 +118,7 @@ export default function SiteUpdate() {
   const [mediaPickerOpen, setMediaPickerOpen] = useState(false);
   const [mediaPickerField, setMediaPickerField] = useState<string>("");
   const [mediaPickerType, setMediaPickerType] = useState<MediaType[]>(["image"]);
+  const [mediaPickerTitle, setMediaPickerTitle] = useState<string>("Select Media Asset");
 
   // Available section keys for the active page
   const pageSectionKeys = useMemo<readonly string[]>(() => {
@@ -138,11 +146,7 @@ export default function SiteUpdate() {
     let type = "hero_banner";
     let displayName = "Homepage Hero";
 
-    if (activeKey === "home.video") {
-      defaultPayload = DEFAULT_HOMEPAGE_VIDEO_PAYLOAD as unknown as Record<string, unknown>;
-      type = "custom_section";
-      displayName = "Homepage Video (Living Saree)";
-    } else if (activeKey === "home.craft") {
+    if (activeKey === "home.craft") {
       defaultPayload = DEFAULT_CRAFT_PAYLOAD as unknown as Record<string, unknown>;
       type = "craft_story";
       displayName = "Homepage Craft (Gangamma)";
@@ -196,9 +200,9 @@ export default function SiteUpdate() {
       has_unpublished_changes: false,
       published_at: null,
       published_by: null,
-      updated_at: new Date().toISOString(),
+      updated_at: "2026-01-01T00:00:00.000Z",
       updated_by: null,
-      created_at: new Date().toISOString(),
+      created_at: "2026-01-01T00:00:00.000Z",
     };
   }, [sections, activeKey, activePage]);
 
@@ -213,7 +217,8 @@ export default function SiteUpdate() {
       setIsDirty(false);
       setValidationErrors([]);
     }
-  }, [currentSection]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSection.key, currentSection.version]);
 
   const handleFieldChange = (path: string, value: unknown) => {
     setIsDirty(true);
@@ -258,8 +263,7 @@ export default function SiteUpdate() {
     let result;
     if (activeKey === "home.hero") {
       result = HeroBannerPayloadSchema.safeParse(formData);
-    } else if (activeKey === "home.video") {
-      result = HomepageVideoPayloadSchema.safeParse(formData);
+    
     } else if (activeKey === "home.craft") {
       result = CraftStoryPayloadSchema.safeParse(formData);
     } else if (activeKey === "home.philosophy") {
@@ -335,9 +339,10 @@ export default function SiteUpdate() {
     }
   };
 
-  const openMediaPicker = (field: string, types: MediaType[] = ["image"]) => {
+  const openMediaPicker = (field: string, types: MediaType[] = ["image"], title: string = "Select Media Asset") => {
     setMediaPickerField(field);
     setMediaPickerType(types);
+    setMediaPickerTitle(title);
     setMediaPickerOpen(true);
   };
 
@@ -415,6 +420,93 @@ export default function SiteUpdate() {
             <RotateCcw className="h-4 w-4" />
             <span>Reload</span>
           </Button>
+        </div>
+      </div>
+
+      {/* Centralized Media Display Mode Control for Site Update */}
+      <div className="border border-border/70 rounded-lg p-4 bg-muted/20 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <div className="flex items-center gap-2">
+              <Layers className="h-4.5 w-4.5 text-primary" />
+              <h4 className="text-sm font-serif font-medium text-foreground">Media Display Mode</h4>
+            </div>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Authoritative site-wide control: switch between clean UI structure and visual media across the storefront and Studio editors.
+            </p>
+          </div>
+          <span
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium shrink-0 self-start sm:self-auto ${
+              isStructureOnly
+                ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30"
+                : "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30"
+            }`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${isStructureOnly ? "bg-amber-500 animate-pulse" : "bg-emerald-500"}`} />
+            {isStructureOnly ? "Structure Only Active" : "Show Media Active"}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <button
+            type="button"
+            role="radio"
+            aria-checked={isStructureOnly}
+            onClick={() => {
+              if (mode !== "structure-only") {
+                setMode("structure-only");
+                toast.success("Structure Only mode activated", {
+                  description: "All visual media suppressed; layout, dimensions, and slide ordering preserved.",
+                });
+              }
+            }}
+            className={`flex items-start justify-between p-3.5 rounded-lg border text-left transition-all cursor-pointer ${
+              isStructureOnly
+                ? "border-primary bg-primary/10 ring-1 ring-primary shadow-xs"
+                : "border-border/60 hover:border-border hover:bg-muted/40"
+            }`}
+          >
+            <div className="flex items-start gap-2.5">
+              <LayoutGrid className="h-4 w-4 text-primary mt-0.5" />
+              <div>
+                <div className="font-medium text-xs text-foreground">Structure Only</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5 leading-snug">
+                  Neutral structural preview surfaces; zero video or image asset downloads.
+                </div>
+              </div>
+            </div>
+            {isStructureOnly && <CheckCircle2 className="h-4 w-4 text-primary shrink-0 ml-2" />}
+          </button>
+
+          <button
+            type="button"
+            role="radio"
+            aria-checked={!isStructureOnly}
+            onClick={() => {
+              if (mode !== "show-media") {
+                setMode("show-media");
+                toast.success("Show Media mode restored", {
+                  description: "Hero video playback, posters, and media picker controls enabled.",
+                });
+              }
+            }}
+            className={`flex items-start justify-between p-3.5 rounded-lg border text-left transition-all cursor-pointer ${
+              !isStructureOnly
+                ? "border-primary bg-primary/10 ring-1 ring-primary shadow-xs"
+                : "border-border/60 hover:border-border hover:bg-muted/40"
+            }`}
+          >
+            <div className="flex items-start gap-2.5">
+              <Eye className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mt-0.5" />
+              <div>
+                <div className="font-medium text-xs text-foreground">Show Media</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5 leading-snug">
+                  Full video/poster URLs, Media Library selection, and real media playback.
+                </div>
+              </div>
+            </div>
+            {!isStructureOnly && <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 ml-2" />}
+          </button>
         </div>
       </div>
 
@@ -581,16 +673,27 @@ export default function SiteUpdate() {
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-3">
                         <div>
                           <div className="flex items-center gap-2">
-                            <Film className="h-4 w-4 text-primary" />
+                            {isStructureOnly ? (
+                              <LayoutGrid className="h-4 w-4 text-primary" />
+                            ) : (
+                              <Film className="h-4 w-4 text-primary" />
+                            )}
                             <h3 className="text-base font-serif font-semibold text-foreground">
-                              Hero Video Slider
+                              {isStructureOnly ? "Hero Slide Structure" : "Hero Video Slider"}
                             </h3>
                             <Badge variant="outline" className="text-xs">
                               {((formData.slides as HeroSlide[]) || []).length} Slides Configured
                             </Badge>
+                            {isStructureOnly && (
+                              <Badge variant="secondary" className="text-[10px] bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+                                Structure Only
+                              </Badge>
+                            )}
                           </div>
                           <p className="text-xs text-muted-foreground mt-1">
-                            Configure the cinematic multi-video hero slider. Each slide has a maximum display window of 5 seconds (targeting 3–5 seconds) and automatically advances.
+                            {isStructureOnly
+                              ? "Structure-Only Mode is active. Slide layout, ordering, activation, and display windows are preserved with clean neutral surfaces."
+                              : "Configure the cinematic multi-video hero slider. Each slide has a maximum display window of 5 seconds (targeting 3–5 seconds) and automatically advances."}
                           </p>
                         </div>
                         <div className="flex items-center gap-2">
@@ -756,64 +859,262 @@ export default function SiteUpdate() {
                                   </div>
                                 </div>
 
-                                {/* Slide Media URLs */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                  <div className="space-y-1.5">
-                                    <div className="flex items-center justify-between">
-                                      <Label htmlFor={`slide-${sIdx}-video`} className="text-xs font-semibold">
-                                        Video URL *
-                                      </Label>
-                                      <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => openMediaPicker(`slides.${sIdx}.video_url`, ["video"])}
-                                        className="h-6 text-xs px-2"
-                                      >
-                                        <Film className="h-3 w-3 mr-1" /> Choose Video
-                                      </Button>
-                                    </div>
-                                    <Input
-                                      id={`slide-${sIdx}-video`}
-                                      value={slide.video_url || ""}
-                                      onChange={(e) => {
-                                        const copy = [...slidesList];
-                                        copy[sIdx] = { ...copy[sIdx], video_url: e.target.value };
-                                        handleFieldChange("slides", copy);
-                                      }}
-                                      placeholder="/optimized/videos/KALYANI-720p.mp4 or https://..."
-                                      className="text-xs font-mono"
-                                    />
-                                  </div>
+                                {/* Slide Media Layer */}
+                                {(() => {
+                                  const isImageFile = (url?: string) =>
+                                    Boolean(url && /\.(png|jpe?g|webp|avif|gif)(\?.*)?$/i.test(url.trim()));
 
-                                  <div className="space-y-1.5">
-                                    <div className="flex items-center justify-between">
-                                      <Label htmlFor={`slide-${sIdx}-poster`} className="text-xs font-semibold">
-                                        Poster Image URL (Optional)
-                                      </Label>
-                                      <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => openMediaPicker(`slides.${sIdx}.poster_url`, ["image"])}
-                                        className="h-6 text-xs px-2"
-                                      >
-                                        <ImageIcon className="h-3 w-3 mr-1" /> Choose Poster
-                                      </Button>
+                                  const slideMediaType: "image" | "video_and_poster" | "video" =
+                                    (slide.media_type as "image" | "video_and_poster" | "video") ||
+                                    (slide.poster_url && (!slide.video_url || slide.video_url.trim() === "")
+                                      ? "image"
+                                      : slide.video_url && isImageFile(slide.video_url)
+                                      ? "image"
+                                      : slide.video_url && (!slide.poster_url || slide.poster_url.trim() === "")
+                                      ? "video"
+                                      : "video_and_poster");
+
+                                  const effectivePosterUrl = slide.poster_url || (isImageFile(slide.video_url) ? slide.video_url : "");
+
+                                  if (isStructureOnly) {
+                                    return (
+                                      <div className="space-y-3">
+                                        {/* Neutral Structural Slide Surface Frame */}
+                                        <div className="relative aspect-[16/9] w-full max-w-xl mx-auto rounded-lg bg-jasmine-deep/35 border border-border/70 flex flex-col items-center justify-center p-6 text-center select-none shadow-xs overflow-hidden">
+                                          <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/80 mb-1">
+                                            16:9 Structural Hero Slide Surface · {slideMediaType === "image" ? "Poster Image" : "Video"}
+                                          </span>
+                                          <div className="font-serif text-lg font-light text-foreground">
+                                            {slide.eyebrow || slide.title || `Slide #${sIdx + 1}`}
+                                          </div>
+                                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono bg-background/80 text-foreground border border-border/50 mt-2">
+                                            <Clock className="h-3 w-3 text-muted-foreground" />
+                                            <span>{slide.duration ?? 5}s display window</span>
+                                          </div>
+                                          <span className="text-[10px] text-muted-foreground/70 mt-3 font-mono">
+                                            Zero video or image assets mounted in Structure-Only Mode
+                                          </span>
+                                        </div>
+
+                                        {/* Preserved Media Information & Quick Switch */}
+                                        <div className="p-3 bg-muted/30 border border-border/50 rounded-md flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                                          <div className="space-y-0.5">
+                                            <div className="font-medium text-foreground flex items-center gap-1.5">
+                                              {slideMediaType === "image" ? (
+                                                <ImageIcon className="h-3.5 w-3.5 text-muted-foreground" />
+                                              ) : (
+                                                <Film className="h-3.5 w-3.5 text-muted-foreground" />
+                                              )}
+                                              <span>{slideMediaType === "image" ? "Preserved Poster Asset:" : "Preserved Video Asset:"}</span>
+                                              <span className="font-mono text-muted-foreground truncate max-w-xs">
+                                                {slideMediaType === "image" ? (slide.poster_url || "None configured") : (slide.video_url || "None configured")}
+                                              </span>
+                                            </div>
+                                            <div className="text-[11px] text-muted-foreground">
+                                              All media URLs and poster references remain safely preserved in the draft and live payloads.
+                                            </div>
+                                          </div>
+                                          <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => {
+                                              setMode("show-media");
+                                              toast.success("Show Media mode restored", {
+                                                description: "Video and poster asset controls are now editable.",
+                                              });
+                                            }}
+                                            className="text-xs h-7 self-start sm:self-auto shrink-0"
+                                          >
+                                            <Eye className="h-3 w-3 mr-1 text-emerald-600" />
+                                            Switch to Show Media to Edit
+                                          </Button>
+                                        </div>
+                                      </div>
+                                    );
+                                  }
+
+                                  return (
+                                    <div className="space-y-4">
+                                      {/* Slide Media Mode Selector */}
+                                      <div className="space-y-1.5">
+                                        <Label className="text-xs font-semibold">Slide Media Mode</Label>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                          <Button
+                                            type="button"
+                                            size="sm"
+                                            variant={slideMediaType === "image" ? "default" : "outline"}
+                                            onClick={() => {
+                                              const copy = [...slidesList];
+                                              const current = copy[sIdx];
+                                              const inferredPoster = current.poster_url || (isImageFile(current.video_url) ? current.video_url : "");
+                                              copy[sIdx] = {
+                                                ...current,
+                                                media_type: "image",
+                                                poster_url: inferredPoster,
+                                                video_url: isImageFile(current.video_url) ? "" : current.video_url,
+                                              };
+                                              handleFieldChange("slides", copy);
+                                            }}
+                                            className="h-7 text-xs flex items-center gap-1.5"
+                                          >
+                                            <ImageIcon className="h-3.5 w-3.5" />
+                                            <span>Poster Image Only</span>
+                                          </Button>
+
+                                          <Button
+                                            type="button"
+                                            size="sm"
+                                            variant={slideMediaType === "video_and_poster" ? "default" : "outline"}
+                                            onClick={() => {
+                                              const copy = [...slidesList];
+                                              copy[sIdx] = { ...copy[sIdx], media_type: "video_and_poster" };
+                                              handleFieldChange("slides", copy);
+                                            }}
+                                            className="h-7 text-xs flex items-center gap-1.5"
+                                          >
+                                            <Film className="h-3.5 w-3.5" />
+                                            <span>Video + Poster</span>
+                                          </Button>
+
+                                          <Button
+                                            type="button"
+                                            size="sm"
+                                            variant={slideMediaType === "video" ? "default" : "outline"}
+                                            onClick={() => {
+                                              const copy = [...slidesList];
+                                              copy[sIdx] = { ...copy[sIdx], media_type: "video" };
+                                              handleFieldChange("slides", copy);
+                                            }}
+                                            className="h-7 text-xs flex items-center gap-1.5"
+                                          >
+                                            <Film className="h-3.5 w-3.5" />
+                                            <span>Video Only</span>
+                                          </Button>
+                                        </div>
+                                      </div>
+
+                                      {/* Controls for Poster Image Only Mode */}
+                                      {slideMediaType === "image" && (
+                                        <div className="p-3 bg-muted/20 border rounded-md space-y-3">
+                                          <div className="space-y-1.5">
+                                            <div className="flex items-center justify-between">
+                                              <Label htmlFor={`slide-${sIdx}-poster`} className="text-xs font-semibold">
+                                                Poster Image URL *
+                                              </Label>
+                                              <Button
+                                                type="button"
+                                                variant="secondary"
+                                                size="sm"
+                                                onClick={() => openMediaPicker(`slides.${sIdx}.poster_url`, ["image"], "Choose Poster Image for Slide")}
+                                                className="h-6 text-xs px-2 flex items-center gap-1"
+                                              >
+                                                <ImageIcon className="h-3 w-3" />
+                                                <span>Choose Poster Image</span>
+                                              </Button>
+                                            </div>
+                                            <Input
+                                              id={`slide-${sIdx}-poster`}
+                                              value={effectivePosterUrl || ""}
+                                              onChange={(e) => {
+                                                const copy = [...slidesList];
+                                                copy[sIdx] = { ...copy[sIdx], poster_url: e.target.value };
+                                                handleFieldChange("slides", copy);
+                                              }}
+                                              placeholder="https://... or /assets/... or variant key"
+                                              className="text-xs font-mono"
+                                            />
+                                            <p className="text-[11px] text-muted-foreground">
+                                              This slide renders as a high-resolution photograph on the storefront without video playback.
+                                            </p>
+                                          </div>
+
+                                          {effectivePosterUrl && (
+                                            <div className="flex items-center gap-3 pt-1">
+                                              <div className="relative w-28 aspect-video rounded border overflow-hidden bg-background">
+                                                <img
+                                                  src={effectivePosterUrl}
+                                                  alt={slide.alt_text || "Poster preview"}
+                                                  className="w-full h-full object-cover"
+                                                  onError={(e) => {
+                                                    (e.target as HTMLElement).style.display = "none";
+                                                  }}
+                                                />
+                                              </div>
+                                              <div className="text-xs space-y-0.5">
+                                                <span className="font-medium text-foreground">Current Poster Still Preview</span>
+                                                <p className="text-[10px] text-muted-foreground truncate max-w-sm">{effectivePosterUrl}</p>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      )}
+
+                                      {/* Controls for Video + Poster and Video Only */}
+                                      {slideMediaType !== "image" && (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                          <div className="space-y-1.5">
+                                            <div className="flex items-center justify-between">
+                                              <Label htmlFor={`slide-${sIdx}-video`} className="text-xs font-semibold">
+                                                Video URL *
+                                              </Label>
+                                              <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => openMediaPicker(`slides.${sIdx}.video_url`, ["video"], "Choose Video for Slide")}
+                                                className="h-6 text-xs px-2"
+                                              >
+                                                <Film className="h-3 w-3 mr-1" /> Choose Video
+                                              </Button>
+                                            </div>
+                                            <Input
+                                              id={`slide-${sIdx}-video`}
+                                              value={slide.video_url || ""}
+                                              onChange={(e) => {
+                                                const copy = [...slidesList];
+                                                copy[sIdx] = { ...copy[sIdx], video_url: e.target.value };
+                                                handleFieldChange("slides", copy);
+                                              }}
+                                              placeholder="/optimized/videos/KALYANI-720p.mp4 or https://..."
+                                              className="text-xs font-mono"
+                                            />
+                                          </div>
+
+                                          {slideMediaType === "video_and_poster" && (
+                                            <div className="space-y-1.5">
+                                              <div className="flex items-center justify-between">
+                                                <Label htmlFor={`slide-${sIdx}-poster`} className="text-xs font-semibold">
+                                                  Poster Image URL *
+                                                </Label>
+                                                <Button
+                                                  type="button"
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  onClick={() => openMediaPicker(`slides.${sIdx}.poster_url`, ["image"], "Choose Poster Image for Slide")}
+                                                  className="h-6 text-xs px-2"
+                                                >
+                                                  <ImageIcon className="h-3 w-3 mr-1" /> Choose Poster Image
+                                                </Button>
+                                              </div>
+                                              <Input
+                                                id={`slide-${sIdx}-poster`}
+                                                value={slide.poster_url || ""}
+                                                onChange={(e) => {
+                                                  const copy = [...slidesList];
+                                                  copy[sIdx] = { ...copy[sIdx], poster_url: e.target.value };
+                                                  handleFieldChange("slides", copy);
+                                                }}
+                                                placeholder="/optimized/videos/KALYANI-poster.webp or https://..."
+                                                className="text-xs font-mono"
+                                              />
+                                            </div>
+                                          )}
+                                        </div>
+                                      )}
                                     </div>
-                                    <Input
-                                      id={`slide-${sIdx}-poster`}
-                                      value={slide.poster_url || ""}
-                                      onChange={(e) => {
-                                        const copy = [...slidesList];
-                                        copy[sIdx] = { ...copy[sIdx], poster_url: e.target.value };
-                                        handleFieldChange("slides", copy);
-                                      }}
-                                      placeholder="/optimized/videos/KALYANI-poster.webp or https://..."
-                                      className="text-xs font-mono"
-                                    />
-                                  </div>
-                                </div>
+                                  );
+                                })()}
 
                                 {/* Slide Duration & Alt Text */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1010,65 +1311,71 @@ export default function SiteUpdate() {
                         />
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Label htmlFor="hero-video">Fallback Film / Video URL (Optional)</Label>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => openMediaPicker("video_url", ["video"])}
-                              className="h-6 text-xs px-2"
-                            >
-                              <Film className="h-3 w-3 mr-1" /> Choose Video
-                            </Button>
-                          </div>
-                          <Input
-                            id="hero-video"
-                            value={(formData.video_url as string) || ""}
-                            onChange={(e) => handleFieldChange("video_url", e.target.value)}
-                            placeholder="https://... or variant key"
-                          />
+                      {isStructureOnly ? (
+                        <div className="p-3 bg-muted/20 border border-border/50 rounded-md text-xs text-muted-foreground flex items-center justify-between">
+                          <span>Fallback video and poster URLs are preserved in the draft payload while in Structure-Only Mode.</span>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              setMode("show-media");
+                              toast.success("Show Media mode restored");
+                            }}
+                            className="h-6 text-xs"
+                          >
+                            <Eye className="h-3 w-3 mr-1 text-emerald-600" /> Show Media
+                          </Button>
                         </div>
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Label htmlFor="hero-poster">Fallback Poster Image URL (Optional)</Label>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => openMediaPicker("poster_url", ["image"])}
-                              className="h-6 text-xs px-2"
-                            >
-                              <ImageIcon className="h-3 w-3 mr-1" /> Choose Poster
-                            </Button>
+                      ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <Label htmlFor="hero-video">Fallback Film / Video URL (Optional)</Label>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => openMediaPicker("video_url", ["video"])}
+                                className="h-6 text-xs px-2"
+                              >
+                                <Film className="h-3 w-3 mr-1" /> Choose Video
+                              </Button>
+                            </div>
+                            <Input
+                              id="hero-video"
+                              value={(formData.video_url as string) || ""}
+                              onChange={(e) => handleFieldChange("video_url", e.target.value)}
+                              placeholder="https://... or variant key"
+                            />
                           </div>
-                          <Input
-                            id="hero-poster"
-                            value={(formData.poster_url as string) || ""}
-                            onChange={(e) => handleFieldChange("poster_url", e.target.value)}
-                            placeholder="https://..."
-                          />
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <Label htmlFor="hero-poster">Fallback Poster Image URL (Optional)</Label>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => openMediaPicker("poster_url", ["image"])}
+                                className="h-6 text-xs px-2"
+                              >
+                                <ImageIcon className="h-3 w-3 mr-1" /> Choose Poster
+                              </Button>
+                            </div>
+                            <Input
+                              id="hero-poster"
+                              value={(formData.poster_url as string) || ""}
+                              onChange={(e) => handleFieldChange("poster_url", e.target.value)}
+                              placeholder="https://..."
+                            />
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 )}
 
-                {/* 1.5 Homepage Video Placeholder Editor */}
-                {activeKey === "home.video" && (
-                  <HomepageVideoSectionEditor
-                    formData={formData as unknown as HomepageVideoPayload}
-                    publishedPayload={currentSection?.published_payload as unknown as HomepageVideoPayload}
-                    hasUnpublishedChanges={Boolean(currentSection?.has_unpublished_changes)}
-                    publishedAt={currentSection?.published_at}
-                    version={currentSection?.version ?? 1}
-                    onChange={handleFieldChange}
-                    onOpenMediaPicker={(field, types) => openMediaPicker(field, types)}
-                  />
-                )}
-
+                
                 {/* 2. Craft Editor */}
                 {activeKey === "home.craft" && (
                   <div className="space-y-4">
@@ -1779,7 +2086,7 @@ export default function SiteUpdate() {
         onOpenChange={setMediaPickerOpen}
         onSelect={handleMediaSelect}
         allowedTypes={mediaPickerType}
-        title="Select Media for Section"
+        title={mediaPickerTitle}
       />
     </div>
   );

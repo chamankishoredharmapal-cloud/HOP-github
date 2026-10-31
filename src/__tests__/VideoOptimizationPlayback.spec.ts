@@ -2,28 +2,56 @@ import { test, expect, type Page } from "@playwright/test";
 
 const HOMEPAGE_URL = "http://localhost:8080/";
 
-const openHomepage = async (page: Page) => {
+const openHomepage = async (page: Page, options?: { mode?: "structure-only" | "show-media" }) => {
+  const targetUrl = options?.mode === "show-media" ? `${HOMEPAGE_URL}?media_mode=show-media` : HOMEPAGE_URL;
   const sectionsLoaded = page
     .waitForResponse(
       (response) => response.url().includes("get_published_site_sections"),
       { timeout: 15000 },
     )
     .catch(() => null);
-  await page.goto(HOMEPAGE_URL, { waitUntil: "domcontentloaded" });
+  await page.goto(targetUrl, { waitUntil: "domcontentloaded" });
   await sectionsLoaded;
   await page.waitForTimeout(150);
 };
 
 test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
-  test("Desktop: Hero video loads 720p, autoplays, pauses on scroll out, resumes on scroll back", async ({ page }) => {
+  test("Structure-Only Mode (Default): Homepage renders neutral structural surfaces with strictly 0 videos and 0 images", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openHomepage(page);
+
+    const counts = await page.evaluate(() => ({
+      videos: document.querySelectorAll("video").length,
+      imgs: document.querySelectorAll("img").length,
+      mode: document.documentElement.getAttribute("data-media-mode"),
+    }));
+
+    expect(counts.mode).toBe("structure-only");
+    expect(counts.videos).toBe(0);
+    expect(counts.imgs).toBe(0);
+
+    const hero = page.locator(".hop-threshold");
+    await expect(hero).toBeVisible();
+    await expect(hero.locator("video")).toHaveCount(0);
+  });
+
+  test("Desktop: Hero video loads 720p, autoplays, pauses on scroll out, resumes on scroll back", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await openHomepage(page, { mode: "show-media" });
 
     // 1. Check Hero Section Video Element
     const heroSection = page.locator(".hop-threshold");
     await expect(heroSection).toBeVisible();
 
     const heroVideo = heroSection.locator("video").first();
+    const hasVideo = (await heroVideo.count()) > 0;
+    if (!hasVideo) {
+      // In Poster Image Only mode, verify poster image is rendered and no video is mounted
+      const posterImg = heroSection.locator("img.hop-threshold__slide-poster").first();
+      await expect(posterImg).toBeVisible();
+      await expect(heroSection.locator("video")).toHaveCount(0);
+      return;
+    }
     await expect(heroVideo).toBeVisible({ timeout: 10000 });
 
     // Verify source tags
@@ -73,12 +101,20 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
 
   test("Mobile: Hero video includes mobile 540p media query source", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await openHomepage(page);
+    await openHomepage(page, { mode: "show-media" });
 
     const heroSection = page.locator(".hop-threshold");
     await expect(heroSection).toBeVisible();
 
     const heroVideo = heroSection.locator("video").first();
+    const hasVideo = (await heroVideo.count()) > 0;
+    if (!hasVideo) {
+      // In Poster Image Only mode on mobile, verify poster image is rendered and no video is mounted
+      const posterImg = heroSection.locator("img.hop-threshold__slide-poster").first();
+      await expect(posterImg).toBeVisible();
+      await expect(heroSection.locator("video")).toHaveCount(0);
+      return;
+    }
     await expect(heroVideo).toBeVisible({ timeout: 10000 });
 
     const mobileSource = heroVideo.locator('source[media="(max-width: 767px)"]');
@@ -90,7 +126,7 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
 
   test("Collection Films: Only mount and play on viewport entry", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
-    await openHomepage(page);
+    await openHomepage(page, { mode: "show-media" });
 
     // Collection films down the page should be attached
     const collectionsSection = page.locator("#collections");
@@ -108,7 +144,7 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
 
   test("Cinematic Hero Slider: arrows navigate immediately, dots sync, autoplay continues, zero text", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
-    await openHomepage(page);
+    await openHomepage(page, { mode: "show-media" });
 
     const heroSection = page.locator(".hop-threshold");
     await expect(heroSection).toBeVisible();
@@ -202,10 +238,14 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
       .evaluate((el) => getComputedStyle(el).transitionDuration);
     expect(activeTransition).toContain("0.85s");
 
-    // Incoming video should be playing.
+    // Incoming active slide: if video exists, verify it plays; if poster-only, verify poster image renders.
     await page.waitForFunction(() => {
-      const v = document.querySelector(".hop-threshold .hop-threshold__slide--active video") as HTMLVideoElement;
-      return v && !v.paused;
+      const activeSlide = document.querySelector(".hop-threshold .hop-threshold__slide--active");
+      if (!activeSlide) return false;
+      const v = activeSlide.querySelector("video") as HTMLVideoElement;
+      if (v) return !v.paused;
+      const img = activeSlide.querySelector("img.hop-threshold__slide-poster") as HTMLImageElement;
+      return Boolean(img && img.getAttribute("src"));
     }, { timeout: 10000 });
   });
 
@@ -344,13 +384,15 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
     expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(50);
   });
 
-  test("Homepage Section Sequence: Hero Slider -> Living Saree Placeholder -> Kalyani Film", async ({ page }) => {
+  test("Homepage Section Sequence: Hero Slider -> Kalyani Film Direct Transition (No Placeholder)", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openHomepage(page);
 
-    // 1. Verify exact sequence of top 3 sections
-    const mainChildren = page.locator("main.hop-home > *");
-    const childTags = await mainChildren.evaluateAll((elements) =>
+    // 1. Verify strict section sequence: Hero Slider -> Collections (Kalyani) directly
+    const mainElement = page.locator("main.hop-home");
+    await expect(mainElement).toBeVisible();
+
+    const childTags = await mainElement.locator("> *").evaluateAll((elements) =>
       elements.map((el) => ({
         tag: el.tagName.toLowerCase(),
         className: el.className,
@@ -361,43 +403,19 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
     // Filter out status aside (preview banner if present) and screen-reader h1
     const contentSections = childTags.filter((el) => el.tag !== "aside" && el.tag !== "h1");
 
-    expect(contentSections.length).toBeGreaterThanOrEqual(3);
+    expect(contentSections.length).toBeGreaterThanOrEqual(2);
 
     // Section 1: Cinematic hero video slider
     expect(contentSections[0].className).toContain("hop-threshold");
 
-    // Section 2: Living Saree full-width video placeholder immediately below
-    expect(contentSections[1].className).toContain("hop-living-saree");
+    // Section 2: Kalyani collection film directly follows hero (no video placeholder between them)
+    expect(contentSections[1].id).toBe("collections");
 
-    // Section 3: Kalyani collection film immediately below
-    expect(contentSections[2].id).toBe("collections");
+    // Verify video placeholder section is completely removed from homepage
+    const livingSareePlaceholder = page.locator(".hop-living-saree");
+    await expect(livingSareePlaceholder).toHaveCount(0);
 
-    // 2. Living Saree 16:9 landscape ratio verification on desktop
-    const livingSaree = page.locator(".hop-living-saree");
-    const livingSareeFrame = livingSaree.locator(".hop-living-saree__frame");
-    await expect(livingSaree).toBeVisible();
-    await expect(livingSareeFrame).toBeVisible();
-
-    const frameBox = await livingSareeFrame.boundingBox();
-    expect(frameBox).not.toBeNull();
-    if (frameBox) {
-      const ratio = frameBox.width / frameBox.height;
-      // 16 / 9 = ~1.7778
-      expect(Math.abs(ratio - 16 / 9)).toBeLessThan(0.05);
-    }
-
-    // 3. Living Saree must be completely empty: no text, captions, overlays, labels, borders, or placeholder content
-    const livingSareeButtons = livingSaree.locator("button");
-    await expect(livingSareeButtons).toHaveCount(0);
-
-    const livingSareeText = livingSaree.locator("h1, h2, h3, h4, h5, h6, p, span, a, label");
-    await expect(livingSareeText).toHaveCount(0);
-
-    // No placeholder image when no video is configured
-    const livingSareeImages = livingSaree.locator("img");
-    await expect(livingSareeImages).toHaveCount(0);
-
-    // 4. Verify hero slider has only the two edge arrows and zero text
+    // 2. Verify hero slider controls
     const heroControls = page.locator(".hop-threshold__controls");
     await expect(heroControls).toHaveCount(0);
     const heroButtons = page.locator(".hop-threshold button");
@@ -407,29 +425,25 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
     const heroText = page.locator(".hop-threshold h1, .hop-threshold h2, .hop-threshold h3, .hop-threshold p, .hop-threshold a");
     await expect(heroText).toHaveCount(0);
 
-    // 5. Verify zero artificial margin between sections
+    // 3. Verify deliberate vertical spacing between hero and collection photo placeholders
     const heroBox = await page.locator(".hop-threshold").boundingBox();
-    const livingSareeBox = await livingSaree.boundingBox();
-    const collectionsBox = await page.locator("#collections").boundingBox();
+    const firstFilmBox = await page.locator(".hop-collection-film").first().boundingBox();
 
-    if (heroBox && livingSareeBox) {
-      // The top of living saree touches the bottom of the hero slider
-      const topGap = Math.abs(livingSareeBox.y - (heroBox.y + heroBox.height));
-      expect(topGap).toBeLessThanOrEqual(2);
+    if (heroBox && firstFilmBox) {
+      const visibleGap = firstFilmBox.y - (heroBox.y + heroBox.height);
+      expect(visibleGap).toBeGreaterThanOrEqual(40);
     }
 
-    if (livingSareeBox && collectionsBox) {
-      // The top of collections touches the bottom of living saree
-      const bottomGap = Math.abs(collectionsBox.y - (livingSareeBox.y + livingSareeBox.height));
-      expect(bottomGap).toBeLessThanOrEqual(2);
-    }
+    // 4. Confirm collection photo placeholders contain no visible collection names or captions
+    const collectionsHeadings = page.locator("#collections h1, #collections h2, #collections h3, .hop-collection-film__identity");
+    await expect(collectionsHeadings).toHaveCount(0);
   });
 
-  test("Living Saree Mobile 16:9 Landscape Ratio & Clean Visual Frame", async ({ page }) => {
+  test("Mobile Breakpoint: Hero-to-Kalyani Visible Spacing, Clean Placeholders, and No Video Placeholder", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await openHomepage(page);
 
-    // Verify hero slider on mobile contains dot indicators, centered, with 4 dots and 1 active dot
+    // Verify hero slider on mobile
     const heroSection = page.locator(".hop-threshold");
     await expect(heroSection).toBeVisible();
     await expect(heroSection.locator("button")).toHaveCount(2);
@@ -442,37 +456,24 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
     expect(await mobileIndicators.locator(".hop-threshold__indicator-dot").count()).toBeGreaterThanOrEqual(2);
     await expect(mobileIndicators.locator(".hop-threshold__indicator-dot--active")).toHaveCount(1);
 
+    // Verify no video placeholder on mobile between hero and collections
     const livingSaree = page.locator(".hop-living-saree");
-    const livingSareeFrame = livingSaree.locator(".hop-living-saree__frame");
-    await expect(livingSaree).toBeVisible();
-    await expect(livingSareeFrame).toBeVisible();
+    await expect(livingSaree).toHaveCount(0);
 
-    // Verify 16:9 ratio on mobile
-    const frameBox = await livingSareeFrame.boundingBox();
-    expect(frameBox).not.toBeNull();
-    if (frameBox) {
-      const ratio = frameBox.width / frameBox.height;
-      expect(Math.abs(ratio - 16 / 9)).toBeLessThan(0.05);
+    // Verify intentional mobile vertical spacing between hero and first collection placeholder
+    const heroBox = await heroSection.boundingBox();
+    const firstFilmBox = await page.locator(".hop-collection-film").first().boundingBox();
+    if (heroBox && firstFilmBox) {
+      const visibleGap = firstFilmBox.y - (heroBox.y + heroBox.height);
+      expect(visibleGap).toBeGreaterThanOrEqual(30);
     }
 
-    // Verify clean visual frame with zero controls or text on mobile
-    await expect(livingSaree.locator("button")).toHaveCount(0);
-    await expect(livingSaree.locator("h1, h2, h3, h4, p, span, a")).toHaveCount(0);
-    await expect(livingSaree.locator("img")).toHaveCount(0);
+    // Confirm no collection names displayed on mobile photo placeholders
+    const collectionsHeadings = page.locator("#collections h1, #collections h2, #collections h3, .hop-collection-film__identity");
+    await expect(collectionsHeadings).toHaveCount(0);
 
-    // Verify flush spacing on mobile
-    const heroBox = await page.locator(".hop-threshold").boundingBox();
-    const livingSareeBox = await livingSaree.boundingBox();
-    const collectionsBox = await page.locator("#collections").boundingBox();
-
-    if (heroBox && livingSareeBox) {
-      const topGap = Math.abs(livingSareeBox.y - (heroBox.y + heroBox.height));
-      expect(topGap).toBeLessThanOrEqual(2);
-    }
-
-    if (livingSareeBox && collectionsBox) {
-      const bottomGap = Math.abs(collectionsBox.y - (livingSareeBox.y + livingSareeBox.height));
-      expect(bottomGap).toBeLessThanOrEqual(2);
-    }
+    // Collections is visible directly on mobile
+    const collections = page.locator("#collections");
+    await expect(collections).toBeVisible();
   });
 });

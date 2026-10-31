@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useMediaDisplayMode } from "@/contexts/MediaDisplayContext";
 import { resolveOptimizedVideo } from "@/data/collectionVideos";
 import {
   getSupabaseOptimizedUrl,
@@ -27,6 +28,7 @@ export const CinematicHeroSlider = ({
   className = "",
   onSlideChange,
 }: CinematicHeroSliderProps) => {
+  const { isStructureOnly } = useMediaDisplayMode();
   // 1. Resolve and filter active slides
   const activeSlides = useMemo<HeroSlide[]>(() => {
     const rawSlides = section?.slides;
@@ -313,7 +315,7 @@ export const CinematicHeroSlider = ({
           }
         }
       },
-      { rootMargin: "200px 0px", threshold: 0.05 },
+      { rootMargin: "0px", threshold: 0.05 },
     );
 
     observer.observe(el);
@@ -376,9 +378,26 @@ export const CinematicHeroSlider = ({
           const isTransitioningOut = index === transitioningFromIndex;
           const isVisible = isActive || isTransitioningOut;
 
-          // Resolve multi-resolution video variants
-          const resolved = resolveOptimizedVideo(slide.video_url);
-          const rawPoster = slide.poster_url || resolved.poster || heroStill;
+          const isImageFile = (url?: string) =>
+            Boolean(url && /\.(png|jpe?g|webp|avif|gif)(\?.*)?$/i.test(url.trim()));
+
+          // Check slide media type:
+          // Poster-only if explicitly "image", if poster_url exists without video_url,
+          // or if video_url points to a static image file rather than a video stream
+          const isPosterOnly =
+            slide.media_type === "image" ||
+            (Boolean(slide.poster_url && slide.poster_url.trim()) && (!slide.video_url || slide.video_url.trim() === "")) ||
+            Boolean(slide.video_url && isImageFile(slide.video_url));
+
+          // Resolve multi-resolution video variants only when video is applicable
+          const resolved = !isPosterOnly && slide.video_url
+            ? resolveOptimizedVideo(slide.video_url)
+            : { src: "", mobileSrc: "", poster: "" };
+
+          const rawPoster =
+            slide.poster_url ||
+            (isImageFile(slide.video_url) ? slide.video_url : resolved.poster) ||
+            heroStill;
           const isSupabasePoster = isSupabaseStorageUrl(rawPoster);
           const posterUrl = isSupabasePoster
             ? getSupabaseOptimizedUrl(rawPoster, { width: 1600 })
@@ -387,17 +406,18 @@ export const CinematicHeroSlider = ({
             ? getSupabaseSrcSet(rawPoster, [640, 1024, 1600, 2560]) || undefined
             : undefined;
 
-          const videoSrc = slide.video_url || resolved.src;
-          const mobileVideoSrc = slide.mobile_video_url || resolved.mobileSrc;
+          const videoSrc = !isPosterOnly ? (slide.video_url || resolved.src) : "";
+          const mobileVideoSrc = !isPosterOnly ? (slide.mobile_video_url || resolved.mobileSrc) : "";
           const altText =
             slide.alt_text?.trim() ||
             section?.alt_text?.trim() ||
-            "House of Padmavati collection film";
+            (isPosterOnly ? "House of Padmavati collection image" : "House of Padmavati collection film");
 
           // Video mounting strategy:
           // Only the active slide (and outgoing slide during transition) mounts a <video> element.
           // Other slides render their high-res poster and do not eagerly download video streams.
-          const shouldMountVideo = isActive || isTransitioningOut;
+          // Poster-only slides strictly never mount video.
+          const shouldMountVideo = !isPosterOnly && (isActive || isTransitioningOut) && Boolean(videoSrc);
           const preloadStrategy = isActive ? "auto" : "none";
 
           return (
@@ -416,65 +436,74 @@ export const CinematicHeroSlider = ({
               aria-roledescription="slide"
               aria-label={`Slide ${index + 1} of ${totalSlides}`}
             >
-              {/* Poster frame: ALWAYS rendered underneath video layer for instant visual stability and zero black frames */}
-              <div className="hop-threshold__slide-poster-layer">
-                <img
-                  src={posterUrl}
-                  srcSet={posterSrcSet}
-                  sizes="100vw"
-                  alt={altText}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  draggable={false}
-                  {...(index === 0 ? { fetchpriority: "high" } : {})}
-                  className="hop-threshold__slide-poster"
-                />
-              </div>
-
-              {/* Native <video> layer: rendered on-demand, plays only when active */}
-              {shouldMountVideo && videoSrc && (
+              {/* Structure-Only Mode: render plain neutral structural frame; zero images, zero videos */}
+              {isStructureOnly ? (
                 <div
-                  className="hop-threshold__slide-video-layer"
-                  style={{ opacity: videoReadyStates[index] ? 1 : (isActive ? 1 : 0) }}
-                >
-                  <video
-                    ref={(el) => {
-                      if (el) {
-                        videoRefs.current.set(index, el);
-                        if (isActive && inView && isTabVisible) {
-                          playVideoSafe(el);
-                        }
-                      } else {
-                        videoRefs.current.delete(index);
-                      }
-                    }}
-                    className="hop-threshold__slide-video"
-                    poster={posterUrl}
-                    autoPlay={!reducedMotion && isActive}
-                    muted
-                    loop
-                    playsInline
-                    preload={preloadStrategy}
-                    aria-label={altText}
-                    onLoadedData={() => {
-                      setVideoReadyStates((prev) => ({ ...prev, [index]: true }));
-                      if (isActive && inView && isTabVisible) {
-                        const v = videoRefs.current.get(index);
-                        if (v) playVideoSafe(v);
-                      }
-                    }}
-                    onError={() => {
-                      // Graceful handling of unavailable sources / network errors
-                      // Slider will still automatically advance when the timer expires
-                      setVideoReadyStates((prev) => ({ ...prev, [index]: false }));
-                    }}
-                  >
-                    {mobileVideoSrc && (
-                      <source media="(max-width: 767px)" src={mobileVideoSrc} type="video/mp4" />
-                    )}
-                    <source src={videoSrc} type="video/mp4" />
-                  </video>
-                </div>
+                  className="hop-threshold__slide-poster-layer bg-jasmine-deep/30 w-full h-full select-none transition-colors"
+                  aria-hidden="true"
+                  role="presentation"
+                />
+              ) : (
+                <>
+                  {/* Poster frame: ALWAYS rendered underneath video layer for instant visual stability and zero black frames */}
+                  <div className="hop-threshold__slide-poster-layer">
+                    <img
+                      src={posterUrl}
+                      srcSet={posterSrcSet}
+                      sizes="100vw"
+                      alt={altText}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      draggable={false}
+                      {...(index === 0 ? { fetchpriority: "high" } : {})}
+                      className="hop-threshold__slide-poster"
+                    />
+                  </div>
+
+                  {/* Native <video> layer: rendered on-demand, plays only when active */}
+                  {shouldMountVideo && videoSrc && (
+                    <div
+                      className="hop-threshold__slide-video-layer"
+                      style={{ opacity: videoReadyStates[index] ? 1 : (isActive ? 1 : 0) }}
+                    >
+                      <video
+                        ref={(el) => {
+                          if (el) {
+                            videoRefs.current.set(index, el);
+                            if (isActive && inView && isTabVisible) {
+                              playVideoSafe(el);
+                            }
+                          } else {
+                            videoRefs.current.delete(index);
+                          }
+                        }}
+                        className="hop-threshold__slide-video"
+                        poster={posterUrl}
+                        autoPlay={!reducedMotion && isActive}
+                        muted
+                        loop
+                        playsInline
+                        preload={preloadStrategy}
+                        aria-label={altText}
+                        onLoadedData={() => {
+                          setVideoReadyStates((prev) => ({ ...prev, [index]: true }));
+                          if (isActive && inView && isTabVisible) {
+                            const v = videoRefs.current.get(index);
+                            if (v) playVideoSafe(v);
+                          }
+                        }}
+                        onError={() => {
+                          setVideoReadyStates((prev) => ({ ...prev, [index]: false }));
+                        }}
+                      >
+                        {mobileVideoSrc && (
+                          <source media="(max-width: 767px)" src={mobileVideoSrc} type="video/mp4" />
+                        )}
+                        <source src={videoSrc} type="video/mp4" />
+                      </video>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           );

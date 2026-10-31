@@ -67,12 +67,65 @@ describe("Cinematic Hero Video Slider — Specification & Behavior Suite", () =>
       expect(invalidUnder1.success).toBe(false);
     });
 
-    it("requires a video_url for each slide", () => {
+    it("requires a video_url for each video-based slide", () => {
       const missingVideo = HeroSlideSchema.safeParse({
         id: "s1",
         video_url: "",
       });
       expect(missingVideo.success).toBe(false);
+    });
+
+    it("validates compliant Poster Image Only slide without requiring video_url", () => {
+      const posterOnlySlide = {
+        id: "slide-poster-only",
+        media_type: "image" as const,
+        poster_url: "https://kbvjmcnaaogkbnerjcoc.supabase.co/storage/v1/object/public/product-images/test-poster.jpg",
+        duration: 4,
+        is_active: true,
+        title: "Poster Slide Title",
+        alt_text: "Handwoven saree portrait",
+      };
+
+      const result = HeroSlideSchema.safeParse(posterOnlySlide);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.video_url).toBeFalsy();
+        expect(result.data.poster_url).toContain("test-poster.jpg");
+      }
+    });
+
+    it("rejects Poster Image Only slide if poster_url is missing or blank", () => {
+      const invalidPosterOnly = {
+        id: "slide-poster-empty",
+        media_type: "image" as const,
+        poster_url: "",
+        duration: 5,
+      };
+
+      const result = HeroSlideSchema.safeParse(invalidPosterOnly);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toContain("Poster Image URL is required");
+      }
+    });
+
+    it("validates Video + Poster slides requiring both fields", () => {
+      const validVideoAndPoster = {
+        id: "slide-both",
+        media_type: "video_and_poster" as const,
+        video_url: "/optimized/videos/KALYANI-720p.mp4",
+        poster_url: "/optimized/videos/KALYANI-poster.webp",
+        duration: 5,
+      };
+      expect(HeroSlideSchema.safeParse(validVideoAndPoster).success).toBe(true);
+
+      const missingPoster = {
+        id: "slide-missing-poster",
+        media_type: "video_and_poster" as const,
+        video_url: "/optimized/videos/KALYANI-720p.mp4",
+        poster_url: "",
+      };
+      expect(HeroSlideSchema.safeParse(missingPoster).success).toBe(false);
     });
 
     it("supports configurable arbitrary number of slides in HeroBannerPayloadSchema", () => {
