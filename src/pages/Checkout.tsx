@@ -25,6 +25,7 @@ import {
 } from "@/services/customerAddressService";
 import { useMetadata } from "@/hooks/useMetadata";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { StickyCta } from "@/components/hop/StickyCta";
 import { formatPaise, formatRupees } from "@/lib/formatPrice";
 import { supabase } from "@/integrations/supabase/client";
@@ -794,7 +795,7 @@ export default function Checkout() {
                   {items.map((item) => (
                     <div key={item.id} className="flex gap-4">
                       <div className="w-14 h-18 shrink-0 bg-jasmine-deep rounded overflow-hidden">
-                        <img
+                        <MediaImage
                           src={getSupabaseOptimizedUrl(item.image, { width: 120, height: 160, resize: "cover" })}
                           alt={item.name}
                           onError={(event) => {
@@ -1274,7 +1275,7 @@ export default function Checkout() {
                   {items.map((item) => (
                     <div key={item.id} className="flex gap-4 items-center">
                       <div className="w-16 h-20 shrink-0 bg-jasmine-deep/10 rounded overflow-hidden">
-                        <img
+                        <MediaImage
                           src={getSupabaseOptimizedUrl(item.image, { width: 160, height: 200, resize: "cover" })}
                           alt={item.name}
                           loading="lazy"

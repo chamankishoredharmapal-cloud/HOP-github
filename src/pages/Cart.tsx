@@ -8,6 +8,7 @@ import { StickyCta } from "@/components/hop/StickyCta";
 import { useCart } from "@/contexts/CartContext";
 import { useMetadata } from "@/hooks/useMetadata";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { formatPaise, formatRupees } from "@/lib/formatPrice";
 
 const formatLinePrice = formatPaise;
@@ -66,7 +67,7 @@ export default function Cart() {
                 className="flex gap-5 pb-6 border-b border-border/60"
               >
                 <div className="w-24 h-32 md:w-28 md:h-36 shrink-0 bg-jasmine-deep rounded overflow-hidden">
-                  <img
+                  <MediaImage
                     src={getSupabaseOptimizedUrl(item.image, { width: 160, height: 192, resize: "cover" })}
                     alt={item.name}
                     loading="lazy"

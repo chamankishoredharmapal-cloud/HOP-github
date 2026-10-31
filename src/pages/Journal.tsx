@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { useMetadata } from "@/hooks/useMetadata";
 import { useJournalArticles } from "@/hooks/useJournal";
 import heroStill from "@/assets/hop-hero.jpg";
@@ -46,7 +47,7 @@ const Journal = () => {
                     imgClassName="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
                   />
                 ) : (
-                  <img
+                  <MediaImage
                     src={featured.img}
                     alt={featured.image_alt || featured.title}
                     onError={(e) => {
@@ -93,7 +94,7 @@ const Journal = () => {
                           imgClassName="w-full h-full object-cover"
                         />
                       ) : (
-                        <img
+                        <MediaImage
                           src={article.img}
                           alt={article.image_alt || article.title}
                           loading="lazy"

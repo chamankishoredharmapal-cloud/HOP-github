@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import {
   Dialog,
   DialogContent,
@@ -405,7 +406,7 @@ export default function StudioJournal() {
               >
                 <div className="flex items-start sm:items-center gap-4 min-w-0">
                   <div className="h-14 w-20 shrink-0 rounded overflow-hidden border border-border/40 bg-muted/40">
-                    <img
+                    <MediaImage
                       src={article.img}
                       alt={article.image_alt || article.title}
                       className="h-full w-full object-cover"
@@ -667,7 +668,7 @@ export default function StudioJournal() {
               {img ? (
                 <div className="flex items-center gap-3">
                   <div className="h-16 w-24 rounded overflow-hidden border border-border/60 bg-black/10 shrink-0">
-                    <img src={img} alt="Cover preview" className="h-full w-full object-cover" />
+                    <MediaImage src={img} alt="Cover preview" className="h-full w-full object-cover" />
                   </div>
                   <div className="min-w-0 flex-1 space-y-1">
                     <Input

@@ -2,6 +2,7 @@ import * as React from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight, X, ZoomIn } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import {
   getSupabaseOptimizedUrl,
   getSupabaseSrcSet,
@@ -154,7 +155,7 @@ export const ProductGallery = React.memo(function ProductGallery({
             return (
               <div key={index} className="min-w-0 shrink-0 grow-0 basis-full">
                 <div className={`relative ${aspectRatioClass} w-full`} style={{ transform: isZoomed ? `scale(${zoomLevel})` : "scale(1)", transformOrigin: zoomOrigin }}>
-                  <img
+                  <MediaImage
                     src={optimizedSrc}
                     srcSet={srcSet || undefined}
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
@@ -233,7 +234,7 @@ export const ProductGallery = React.memo(function ProductGallery({
               aria-label={`Show product image ${index + 1}`}
               aria-pressed={index === selectedIndex}
             >
-              <img
+              <MediaImage
                 src={thumbSrc}
                 alt=""
                 className="w-full h-full object-cover"

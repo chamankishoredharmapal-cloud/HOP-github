@@ -5,6 +5,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { useMetadata, addJsonLd } from "@/hooks/useMetadata";
 import { useJournalArticle } from "@/hooks/useJournal";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import heroStill from "@/assets/hop-hero.jpg";
 
@@ -99,7 +100,7 @@ const JournalDetail = () => {
                 imgClassName="w-full h-full object-cover"
               />
             ) : (
-              <img
+              <MediaImage
                 src={article.img}
                 alt={article.image_alt || article.title}
                 onError={(e) => {

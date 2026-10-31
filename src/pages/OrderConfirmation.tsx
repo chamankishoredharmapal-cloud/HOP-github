@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useMetadata } from "@/hooks/useMetadata";
 import { fetchOrderConfirmation } from "@/services/orderService";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
+import { MediaImage } from "@/components/ui/MediaSurface";
 
 function formatPrice(paise: number): string {
   return `₹ ${(paise / 100).toLocaleString("en-IN")}`;
@@ -107,7 +108,7 @@ export default function OrderConfirmation() {
                       <div key={i} className="flex gap-4">
                         <div className="w-14 h-16 shrink-0 bg-jasmine-deep rounded overflow-hidden">
                           {item.imageUrl ? (
-                            <img
+                            <MediaImage
                               src={getSupabaseOptimizedUrl(item.imageUrl, { width: 112, height: 128, resize: "cover" })}
                               alt={item.productName}
                               loading="lazy"

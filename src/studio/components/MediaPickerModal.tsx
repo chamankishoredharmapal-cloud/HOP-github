@@ -220,12 +220,7 @@ export function MediaPickerModal({
                           </span>
                         </div>
                       ) : (
-                        <img
-                          src={item.url}
-                          alt={item.alt_text || item.name}
-                          loading="lazy"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                        />
+                        <img src={item.url} alt={item.alt_text || item.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                       )}
                       {isSelected && (
                         <div className="absolute top-1.5 right-1.5 bg-primary text-primary-foreground rounded-full p-0.5 shadow">

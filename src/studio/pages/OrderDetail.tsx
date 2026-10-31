@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Package, Truck, CheckCircle, XCircle, Edit3, Save, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -225,7 +226,7 @@ export default function OrderDetail() {
                   {order.items.map((item) => (
                     <div key={item.id} className="flex items-center gap-4 py-3 first:pt-0 last:pb-0">
                       {item.image_url ? (
-                        <img
+                        <MediaImage
                           src={item.image_url}
                           alt={item.product_name}
                           className="h-16 w-16 rounded-md object-cover bg-jasmine-deep"

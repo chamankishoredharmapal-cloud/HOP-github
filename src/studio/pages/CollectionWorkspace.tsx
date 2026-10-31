@@ -17,6 +17,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { MediaImage } from "@/components/ui/MediaSurface";
+import { useMediaDisplayMode } from "@/contexts/MediaDisplayContext";
 import {
   useStudioCollection,
   useCreateCollection,
@@ -52,6 +54,7 @@ export default function CollectionWorkspace() {
 
   const [form, setForm] = useState<CollectionFormData>(emptyForm);
   const [saving, setSaving] = useState(false);
+  const { isStructureOnly } = useMediaDisplayMode();
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadingVideo, setUploadingVideo] = useState(false);
   const [videoValidation, setVideoValidation] = useState<VideoValidationResult | null>(null);
@@ -597,16 +600,22 @@ export default function CollectionWorkspace() {
               {form.hero_video_url ? (
                 <div className="space-y-3">
                   <div className="relative aspect-[16/9] rounded-lg overflow-hidden border border-border/60 bg-black shadow-md group">
-                    <video
-                      ref={videoPlayerRef}
-                      src={form.hero_video_url}
-                      poster={form.hero_image_url || undefined}
-                      className="w-full h-full object-cover"
-                      controls
-                      playsInline
-                      preload="metadata"
-                      loop
-                    />
+                    {isStructureOnly ? (
+                      <div className="w-full h-full bg-jasmine-deep/30 flex items-center justify-center text-xs text-muted-foreground font-mono select-none">
+                        Structure Only Active
+                      </div>
+                    ) : (
+                      <video
+                        ref={videoPlayerRef}
+                        src={form.hero_video_url}
+                        poster={form.hero_image_url || undefined}
+                        className="w-full h-full object-cover"
+                        controls
+                        playsInline
+                        preload="metadata"
+                        loop
+                      />
+                    )}
                   </div>
 
                   {/* Film controls & metadata */}
@@ -732,7 +741,7 @@ export default function CollectionWorkspace() {
               {form.hero_image_url ? (
                 <div className="space-y-3">
                   <div className="relative aspect-[16/10] rounded-lg overflow-hidden border border-border/60 bg-jasmine-deep">
-                    <img
+                    <MediaImage
                       src={form.hero_image_url}
                       alt={`${form.name} Poster`}
                       className="w-full h-full object-cover"

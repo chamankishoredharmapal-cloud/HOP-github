@@ -1,4 +1,5 @@
 import PageLayout from "@/components/layout/PageLayout";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { useMetadata } from "@/hooks/useMetadata";
 import { Link } from "react-router-dom";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
@@ -18,7 +19,7 @@ const QuietWedding = () => {
     <PageLayout darkHero>
       <main className="hop-page">
         <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
-          <img
+          <MediaImage
             src={fabricImg}
             alt="A close study of heavy silk and zari"
             className="absolute inset-0 w-full h-full object-cover"
@@ -48,19 +49,19 @@ const QuietWedding = () => {
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
               <figure className="space-y-3">
                 <div className="aspect-[3/4] overflow-hidden bg-jasmine-deep">
-                  <img src={pattuImg} alt="A zari border study" className="w-full h-full object-cover" />
+                  <MediaImage src={pattuImg} alt="A zari border study" className="w-full h-full object-cover" />
                 </div>
                 <figcaption className="hop-lookbook__caption">The border, held close.</figcaption>
               </figure>
               <figure className="space-y-3 pt-12 sm:pt-20">
                 <div className="aspect-[3/4] overflow-hidden bg-jasmine-deep">
-                  <img src={organzaImg} alt="A folded silk study" className="w-full h-full object-cover" />
+                  <MediaImage src={organzaImg} alt="A folded silk study" className="w-full h-full object-cover" />
                 </div>
                 <figcaption className="hop-lookbook__caption">Light finding its way through the weave.</figcaption>
               </figure>
               <figure className="col-span-2 space-y-3 sm:ml-[20%]">
                 <div className="aspect-[16/9] overflow-hidden bg-jasmine-deep">
-                  <img src={linenImg} alt="A natural fibre texture study" className="w-full h-full object-cover" />
+                  <MediaImage src={linenImg} alt="A natural fibre texture study" className="w-full h-full object-cover" />
                 </div>
                 <figcaption className="hop-lookbook__caption">The final layer: something chosen to keep.</figcaption>
               </figure>

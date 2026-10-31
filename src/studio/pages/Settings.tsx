@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback, type ComponentType, type ReactNode, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Save, Store, Phone, Truck, Search, Shield, Film, Activity, CheckCircle2, AlertTriangle, XCircle, RefreshCw, FileText, ExternalLink } from "lucide-react";
+import { Save, Store, Phone, Truck, Search, Shield, Activity, CheckCircle2, AlertTriangle, XCircle, RefreshCw, FileText, ExternalLink, Layers, LayoutGrid, Eye } from "lucide-react";
 import { useSettings, useSaveSettings } from "../hooks/useSettings";
-import { useUploadMedia } from "../hooks/useMedia";
+import { useMediaDisplayMode } from "@/contexts/MediaDisplayContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,7 +10,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { validateVideoFile } from "../utils/videoValidation";
 import type { StoreSettings } from "../types/settings";
 import { diagnosticsService, type SystemIntegrityReport } from "../services/diagnosticsService";
 
@@ -59,6 +58,7 @@ export default function Settings() {
   const navigate = useNavigate();
   const { data: settings, isLoading, error } = useSettings();
   const saveSettings = useSaveSettings();
+  const { mode, isStructureOnly, setMode } = useMediaDisplayMode();
   const [form, setForm] = useState<StoreSettings | null>(null);
   const [activeTab, setActiveTab] = useState("brand");
   const [diagnosticsReport, setDiagnosticsReport] = useState<SystemIntegrityReport | null>(null);
@@ -103,47 +103,6 @@ export default function Settings() {
     saveSettings.mutate(form);
   };
 
-  // Cinematic video upload
-  const videoInputRef = useRef<HTMLInputElement>(null);
-  const uploadMedia = useUploadMedia();
-
-  const handleCinematicVideoUpload = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      toast.info("Validating film specifications...");
-      const validation = await validateVideoFile(file);
-      if (!validation.isValid) {
-        toast.error(validation.error || "Video rejected");
-        if (videoInputRef.current) videoInputRef.current.value = "";
-        return;
-      }
-
-      if (validation.warning) {
-        toast.warning(validation.warning);
-      }
-
-      try {
-        const result = await uploadMedia.mutateAsync({ file, targetBucket: "HOP-films" });
-        update("homepage_cinematic_video", "video_url", result.url);
-        // Use the extracted poster if available
-        if (validation.posterFile) {
-          // Upload poster as well
-          const posterResult = await uploadMedia.mutateAsync({
-            file: validation.posterFile,
-            targetBucket: "HOP-films",
-          });
-          update("homepage_cinematic_video", "poster_url", posterResult.url);
-        }
-        toast.success("Cinematic video uploaded successfully");
-      } finally {
-        if (videoInputRef.current) videoInputRef.current.value = "";
-      }
-    },
-    [uploadMedia, update],
-  );
-
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -179,6 +138,98 @@ export default function Settings() {
         </Button>
       </div>
 
+      {/* Centralized Media Display Mode Control */}
+      <Card className="border-border/70 bg-card shadow-xs">
+        <CardHeader className="pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <CardTitle className="font-serif text-base font-medium text-foreground flex items-center gap-2">
+                <Layers className="h-4.5 w-4.5 text-primary" />
+                Media Display Mode
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-1">
+                Authoritative site-wide switch controlling whether visual media (photographs &amp; films) or pure UI structure is rendered.
+              </p>
+            </div>
+            <span
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium shrink-0 self-start sm:self-auto ${
+                isStructureOnly
+                  ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30"
+                  : "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30"
+              }`}
+            >
+              <span className={`h-1.5 w-1.5 rounded-full ${isStructureOnly ? "bg-amber-500 animate-pulse" : "bg-emerald-500"}`} />
+              {isStructureOnly ? "Structure Only Active" : "Show Media Active"}
+            </span>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid sm:grid-cols-2 gap-3">
+            <button
+              type="button"
+              role="radio"
+              aria-checked={isStructureOnly}
+              onClick={() => {
+                if (mode !== "structure-only") {
+                  setMode("structure-only");
+                  toast.success("Structure Only mode activated", {
+                    description: "All rendered images and videos hidden across the site and Studio previews.",
+                  });
+                }
+              }}
+              className={`flex flex-col text-left p-4 rounded-lg border transition-all cursor-pointer ${
+                isStructureOnly
+                  ? "border-primary bg-primary/5 ring-1 ring-primary shadow-xs"
+                  : "border-border/60 hover:border-border hover:bg-muted/40"
+              }`}
+            >
+              <div className="flex items-center justify-between w-full mb-1.5">
+                <span className="font-medium text-sm text-foreground flex items-center gap-2">
+                  <LayoutGrid className="h-4 w-4 text-primary" />
+                  Structure Only
+                </span>
+                {isStructureOnly && <CheckCircle2 className="h-4 w-4 text-primary" />}
+              </div>
+              <span className="text-xs text-muted-foreground leading-relaxed">
+                Hide every rendered image and video across the entire website and Studio previews.
+                Neutral structural surfaces preserve exact layout dimensions with zero network media requests.
+              </span>
+            </button>
+
+            <button
+              type="button"
+              role="radio"
+              aria-checked={!isStructureOnly}
+              onClick={() => {
+                if (mode !== "show-media") {
+                  setMode("show-media");
+                  toast.success("Show Media mode restored", {
+                    description: "Existing photographs, hero video slides, and collection films are now visible.",
+                  });
+                }
+              }}
+              className={`flex flex-col text-left p-4 rounded-lg border transition-all cursor-pointer ${
+                !isStructureOnly
+                  ? "border-primary bg-primary/5 ring-1 ring-primary shadow-xs"
+                  : "border-border/60 hover:border-border hover:bg-muted/40"
+              }`}
+            >
+              <div className="flex items-center justify-between w-full mb-1.5">
+                <span className="font-medium text-sm text-foreground flex items-center gap-2">
+                  <Eye className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  Show Media
+                </span>
+                {!isStructureOnly && <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />}
+              </div>
+              <span className="text-xs text-muted-foreground leading-relaxed">
+                Restore normal media rendering using the existing media configuration.
+                Photographs, hero carousel, and collection films display normally without requiring re-uploads.
+              </span>
+            </button>
+          </div>
+        </CardContent>
+      </Card>
+
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
           <TabsTrigger value="brand"><Store className="h-4 w-4 mr-1.5" />Brand</TabsTrigger>
@@ -186,7 +237,6 @@ export default function Settings() {
           <TabsTrigger value="shipping"><Truck className="h-4 w-4 mr-1.5" />Shipping</TabsTrigger>
           <TabsTrigger value="seo"><Search className="h-4 w-4 mr-1.5" />SEO</TabsTrigger>
           <TabsTrigger value="security"><Shield className="h-4 w-4 mr-1.5" />Security</TabsTrigger>
-          <TabsTrigger value="cinematic"><Film className="h-4 w-4 mr-1.5" />Cinematic Video</TabsTrigger>
           <TabsTrigger value="resilience"><Activity className="h-4 w-4 mr-1.5" />Resilience &amp; Health</TabsTrigger>
         </TabsList>
 
@@ -454,77 +504,6 @@ export default function Settings() {
                 ))}
               </div>
             </Field>
-          </SectionCard>
-        </TabsContent>
-
-        <TabsContent value="cinematic" className="mt-6 space-y-6">
-          <SectionCard title="Homepage Cinematic Video" icon={Film}>
-            <div className="p-4 rounded-lg bg-primary/5 border border-primary/20 space-y-2 mb-4">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-xs text-primary flex items-center gap-1.5">
-                  <Film className="h-4 w-4" />
-                  Dedicated Video Management Section in Site Update
-                </span>
-                <Button
-                  size="sm"
-                  variant="default"
-                  onClick={() => navigate("/studio/site-update?section=home.video")}
-                  className="text-xs h-7 flex items-center gap-1"
-                >
-                  <span>Open Video Workspace</span>
-                  <ExternalLink className="h-3 w-3" />
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Homepage video is now managed with full Draft &amp; Publish protection, video preview, mobile 9:16 portrait video support, and automatic poster frame extraction in the Site Update workspace.
-              </p>
-            </div>
-
-            <p className="text-xs text-muted-foreground mb-4">
-              Full-bleed cinematic film displayed between the hero and collection discovery on the homepage.
-              Upload an MP4 (H.264) file up to 30MB, 60s max duration. A poster frame will be extracted automatically.
-            </p>
-            <Field label="Video URL">
-              <Input
-                value={form.homepage_cinematic_video.video_url}
-                onChange={(e) => update("homepage_cinematic_video", "video_url", e.target.value)}
-                placeholder="https://.../HOP-films/your-film.mp4"
-              />
-            </Field>
-            <Field label="Poster URL (optional)">
-              <Input
-                value={form.homepage_cinematic_video.poster_url}
-                onChange={(e) => update("homepage_cinematic_video", "poster_url", e.target.value)}
-                placeholder="https://.../HOP-films/your-film-poster.jpg"
-              />
-            </Field>
-            <Field label="Alt Text">
-              <Input
-                value={form.homepage_cinematic_video.alt_text}
-                onChange={(e) => update("homepage_cinematic_video", "alt_text", e.target.value)}
-                placeholder="House of Padmavati — Homepage cinematic film"
-              />
-            </Field>
-            <div className="flex items-center gap-2 pt-2">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => {
-                  if (videoInputRef.current) videoInputRef.current.click();
-                }}
-                disabled={saveSettings.isPending}
-              >
-                <Film className="h-3.5 w-3.5 mr-1.5" />
-                Upload Video
-              </Button>
-              <input
-                ref={videoInputRef}
-                type="file"
-                accept="video/mp4,video/webm"
-                className="hidden"
-                onChange={handleCinematicVideoUpload}
-              />
-            </div>
           </SectionCard>
         </TabsContent>
 

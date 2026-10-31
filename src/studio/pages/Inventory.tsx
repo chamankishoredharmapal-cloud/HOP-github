@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { DashboardCard } from "../components/DashboardCard";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import {
   useInventoryMetrics,
   useInventoryList,
@@ -242,7 +243,7 @@ export default function Inventory() {
                       <td className="py-3 pr-3">
                         <div className="w-10 h-10 rounded-md bg-jasmine-deep overflow-hidden flex-shrink-0">
                           {item.image_url ? (
-                            <img
+                            <MediaImage
                               src={item.image_url}
                               alt={item.name}
                               className="w-full h-full object-cover"

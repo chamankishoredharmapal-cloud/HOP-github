@@ -1,4 +1,5 @@
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { MediaImage } from "@/components/ui/MediaSurface";
 
 interface ImageTextBlockProps {
   image: string;
@@ -29,7 +30,7 @@ const ImageTextBlock = ({
             imgClassName="w-full aspect-square lg:aspect-auto lg:h-[800px] object-cover"
           />
         ) : (
-          <img
+          <MediaImage
             src={image}
             alt={imageAlt}
             className="w-full aspect-square lg:aspect-auto lg:h-[800px] object-cover"

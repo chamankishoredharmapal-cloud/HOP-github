@@ -17,6 +17,7 @@ import { fetchProductsByCollection } from "@/services/productService";
 import { fetchCollectionBySlugWithLegacyFallback } from "@/services/collectionService";
 import { COLLECTION_VIDEOS } from "@/data/collectionVideos";
 import { Film } from "@/components/hop/Film";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { getCollectionDescriptor } from "@/data/collectionDescriptors";
 import { getWorld, getCanonicalCollectionSlug, getCollectionDisplayName } from "@/data/collectionWorlds";
 import { Selvedge } from "@/components/hop/Selvedge";
@@ -169,7 +170,7 @@ const Category = () => {
                 preload="metadata"
               />
           ) : collection?.hero_image_url ? (
-            <img
+            <MediaImage
               src={collection.hero_image_url}
               alt={displayName}
               className="w-full h-full object-cover"
@@ -293,7 +294,7 @@ const Category = () => {
                     <div className="hop-product-card__image relative aspect-[4/5] overflow-hidden rounded-sm bg-jasmine-deep">
                       <Link to={`/product/${p.id}`} aria-label={`View ${p.name}`}>
                         {heroImage ? (
-                          <img
+                          <MediaImage
                             src={getSupabaseOptimizedUrl(heroImage, { width: 640 })}
                             srcSet={getSupabaseSrcSet(heroImage, [360, 640, 840]) || undefined}
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

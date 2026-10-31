@@ -4,6 +4,7 @@ import { ArrowRight, Heart } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import PageLayout from "@/components/layout/PageLayout";
 import { ProductGallery } from "@/components/hop/ProductGallery";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { StickyCta } from "@/components/hop/StickyCta";
 import { formatPaise } from "@/lib/formatPrice";
 import { useCart } from "@/contexts/CartContext";
@@ -306,7 +307,7 @@ const ProductDetail = () => {
                 <Link key={p.id} to={`/product/${p.id}`} className="group">
                   <div className="aspect-[4/5] overflow-hidden bg-jasmine-deep rounded-sm">
                     {p.images[0] ? (
-                      <img
+                      <MediaImage
                         src={p.images[0].url}
                         alt={p.name}
                         loading="lazy"

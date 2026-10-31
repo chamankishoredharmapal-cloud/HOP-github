@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { MediaDisplayProvider } from "@/contexts/MediaDisplayContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
@@ -91,6 +92,7 @@ const App = () => (
     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
     <HydrationBoundary state={typeof window !== "undefined" ? (window as any).__REACT_QUERY_STATE__ : undefined}>
       <TooltipProvider>
+      <MediaDisplayProvider>
       <CartProvider>
         <WishlistProvider>
           <AuthProvider>
@@ -165,6 +167,7 @@ const App = () => (
         </AuthProvider>
       </WishlistProvider>
       </CartProvider>
+      </MediaDisplayProvider>
     </TooltipProvider>
     </HydrationBoundary>
   </QueryClientProvider>

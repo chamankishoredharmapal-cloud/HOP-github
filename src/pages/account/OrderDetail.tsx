@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useMetadata } from "@/hooks/useMetadata";
 import { fetchCustomerOrderDetail } from "@/services/customerOrderService";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
+import { MediaImage } from "@/components/ui/MediaSurface";
 
 const statusLabel: Record<string, string> = {
   pending_payment: "Pending payment",
@@ -116,7 +117,7 @@ export default function OrderDetail() {
                className="hop-page__panel flex items-center gap-4 p-3"
             >
               {item.imageUrl ? (
-                <img
+                <MediaImage
                   src={getSupabaseOptimizedUrl(item.imageUrl, { width: 128, height: 128, resize: "cover" })}
                   alt={item.productName}
                   loading="lazy"

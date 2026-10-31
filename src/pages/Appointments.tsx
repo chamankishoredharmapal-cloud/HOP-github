@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { useMetadata } from "@/hooks/useMetadata";
 // House photography only: the former Unsplash stock URL returned 404.
 import fabricImg from "@/assets/hop-fabric.jpg";
@@ -28,7 +29,7 @@ const Appointments = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-80px)]">
           {/* Left: Imagery — context before action on mobile */}
           <section className="relative h-[32svh] lg:h-auto order-1">
-            <img
+            <MediaImage
               src={fabricImg}
               alt="Folded silks in the atelier"
               className="absolute inset-0 w-full h-full object-cover"

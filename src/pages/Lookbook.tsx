@@ -1,5 +1,6 @@
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import PageLayout from "@/components/layout/PageLayout";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { useMetadata } from "@/hooks/useMetadata";
 import { Link } from "react-router-dom";
 // House photography only: the former Unsplash stock URLs returned 404 and
@@ -25,7 +26,7 @@ const Lookbook = () => {
         {/* Hero Section */}
          <section className="hop-lookbook__hero relative flex items-center justify-center overflow-hidden" style={{ height: "100svh", minHeight: "min(100svh, 700px)" }}>
           <div className="absolute inset-0 z-0">
-            <img
+            <MediaImage
               src={fabricImg}
                alt="Macro detail of fine silver zari on a Kalyani border"
                className="hop-lookbook__hero"
@@ -49,7 +50,7 @@ const Lookbook = () => {
               {/* Image 1 */}
               <figure className="md:col-span-5 md:mt-24 space-y-4">
                 <div className="aspect-[4/5] overflow-hidden">
-                  <img 
+                  <MediaImage 
                     src={pattuImg} 
                     alt="Detail of a heavy border"
                     className="w-full h-full object-cover"
@@ -63,7 +64,7 @@ const Lookbook = () => {
               {/* Image 2 */}
               <figure className="md:col-span-7 space-y-4">
                 <div className="aspect-[16/9] overflow-hidden">
-                  <img 
+                  <MediaImage 
                     src={heroImg} 
                     alt="The interaction of warp and weft"
                     className="w-full h-full object-cover"
@@ -77,7 +78,7 @@ const Lookbook = () => {
               {/* Image 3 */}
               <figure className="md:col-span-8 md:col-start-3 space-y-4 md:mt-16">
                 <div className="aspect-[3/2] overflow-hidden">
-                  <img 
+                  <MediaImage 
                     src={linenImg} 
                     alt="Pure zari detail"
                     className="w-full h-full object-cover"
@@ -101,7 +102,7 @@ const Lookbook = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
               <figure className="space-y-4">
                 <div className="aspect-[3/4] overflow-hidden">
-                  <img 
+                  <MediaImage 
                     src={organzaImg} 
                     alt="Saree in motion"
                     className="w-full h-full object-cover"
@@ -114,7 +115,7 @@ const Lookbook = () => {
 
               <figure className="space-y-4 md:mt-48">
                 <div className="aspect-[3/4] overflow-hidden">
-                  <img 
+                  <MediaImage 
                     src={linenImg} 
                     alt="Saree pleats"
                     className="w-full h-full object-cover"
@@ -132,7 +133,7 @@ const Lookbook = () => {
         <section className="py-section-lg px-6 text-center">
           <div className="max-w-lg mx-auto space-y-12">
             <div className="aspect-square overflow-hidden bg-card/50 p-8 rounded-sm">
-              <img 
+              <MediaImage 
                 src={giftImg} 
                 alt="Folded saree in a box"
                 className="w-full h-full object-cover rounded-sm mix-blend-multiply"

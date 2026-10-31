@@ -6,6 +6,7 @@ import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 import { useMetadata } from "@/hooks/useMetadata";
 import { getSupabaseOptimizedUrl } from "@/lib/supabaseImage";
+import { MediaImage } from "@/components/ui/MediaSurface";
 
 export default function Wishlist() {
   useMetadata({
@@ -74,7 +75,7 @@ export default function Wishlist() {
              <div key={item.id} className="hop-product-card group">
                <div className="hop-product-card__image relative aspect-[3/4] overflow-hidden rounded-sm bg-jasmine-deep">
                 <Link to={`/product/${item.id.replace("product-", "")}`} aria-label={`View ${item.name}`}>
-                  <img
+                  <MediaImage
                     src={getSupabaseOptimizedUrl(item.image, { width: 480, resize: "cover" })}
                     alt={item.name}
                     loading="lazy"

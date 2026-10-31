@@ -48,6 +48,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { validateVideoFile } from "../utils/videoValidation";
+import { MediaImage } from "@/components/ui/MediaSurface";
+import { useMediaDisplayMode } from "@/contexts/MediaDisplayContext";
 
 function formatDate(iso: string): string {
   try {
@@ -62,6 +64,7 @@ function formatDate(iso: string): string {
 }
 
 export default function Media() {
+  const { isStructureOnly } = useMediaDisplayMode();
   const [statusFilter, setStatusFilter] = useState<"active" | "trash">("active");
   const [params, setParams] = useState<MediaListParams>({
     search: "",
@@ -410,17 +413,12 @@ export default function Media() {
                       </span>
                     </div>
                   ) : (
-                    <img
-                      src={item.url}
-                      alt={item.alt_text || item.name}
-                      className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                      loading="lazy"
-                    />
+                    <img src={item.url} alt={item.alt_text || item.name} className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300" loading="lazy" />
                   )}
 
                   {/* Bucket tag */}
                   <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-background/80 backdrop-blur-xs text-[9px] font-mono text-muted-foreground">
-                    {item.bucket === "HOP-films" ? "HOP-films" : "product-images"}
+                    {(item.bucket as string) === "HOP-films" || (item.bucket as string) === "hop-films" ? "HOP-films" : "product-images"}
                   </span>
                 </div>
 

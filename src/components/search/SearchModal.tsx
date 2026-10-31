@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Search, X, Package, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { searchAll, type SearchResult } from "@/services/searchService";
 
 function formatPrice(paise: number): string {
@@ -189,7 +190,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                 >
                    <div className="hop-search-dialog__result-image">
                     {result.image ? (
-                      <img src={result.image} alt="" className="w-full h-full object-cover" />
+                      <MediaImage src={result.image} alt="" className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <Package className="h-5 w-5 text-ink-soft/30" />

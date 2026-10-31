@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Plus, Edit3, Film, Globe, Eye, Sparkles } from "lucide-react";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useStudioCollections } from "../hooks/useCollections";
@@ -87,7 +88,7 @@ export default function StudioCollections() {
                   {/* Thumbnail / Poster */}
                   <div className="relative h-14 w-20 shrink-0 rounded overflow-hidden border border-border/40 bg-muted/40">
                     {c.hero_image_url ? (
-                      <img
+                      <MediaImage
                         src={c.hero_image_url}
                         alt=""
                         className="h-full w-full object-cover"

@@ -20,6 +20,8 @@ import {
   buildSrcSet,
   type MediaAssetEntry,
 } from "@/lib/mediaManifest";
+import { useMediaDisplayMode } from "@/contexts/MediaDisplayContext";
+import { cn } from "@/lib/utils";
 
 export interface OptimizedImageProps {
   /**
@@ -70,6 +72,19 @@ export const OptimizedImage = ({
   className,
   imgClassName,
 }: OptimizedImageProps) => {
+  const { isStructureOnly } = useMediaDisplayMode();
+
+  // In structure-only mode: preserve layout geometry with a neutral surface; zero media requests
+  if (isStructureOnly) {
+    return (
+      <div
+        className={cn("w-full h-full bg-jasmine-deep/35 select-none transition-colors", className, imgClassName)}
+        aria-hidden="true"
+        role="presentation"
+      />
+    );
+  }
+
   const asset: MediaAssetEntry | undefined = resolveAsset(assetPath);
 
   // If no manifest entry exists, render a plain <img> with the original asset
