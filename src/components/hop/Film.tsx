@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Pause, Play } from "lucide-react";
+import { useMediaDisplayMode } from "@/contexts/MediaDisplayContext";
 import {
   getSupabaseOptimizedUrl,
   getSupabaseSrcSet,
@@ -40,7 +41,9 @@ export const Film = ({
 
   // Priority videos (hero) mount immediately. Lazy videos mount once near viewport.
   const [isMounted, setIsMounted] = useState(priority);
-  const [inView, setInView] = useState(priority);
+  // Viewport intersection state: always false initially until confirmed by observer,
+  // preventing off-screen videos from autoplaying on page load.
+  const [inView, setInView] = useState(false);
 
   // Reduced-motion preference check
   const [reducedMotion] = useState(
@@ -49,6 +52,10 @@ export const Film = ({
       !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
   );
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const { isStructureOnly } = useMediaDisplayMode();
+
+
 
   const doPlay = useCallback(
     (v: HTMLVideoElement) => {
@@ -79,10 +86,10 @@ export const Film = ({
   }, [doPlay]);
 
   // Viewport lifecycle:
-  // - Approaching viewport (rootMargin: 300px): mount <video> tag
-  // - Inside viewport: play
-  // - Scrolled out of viewport: pause to save CPU and network
+  // - Intersecting viewport (rootMargin: 0px): mount <video> tag and play
+  // - Scrolled out of viewport: pause immediately to release decoder/CPU/network
   useEffect(() => {
+    if (isStructureOnly) return;
     const frame = frameRef.current;
     if (!frame || !src) return;
 
@@ -95,14 +102,14 @@ export const Film = ({
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
             setIsMounted(true);
             setInView(true);
             const v = videoRef.current;
             if (v && v.paused) {
               doPlay(v);
             }
-          } else {
+          } else if (!entry.isIntersecting || entry.intersectionRatio < 0.05) {
             setInView(false);
             const v = videoRef.current;
             if (v && !v.paused) {
@@ -111,22 +118,56 @@ export const Film = ({
           }
         }
       },
-      { rootMargin: "300px 0px", threshold: 0.05 },
+      { rootMargin: "0px", threshold: [0, 0.05, 0.15] },
     );
 
     io.observe(frame);
-    return () => io.disconnect();
-  }, [src, doPlay]);
+    return () => {
+      io.disconnect();
+    };
+  }, [src, doPlay, isStructureOnly]);
+
+  // Tab visibility change listener: pause when tab hidden, resume when tab visible and element in view
+  useEffect(() => {
+    if (isStructureOnly) return;
+    const handleVisibilityChange = () => {
+      const isVisible = document.visibilityState === "visible";
+      const v = videoRef.current;
+      if (!v) return;
+      if (!isVisible && !v.paused) {
+        v.pause();
+      } else if (isVisible && inView && v.paused) {
+        doPlay(v);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [inView, doPlay, isStructureOnly]);
+
+  // Teardown on unmount: ensure video pauses and frees media resources
+  useEffect(() => {
+    const ref = videoRef;
+    return () => {
+      const v = ref.current;
+      if (v && !v.paused) {
+        v.pause();
+      }
+    };
+  }, []);
 
   // When video mounts and is ready, trigger playback if in view
   useEffect(() => {
+    if (isStructureOnly) return;
     const v = videoRef.current;
     if (!v || !src || !inView) return;
     if (v.readyState >= 2) {
       setVideoReady(true);
       doPlay(v);
     }
-  }, [src, inView, doPlay]);
+  }, [src, inView, doPlay, isStructureOnly]);
 
   const handleLoadedData = useCallback(
     (e: React.SyntheticEvent<HTMLVideoElement>) => {
@@ -143,6 +184,20 @@ export const Film = ({
     setVideoReady(false);
     setIsPlaying(false);
   }, []);
+
+  // In structure-only mode: render pure structural frame with zero media requests and zero video mounting
+  if (isStructureOnly) {
+    return (
+      <div
+        ref={frameRef}
+        className={`relative overflow-hidden bg-jasmine-deep/35 ${className} ${
+          isCinematic ? "rounded-2xl lg:rounded-3xl" : "rounded-sm"
+        } gallery-shadow select-none transition-colors`}
+        aria-hidden="true"
+        role="presentation"
+      />
+    );
+  }
 
   return (
     <div
@@ -181,7 +236,7 @@ export const Film = ({
             ref={videoRef}
             className="w-full h-full object-cover"
             poster={poster}
-            autoPlay={!reducedMotion}
+            autoPlay={!reducedMotion && inView}
             muted
             loop
             playsInline

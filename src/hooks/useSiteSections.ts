@@ -124,17 +124,11 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
     }
   }
 
-  // 2. Video Placeholder (home.video / home.cinematic_video)
-  let video: HomepageVideoPayload = DEFAULT_HOMEPAGE_VIDEO_PAYLOAD;
-  const rawVideo = rawSections["home.video"] || rawSections["home.cinematic_video"];
-  if (rawVideo) {
-    const parsed = HomepageVideoPayloadSchema.safeParse(rawVideo);
-    if (parsed.success) {
-      video = parsed.data;
-    } else {
-      console.warn("Invalid payload for home.video, falling back to defaults:", parsed.error.issues);
-    }
-  }
+  // 2. Video Placeholder (obsolete - disabled by site-wide policy)
+  const video: HomepageVideoPayload = {
+    ...DEFAULT_HOMEPAGE_VIDEO_PAYLOAD,
+    is_enabled: false,
+  };
 
   // 3. Craft (home.craft)
   let craft: CraftStoryPayload = DEFAULT_CRAFT_PAYLOAD;

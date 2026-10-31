@@ -4,8 +4,8 @@ import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Film } from "@/components/hop/Film";
+import { MediaImage } from "@/components/ui/MediaSurface";
 import { CinematicHeroSlider } from "@/components/hop/CinematicHeroSlider";
-import { LivingSareeSection } from "@/components/hop/LivingSareeSection";
 import { Monogram } from "@/components/hop/Monogram";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
@@ -15,7 +15,6 @@ import { COLLECTION_WORLDS, getWorld, getCollectionDisplayName, getCollectionRoo
 import { fetchCollections } from "@/services/collectionService";
 import { fetchFeaturedCollection } from "@/services/collectionService";
 import { fetchFeaturedProduct, type StorefrontProduct } from "@/services/productService";
-import { fetchPublicStoreSettings } from "@/services/settingsService";
 import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import { useSiteSections } from "@/hooks/useSiteSections";
 import type {
@@ -136,7 +135,7 @@ const EditorialImage = ({
   }
 
   return (
-    <img
+    <MediaImage
       src={displaySrc}
       alt={alt}
       loading={priority ? "eager" : "lazy"}
@@ -184,11 +183,9 @@ const Philosophy = ({ section }: { section?: PhilosophyPayload }) => {
 const CollectionFilmChapter = ({
   world,
   record,
-  priority = false,
 }: {
   world: CollectionWorld;
   record: Awaited<ReturnType<typeof fetchCollections>>[number] | undefined;
-  priority?: boolean;
 }) => {
   const rawFilm = record?.hero_video_url || world.slug;
   const resolved = resolveOptimizedVideo(rawFilm);
@@ -196,8 +193,7 @@ const CollectionFilmChapter = ({
   const poster = record?.hero_image_url || resolved.poster || copy?.image || "";
   const film = resolved.src;
   const mobileFilm = resolved.mobileSrc;
-  // Canonical identity: the visible title, chapter class, and link follow
-  // the world (YŪGEN), never the legacy database record (Spandana).
+  // Canonical identity: internal labels and link follow the world
   const name = getCollectionDisplayName(record?.slug, record?.name) || world.name;
   const slug = getCollectionRoomSlug(record?.slug);
 
@@ -217,17 +213,10 @@ const CollectionFilmChapter = ({
           poster={poster}
           alt={record?.hero_image_url ? `${name} — collection film` : copy?.alt || `${name} — collection film`}
           className="hop-collection-film__media"
-          preload="metadata"
-          priority={priority}
+          preload="none"
+          priority={false}
+          showControls={false}
         />
-        <span className="hop-collection-film__veil" aria-hidden="true" />
-        <span className="hop-collection-film__identity">
-          <Monogram variant="signature" className="hop-collection-film__mark" />
-          <h2 className="hop-editorial-name hop-collection-film__name">{name}</h2>
-          {world.emotion && (
-            <span className="hop-collection-film__emotion">{world.emotion}</span>
-          )}
-        </span>
       </Link>
     </article>
   );
@@ -266,12 +255,11 @@ const CollectionRooms = () => {
   return (
     <section id="collections" className="hop-collections" aria-labelledby="collections-title">
       <div className="hop-collection-films" aria-label="HOP collection worlds">
-        {chapters.map(({ world, record }, index) => (
+        {chapters.map(({ world, record }) => (
           <CollectionFilmChapter
             key={world.slug}
             world={world}
             record={record}
-            priority={index === 0}
           />
         ))}
       </div>
@@ -294,7 +282,7 @@ const Craft = ({ section }: { section?: CraftStoryPayload }) => {
   return (
     <section id="craft" className="hop-craft" aria-labelledby="craft-title">
       <div className="hop-craft__image">
-        <img
+        <MediaImage
           src={imageUrl}
           alt={altText}
           loading="lazy"
@@ -381,7 +369,7 @@ const ProductDesire = () => {
   return (
     <section className="hop-product-desire" aria-labelledby="product-desire-title">
       <div className="hop-product-desire__image">
-        <img
+        <MediaImage
           src={image}
           alt={product.images[0]?.alt_text || `${product.name} — featured drape`}
           loading="lazy"
@@ -535,25 +523,7 @@ const Invitation = ({ section }: { section?: InvitationPayload }) => {
 };
 
 export const HomepageExperience = () => {
-  const { data: storeSettings } = useQuery({
-    queryKey: ["storefront", "settings"],
-    queryFn: fetchPublicStoreSettings,
-  });
-
-  const { hero, video, craft, philosophy, ownership, invitation, isPreview } = useSiteSections("home");
-
-  // Resolve video: Priority is given to site_sections "home.video", falling back to storeSettings if unconfigured
-  const isVideoConfiguredInSections = Boolean(video && (video.video_url || video.is_enabled === false));
-  const activeVideo = isVideoConfiguredInSections ? video : null;
-
-  const isEnabled = activeVideo ? activeVideo.is_enabled !== false : true;
-  const videoSrc = activeVideo ? activeVideo.video_url : storeSettings?.homepage_cinematic_video?.video_url;
-  const mobileVideoSrc = activeVideo?.mobile_video_url || undefined;
-  const posterSrc = activeVideo ? activeVideo.poster_url : storeSettings?.homepage_cinematic_video?.poster_url;
-  const altText = activeVideo?.alt_text || storeSettings?.homepage_cinematic_video?.alt_text || "Living Saree visual study";
-  const autoplay = activeVideo ? activeVideo.autoplay !== false : true;
-  const loop = activeVideo ? activeVideo.loop !== false : true;
-  const muted = activeVideo ? activeVideo.muted !== false : true;
+  const { hero, craft, philosophy, ownership, invitation, isPreview } = useSiteSections("home");
 
   return (
     <main className="hop-home">
@@ -572,16 +542,6 @@ export const HomepageExperience = () => {
         </aside>
       )}
       <Threshold section={hero} />
-      <LivingSareeSection
-        src={isEnabled ? (videoSrc || undefined) : undefined}
-        mobileSrc={isEnabled ? (mobileVideoSrc || undefined) : undefined}
-        poster={posterSrc || undefined}
-        alt={altText}
-        isEnabled={isEnabled}
-        autoplay={autoplay}
-        loop={loop}
-        muted={muted}
-      />
       <CollectionRooms />
       <ProductDesire />
       <Craft section={craft} />

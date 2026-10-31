@@ -9,14 +9,15 @@ import {
 } from "@/types/siteSections";
 
 describe("HOP Studios — Homepage Video Management & Integration", () => {
-  it("includes 'home.video' in HOMEPAGE_SECTION_KEYS between hero and craft", () => {
-    expect(HOMEPAGE_SECTION_KEYS).toContain("home.video");
-    const heroIdx = HOMEPAGE_SECTION_KEYS.indexOf("home.hero");
-    const videoIdx = HOMEPAGE_SECTION_KEYS.indexOf("home.video");
-    const craftIdx = HOMEPAGE_SECTION_KEYS.indexOf("home.craft");
-
-    expect(videoIdx).toBeGreaterThan(heroIdx);
-    expect(videoIdx).toBeLessThan(craftIdx);
+  it("excludes 'home.video' from HOMEPAGE_SECTION_KEYS to eliminate obsolete placeholder controls", () => {
+    expect(HOMEPAGE_SECTION_KEYS).not.toContain("home.video");
+    expect(HOMEPAGE_SECTION_KEYS).toEqual([
+      "home.hero",
+      "home.craft",
+      "home.philosophy",
+      "home.ownership",
+      "home.invitation",
+    ]);
   });
 
   it("verifies DEFAULT_HOMEPAGE_VIDEO_PAYLOAD baseline configuration", () => {
