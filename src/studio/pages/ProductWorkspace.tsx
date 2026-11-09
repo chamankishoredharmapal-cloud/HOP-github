@@ -91,7 +91,7 @@ export default function ProductWorkspace() {
       toast.info("Save draft before preview.");
       return;
     }
-    window.open(`/product/${workspaceId}`, "_blank");
+    window.open(`/product/${workspaceId}?studio_preview=true`, "_blank");
   }, [workspaceId]);
 
   const handleUpload = useCallback(async (file: File) => {

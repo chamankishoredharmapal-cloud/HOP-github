@@ -61,6 +61,7 @@ import {
   type SiteSectionRecord,
   HeroBannerPayloadSchema,
   HomepageVideoPayloadSchema,
+  HomepageImagePayloadSchema,
   CraftStoryPayloadSchema,
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
@@ -73,6 +74,7 @@ import {
   type HeroSlide,
   DEFAULT_HOMEPAGE_VIDEO_PAYLOAD,
   type HomepageVideoPayload,
+  DEFAULT_HOMEPAGE_IMAGE_PAYLOAD,
   DEFAULT_CRAFT_PAYLOAD,
   DEFAULT_PHILOSOPHY_PAYLOAD,
   DEFAULT_OWNERSHIP_PAYLOAD,
@@ -87,6 +89,12 @@ import {
 import { toast } from "sonner";
 
 const EMPTY_SECTIONS: SiteSectionRecord[] = [];
+
+const IMAGE_FOCAL_POSITIONS: Record<string, string> = {
+  left: "25% center",
+  center: "center",
+  right: "75% center",
+};
 
 export default function SiteUpdate() {
   const { mode, isStructureOnly, setMode } = useMediaDisplayMode();
@@ -146,7 +154,11 @@ export default function SiteUpdate() {
     let type = "hero_banner";
     let displayName = "Homepage Hero";
 
-    if (activeKey === "home.craft") {
+    if (activeKey === "home.image") {
+      defaultPayload = DEFAULT_HOMEPAGE_IMAGE_PAYLOAD as unknown as Record<string, unknown>;
+      type = "custom_section";
+      displayName = "Homepage Full-Screen Image";
+    } else if (activeKey === "home.craft") {
       defaultPayload = DEFAULT_CRAFT_PAYLOAD as unknown as Record<string, unknown>;
       type = "craft_story";
       displayName = "Homepage Craft (Gangamma)";
@@ -263,7 +275,8 @@ export default function SiteUpdate() {
     let result;
     if (activeKey === "home.hero") {
       result = HeroBannerPayloadSchema.safeParse(formData);
-    
+    } else if (activeKey === "home.image") {
+      result = HomepageImagePayloadSchema.safeParse(formData);
     } else if (activeKey === "home.craft") {
       result = CraftStoryPayloadSchema.safeParse(formData);
     } else if (activeKey === "home.philosophy") {
@@ -313,6 +326,7 @@ export default function SiteUpdate() {
     if (!validateCurrentPayload()) return;
 
     try {
+      let activeVersion = currentSection.version;
       if (isDirty) {
         const saveRes = await saveDraftMutation.mutateAsync({
           key: currentSection.key,
@@ -321,19 +335,19 @@ export default function SiteUpdate() {
         });
         if (!saveRes.success) return;
         setIsDirty(false);
+        activeVersion = saveRes.new_version ?? (currentSection.version + 1);
       }
 
-      const activeVersion = isDirty
-        ? currentSection.version + 1
-        : currentSection.version;
-
-      await publishMutation.mutateAsync({
+      const publishRes = await publishMutation.mutateAsync({
         key: currentSection.key,
         expectedVersion: activeVersion,
         changeSummary: changeSummary.trim() || undefined,
       });
-      setIsPublishDialogOpen(false);
-      setChangeSummary("");
+
+      if (publishRes.success) {
+        setIsPublishDialogOpen(false);
+        setChangeSummary("");
+      }
     } catch {
       // Error handled by mutation onError
     }
@@ -352,9 +366,10 @@ export default function SiteUpdate() {
     handleFieldChange(mediaPickerField, url);
 
     if (mediaPickerField.includes("image_url") && asset.alt_text) {
-      const currentAlt = (formData as Record<string, unknown>).image_alt as string;
+      const altField = activeKey === "home.image" ? "alt_text" : "image_alt";
+      const currentAlt = (formData as Record<string, unknown>)[altField] as string;
       if (!currentAlt || currentAlt.trim() === "") {
-        handleFieldChange("image_alt", asset.alt_text);
+        handleFieldChange(altField, asset.alt_text);
       }
     }
 
@@ -366,6 +381,21 @@ export default function SiteUpdate() {
 
     setMediaPickerOpen(false);
     toast.success("Media selected from library", { description: asset.name });
+  };
+
+  const handleClearImage = () => {
+    const confirmed = window.confirm(
+      "Remove the image from this section? Save and publish the draft to hide it on the storefront."
+    );
+    if (!confirmed) return;
+
+    handleFieldChange("image_url", "");
+    handleFieldChange("mobile_image_url", "");
+    handleFieldChange("alt_text", "");
+    handleFieldChange("focal_point", "center");
+    toast.info("Image cleared in this draft", {
+      description: "Save and publish to remove the full-screen image from the live homepage.",
+    });
   };
 
   const getPreviewUrl = () => {
@@ -551,7 +581,7 @@ export default function SiteUpdate() {
       </div>
 
       {/* Section Selection Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-3">
         {pageSectionKeys.map((key) => {
           const sec = sections.find((s) => s.key === key) || (currentSection.key === key ? currentSection : null);
           const isSelected = activeKey === key;
@@ -1375,8 +1405,123 @@ export default function SiteUpdate() {
                   </div>
                 )}
 
-                
-                {/* 2. Craft Editor */}
+                {/* 2. Full-Screen Image Editor */}
+                {activeKey === "home.image" && (
+                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <Label htmlFor="home-image-url">Desktop Image URL</Label>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => openMediaPicker("image_url", ["image"], "Choose Full-Screen Image")}
+                            className="h-7 gap-1 text-xs"
+                          >
+                            <ImageIcon className="h-3 w-3" /> Upload or Select
+                          </Button>
+                        </div>
+                        <Input
+                          id="home-image-url"
+                          value={(formData.image_url as string) || ""}
+                          onChange={(e) => handleFieldChange("image_url", e.target.value)}
+                          placeholder="/optimized/... or https://..."
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Renders edge-to-edge at full viewport height. Leave blank to hide the section on the storefront.
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <Label htmlFor="home-mobile-image-url">Mobile Image URL (Optional)</Label>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => openMediaPicker("mobile_image_url", ["image"], "Choose Mobile Image")}
+                            className="h-7 gap-1 text-xs"
+                          >
+                            <ImageIcon className="h-3 w-3" /> Upload or Select
+                          </Button>
+                        </div>
+                        <Input
+                          id="home-mobile-image-url"
+                          value={(formData.mobile_image_url as string) || ""}
+                          onChange={(e) => handleFieldChange("mobile_image_url", e.target.value)}
+                          placeholder="Optional portrait crop for screens below 768px"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="home-image-alt">Alt Text *</Label>
+                        <Input
+                          id="home-image-alt"
+                          value={(formData.alt_text as string) || ""}
+                          onChange={(e) => handleFieldChange("alt_text", e.target.value)}
+                          placeholder="Describe the image for screen readers"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="home-image-focal">Mobile Focal Point</Label>
+                        <select
+                          id="home-image-focal"
+                          value={(formData.focal_point as string) || "center"}
+                          onChange={(e) => handleFieldChange("focal_point", e.target.value)}
+                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                        >
+                          <option value="left">Left</option>
+                          <option value="center">Center</option>
+                          <option value="right">Right</option>
+                        </select>
+                      </div>
+
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleClearImage}
+                        disabled={!formData.image_url && !formData.mobile_image_url}
+                        className="gap-2 text-destructive hover:text-destructive"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        Clear Image
+                      </Button>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Storefront Preview</Label>
+                      <div className="relative aspect-[3/4] max-h-[380px] overflow-hidden rounded-md border bg-muted">
+                        {isStructureOnly ? (
+                          <div className="flex h-full items-center justify-center bg-jasmine-deep/35 text-center text-xs text-muted-foreground">
+                            Structure Only Mode
+                          </div>
+                        ) : formData.image_url ? (
+                          <img
+                            src={formData.image_url as string}
+                            alt=""
+                            style={{
+                              objectPosition:
+                                IMAGE_FOCAL_POSITIONS[(formData.focal_point as string) || "center"],
+                            }}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-full flex-col items-center justify-center gap-2 p-4 text-center text-xs text-muted-foreground">
+                            <ImageIcon className="h-8 w-8 opacity-40" />
+                            <span>No image selected. This section will not render publicly.</span>
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Published changes appear between the hero slider and the collections.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* 3. Craft Editor */}
                 {activeKey === "home.craft" && (
                   <div className="space-y-4">
                     <div className="space-y-2">
@@ -2070,7 +2215,10 @@ export default function SiteUpdate() {
           <AlertDialogFooter>
             <AlertDialogCancel disabled={publishMutation.isPending}>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={handlePublishConfirm}
+              onClick={(event) => {
+                event.preventDefault();
+                void handlePublishConfirm();
+              }}
               disabled={publishMutation.isPending}
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >

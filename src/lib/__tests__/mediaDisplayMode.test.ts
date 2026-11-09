@@ -24,8 +24,8 @@ describe("HOP Structure-Only Mode & Media Visibility Controls", () => {
     vi.restoreAllMocks();
   });
 
-  it("defaults initial mode to 'structure-only' per mission specification", () => {
-    expect(DEFAULT_MEDIA_DISPLAY_MODE).toBe("structure-only");
+  it("defaults initial mode to 'show-media' for normal storefront rendering", () => {
+    expect(DEFAULT_MEDIA_DISPLAY_MODE).toBe("show-media");
   });
 
   it("MediaImage renders a neutral structural surface in structure-only mode without <img> tag", () => {
@@ -186,9 +186,9 @@ describe("HOP Structure-Only Mode & Media Visibility Controls", () => {
     window.removeEventListener(MEDIA_DISPLAY_MODE_EVENT, listener);
   });
 
-  it("getStoredMediaDisplayMode returns stored mode or falls back to 'structure-only'", () => {
+  it("getStoredMediaDisplayMode returns stored mode or falls back to 'show-media'", () => {
     localStorage.clear();
-    expect(getStoredMediaDisplayMode()).toBe("structure-only");
+    expect(getStoredMediaDisplayMode()).toBe("show-media");
 
     localStorage.setItem(MEDIA_DISPLAY_MODE_STORAGE_KEY, "show-media");
     expect(getStoredMediaDisplayMode()).toBe("show-media");

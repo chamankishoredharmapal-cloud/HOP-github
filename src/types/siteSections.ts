@@ -215,8 +215,34 @@ export const HomepageVideoPayloadSchema = z.object({
   aspect_ratio: z.enum(["16:9", "9:16"]).default("16:9"),
 });
 
+const HomepageImageUrlSchema = z
+  .string()
+  .max(1000)
+  .refine(
+    (val) => !val || val.startsWith("/") || val.startsWith("https://"),
+    "Image URL must be a relative path (/...) or HTTPS URL (https://)"
+  );
+
+export const HomepageImagePayloadSchema = z
+  .object({
+    image_url: HomepageImageUrlSchema.default(""),
+    mobile_image_url: HomepageImageUrlSchema.default(""),
+    alt_text: z.string().max(250).default(""),
+    focal_point: z.enum(["left", "center", "right"]).default("center"),
+  })
+  .superRefine((payload, ctx) => {
+    if (payload.image_url.trim() && !payload.alt_text.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Alt text is required when an image is selected",
+        path: ["alt_text"],
+      });
+    }
+  });
+
 export type HeroBannerPayload = z.infer<typeof HeroBannerPayloadSchema>;
 export type HomepageVideoPayload = z.infer<typeof HomepageVideoPayloadSchema>;
+export type HomepageImagePayload = z.infer<typeof HomepageImagePayloadSchema>;
 export type CraftStoryPayload = z.infer<typeof CraftStoryPayloadSchema>;
 export type PhilosophyPayload = z.infer<typeof PhilosophyPayloadSchema>;
 export type NoteCardsPayload = z.infer<typeof NoteCardsPayloadSchema>;
@@ -224,6 +250,7 @@ export type InvitationPayload = z.infer<typeof InvitationPayloadSchema>;
 
 export const HOMEPAGE_SECTION_KEYS = [
   "home.hero",
+  "home.image",
   "home.craft",
   "home.philosophy",
   "home.ownership",
@@ -242,6 +269,13 @@ export const DEFAULT_HOMEPAGE_VIDEO_PAYLOAD: HomepageVideoPayload = {
   loop: true,
   muted: true,
   aspect_ratio: "16:9",
+};
+
+export const DEFAULT_HOMEPAGE_IMAGE_PAYLOAD: HomepageImagePayload = {
+  image_url: "/optimized/hero-image/hero-image-1824w.webp",
+  mobile_image_url: "/optimized/hero-image/hero-image-1200w.webp",
+  alt_text: "Two women wearing House of Padmavati sarees in window light",
+  focal_point: "right",
 };
 
 // Curated default hero slides for the cinematic multi-video hero slider

@@ -1,9 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { siteSectionService } from "@/services/siteSectionService";
 import { supabase } from "@/integrations/supabase/client";
 import {
+  BROADCAST_CHANNEL_NAME,
+  LOCAL_STORAGE_SYNC_KEY,
+} from "@/lib/broadcastSync";
+import {
   HeroBannerPayloadSchema,
   HomepageVideoPayloadSchema,
+  HomepageImagePayloadSchema,
   CraftStoryPayloadSchema,
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
@@ -14,6 +20,7 @@ import {
   DEFAULT_HERO_PAYLOAD,
   DEFAULT_HERO_SLIDES,
   DEFAULT_HOMEPAGE_VIDEO_PAYLOAD,
+  DEFAULT_HOMEPAGE_IMAGE_PAYLOAD,
   DEFAULT_CRAFT_PAYLOAD,
   DEFAULT_PHILOSOPHY_PAYLOAD,
   DEFAULT_OWNERSHIP_PAYLOAD,
@@ -26,6 +33,7 @@ import {
   DEFAULT_TERMS_POLICY_PAYLOAD,
   type HeroBannerPayload,
   type HomepageVideoPayload,
+  type HomepageImagePayload,
   type CraftStoryPayload,
   type PhilosophyPayload,
   type NoteCardsPayload,
@@ -38,6 +46,7 @@ import {
 
 export interface HomepageSectionsResult {
   hero: HeroBannerPayload;
+  image: HomepageImagePayload;
   video: HomepageVideoPayload;
   craft: CraftStoryPayload;
   philosophy: PhilosophyPayload;
@@ -70,11 +79,58 @@ async function checkAdminPreviewSession(): Promise<boolean> {
 }
 
 /**
+ * Automatically synchronizes site sections across open tabs and windows when
+ * an administrator publishes live changes in Studio.
+ */
+export function useCrossTabSiteSectionSync(): void {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleSync = () => {
+      queryClient.invalidateQueries({ queryKey: ["site_sections", "published"] });
+    };
+
+    let channel: BroadcastChannel | null = null;
+    try {
+      if (typeof BroadcastChannel !== "undefined") {
+        channel = new BroadcastChannel(BROADCAST_CHANNEL_NAME);
+        channel.onmessage = handleSync;
+      }
+    } catch {
+      // Ignore
+    }
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === LOCAL_STORAGE_SYNC_KEY && e.newValue) {
+        handleSync();
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      if (channel) {
+        try {
+          channel.close();
+        } catch {
+          // Channel already closed or unavailable
+        }
+      }
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, [queryClient]);
+}
+
+/**
  * Canonical hook for fetching database-backed homepage site sections.
  * Guarantees zero draft leakage to public visitors, validated payload structure,
  * and seamless fallback to grounded source-code defaults.
  */
 export function useSiteSections(pageName: string = "home"): HomepageSectionsResult {
+  useCrossTabSiteSectionSync();
+
   const isPreviewRequested = typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("studio_preview") === "true";
 
@@ -105,7 +161,8 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
       // Canonical public storefront query: published RPC only
       return siteSectionService.getPublishedPageSections(pageName);
     },
-    staleTime: isAdminPreview ? 0 : 1000 * 60, // 1 min cache for public, immediate for preview
+    staleTime: isAdminPreview ? 0 : 1000 * 15, // 15 sec cache for public, immediate for preview
+    refetchOnWindowFocus: true,
   });
 
   // Parse and validate each supported homepage section with safe fallbacks
@@ -124,13 +181,24 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
     }
   }
 
-  // 2. Video Placeholder (obsolete - disabled by site-wide policy)
+  // 2. Full-Screen Editorial Image (home.image)
+  let image: HomepageImagePayload = DEFAULT_HOMEPAGE_IMAGE_PAYLOAD;
+  if (rawSections["home.image"]) {
+    const parsed = HomepageImagePayloadSchema.safeParse(rawSections["home.image"]);
+    if (parsed.success) {
+      image = parsed.data;
+    } else {
+      console.warn("Invalid payload for home.image, falling back to defaults:", parsed.error.issues);
+    }
+  }
+
+  // 3. Video Placeholder (obsolete - disabled by site-wide policy)
   const video: HomepageVideoPayload = {
     ...DEFAULT_HOMEPAGE_VIDEO_PAYLOAD,
     is_enabled: false,
   };
 
-  // 3. Craft (home.craft)
+  // 4. Craft (home.craft)
   let craft: CraftStoryPayload = DEFAULT_CRAFT_PAYLOAD;
   if (rawSections["home.craft"]) {
     const parsed = CraftStoryPayloadSchema.safeParse(rawSections["home.craft"]);
@@ -141,7 +209,7 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
     }
   }
 
-  // 3. Philosophy (home.philosophy)
+  // 5. Philosophy (home.philosophy)
   let philosophy: PhilosophyPayload = DEFAULT_PHILOSOPHY_PAYLOAD;
   if (rawSections["home.philosophy"]) {
     const parsed = PhilosophyPayloadSchema.safeParse(rawSections["home.philosophy"]);
@@ -152,7 +220,7 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
     }
   }
 
-  // 4. Ownership (home.ownership)
+  // 6. Ownership (home.ownership)
   let ownership: NoteCardsPayload = DEFAULT_OWNERSHIP_PAYLOAD;
   if (rawSections["home.ownership"]) {
     const parsed = NoteCardsPayloadSchema.safeParse(rawSections["home.ownership"]);
@@ -163,7 +231,7 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
     }
   }
 
-  // 5. Invitation (home.invitation)
+  // 7. Invitation (home.invitation)
   let invitation: InvitationPayload = DEFAULT_INVITATION_PAYLOAD;
   if (rawSections["home.invitation"]) {
     const parsed = InvitationPayloadSchema.safeParse(rawSections["home.invitation"]);
@@ -176,6 +244,7 @@ export function useSiteSections(pageName: string = "home"): HomepageSectionsResu
 
   return {
     hero,
+    image,
     video,
     craft,
     philosophy,
@@ -195,6 +264,8 @@ export interface AboutStorySectionResult {
 }
 
 export function useAboutStorySection(): AboutStorySectionResult {
+  useCrossTabSiteSectionSync();
+
   const isPreviewRequested =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("studio_preview") === "true";
@@ -221,7 +292,8 @@ export function useAboutStorySection(): AboutStorySectionResult {
       }
       return siteSectionService.getPublishedPageSections("about");
     },
-    staleTime: isAdminPreview ? 0 : 1000 * 60,
+    staleTime: isAdminPreview ? 0 : 1000 * 15,
+    refetchOnWindowFocus: true,
   });
 
   let story: AboutStoryPayload = DEFAULT_ABOUT_STORY_PAYLOAD;
@@ -250,6 +322,8 @@ export interface CustomerCareSectionResult {
 }
 
 export function useCustomerCareSection(): CustomerCareSectionResult {
+  useCrossTabSiteSectionSync();
+
   const isPreviewRequested =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("studio_preview") === "true";
@@ -276,7 +350,8 @@ export function useCustomerCareSection(): CustomerCareSectionResult {
       }
       return siteSectionService.getPublishedPageSections("care");
     },
-    staleTime: isAdminPreview ? 0 : 1000 * 60,
+    staleTime: isAdminPreview ? 0 : 1000 * 15,
+    refetchOnWindowFocus: true,
   });
 
   let care: CustomerCarePayload = DEFAULT_CUSTOMER_CARE_PAYLOAD;
@@ -305,6 +380,8 @@ export interface PolicySectionResult {
 }
 
 export function usePolicySection(policyKey: PolicySectionKey): PolicySectionResult {
+  useCrossTabSiteSectionSync();
+
   const isPreviewRequested =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("studio_preview") === "true";
@@ -331,7 +408,8 @@ export function usePolicySection(policyKey: PolicySectionKey): PolicySectionResu
       }
       return siteSectionService.getPublishedPageSections("policy");
     },
-    staleTime: isAdminPreview ? 0 : 1000 * 60,
+    staleTime: isAdminPreview ? 0 : 1000 * 15,
+    refetchOnWindowFocus: true,
   });
 
   let defaultPayload = DEFAULT_SHIPPING_POLICY_PAYLOAD;

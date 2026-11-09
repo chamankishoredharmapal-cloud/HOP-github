@@ -305,87 +305,6 @@
   }
 }
 
-.hop-threshold__veil {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(90deg, rgb(0 0 0 / 0.60) 0%, rgb(0 0 0 / 0.36) 42%, transparent 75%),
-    linear-gradient(0deg, rgb(0 0 0 / 0.55) 0%, transparent 48%, rgb(0 0 0 / 0.24) 100%);
-  pointer-events: none;
-}
-
-.hop-threshold__content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  min-height: min(56rem, 100svh);
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 8rem clamp(1.25rem, 7vw, 8rem) clamp(3rem, 8vw, 7rem);
-}
-
-.hop-threshold__eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin-bottom: clamp(1.6rem, 4vw, 3.5rem);
-  color: var(--hop-gold);
-  font-size: 0.64rem;
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.hop-threshold__mark {
-  width: 2.4rem !important;
-  height: 2.4rem !important;
-  flex: 0 0 2.4rem;
-  opacity: 0.9;
-}
-
-.hop-threshold__title {
-  max-width: 9ch;
-  color: var(--hop-cream);
-  font-size: clamp(4.2rem, 10.5vw, 10.5rem);
-  text-shadow: 0 0.1em 1.2em rgb(0 0 0 / 0.45);
-}
-
-.hop-threshold__supporting {
-  max-width: 30rem;
-  margin-top: 1.6rem;
-  color: color-mix(in srgb, var(--hop-cream) 76%, transparent);
-  font-family: "Newsreader", Georgia, serif;
-  font-size: clamp(1rem, 1.4vw, 1.35rem);
-  font-weight: 300;
-  line-height: 1.45;
-}
-
-.hop-threshold__actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1.5rem 2.5rem;
-  margin-top: clamp(2.2rem, 5vw, 4rem);
-}
-
-.hop-scroll-cue {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: color-mix(in srgb, var(--hop-cream) 68%, transparent);
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  transition: color 400ms ease;
-}
-
-.hop-scroll-cue:hover,
-.hop-scroll-cue:focus-visible {
-  color: var(--hop-gold);
-}
-
 .hop-philosophy {
   position: relative;
   display: grid;
@@ -451,24 +370,46 @@
   color: color-mix(in srgb, var(--hop-gold) 88%, var(--hop-cream));
 }
 
+.hop-image-interlude {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--hop-lac);
+  isolation: isolate;
+}
+
+.hop-image-interlude__surface {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.hop-image-interlude__picture,
+.hop-image-interlude__image,
+.hop-image-interlude__fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hop-image-interlude__image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.hop-image-interlude__fallback {
+  background:
+    radial-gradient(circle at 68% 42%, color-mix(in srgb, var(--hop-gold) 20%, transparent), transparent 38%),
+    linear-gradient(135deg, var(--hop-lac), color-mix(in srgb, var(--hop-lac) 72%, black));
+}
+
 .hop-collections {
   background: var(--hop-cream);
   color: var(--hop-lac);
   padding: clamp(4rem, 8vw, 8rem) 0 clamp(8rem, 16vw, 15rem);
-}
-
-.hop-collections__heading {
-  display: grid;
-  max-width: 88rem;
-  margin: 0 auto clamp(4rem, 8vw, 7rem);
-  padding-inline: clamp(1.25rem, 7vw, 8rem);
-  grid-template-columns: 0.85fr 1.3fr 0.8fr;
-  align-items: end;
-  gap: 2rem;
-}
-
-.hop-collections__title {
-  font-size: clamp(3.8rem, 8vw, 8rem);
 }
 
 .hop-collections__body {
@@ -1258,7 +1199,6 @@
 }
 
 @media (max-width: 1279px) {
-  .hop-collections__heading,
   .hop-ownership__heading,
   .hop-journal__header {
     grid-template-columns: 0.75fr 1.25fr;
@@ -1292,35 +1232,6 @@
   .hop-threshold__film img,
   .hop-threshold__film video {
     object-position: 62% center;
-  }
-
-  .hop-threshold__content {
-    min-height: 100svh;
-    padding: 7rem 1.25rem 4rem;
-  }
-
-  .hop-threshold__title {
-    max-width: 8ch;
-    font-size: clamp(3.25rem, 15vw, 5rem);
-    line-height: 1;
-  }
-
-  .hop-threshold__supporting {
-    max-width: 18rem;
-    font-size: 1rem;
-  }
-
-  .hop-threshold__actions {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .hop-threshold__actions .hop-arrow-link,
-  .hop-threshold__actions .hop-scroll-cue {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
   }
 
   .hop-philosophy {
@@ -1361,14 +1272,12 @@
     padding: clamp(3rem, 7vw, 4.5rem) 0 5rem;
   }
 
-  .hop-collections__heading,
   .hop-ownership__heading,
   .hop-journal__header {
     display: block;
     margin-bottom: 3.5rem;
   }
 
-  .hop-collections__title,
   .hop-ownership__title,
   .hop-journal__title {
     margin-top: 2rem;
@@ -1535,18 +1444,8 @@
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
-  .hop-threshold,
-  .hop-threshold__content {
+  .hop-threshold {
     min-height: 140svh;
-  }
-
-  .hop-threshold__content {
-    padding-top: 6rem;
-    padding-bottom: 3rem;
-  }
-
-  .hop-threshold__title {
-    font-size: clamp(2.75rem, 9vw, 4.5rem);
   }
 
   .hop-collection-film {
@@ -1563,10 +1462,6 @@
 }
 
 @media (max-width: 400px) {
-  .hop-threshold__eyebrow {
-    letter-spacing: 0.22em;
-  }
-
   .hop-collection-film__emotion {
     font-size: 0.88rem;
   }

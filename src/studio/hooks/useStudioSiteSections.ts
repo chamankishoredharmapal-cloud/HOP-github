@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { siteSectionService } from "@/services/siteSectionService";
 import type { SiteSectionRecord, SiteSectionRevision } from "@/types/siteSections";
 import { toast } from "sonner";
+import { broadcastSectionPublication } from "@/lib/broadcastSync";
 
 export function useStudioSiteSections(pageName: string = "home") {
   return useQuery<SiteSectionRecord[]>({
@@ -58,11 +59,12 @@ export function usePublishSection() {
     }) => {
       return siteSectionService.publishSection(key, expectedVersion, changeSummary);
     },
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       qc.invalidateQueries({ queryKey: ["studio", "site_sections"] });
       qc.invalidateQueries({ queryKey: ["site_sections", "published"] });
       qc.invalidateQueries({ queryKey: ["site_sections", "draft_preview"] });
       if (data.success) {
+        broadcastSectionPublication(variables.key, data.revision_number);
         toast.success("Section published live to storefront", {
           description: `Revision #${data.revision_number} is now visible to all visitors`,
         });

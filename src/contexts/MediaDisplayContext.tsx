@@ -5,7 +5,7 @@ export type MediaDisplayMode = "structure-only" | "show-media";
 
 export const MEDIA_DISPLAY_MODE_STORAGE_KEY = "hop_media_display_mode";
 export const MEDIA_DISPLAY_MODE_EVENT = "hop-media-display-mode-change";
-export const DEFAULT_MEDIA_DISPLAY_MODE: MediaDisplayMode = "structure-only";
+export const DEFAULT_MEDIA_DISPLAY_MODE: MediaDisplayMode = "show-media";
 
 export interface MediaDisplayContextValue {
   /** Currently active media display mode */
@@ -20,7 +20,7 @@ export interface MediaDisplayContextValue {
 
 /**
  * Reads the authoritative media display mode from storage or query parameter.
- * Defaults safely to "structure-only" mode.
+ * Defaults to normal storefront media rendering.
  */
 export function getStoredMediaDisplayMode(): MediaDisplayMode {
   if (typeof window === "undefined") {

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   HeroBannerPayloadSchema,
   HomepageVideoPayloadSchema,
+  HomepageImagePayloadSchema,
   CraftStoryPayloadSchema,
   PhilosophyPayloadSchema,
   NoteCardsPayloadSchema,
@@ -12,6 +13,7 @@ import {
   SafeLinkSchema,
   DEFAULT_HERO_PAYLOAD,
   DEFAULT_HOMEPAGE_VIDEO_PAYLOAD,
+  DEFAULT_HOMEPAGE_IMAGE_PAYLOAD,
   DEFAULT_CRAFT_PAYLOAD,
   DEFAULT_PHILOSOPHY_PAYLOAD,
   DEFAULT_OWNERSHIP_PAYLOAD,
@@ -112,6 +114,46 @@ describe("Phase 3 Stage 1: Content Security & Schema Validation", () => {
     it("rejects unsafe URL protocols", () => {
       expect(HomepageVideoPayloadSchema.safeParse({ video_url: "javascript:alert(1)" }).success).toBe(false);
       expect(HomepageVideoPayloadSchema.safeParse({ video_url: "http://insecure.com/video.mp4" }).success).toBe(false);
+    });
+  });
+
+  describe("HomepageImagePayloadSchema", () => {
+    it("validates the full-screen image default payload", () => {
+      expect(HomepageImagePayloadSchema.safeParse(DEFAULT_HOMEPAGE_IMAGE_PAYLOAD).success).toBe(true);
+    });
+
+    it("accepts a cleared image payload so Studio can hide the section", () => {
+      const parsed = HomepageImagePayloadSchema.safeParse({
+        image_url: "",
+        mobile_image_url: "",
+        alt_text: "",
+        focal_point: "center",
+      });
+      expect(parsed.success).toBe(true);
+    });
+
+    it("requires alt text when an image is selected", () => {
+      expect(
+        HomepageImagePayloadSchema.safeParse({
+          image_url: "/optimized/hero-image/hero-image-1824w.webp",
+          alt_text: "",
+        }).success
+      ).toBe(false);
+    });
+
+    it("rejects insecure or executable image URLs", () => {
+      expect(
+        HomepageImagePayloadSchema.safeParse({
+          image_url: "http://insecure.com/image.jpg",
+          alt_text: "Insecure image",
+        }).success
+      ).toBe(false);
+      expect(
+        HomepageImagePayloadSchema.safeParse({
+          image_url: "javascript:alert(1)",
+          alt_text: "Executable image",
+        }).success
+      ).toBe(false);
     });
   });
 

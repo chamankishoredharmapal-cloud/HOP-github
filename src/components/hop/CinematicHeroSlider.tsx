@@ -2,11 +2,7 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useMediaDisplayMode } from "@/contexts/MediaDisplayContext";
 import { resolveOptimizedVideo } from "@/data/collectionVideos";
-import {
-  getSupabaseOptimizedUrl,
-  getSupabaseSrcSet,
-  isSupabaseStorageUrl,
-} from "@/lib/supabaseImage";
+import { getHeroPosterSources } from "@/lib/heroPoster";
 import type { HeroBannerPayload, HeroSlide } from "@/types/siteSections";
 import { DEFAULT_HERO_SLIDES } from "@/types/siteSections";
 import heroStill from "@/assets/hop-hero.jpg";
@@ -68,6 +64,7 @@ export const CinematicHeroSlider = ({
   const [inView, setInView] = useState(true);
   const [isTabVisible, setIsTabVisible] = useState(true);
   const [videoReadyStates, setVideoReadyStates] = useState<Record<number, boolean>>({});
+  const [posterFallbacks, setPosterFallbacks] = useState<Record<string, "canonical" | "error">>({});
 
   // Reduced-motion preference check
   const [reducedMotion] = useState(
@@ -398,13 +395,18 @@ export const CinematicHeroSlider = ({
             slide.poster_url ||
             (isImageFile(slide.video_url) ? slide.video_url : resolved.poster) ||
             heroStill;
-          const isSupabasePoster = isSupabaseStorageUrl(rawPoster);
-          const posterUrl = isSupabasePoster
-            ? getSupabaseOptimizedUrl(rawPoster, { width: 1600 })
-            : rawPoster;
-          const posterSrcSet = isSupabasePoster
-            ? getSupabaseSrcSet(rawPoster, [640, 1024, 1600, 2560]) || undefined
-            : undefined;
+          const slideKey = slide.id || `slide-${index}`;
+          const posterKey = `${slideKey}::${rawPoster}`;
+          const posterFallback = posterFallbacks[posterKey];
+          const posterSources = getHeroPosterSources(
+            rawPoster,
+            posterFallback === "canonical" || posterFallback === "error",
+          );
+          const posterUrl = posterSources.src;
+          const posterSrcSet = posterSources.srcSet;
+          const posterState =
+            posterFallback ?? (posterSources.canRetryCanonical ? "optimized" : "canonical");
+          const posterFailed = posterFallback === "error";
 
           const videoSrc = !isPosterOnly ? (slide.video_url || resolved.src) : "";
           const mobileVideoSrc = !isPosterOnly ? (slide.mobile_video_url || resolved.mobileSrc) : "";
@@ -422,7 +424,7 @@ export const CinematicHeroSlider = ({
 
           return (
             <div
-              key={slide.id || `slide-${index}`}
+              key={slideKey}
               className={`hop-threshold__slide ${
                 isActive ? "hop-threshold__slide--active" : "hop-threshold__slide--inactive"
               } ${isTransitioningOut ? "hop-threshold__slide--transitioning-out" : ""}`}
@@ -447,17 +449,60 @@ export const CinematicHeroSlider = ({
                 <>
                   {/* Poster frame: ALWAYS rendered underneath video layer for instant visual stability and zero black frames */}
                   <div className="hop-threshold__slide-poster-layer">
-                    <img
-                      src={posterUrl}
-                      srcSet={posterSrcSet}
-                      sizes="100vw"
-                      alt={altText}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      decoding="async"
-                      draggable={false}
-                      {...(index === 0 ? { fetchpriority: "high" } : {})}
-                      className="hop-threshold__slide-poster"
-                    />
+                    {posterFailed ? (
+                      <div
+                        className="flex h-full w-full items-center justify-center bg-jasmine-deep/35 px-6 text-center"
+                        role="img"
+                        aria-label={`${altText} — image unavailable`}
+                        data-image-error="true"
+                        data-canonical-src={posterSources.canonical}
+                      >
+                        <span className="text-[0.65rem] uppercase tracking-[0.25em] text-ink-soft/60">
+                          Image unavailable
+                        </span>
+                      </div>
+                    ) : (
+                      <img
+                        src={posterUrl}
+                        srcSet={posterSrcSet}
+                        sizes="100vw"
+                        alt={altText}
+                        loading={index === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                        draggable={false}
+                        {...(index === 0 ? { fetchpriority: "high" } : {})}
+                        className="hop-threshold__slide-poster"
+                        data-canonical-src={posterSources.canonical}
+                        data-poster-state={posterState}
+                        onError={() => {
+                          if (posterSources.canRetryCanonical) {
+                            console.warn(
+                              "Hero poster optimization failed; retrying the saved storage URL.",
+                              {
+                                slide: slideKey,
+                                attemptedUrl: posterSources.src,
+                                savedUrl: posterSources.canonical,
+                              },
+                            );
+                            setPosterFallbacks((prev) => ({
+                              ...prev,
+                              [posterKey]: "canonical",
+                            }));
+                            return;
+                          }
+
+                          console.error("Hero poster failed to load.", {
+                            slide: slideKey,
+                            attemptedUrl: posterSources.src,
+                            savedUrl: posterSources.canonical,
+                          });
+                          setPosterFallbacks((prev) => ({
+                            ...prev,
+                            [posterKey]: "error",
+                          }));
+                        }}
+                      />
+                    )}
                   </div>
 
                   {/* Native <video> layer: rendered on-demand, plays only when active */}

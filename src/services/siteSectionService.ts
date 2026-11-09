@@ -113,12 +113,18 @@ export const siteSectionService = {
 
     const res = data as SaveDraftResponse;
     if (res && res.error === "section_not_found") {
-      // Graceful bootstrap for new section keys (e.g. home.video) before migration seed
+      // Graceful bootstrap for new section keys before their migration seed is applied
+      const displayName =
+        key === "home.video"
+          ? "Homepage Video Placeholder"
+          : key === "home.image"
+            ? "Homepage Full-Screen Image"
+            : key;
       const { error: insertError } = await supabase.from("site_sections").insert({
         key,
         page_name: key.split(".")[0],
         section_type: "custom_section",
-        display_name: key === "home.video" ? "Homepage Video Placeholder" : key,
+        display_name: displayName,
         version: 1,
         draft_payload: draftPayload,
         published_payload: draftPayload,
@@ -152,11 +158,17 @@ export const siteSectionService = {
     if (res && res.error === "section_not_found") {
       const { data: existingDraft } = await supabase.from("site_sections").select("draft_payload").eq("key", key).maybeSingle();
       const payload = existingDraft?.draft_payload || {};
+      const displayName =
+        key === "home.video"
+          ? "Homepage Video Placeholder"
+          : key === "home.image"
+            ? "Homepage Full-Screen Image"
+            : key;
       const { error: insertError } = await supabase.from("site_sections").insert({
         key,
         page_name: key.split(".")[0],
         section_type: "custom_section",
-        display_name: key === "home.video" ? "Homepage Video Placeholder" : key,
+        display_name: displayName,
         version: 1,
         draft_payload: payload,
         published_payload: payload,

@@ -3,7 +3,7 @@ import { test, expect, type Page } from "@playwright/test";
 const HOMEPAGE_URL = "http://localhost:8080/";
 
 const openHomepage = async (page: Page, options?: { mode?: "structure-only" | "show-media" }) => {
-  const targetUrl = options?.mode === "show-media" ? `${HOMEPAGE_URL}?media_mode=show-media` : HOMEPAGE_URL;
+  const targetUrl = options?.mode ? `${HOMEPAGE_URL}?media_mode=${options.mode}` : HOMEPAGE_URL;
   const sectionsLoaded = page
     .waitForResponse(
       (response) => response.url().includes("get_published_site_sections"),
@@ -16,9 +16,9 @@ const openHomepage = async (page: Page, options?: { mode?: "structure-only" | "s
 };
 
 test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
-  test("Structure-Only Mode (Default): Homepage renders neutral structural surfaces with strictly 0 videos and 0 images", async ({ page }) => {
+  test("Structure-Only Mode (Explicit): Homepage renders neutral structural surfaces with strictly 0 videos and 0 images", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
-    await openHomepage(page);
+    await openHomepage(page, { mode: "structure-only" });
 
     const counts = await page.evaluate(() => ({
       videos: document.querySelectorAll("video").length,
@@ -33,6 +33,24 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
     const hero = page.locator(".hop-threshold");
     await expect(hero).toBeVisible();
     await expect(hero.locator("video")).toHaveCount(0);
+  });
+
+  test("Show Media Mode (Default): Homepage renders media without a query parameter", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await openHomepage(page);
+
+    const counts = await page.evaluate(() => ({
+      videos: document.querySelectorAll("video").length,
+      imgs: document.querySelectorAll("img").length,
+      mode: document.documentElement.getAttribute("data-media-mode"),
+    }));
+
+    expect(counts.mode).toBe("show-media");
+    expect(counts.imgs).toBeGreaterThan(0);
+
+    const hero = page.locator(".hop-threshold");
+    await expect(hero).toBeVisible();
+    await expect(hero.locator("img.hop-threshold__slide-poster").first()).toBeVisible();
   });
 
   test("Desktop: Hero video loads 720p, autoplays, pauses on scroll out, resumes on scroll back", async ({ page }) => {
@@ -384,11 +402,11 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
     expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(50);
   });
 
-  test("Homepage Section Sequence: Hero Slider -> Kalyani Film Direct Transition (No Placeholder)", async ({ page }) => {
+  test("Homepage Section Sequence: Hero Slider -> Full-Screen Image -> Kalyani Film", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openHomepage(page);
 
-    // 1. Verify strict section sequence: Hero Slider -> Collections (Kalyani) directly
+    // 1. Verify strict section sequence: Hero Slider -> Full-Screen Image -> Collections
     const mainElement = page.locator("main.hop-home");
     await expect(mainElement).toBeVisible();
 
@@ -403,43 +421,59 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
     // Filter out status aside (preview banner if present) and screen-reader h1
     const contentSections = childTags.filter((el) => el.tag !== "aside" && el.tag !== "h1");
 
-    expect(contentSections.length).toBeGreaterThanOrEqual(2);
-
-    // Section 1: Cinematic hero video slider
+    expect(contentSections.length).toBeGreaterThanOrEqual(3);
     expect(contentSections[0].className).toContain("hop-threshold");
+    expect(contentSections[1].className).toContain("hop-image-interlude");
+    expect(contentSections[2].id).toBe("collections");
 
-    // Section 2: Kalyani collection film directly follows hero (no video placeholder between them)
-    expect(contentSections[1].id).toBe("collections");
+    // 2. Verify the full-screen image is media-only and fills the viewport
+    const imageSection = page.locator(".hop-image-interlude");
+    await expect(imageSection).toBeVisible();
+    await expect(
+      imageSection.locator("h1, h2, h3, h4, h5, h6, p, a, button"),
+    ).toHaveCount(0);
+    await expect(imageSection.locator("img")).toHaveCount(1);
+    await expect(imageSection.locator("img").first()).toBeVisible();
 
-    // Verify video placeholder section is completely removed from homepage
-    const livingSareePlaceholder = page.locator(".hop-living-saree");
-    await expect(livingSareePlaceholder).toHaveCount(0);
+    const imageBox = await imageSection.boundingBox();
+    expect(imageBox).not.toBeNull();
+    if (imageBox) {
+      expect(imageBox.height).toBeGreaterThanOrEqual(880);
+      expect(imageBox.width).toBeGreaterThanOrEqual(1400);
+    }
 
-    // 2. Verify hero slider controls
-    const heroControls = page.locator(".hop-threshold__controls");
-    await expect(heroControls).toHaveCount(0);
-    const heroButtons = page.locator(".hop-threshold button");
-    await expect(heroButtons).toHaveCount(2);
+    const horizontalOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(horizontalOverflow).toBeLessThanOrEqual(1);
+
+    // Verify obsolete placeholder and heading are removed
+    await expect(page.locator(".hop-living-saree")).toHaveCount(0);
+    await expect(page.locator("#collections-title")).toHaveCount(0);
+    await expect(
+      page.getByText("Five Different Ways of Wearing Tradition", { exact: true }),
+    ).toHaveCount(0);
+
+    // 3. Verify hero slider controls remain intact
+    await expect(page.locator(".hop-threshold__controls")).toHaveCount(0);
+    await expect(page.locator(".hop-threshold button")).toHaveCount(2);
     await expect(page.locator(".hop-threshold").getByRole("button", { name: "Previous slide" })).toHaveCount(1);
     await expect(page.locator(".hop-threshold").getByRole("button", { name: "Next slide" })).toHaveCount(1);
     const heroText = page.locator(".hop-threshold h1, .hop-threshold h2, .hop-threshold h3, .hop-threshold p, .hop-threshold a");
     await expect(heroText).toHaveCount(0);
 
-    // 3. Verify deliberate vertical spacing between hero and collection photo placeholders
-    const heroBox = await page.locator(".hop-threshold").boundingBox();
+    // 4. Verify deliberate vertical spacing between the image and the collections
     const firstFilmBox = await page.locator(".hop-collection-film").first().boundingBox();
-
-    if (heroBox && firstFilmBox) {
-      const visibleGap = firstFilmBox.y - (heroBox.y + heroBox.height);
+    if (imageBox && firstFilmBox) {
+      const visibleGap = firstFilmBox.y - (imageBox.y + imageBox.height);
       expect(visibleGap).toBeGreaterThanOrEqual(40);
     }
 
-    // 4. Confirm collection photo placeholders contain no visible collection names or captions
-    const collectionsHeadings = page.locator("#collections h1, #collections h2, #collections h3, .hop-collection-film__identity");
-    await expect(collectionsHeadings).toHaveCount(0);
+    await expect(page.locator(".hop-collection-film-chapter")).toHaveCount(5);
+    await expect(page.locator(".hop-collection-film__identity")).toHaveCount(0);
   });
 
-  test("Mobile Breakpoint: Hero-to-Kalyani Visible Spacing, Clean Placeholders, and No Video Placeholder", async ({ page }) => {
+  test("Mobile Breakpoint: Full-Screen Image, Clean Spacing, and No Heading", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await openHomepage(page);
 
@@ -456,23 +490,43 @@ test.describe("HOP Video Optimization & Smooth Playback Suite", () => {
     expect(await mobileIndicators.locator(".hop-threshold__indicator-dot").count()).toBeGreaterThanOrEqual(2);
     await expect(mobileIndicators.locator(".hop-threshold__indicator-dot--active")).toHaveCount(1);
 
-    // Verify no video placeholder on mobile between hero and collections
-    const livingSaree = page.locator(".hop-living-saree");
-    await expect(livingSaree).toHaveCount(0);
+    // Verify the full-screen image follows the hero and remains media-only
+    const imageSection = page.locator(".hop-image-interlude");
+    await expect(imageSection).toBeVisible();
+    await expect(imageSection.locator("img")).toHaveCount(1);
+    await expect(imageSection.locator("img").first()).toBeVisible();
+    await expect(
+      imageSection.locator("h1, h2, h3, h4, h5, h6, p, a, button"),
+    ).toHaveCount(0);
 
-    // Verify intentional mobile vertical spacing between hero and first collection placeholder
-    const heroBox = await heroSection.boundingBox();
+    const imageBox = await imageSection.boundingBox();
+    expect(imageBox).not.toBeNull();
+    if (imageBox) {
+      expect(imageBox.height).toBeGreaterThanOrEqual(820);
+      expect(imageBox.width).toBeGreaterThanOrEqual(380);
+    }
+
+    const horizontalOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(horizontalOverflow).toBeLessThanOrEqual(1);
+
+    await expect(page.locator(".hop-living-saree")).toHaveCount(0);
+    await expect(page.locator("#collections-title")).toHaveCount(0);
+    await expect(
+      page.getByText("Five Different Ways of Wearing Tradition", { exact: true }),
+    ).toHaveCount(0);
+
+    // Verify intentional mobile vertical spacing between the image and first collection
     const firstFilmBox = await page.locator(".hop-collection-film").first().boundingBox();
-    if (heroBox && firstFilmBox) {
-      const visibleGap = firstFilmBox.y - (heroBox.y + heroBox.height);
+    if (imageBox && firstFilmBox) {
+      const visibleGap = firstFilmBox.y - (imageBox.y + imageBox.height);
       expect(visibleGap).toBeGreaterThanOrEqual(30);
     }
 
-    // Confirm no collection names displayed on mobile photo placeholders
-    const collectionsHeadings = page.locator("#collections h1, #collections h2, #collections h3, .hop-collection-film__identity");
-    await expect(collectionsHeadings).toHaveCount(0);
+    await expect(page.locator(".hop-collection-film-chapter")).toHaveCount(5);
+    await expect(page.locator(".hop-collection-film__identity")).toHaveCount(0);
 
-    // Collections is visible directly on mobile
     const collections = page.locator("#collections");
     await expect(collections).toBeVisible();
   });

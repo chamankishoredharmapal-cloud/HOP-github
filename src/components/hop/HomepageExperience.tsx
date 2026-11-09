@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Film } from "@/components/hop/Film";
-import { MediaImage } from "@/components/ui/MediaSurface";
+import { MediaImage, MediaSurface } from "@/components/ui/MediaSurface";
 import { CinematicHeroSlider } from "@/components/hop/CinematicHeroSlider";
 import { Monogram } from "@/components/hop/Monogram";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
@@ -19,6 +19,7 @@ import { usePrerenderReady } from "@/hooks/usePrerenderReady";
 import { useSiteSections } from "@/hooks/useSiteSections";
 import type {
   HeroBannerPayload,
+  HomepageImagePayload,
   CraftStoryPayload,
   PhilosophyPayload,
   NoteCardsPayload,
@@ -161,6 +162,50 @@ const Threshold = ({ section }: { section?: HeroBannerPayload }) => {
   return <CinematicHeroSlider section={section} />;
 };
 
+const IMAGE_FOCAL_POSITIONS: Record<HomepageImagePayload["focal_point"], string> = {
+  left: "25% center",
+  center: "center",
+  right: "75% center",
+};
+
+const ImageInterlude = ({ section }: { section?: HomepageImagePayload }) => {
+  const [hasError, setHasError] = useState(false);
+  const imageUrl = section?.image_url?.trim() || "";
+  const mobileImageUrl = section?.mobile_image_url?.trim() || imageUrl;
+  const altText = section?.alt_text?.trim() || "House of Padmavati editorial image";
+
+  useEffect(() => {
+    setHasError(false);
+  }, [imageUrl, mobileImageUrl]);
+
+  if (!imageUrl) return null;
+
+  return (
+    <section className="hop-image-interlude">
+      <MediaSurface className="hop-image-interlude__surface">
+        {hasError ? (
+          <div className="hop-image-interlude__fallback" aria-hidden="true" />
+        ) : (
+          <picture className="hop-image-interlude__picture">
+            {mobileImageUrl !== imageUrl && (
+              <source media="(max-width: 767px)" srcSet={mobileImageUrl} />
+            )}
+            <MediaImage
+              src={imageUrl}
+              alt={altText}
+              loading="eager"
+              decoding="async"
+              onError={() => setHasError(true)}
+              style={{ objectPosition: IMAGE_FOCAL_POSITIONS[section?.focal_point || "center"] }}
+              className="hop-image-interlude__image"
+            />
+          </picture>
+        )}
+      </MediaSurface>
+    </section>
+  );
+};
+
 const Philosophy = ({ section }: { section?: PhilosophyPayload }) => {
   const title = section?.title || "A House, Not a Shop.";
   const lede = section?.lede || "We make room for the intelligence of considered making, the patience of cloth and the woman who chooses what to carry.";
@@ -253,8 +298,8 @@ const CollectionRooms = () => {
         }));
 
   return (
-    <section id="collections" className="hop-collections" aria-labelledby="collections-title">
-      <div className="hop-collection-films" aria-label="HOP collection worlds">
+    <section id="collections" className="hop-collections" aria-label="HOP collections">
+      <div className="hop-collection-films">
         {chapters.map(({ world, record }) => (
           <CollectionFilmChapter
             key={world.slug}
@@ -523,7 +568,7 @@ const Invitation = ({ section }: { section?: InvitationPayload }) => {
 };
 
 export const HomepageExperience = () => {
-  const { hero, craft, philosophy, ownership, invitation, isPreview } = useSiteSections("home");
+  const { hero, image, craft, philosophy, ownership, invitation, isPreview } = useSiteSections("home");
 
   return (
     <main className="hop-home">
@@ -542,6 +587,7 @@ export const HomepageExperience = () => {
         </aside>
       )}
       <Threshold section={hero} />
+      <ImageInterlude section={image} />
       <CollectionRooms />
       <ProductDesire />
       <Craft section={craft} />

@@ -38,6 +38,28 @@ export function getStudioEnvironment(): EnvironmentInfo {
     };
   }
 
+  if (hostname === "localhost" || hostname === "127.0.0.1") {
+    // If running locally, distinguish based on Supabase target
+    const isProdDb = supabaseUrl.includes("kbvjmcnaaogkbnerjcoc");
+    const isStagingDb = supabaseUrl.includes("dovnhgbisiturzbjgvei");
+    return {
+      name: isProdDb ? "PRODUCTION" : isStagingDb ? "STAGING" : "DEVELOPMENT",
+      isProduction: isProdDb,
+      isStaging: isStagingDb,
+      isDevelopment: !isProdDb && !isStagingDb,
+      badgeLabel: isProdDb
+        ? "LOCAL (PROD DB)"
+        : isStagingDb
+        ? "LOCAL (STAGING DB)"
+        : "DEVELOPMENT",
+      badgeClass: isProdDb
+        ? "bg-signature-crimson/15 text-signature-crimson border-signature-crimson/30"
+        : isStagingDb
+        ? "bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30"
+        : "bg-coastal-teal/15 text-coastal-teal border-coastal-teal/30",
+    };
+  }
+
   if (hostname.includes("hop-staging.pages.dev") || supabaseUrl.includes("dovnhgbisiturzbjgvei")) {
     return {
       name: "STAGING",
@@ -46,21 +68,6 @@ export function getStudioEnvironment(): EnvironmentInfo {
       isDevelopment: false,
       badgeLabel: "STAGING",
       badgeClass: "bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30",
-    };
-  }
-
-  if (hostname === "localhost" || hostname === "127.0.0.1") {
-    // If running locally against production Supabase, flag it clearly
-    const isProdDb = supabaseUrl.includes("kbvjmcnaaogkbnerjcoc");
-    return {
-      name: isProdDb ? "PRODUCTION" : "DEVELOPMENT",
-      isProduction: isProdDb,
-      isStaging: !isProdDb,
-      isDevelopment: true,
-      badgeLabel: isProdDb ? "LOCAL (PROD DB)" : "DEVELOPMENT",
-      badgeClass: isProdDb
-        ? "bg-signature-crimson/15 text-signature-crimson border-signature-crimson/30"
-        : "bg-coastal-teal/15 text-coastal-teal border-coastal-teal/30",
     };
   }
 

@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { MediaImage } from "@/components/ui/MediaSurface";
+import heroStill from "@/assets/hop-hero.jpg";
 
 interface ImageTextBlockProps {
   image: string;
@@ -18,21 +20,25 @@ const ImageTextBlock = ({
   imagePosition = 'left',
   assetPath,
 }: ImageTextBlockProps) => {
+  const [hasError, setHasError] = useState(false);
+  const displaySrc = hasError || !image ? heroStill : image;
+
   return (
     <div className={`hop-page__split ${imagePosition === 'right' ? 'hop-page__split--reverse' : ''}`}>
       <div className="flex-1">
-        {assetPath ? (
+        {assetPath && !hasError ? (
           <OptimizedImage
             assetPath={assetPath}
-            fallbackSrc={image}
+            fallbackSrc={displaySrc}
             alt={imageAlt}
             sizes="(max-width: 1024px) 100vw, 50vw"
             imgClassName="w-full aspect-square lg:aspect-auto lg:h-[800px] object-cover"
           />
         ) : (
           <MediaImage
-            src={image}
+            src={displaySrc}
             alt={imageAlt}
+            onError={() => setHasError(true)}
             className="w-full aspect-square lg:aspect-auto lg:h-[800px] object-cover"
           />
         )}

@@ -13,6 +13,7 @@ describe("HOP Studios — Homepage Video Management & Integration", () => {
     expect(HOMEPAGE_SECTION_KEYS).not.toContain("home.video");
     expect(HOMEPAGE_SECTION_KEYS).toEqual([
       "home.hero",
+      "home.image",
       "home.craft",
       "home.philosophy",
       "home.ownership",

@@ -31,11 +31,15 @@ const ProductDetail = () => {
   const { toggleItem, isWishlisted } = useWishlist();
   const inlineCtaRef = useRef<HTMLDivElement>(null);
 
+  const isPreviewRequested =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("studio_preview") === "true";
+
   const { data: product, isLoading } = useQuery({
-    queryKey: ["storefront", "product", productId],
-    queryFn: () => fetchProductById(productId!),
+    queryKey: ["storefront", "product", productId, isPreviewRequested],
+    queryFn: () => fetchProductById(productId!, { allowDraftPreview: isPreviewRequested }),
     enabled: !!productId,
-    staleTime: 5 * 60 * 1000,
+    staleTime: isPreviewRequested ? 0 : 5 * 60 * 1000,
   });
 
   const { data: relatedProducts } = useQuery({
@@ -174,6 +178,19 @@ const ProductDetail = () => {
 
   return (
     <PageLayout>
+      {product?.isPreview && (
+        <aside
+          role="status"
+          aria-label="Studio Draft Preview"
+          className="bg-amber-950 text-amber-200 text-xs py-2 px-4 text-center border-b border-amber-800 tracking-wider flex items-center justify-center gap-2 z-50 relative font-sans"
+        >
+          <span className="font-semibold uppercase tracking-widest text-amber-400">● Draft Preview</span>
+          <span>— Viewing unpublished product draft (Administrator only).</span>
+          <Link to="/studio/products" className="underline font-medium text-amber-100 hover:text-white ml-2">
+            Return to Studio
+          </Link>
+        </aside>
+      )}
       <main className="container pt-10 pb-section">
         <Breadcrumb className="mb-10">
           <BreadcrumbList className="text-[0.7rem] tracking-[0.3em] uppercase text-ink-soft">

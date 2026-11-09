@@ -12,12 +12,15 @@ const OurStory = () => {
   usePrerenderReady(true);
   const { story, isPreview } = useAboutStorySection();
 
+  const configuredImage = story.image_url?.trim();
+  const effectiveImage = configuredImage || heroImg;
+
   useMetadata({
     title: `${story.heading || "The House"} — House of Padmavati`,
     description:
       story.header_subtitle ||
       "The story of House of Padmavati. A digital fashion house for Indian sarees.",
-    ogImage: story.image_url || heroImg,
+    ogImage: effectiveImage,
   });
 
   return (
@@ -43,12 +46,7 @@ const OurStory = () => {
 
           <ContentSection>
             <ImageTextBlock
-              image={story.image_url || heroImg}
-              assetPath={
-                story.image_url === heroImg || !story.image_url.startsWith("http")
-                  ? "src/assets/hop-hero.jpg"
-                  : undefined
-              }
+              image={effectiveImage}
               imageAlt={story.image_alt || "House of Padmavati"}
               title={story.story_title}
               content={story.story_content}

@@ -66,6 +66,8 @@ export interface StorefrontProduct {
   collection_id: string | null;
   collection_name: string | null;
   featured: boolean;
+  status?: string;
+  isPreview?: boolean;
   images: StorefrontProductImage[];
 }
 
@@ -109,21 +111,44 @@ function mapProduct(d: ProductRow, images: StorefrontProductImage[]): Storefront
     collection_id: d.collection_id,
     collection_name: d.collections?.name ?? null,
     featured: d.featured,
+    status: d.status,
     images,
   };
 }
 
-export async function fetchProductById(id: string): Promise<StorefrontProduct | null> {
-  const { data, error } = await supabase
+export async function fetchProductById(
+  id: string,
+  options?: { allowDraftPreview?: boolean }
+): Promise<StorefrontProduct | null> {
+  let query = supabase
     .from("products")
     .select(`id,name,slug,story,short_description,customer_description,selling_price,mrp,stock,fabric,weave,colour,occasion,length,weight,blouse_included,care_instructions,country_of_origin,estimated_dispatch_days,collection_id,featured,status,collections!left(name)`)
-    .eq("id", id)
-    .eq("status", "published")
-    .single();
+    .eq("id", id);
+
+  if (options?.allowDraftPreview) {
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) {
+        // Unauthenticated client requesting preview: strictly enforce published status
+        query = query.eq("status", "published");
+      }
+      // If session exists, database RLS (products_admin_all) ensures only admins can read drafts
+    } catch {
+      query = query.eq("status", "published");
+    }
+  } else {
+    // Standard public storefront query: strictly published products only
+    query = query.eq("status", "published");
+  }
+
+  const { data, error } = await query.maybeSingle();
   if (error) {
     if (error.code === "PGRST116") return null;
     throw error;
   }
+  if (!data) return null;
 
   const { data: imageRows } = await supabase
     .from("product_images")
@@ -132,7 +157,11 @@ export async function fetchProductById(id: string): Promise<StorefrontProduct | 
     .order("sort_order", { ascending: true });
 
   const images = mapImages((imageRows ?? []) as ProductImageRow[]);
-  return mapProduct(data as unknown as ProductRow, images);
+  const product = mapProduct(data as unknown as ProductRow, images);
+  if (data.status !== "published") {
+    product.isPreview = true;
+  }
+  return product;
 }
 
 export async function fetchFeaturedProduct(): Promise<StorefrontProduct | null> {
