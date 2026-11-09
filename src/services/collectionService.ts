@@ -36,7 +36,7 @@ function mapRow(r: CollectionRow): CollectionDetail {
 export async function fetchCollections(): Promise<CollectionDetail[]> {
   const { data, error } = await supabase
     .from("collections")
-    .select("*")
+    .select("id,name,slug,hero_image_url,hero_video_url,editorial_story,tagline,description,display_order,featured_on_homepage,status")
     .eq("status", "published")
     .order("display_order", { ascending: true });
   if (error) throw error;
@@ -46,7 +46,7 @@ export async function fetchCollections(): Promise<CollectionDetail[]> {
 export async function fetchFeaturedCollection(): Promise<CollectionDetail | null> {
   const { data, error } = await supabase
     .from("collections")
-    .select("*")
+    .select("id,name,slug,hero_image_url,hero_video_url,editorial_story,tagline,description,display_order,featured_on_homepage,status")
     .eq("featured_on_homepage", true)
     .eq("status", "published")
     .order("display_order", { ascending: true })
@@ -59,7 +59,7 @@ export async function fetchFeaturedCollection(): Promise<CollectionDetail | null
 export async function fetchCollectionBySlug(slug: string): Promise<CollectionDetail | null> {
   const { data, error } = await supabase
     .from("collections")
-    .select("*")
+    .select("id,name,slug,hero_image_url,hero_video_url,editorial_story,tagline,description,display_order,featured_on_homepage,status")
     .eq("slug", slug)
     .eq("status", "published")
     .maybeSingle();

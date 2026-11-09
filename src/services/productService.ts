@@ -116,7 +116,7 @@ function mapProduct(d: ProductRow, images: StorefrontProductImage[]): Storefront
 export async function fetchProductById(id: string): Promise<StorefrontProduct | null> {
   const { data, error } = await supabase
     .from("products")
-    .select(`*, collections!left(name)`)
+    .select(`id,name,slug,story,short_description,customer_description,selling_price,mrp,stock,fabric,weave,colour,occasion,length,weight,blouse_included,care_instructions,country_of_origin,estimated_dispatch_days,collection_id,featured,status,collections!left(name)`)
     .eq("id", id)
     .eq("status", "published")
     .single();
@@ -138,7 +138,7 @@ export async function fetchProductById(id: string): Promise<StorefrontProduct | 
 export async function fetchFeaturedProduct(): Promise<StorefrontProduct | null> {
   const { data, error } = await supabase
     .from("products")
-    .select(`*, collections!left(name)`)
+    .select(`id,name,slug,story,short_description,customer_description,selling_price,mrp,stock,fabric,weave,colour,occasion,length,weight,blouse_included,care_instructions,country_of_origin,estimated_dispatch_days,collection_id,featured,status,collections!left(name)`)
     .eq("status", "published")
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false })
