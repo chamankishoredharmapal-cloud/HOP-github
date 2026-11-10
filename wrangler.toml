@@ -2,7 +2,7 @@ name = "hop-staging"
 compatibility_date = "2026-09-16"
 pages_build_output_dir = "./dist"
 
-[vars]
+[env.preview.vars]
 VITE_SUPABASE_URL = "https://dovnhgbisiturzbjgvei.supabase.co"
 VITE_SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvdm5oZ2Jpc2l0dXJ6YmpndmVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk0ODc1OTMsImV4cCI6MjEwNTA2MzU5M30.aEMWfZNVYQVMul9AvLsfruixeqALealjehXvnM6FaVE"
 VITE_APP_URL = "https://hop-staging.pages.dev"
