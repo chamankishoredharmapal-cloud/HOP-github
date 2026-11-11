@@ -1,6 +1,11 @@
-name = "hop-staging"
+name = "houseofpadmavati"
 compatibility_date = "2026-09-16"
 pages_build_output_dir = "./dist"
+
+[env.production.vars]
+VITE_SUPABASE_URL = "https://kbvjmcnaaogkbnerjcoc.supabase.co"
+VITE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_cSiBaTaktDyF3fyWrpj7LA_d3ToDWC5"
+VITE_APP_URL = "https://houseofpadmavati.pages.dev"
 
 [env.preview.vars]
 VITE_SUPABASE_URL = "https://dovnhgbisiturzbjgvei.supabase.co"
