@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Props {
   children: React.ReactNode;
@@ -22,6 +23,14 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.error("[ErrorBoundary]", error, info.componentStack);
+    void supabase.functions.invoke("log-error", {
+      body: {
+        message: error.message,
+        stack: error.stack,
+        route: typeof window !== "undefined" ? window.location.pathname : "",
+        component: "ErrorBoundary",
+      },
+    });
   }
 
   handleRetry = () => {
