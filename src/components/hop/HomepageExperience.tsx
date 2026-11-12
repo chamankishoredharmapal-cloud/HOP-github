@@ -587,8 +587,11 @@ export const HomepageExperience = () => {
         </aside>
       )}
       <Threshold section={hero} />
-      <ImageInterlude section={image} />
+      <section className="hop-text-section hop-text-interlude hop-text-block" aria-label="five different ways of wearing tradition">
+        <p className="hop-display hop-text-interlude__copy">five different ways of wearing tradition</p>
+      </section>
       <CollectionRooms />
+      <ImageInterlude section={image} />
       <ProductDesire />
       <Craft section={craft} />
       <Philosophy section={philosophy} />
