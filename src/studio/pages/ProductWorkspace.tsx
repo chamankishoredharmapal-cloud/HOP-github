@@ -34,11 +34,11 @@ export default function ProductWorkspace() {
   const setPrimaryImage = useSetPrimaryImage();
   const reorderImages = useReorderImages();
 
-  const { form, updateField, isDirty, resetDirty, checklist, progress } = useProductForm(existing ?? null);
+  const [heroImageExists, setHeroImageExists] = useState(false);
+  const { form, updateField, isDirty, resetDirty, checklist, progress } = useProductForm(existing ?? null, heroImageExists);
 
   const [workspaceId, setWorkspaceId] = useState<string | null>(isNew ? null : (id ?? null));
   const [saving, setSaving] = useState(false);
-  const [heroImageExists, setHeroImageExists] = useState(false);
   useEffect(() => {
     if (existing) {
       setWorkspaceId(existing.id);

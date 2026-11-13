@@ -10,7 +10,7 @@ const emptyForm: ProductFormData = {
   meta_title: "", meta_description: "", og_image_url: null,
 };
 
-export function useProductForm(existing?: Product | null) {
+export function useProductForm(existing?: Product | null, heroImageExists: boolean = false) {
   const [form, setForm] = useState<ProductFormData>(emptyForm);
   const [dirty, setDirty] = useState<Set<string>>(new Set());
   const initialisedRef = useRef(false);
@@ -36,7 +36,7 @@ export function useProductForm(existing?: Product | null) {
 
   const checklist = useMemo(() => {
     const checks: { label: string; key: string; done: boolean }[] = [
-      { label: "Hero Image", key: "hero", done: false },
+      { label: "Hero Image", key: "hero", done: heroImageExists },
       { label: "Product Name", key: "name", done: form.name.trim().length > 0 },
       { label: "Story", key: "story", done: form.story.trim().length > 0 },
       { label: "Collection", key: "collection", done: !!form.collection_id },
@@ -45,7 +45,7 @@ export function useProductForm(existing?: Product | null) {
       { label: "SEO", key: "seo", done: form.meta_title.trim().length > 0 },
     ];
     return checks;
-  }, [form]);
+  }, [form, heroImageExists]);
 
   const progress = useMemo(() => {
     const done = checklist.filter((c) => c.done).length;
